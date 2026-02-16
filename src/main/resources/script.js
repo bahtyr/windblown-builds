@@ -141,10 +141,10 @@ function renderCard(gift, isFaded){
     title.appendChild(nameEl);
 
     if (gift.category) {
-        const badge = document.createElement("span");
-        badge.className = "badge";
-        badge.textContent = gift.category;
-        title.appendChild(badge);
+        // const badge = document.createElement("span");
+        // badge.className = "badge";
+        // badge.textContent = gift.category;
+        // title.appendChild(badge);
     }
     meta.appendChild(title);
 
