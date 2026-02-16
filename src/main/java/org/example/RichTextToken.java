@@ -8,6 +8,7 @@ public class RichTextToken {
     String key;
     String value;
     Map<String, String> attributes = new LinkedHashMap<>();
+    boolean bold;
 
     RichTextToken(String key, String value) {
         this.key = key;
@@ -21,15 +22,23 @@ public class RichTextToken {
         return this;
     }
 
+    RichTextToken withBold(boolean bold) {
+        this.bold = bold;
+        return this;
+    }
+
     String toJsonLikeString() {
-        StringBuilder out = new StringBuilder("{\"t\":\"").append(escape(key)).append("\"");
+        StringBuilder out = new StringBuilder("{\"key\":\"").append(escape(key)).append("\"");
         if (value != null) {
-            out.append(",\"v\":\"").append(escape(value)).append("\"");
+            out.append(",\"text\":\"").append(escape(value)).append("\"");
         }
         if (!attributes.isEmpty()) {
             out.append(",").append(attributes.entrySet().stream()
                     .map(e -> "\"" + escape(e.getKey()) + "\":\"" + escape(e.getValue()) + "\"")
                     .collect(Collectors.joining(",")));
+        }
+        if (bold) {
+            out.append(",\"bold\":true");
         }
         out.append("}");
         return out.toString();

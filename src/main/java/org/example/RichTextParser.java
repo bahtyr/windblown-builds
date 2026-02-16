@@ -28,7 +28,7 @@ public class RichTextParser {
         if (node instanceof TextNode textNode) {
             String text = normalizeWhitespace(textNode.getWholeText());
             if (!text.isBlank()) {
-                tokens.add(new RichTextToken(boldContext ? "bold" : "text", text));
+                tokens.add(new RichTextToken("text", text).withBold(boldContext));
             }
             return;
         }
@@ -50,8 +50,8 @@ public class RichTextParser {
         }
 
         if (isBold(element)) {
-            parseNumberMaybe(element, tokens);
-            if (!isNumber(element)) {
+            boolean parsedNumber = parseNumberMaybe(element, tokens);
+            if (!parsedNumber) {
                 for (Node child : element.childNodes()) {
                     parseNode(child, tokens, true);
                 }
@@ -93,20 +93,24 @@ public class RichTextParser {
             }
         }
 
+        boolean bold = tooltip.selectFirst("b") != null && name != null && !name.isBlank();
+
         return new RichTextToken("entity", name)
                 .with("href", href)
                 .with("icon", icon)
-                .with("color", color);
+                .with("color", color)
+                .withBold(bold);
     }
 
-    private static void parseNumberMaybe(Element boldElement, List<RichTextToken> tokens) {
+    private static boolean parseNumberMaybe(Element boldElement, List<RichTextToken> tokens) {
         if (!isNumber(boldElement)) {
-            return;
+            return false;
         }
         Element colorSpan = boldElement.selectFirst("span");
         String value = colorSpan.text();
         String color = getColor(colorSpan);
-        tokens.add(new RichTextToken("number", value).with("color", color));
+        tokens.add(new RichTextToken("text", value).with("color", color).withBold(true));
+        return true;
     }
 
     private static String getColor(Element style_) {
@@ -161,7 +165,10 @@ public class RichTextParser {
         for (int i = 1; i < tokens.size(); i++) {
             RichTextToken previous = tokens.get(i - 1);
             RichTextToken current = tokens.get(i);
-            if ("text".equals(previous.key) && "text".equals(current.key)) {
+            if ("text".equals(previous.key)
+                    && "text".equals(current.key)
+                    && previous.bold == current.bold
+                    && previous.attributes.equals(current.attributes)) {
                 previous.value = previous.value + current.value;
                 tokens.remove(i);
                 i--;

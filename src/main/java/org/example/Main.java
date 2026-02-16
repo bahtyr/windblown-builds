@@ -19,15 +19,15 @@ public class Main {
         String section = "Scythe Gifts";
 
         WebElement table = driver.findElement(GiftsPage.tableOfSection(section));
-        WebElement row = table.findElements(By.tagName("tr")).get(1);
-        List<WebElement> rows = row.findElements(By.tagName("td"));
+        WebElement row = table.findElements(By.tagName("tr")).get(2);
+        List<WebElement> td = row.findElements(By.tagName("td"));
 
         Gift a = new Gift();
-        a.imageUrl = rows.get(0).findElement(By.tagName("img")).getAttribute("src");
-        a.name = rows.get(0).getText();
+        a.imageUrl = td.get(0).findElement(By.tagName("img")).getAttribute("src");
+        a.name = td.get(0).getText();
         a.category = section.replace(" Gifts", "").trim();
 
-        WebElement rowDescription = rows.get(2);
+        WebElement rowDescription = td.get(2);
         a.richDescription = RichTextParser.parse(rowDescription).stream()
                 .map(RichTextToken::toJsonLikeString)
                 .collect(Collectors.joining(",", "[", "]"));
