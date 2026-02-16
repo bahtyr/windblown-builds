@@ -25,8 +25,10 @@ public class Main {
 
         for (String section : sections) {
             WebElement table = driver.findElement(GiftsPage.tableOfSection(section));
-            WebElement row = table.findElements(By.tagName("tr")).get(2);
-            gifts.add(parseGift(row, section));
+            List<WebElement> rows = table.findElements(By.tagName("tr"));
+            for (WebElement row : rows) {
+                gifts.add(parseGift(row, section));
+            }
         }
 
         System.out.print(gifts);
@@ -39,7 +41,7 @@ public class Main {
         Gift gift = new Gift();
         List<WebElement> td = row.findElements(By.tagName("td"));
         gift.imageUrl = td.get(0).findElement(By.tagName("img")).getAttribute("src");
-        gift.name = td.get(0).getText();
+        gift.name = td.get(1).getText();
         gift.category = section.replace(" Gifts", "").trim();
         WebElement rowDescription = td.get(2);
         gift.description = rowDescription.getText();
