@@ -26,7 +26,7 @@ public class GiftsPage {
     );
 
     static By tableOfSection(String heading) {
-        return By.xpath(String.format("//h3[span[text()=\"%s\"]]/following-sibling::p/following-sibling::table", heading));
+        return By.xpath(String.format("//h3[span[text()=\"%s\"]]/following-sibling::p/following-sibling::table/tbody", heading));
     }
 
 
