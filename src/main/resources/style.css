@@ -139,7 +139,7 @@ main {
     transition: opacity .12s ease;
 }
 
-.card.faded {
+.faded {
     opacity: var(--fade);
 }
 

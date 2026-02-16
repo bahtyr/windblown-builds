@@ -264,6 +264,7 @@ function render() {
     // Render each section
     for (const [cat, gifts] of grouped) {
         const section = ensureSection(cat);
+        const title = section.querySelector(".section-title");
         const sub = section.querySelector(".section-sub");
         const grid = section.querySelector(".grid");
 
@@ -275,14 +276,16 @@ function render() {
             if (m) sectionMatches++;
         }
 
+        title.classList.remove("faded");
         // If there are no results for this section under the current filter:
         // clear contents, keep heading
-        // if (filterActive && sectionMatches === 0) {
+        if (filterActive && sectionMatches === 0) {
         //     grid.innerHTML = "";
         //     // sub.textContent = `0 / ${gifts.length} match`;
         //     sub.textContent = ``;
         //     continue;
-        // }
+            title.classList.add("faded");
+        }
 
         // Otherwise: keep items (render all), fade unmatched
         grid.innerHTML = "";
