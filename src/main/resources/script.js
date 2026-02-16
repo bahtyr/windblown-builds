@@ -1,44 +1,51 @@
-// ---- YOUR DATA HERE ----
+// Data comes from outside (e.g., <script src="./data.js"></script> that sets window.GIFTS_DATA)
 const GIFTS = window.GIFTS_DATA || [];
 
 const WIKI_BASE = "https://windblown.wiki.gg";
 
+// Expected existing elements in your HTML:
+// <select id="entitySelect"><option value="">No filter</option></select>
+// <input id="searchInput" />
+// <button id="clearBtn"></button>
+// <div id="count"></div>
+// <main id="sections"></main>
 const elSections = document.getElementById("sections");
 const elEntity = document.getElementById("entitySelect");
 const elSearch = document.getElementById("searchInput");
 const elCount = document.getElementById("count");
 const elClear = document.getElementById("clearBtn");
 
-// --- href-based entity identity ---
-function normalizeHref(href){
-    if(!href) return "";
-    try{
-        const u = new URL(href, WIKI_BASE);
-        // Use pathname (+search if present) as the stable ID
-        return u.pathname + (u.search || "");
-    } catch {
-        return String(href).trim();
-    }
-}
-function entityId(part){
-    return normalizeHref(part.href);
-}
-function entityDisplayText(part){
-    const t = (part.text || "").trim();
-    if (t) return t;
-
-    const id = entityId(part);
-    const last = id.split("/").filter(Boolean).pop() || "";
-    return decodeURIComponent(last.replaceAll("_"," "));
-}
-function absUrl(u){
-    if(!u) return "";
+function absUrl(u) {
+    if (!u) return "";
     if (u.startsWith("http://") || u.startsWith("https://")) return u;
     if (u.startsWith("/")) return WIKI_BASE + u;
     return u;
 }
 
-function giftEntityIds(gift){
+function normalizeHref(href) {
+    if (!href) return "";
+    try {
+        const u = new URL(href, WIKI_BASE);
+        return u.pathname + (u.search || "");
+    } catch {
+        return String(href).trim();
+    }
+}
+
+function entityId(part) {
+    return normalizeHref(part?.href);
+}
+
+function entityDisplayText(part) {
+    const t = (part?.text || "").trim();
+    if (t) return t;
+
+    const id = entityId(part);
+    const last = id.split("/").filter(Boolean).pop() || "";
+    return decodeURIComponent(last.replaceAll("_", " ")) || "(Unnamed entity)";
+}
+
+function giftEntityIds(gift) {
     const ids = [];
     for (const part of (gift.richDescription || [])) {
         if (part.key !== "entity") continue;
@@ -48,27 +55,60 @@ function giftEntityIds(gift){
     return ids;
 }
 
-function collectEntityOptions(){
-    // id -> label (first seen)
+function matchesEntity(gift, selectedEntityId) {
+    if (!selectedEntityId) return true;
+    return giftEntityIds(gift).includes(selectedEntityId);
+}
+
+function matchesSearch(gift, q) {
+    if (!q) return true;
+    q = q.toLowerCase();
+
+    const name = (gift.name || "").toLowerCase();
+    const cat = (gift.category || "").toLowerCase();
+    const text = (gift.richDescription || []).map(p => (p.text || "")).join(" ").toLowerCase();
+
+    return name.includes(q) || cat.includes(q) || text.includes(q);
+}
+
+function groupByCategory() {
     const map = new Map();
-    for (const g of GIFTS){
-        for (const p of (g.richDescription || [])){
+    for (const g of GIFTS) {
+        const cat = (g.category && g.category.trim()) ? g.category.trim() : "Uncategorized";
+        if (!map.has(cat)) map.set(cat, []);
+        map.get(cat).push(g);
+    }
+    return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+}
+
+// --- UI: build entity dropdown (value = href ID) ---
+function collectEntityOptions() {
+    // clear, keep first option
+    while (elEntity.options.length > 1) elEntity.remove(1);
+
+    const map = new Map(); // id -> label
+    for (const g of GIFTS) {
+        for (const p of (g.richDescription || [])) {
             if (p.key !== "entity") continue;
             const id = entityId(p);
             if (!id) continue;
             if (!map.has(id)) map.set(id, entityDisplayText(p));
         }
     }
-    const options = [...map.entries()].sort((a,b)=>a[1].localeCompare(b[1]));
-    for (const [id,label] of options){
+
+    const options = [...map.entries()].sort((a, b) => a[1].localeCompare(b[1]));
+    for (const [id, label] of options) {
         const opt = document.createElement("option");
-        opt.value = id;          // FILTER KEY (href)
-        opt.textContent = label; // DISPLAY
+        opt.value = id;           // FILTER KEY (href)
+        opt.textContent = label;  // DISPLAY
         elEntity.appendChild(opt);
     }
 }
 
-function richPartToNode(part){
+// --- Rendering helpers ---
+// NOTE: expects your CSS to have: .card, .card.faded, .entity-btn, etc.
+
+function richPartToNode(part) {
     if (part.key === "text") {
         const span = document.createElement("span");
         span.className = "t";
@@ -85,11 +125,10 @@ function richPartToNode(part){
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "entity-btn";
-        btn.title = `Filter by: ${label} (${id})`;
+        btn.title = `Filter by: ${label}`;
 
-        // Clicking applies filter by href ID
+        // Click applies href-based filter (toggle off if same)
         btn.addEventListener("click", () => {
-            // toggle behavior: click again to clear
             elEntity.value = (elEntity.value === id) ? "" : id;
             render();
         });
@@ -116,9 +155,9 @@ function richPartToNode(part){
     return fallback;
 }
 
-function renderCard(gift, isFaded){
+function renderCard(gift, shouldFade) {
     const card = document.createElement("div");
-    card.className = "card" + (isFaded ? " faded" : "");
+    card.className = "card" + (shouldFade ? " faded" : "");
 
     const top = document.createElement("div");
     top.className = "top";
@@ -141,11 +180,12 @@ function renderCard(gift, isFaded){
     title.appendChild(nameEl);
 
     if (gift.category) {
-        // const badge = document.createElement("span");
-        // badge.className = "badge";
-        // badge.textContent = gift.category;
-        // title.appendChild(badge);
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = gift.category;
+        title.appendChild(badge);
     }
+
     meta.appendChild(title);
 
     const desc = document.createElement("div");
@@ -162,80 +202,114 @@ function renderCard(gift, isFaded){
 
     top.appendChild(meta);
     card.appendChild(top);
+
     return card;
 }
 
-function matchesSearch(gift, q){
-    if (!q) return true;
-    q = q.toLowerCase();
-    const name = (gift.name || "").toLowerCase();
-    const cat = (gift.category || "").toLowerCase();
-    const text = (gift.richDescription || []).map(p => (p.text || "")).join(" ").toLowerCase();
-    return name.includes(q) || cat.includes(q) || text.includes(q);
+// --- Sections: keep headings always; clear section contents if no results in that section ---
+function createSectionSkeleton(category) {
+    const section = document.createElement("section");
+    section.className = "section";
+    section.dataset.category = category;
+
+    const head = document.createElement("div");
+    head.className = "section-head";
+
+    const title = document.createElement("h2");
+    title.className = "section-title";
+    title.textContent = category;
+
+    const sub = document.createElement("div");
+    sub.className = "section-sub";
+    sub.textContent = ""; // updated in render()
+
+    head.appendChild(title);
+    head.appendChild(sub);
+    section.appendChild(head);
+
+    // content container (grid)
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    section.appendChild(grid);
+
+    return section;
 }
 
-// MATCHES BY href ID (stable), not text
-function matchesEntity(gift, selectedEntityId){
-    if (!selectedEntityId) return true;
-    return giftEntityIds(gift).includes(selectedEntityId);
-}
-
-function groupByCategory(){
-    const map = new Map();
-    for (const g of GIFTS){
-        const cat = (g.category && g.category.trim()) ? g.category.trim() : "Uncategorized";
-        if (!map.has(cat)) map.set(cat, []);
-        map.get(cat).push(g);
+function ensureSection(category) {
+    let section = elSections.querySelector(`.section[data-category="${CSS.escape(category)}"]`);
+    if (!section) {
+        section = createSectionSkeleton(category);
+        elSections.appendChild(section);
     }
-    return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+    return section;
 }
 
-function render(){
-    const selectedEntityId = elEntity.value;   // <-- href-based
+function render() {
+    const selectedEntityId = elEntity.value;     // href-based filter key
     const q = elSearch.value.trim();
+    const filterActive = Boolean(selectedEntityId || q);
 
-    elSections.innerHTML = "";
-    let matchedCount = 0;
+    let totalMatched = 0;
 
-    for (const [cat, gifts] of groupByCategory()){
-        const section = document.createElement("section");
-        section.className = "section";
+    // Ensure all sections exist (headings always visible)
+    const grouped = groupByCategory();
+    const existingCats = new Set(grouped.map(([cat]) => cat));
 
-        const head = document.createElement("div");
-        head.className = "section-head";
+    // Optionally remove sections that no longer exist in data:
+    for (const sec of [...elSections.querySelectorAll(".section")]) {
+        if (!existingCats.has(sec.dataset.category)) sec.remove();
+    }
 
-        const title = document.createElement("h2");
-        title.className = "section-title";
-        title.textContent = cat;
+    // Render each section
+    for (const [cat, gifts] of grouped) {
+        const section = ensureSection(cat);
+        const sub = section.querySelector(".section-sub");
+        const grid = section.querySelector(".grid");
 
-        const sub = document.createElement("div");
-        sub.className = "section-sub";
-
-        head.appendChild(title);
-        head.appendChild(sub);
-        section.appendChild(head);
-
-        const grid = document.createElement("div");
-        grid.className = "grid";
-
-        let sectionMatched = 0;
-
-        for (const g of gifts){
+        // Determine "results" for this section:
+        // "results" means any gift matches current filter (entity+search). If no filter active, results = all gifts.
+        let sectionMatches = 0;
+        for (const g of gifts) {
             const m = matchesEntity(g, selectedEntityId) && matchesSearch(g, q);
-            if (m) { matchedCount++; sectionMatched++; }
-            grid.appendChild(renderCard(g, !m && (selectedEntityId || q)));
+            if (m) sectionMatches++;
         }
 
-        sub.textContent = `${sectionMatched} / ${gifts.length} match`;
-        section.appendChild(grid);
-        elSections.appendChild(section);
+        // If there are no results for this section under the current filter:
+        // clear contents, keep heading
+        if (filterActive && sectionMatches === 0) {
+            grid.innerHTML = "";
+            sub.textContent = `0 / ${gifts.length} match`;
+            continue;
+        }
+
+        // Otherwise: keep items (render all), fade unmatched
+        grid.innerHTML = "";
+        for (const g of gifts) {
+            const m = matchesEntity(g, selectedEntityId) && matchesSearch(g, q);
+            if (m) { sectionMatches++; totalMatched++; }
+            grid.appendChild(renderCard(g, filterActive && !m));
+        }
+
+        // Important: when filterActive=false, sectionMatches should show all
+        if (!filterActive) {
+            sub.textContent = `${gifts.length} / ${gifts.length} match`;
+            totalMatched += gifts.length;
+        } else {
+            // We double-counted sectionMatches above if filterActive; fix: recompute for display
+            // (cheap + clear)
+            let displayMatches = 0;
+            for (const g of gifts) {
+                if (matchesEntity(g, selectedEntityId) && matchesSearch(g, q)) displayMatches++;
+            }
+            sub.textContent = `${displayMatches} / ${gifts.length} match`;
+        }
     }
 
     const total = GIFTS.length;
-    const showingMatched = (selectedEntityId || q) ? matchedCount : total;
-    elCount.textContent = `${showingMatched} / ${total} match`;
+    elCount.textContent = filterActive ? `${totalMatched} / ${total} match` : `${total} / ${total} match`;
 }
 
+// Init
 collectEntityOptions();
 render();
 
