@@ -9,13 +9,20 @@ public class Gift {
 
     @Override
     public String toString() {
-        return "Gift{" +
-                "imageUrl='" + imageUrl + '\'' +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-//                ", description='" + description + '\'' + skip
-                ", richDescription=" + richDescription +
-                '}'; // todo convert this to json like format
-        // todo if very easy, beautify json
+        return "{"
+                + "\"imageUrl\":\"" + escape(imageUrl) + "\","
+                + "\"name\":\"" + escape(name) + "\","
+                + "\"category\":\"" + escape(category) + "\","
+                + "\"richDescription\":" + (richDescription == null ? "[]" : richDescription)
+                + "}";
+    }
+
+    private String escape(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"");
     }
 }

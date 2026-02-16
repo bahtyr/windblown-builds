@@ -101,8 +101,7 @@ public class RichTextParser {
             }
         }
 
-        return new RichTextToken("entity", null)
-                .with("name", name)
+        return new RichTextToken("entity", name)
                 .with("href", href)
                 .with("icon", icon)
                 .with("color", color);

@@ -32,38 +32,6 @@ public class Main {
                 .map(RichTextToken::toJsonLikeString)
                 .collect(Collectors.joining(",", "[", "]"));
 
-        // on this example
-        // [
-        //  {
-        //    "t": "entity",
-        //    "name": "Criticals", // todo use v like the other one.
-        //    "href": "/wiki/Criticals",
-        //    "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
-        //    "color": "#ffdd00"
-        //  },
-        //  {
-        //    "t": "text",
-        //    "v": " refill "
-        //  },
-        //  {
-        //    "t": "bold",
-        //    "v": "Trinkets"
-        //  },
-        //  {
-        //    "t": "text",
-        //    "v": " by "
-        //  },
-        //  {
-        //    "t": "bold", -- todo color instead
-        //    "v": "1s"
-        //  },
-        //  {
-        //    "t": "text",
-        //    "v": " (up to 6 times per second)."
-        //  }
-        //]
-
-
         System.out.print(a);
 
         driver.quit();
