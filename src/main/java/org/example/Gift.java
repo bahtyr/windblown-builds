@@ -16,5 +16,6 @@ public class Gift {
 //                ", description='" + description + '\'' + skip
                 ", richDescription=" + richDescription +
                 '}'; // todo convert this to json like format
+        // todo if very easy, beautify json
     }
 }
