@@ -5,7 +5,7 @@ public class Gift {
     String name;
     String category;
     String description;
-    // rich description object
+    String richDescription;
 
     @Override
     public String toString() {
@@ -14,6 +14,7 @@ public class Gift {
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
+                ", richDescription=" + richDescription +
                 '}';
     }
 }
