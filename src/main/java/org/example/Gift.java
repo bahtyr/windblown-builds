@@ -5,6 +5,7 @@ public class Gift {
     String name;
     String category;
     String description;
+    // rich description object
 
     @Override
     public String toString() {

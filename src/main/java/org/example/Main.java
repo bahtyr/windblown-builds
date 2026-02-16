@@ -8,21 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.time.Duration;
 import java.util.List;
 
 public class Main {
 
 
-    static void main() {
-//
-//        FirefoxOptions options = new FirefoxOptions()
-//                .addPreference("browser.startup.page", 1)
-//                .addPreference("browser.startup.homepage", "https://www.google.co.uk")
-//                .setAcceptInsecureCerts(true);
-////                .setHeadless(true);
-//        WebDriver driver = new FirefoxDriver(options);
+    static void main() throws InterruptedException {
+
         WebDriver driver = new FirefoxDriver();
         driver.get(GiftsPage.URL);
+        driver.wait(600);
 
         String section = "General Gifts";
 
@@ -38,6 +34,11 @@ public class Main {
         System.out.print(a);
 
         driver.quit();
+
+        // for given description
+        // ....
+        // it will also contain such information
+        // need to parse it into json frield
 
     }
 
