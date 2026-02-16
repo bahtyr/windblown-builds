@@ -32,6 +32,61 @@ public class Main {
                 .map(RichTextToken::toJsonLikeString)
                 .collect(Collectors.joining(",", "[", "]"));
 
+        /*
+        {
+  "imageUrl": "https://windblown.wiki.gg/images/thumb/Damage_Scythe_Icon.png/48px-Damage_Scythe_Icon.png?2431b1",
+  "name": "",
+  "category": "Scythe",
+  "richDescription": [
+    {
+      "t": "text",
+      "v": "Every "
+    },
+    {
+      "t": "bold",
+      "v": "250"
+    },
+    {
+      "t": "entity",
+      "v": "Base Damage",
+      "href": "/wiki/Base_Damage",
+      "color": "#ffffff"
+    },
+    {
+      "t": "text",
+      "v": " you deal, spawn a "
+    },
+    {
+      "t": "entity",
+      "v": "Scythe",
+      "href": "/wiki/Scythe",
+      "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+      "color": "#5f9fff"
+    },
+    {
+      "t": "text",
+      "v": " for 5s ("
+    },
+    {
+      "t": "entity",
+      "v": "",
+      "href": "/wiki/Auto_Scaling",
+      "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+      "color": "#ffffff"
+    },
+    {
+      "t": "number",
+      "v": "10",
+      "color": "#00ff22"
+    },
+    {
+      "t": "text",
+      "v": " damage)."
+    }
+  ]
+}
+         */
+
                 /*
 
         todo RichTextParser

@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RichTextToken {
-    String t;
-    String v;
+    String key;
+    String value;
     Map<String, String> attributes = new LinkedHashMap<>();
 
-    RichTextToken(String t, String v) {
-        this.t = t;
-        this.v = v;
+    RichTextToken(String key, String value) {
+        this.key = key;
+        this.value = value;
     }
 
     RichTextToken with(String key, String value) {
@@ -22,9 +22,9 @@ public class RichTextToken {
     }
 
     String toJsonLikeString() {
-        StringBuilder out = new StringBuilder("{\"t\":\"").append(escape(t)).append("\"");
-        if (v != null) {
-            out.append(",\"v\":\"").append(escape(v)).append("\"");
+        StringBuilder out = new StringBuilder("{\"t\":\"").append(escape(key)).append("\"");
+        if (value != null) {
+            out.append(",\"v\":\"").append(escape(value)).append("\"");
         }
         if (!attributes.isEmpty()) {
             out.append(",").append(attributes.entrySet().stream()

@@ -41,7 +41,7 @@ public class RichTextParser {
             return;
         }
 
-        if (isTooltipEntity(element)) {
+        if (isTooltip(element)) {
             RichTextToken entityToken = parseEntity(element);
             if (entityToken != null) {
                 tokens.add(entityToken);
@@ -54,8 +54,8 @@ public class RichTextParser {
         }
 
         if ("b".equals(element.tagName())) {
-            maybeParseNumber(element, tokens);
-            if (!looksLikeNumberToken(element)) {
+            parseNumberMaybe(element, tokens);
+            if (!isNumber(element)) {
                 for (Node child : element.childNodes()) {
                     parseNode(child, tokens, true);
                 }
@@ -67,10 +67,6 @@ public class RichTextParser {
         for (Node child : element.childNodes()) {
             parseNode(child, tokens, nextBoldContext);
         }
-    }
-
-    private static boolean isTooltipEntity(Element element) {
-        return "span".equals(element.tagName()) && element.hasClass("tooltip");
     }
 
     private static RichTextToken parseEntity(Element tooltip) {
@@ -91,7 +87,7 @@ public class RichTextParser {
         String color = null;
         if (nameNode != null) {
             name = nameNode.text();
-            color = styleColor(nameNode.attr("style"));
+            color = getColor(nameNode);
         } else {
             Element nameLink = tooltip.selectFirst("b a");
             if (nameLink != null) {
@@ -107,27 +103,22 @@ public class RichTextParser {
                 .with("color", color);
     }
 
-    private static void maybeParseNumber(Element boldElement, List<RichTextToken> tokens) {
-        if (!looksLikeNumberToken(boldElement)) {
+    private static void parseNumberMaybe(Element boldElement, List<RichTextToken> tokens) {
+        if (!isNumber(boldElement)) {
             return;
         }
         Element colorSpan = boldElement.selectFirst("span");
         String value = colorSpan.text();
-        String color = styleColor(colorSpan.attr("style"));
+        String color = getColor(colorSpan);
         tokens.add(new RichTextToken("number", value).with("color", color));
     }
 
-    private static boolean looksLikeNumberToken(Element boldElement) {
-        Element colorSpan = boldElement.selectFirst("span");
-        if (colorSpan == null) {
-            return false;
+    private static String getColor(Element style_) {
+        if (style_ == null) {
+            return null;
         }
-        String text = colorSpan.text();
-        return text.matches("[+-]?\\d+(?:\\.\\d+)?");
-    }
-
-    private static String styleColor(String style) {
-        if (style == null || style.isBlank()) {
+        String style = style_.attr("style");
+        if (style.isBlank()) {
             return null;
         }
         String[] declarations = style.split(";");
@@ -140,6 +131,23 @@ public class RichTextParser {
         return null;
     }
 
+    // Check
+
+    private static boolean isNumber(Element boldElement) {
+        Element colorSpan = boldElement.selectFirst("span");
+        if (colorSpan == null) {
+            return false;
+        }
+        String text = colorSpan.text();
+        return text.matches("[+-]?\\d+(?:\\.\\d+)?");
+    }
+
+    private static boolean isTooltip(Element element) {
+        return "span".equals(element.tagName()) && element.hasClass("tooltip");
+    }
+
+    // Tools
+
     private static String normalizeWhitespace(String raw) {
         return raw.replaceAll("\\s+", " ");
     }
@@ -148,8 +156,8 @@ public class RichTextParser {
         for (int i = 1; i < tokens.size(); i++) {
             RichTextToken previous = tokens.get(i - 1);
             RichTextToken current = tokens.get(i);
-            if ("text".equals(previous.t) && "text".equals(current.t)) {
-                previous.v = previous.v + current.v;
+            if ("text".equals(previous.key) && "text".equals(current.key)) {
+                previous.value = previous.value + current.value;
                 tokens.remove(i);
                 i--;
             }
