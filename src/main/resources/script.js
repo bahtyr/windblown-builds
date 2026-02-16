@@ -78,7 +78,7 @@ function groupByCategory() {
         if (!map.has(cat)) map.set(cat, []);
         map.get(cat).push(g);
     }
-    return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+    return [...map.entries()];
 }
 
 // --- UI: build entity dropdown (value = href ID) ---
@@ -182,6 +182,7 @@ function renderCard(gift, shouldFade) {
     if (gift.category) {
         const badge = document.createElement("span");
         badge.className = "badge";
+        badge.style = "display: none"
         badge.textContent = gift.category;
         title.appendChild(badge);
     }
@@ -276,11 +277,12 @@ function render() {
 
         // If there are no results for this section under the current filter:
         // clear contents, keep heading
-        if (filterActive && sectionMatches === 0) {
-            grid.innerHTML = "";
-            sub.textContent = `0 / ${gifts.length} match`;
-            continue;
-        }
+        // if (filterActive && sectionMatches === 0) {
+        //     grid.innerHTML = "";
+        //     // sub.textContent = `0 / ${gifts.length} match`;
+        //     sub.textContent = ``;
+        //     continue;
+        // }
 
         // Otherwise: keep items (render all), fade unmatched
         grid.innerHTML = "";
@@ -292,7 +294,7 @@ function render() {
 
         // Important: when filterActive=false, sectionMatches should show all
         if (!filterActive) {
-            sub.textContent = `${gifts.length} / ${gifts.length} match`;
+            sub.textContent = `${gifts.length} gifts`;
             totalMatched += gifts.length;
         } else {
             // We double-counted sectionMatches above if filterActive; fix: recompute for display
@@ -301,7 +303,12 @@ function render() {
             for (const g of gifts) {
                 if (matchesEntity(g, selectedEntityId) && matchesSearch(g, q)) displayMatches++;
             }
-            sub.textContent = `${displayMatches} / ${gifts.length} match`;
+
+            // sub.textContent = `${displayMatches} of ${gifts.length} gifts`;
+            sub.textContent = `${displayMatches} gifts`;
+            if (displayMatches === 0) {
+                sub.textContent = ''
+            }
         }
     }
 

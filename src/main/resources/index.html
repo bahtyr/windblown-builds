@@ -9,22 +9,18 @@
 </head>
 <body>
 <header>
-    <h1>Gifts Browser</h1>
+    <h1>Windblown Gifts Browser</h1>
     <div class="controls">
-        <label for="entitySelect">Entity filter (by href):</label>
+        <label for="entitySelect">Entities:</label>
         <select id="entitySelect">
             <option value="">No filter</option>
         </select>
 
-        <label for="searchInput">Search (fade unmatched):</label>
+        <label for="searchInput">Search:</label>
         <input id="searchInput" type="text" placeholder="name/category/text…"/>
 
         <button class="btn" id="clearBtn">Clear</button>
         <div class="count" id="count"></div>
-    </div>
-    <div class="hint">
-        All gifts stay visible. Filters only fade cards that don’t match.
-        Click an entity chip to filter (matching is done by entity <b>href</b>, not by text).
     </div>
 </header>
 <main id="sections"></main>
