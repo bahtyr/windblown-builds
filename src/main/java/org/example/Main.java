@@ -34,8 +34,6 @@ public class Main {
 
 
                 /*
-
-        todo RichTextParser
         input
 
 <td style="">
