@@ -13,8 +13,8 @@ public class Gift {
                 "imageUrl='" + imageUrl + '\'' +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
+//                ", description='" + description + '\'' + skip
                 ", richDescription=" + richDescription +
-                '}';
+                '}'; // todo convert this to json like format
     }
 }
