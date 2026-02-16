@@ -32,7 +32,50 @@ public class Main {
                 .map(RichTextToken::toJsonLikeString)
                 .collect(Collectors.joining(",", "[", "]"));
 
-        /*
+
+                /*
+
+        todo RichTextParser
+        input
+
+<td style="">
+  <span>Every <b>250</b>
+    <span class="tooltip" style="position: relative; display: inline;">
+      <b>
+        <a href="/wiki/Base_Damage" class="mw-redirect" title="">
+          <span style="color: #ffffff;">Base Damage</span>
+        </a>
+      </b>
+      <span class="tooltiptext" style="width: 25em;">...</span>
+    </span> you deal, spawn a <span class="tooltip" style="position: relative; display: inline;">
+      <a href="/wiki/Scythe" title="">
+        <img alt="Scythe Icon.png" src="/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570" decoding="async" loading="lazy" width="20" height="20" data-file-width="128" data-file-height="128">
+      </a>
+      <b>
+        <a href="/wiki/Scythe" class="mw-redirect" title="">
+          <span style="color: #5f9fff;">Scythe</span>
+        </a>
+      </b>
+      <span class="tooltiptext" style="width: 25em; left: 1132px; top: 426px;">...</span>
+    </span> for 5s ( <span class="tooltip" style="position: relative; display: inline;">
+      <a href="/wiki/Auto_Scaling" title="">
+        <img alt="Auto Scaling Icon.png" src="/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb" decoding="async" loading="lazy" width="20" height="20" data-file-width="128" data-file-height="128">
+      </a>
+      <b>
+        <a href="/wiki/Auto_Scaling" class="mw-redirect" title="">
+          <span style="color: #ffffff;"></span>
+        </a>
+      </b>
+      <span class="tooltiptext" style="width: 25em;">...</span>
+    </span>
+    <b>
+      <span style="color: #00ff22;">10</span>
+    </b> damage). </span>
+</td>
+                 */
+
+
+        /* current output
         {
   "imageUrl": "https://windblown.wiki.gg/images/thumb/Damage_Scythe_Icon.png/48px-Damage_Scythe_Icon.png?2431b1",
   "name": "",
@@ -87,47 +130,7 @@ public class Main {
 }
          */
 
-                /*
-
-        todo RichTextParser
-        input
-
-<td style="">
-  <span>Every <b>250</b>
-    <span class="tooltip" style="position: relative; display: inline;">
-      <b>
-        <a href="/wiki/Base_Damage" class="mw-redirect" title="">
-          <span style="color: #ffffff;">Base Damage</span>
-        </a>
-      </b>
-      <span class="tooltiptext" style="width: 25em;">...</span>
-    </span> you deal, spawn a <span class="tooltip" style="position: relative; display: inline;">
-      <a href="/wiki/Scythe" title="">
-        <img alt="Scythe Icon.png" src="/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570" decoding="async" loading="lazy" width="20" height="20" data-file-width="128" data-file-height="128">
-      </a>
-      <b>
-        <a href="/wiki/Scythe" class="mw-redirect" title="">
-          <span style="color: #5f9fff;">Scythe</span>
-        </a>
-      </b>
-      <span class="tooltiptext" style="width: 25em; left: 1132px; top: 426px;">...</span>
-    </span> for 5s ( <span class="tooltip" style="position: relative; display: inline;">
-      <a href="/wiki/Auto_Scaling" title="">
-        <img alt="Auto Scaling Icon.png" src="/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb" decoding="async" loading="lazy" width="20" height="20" data-file-width="128" data-file-height="128">
-      </a>
-      <b>
-        <a href="/wiki/Auto_Scaling" class="mw-redirect" title="">
-          <span style="color: #ffffff;"></span>
-        </a>
-      </b>
-      <span class="tooltiptext" style="width: 25em;">...</span>
-    </span>
-    <b>
-      <span style="color: #00ff22;">10</span>
-    </b> damage). </span>
-</td>
-
-        expected output
+        /* expected output
 
 {
   "imageUrl": "https://windblown.wiki.gg/images/thumb/Damage_Scythe_Icon.png/48px-Damage_Scythe_Icon.png?2431b1",
@@ -135,53 +138,57 @@ public class Main {
   "category": "Scythe",
   "richDescription": [
     {
-      "t": "text",
+      "key": "text",
       "text": "Every "
     },
     {
+      "key": "text",
       "bold": true
       "text": "250"
     },
     {
-      "t": "entity",
+      "key": "entity",
       "text": "Base Damage",
       "href": "/wiki/Base_Damage",
       "color": "#ffffff"
+      "bold": true
     },
     {
-      "t": "text",
+      "key": "text",
       "text": " you deal, spawn a "
     },
     {
-      "t": "entity",
+      "key": "entity",
       "text": "Scythe",
       "href": "/wiki/Scythe",
       "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
       "color": "#5f9fff"
+      "bold": true
     },
     {
-      "t": "text",
+      "key": "text",
       "text": " for 5s ("
     },
     {
-      "t": "entity",
+      "key": "entity",
       "text": "",
       "href": "/wiki/Auto_Scaling",
       "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
       "color": "#ffffff"
     },
     {
+      "key": "text",
       "text": "10",
       "color": "#00ff22"
       "bold": true
     },
     {
-      "t": "text",
+      "key": "text",
       "text": " damage)."
     }
   ]
 }
-                 */
+         */
         System.out.print(a);
 
         driver.quit();

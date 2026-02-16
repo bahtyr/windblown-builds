@@ -28,11 +28,7 @@ public class RichTextParser {
         if (node instanceof TextNode textNode) {
             String text = normalizeWhitespace(textNode.getWholeText());
             if (!text.isBlank()) {
-                if (boldContext) {
-                    tokens.add(new RichTextToken("bold", text));
-                } else {
-                    tokens.add(new RichTextToken("text", text));
-                }
+                tokens.add(new RichTextToken(boldContext ? "bold" : "text", text));
             }
             return;
         }
@@ -49,11 +45,11 @@ public class RichTextParser {
             return;
         }
 
-        if (element.hasClass("tooltiptext")) {
+        if (isTooltipText(element)) {
             return;
         }
 
-        if ("b".equals(element.tagName())) {
+        if (isBold(element)) {
             parseNumberMaybe(element, tokens);
             if (!isNumber(element)) {
                 for (Node child : element.childNodes()) {
@@ -145,6 +141,15 @@ public class RichTextParser {
     private static boolean isTooltip(Element element) {
         return "span".equals(element.tagName()) && element.hasClass("tooltip");
     }
+
+    private static boolean isTooltipText(Element element) {
+        return element.hasClass("tooltiptext");
+    }
+
+    private static boolean isBold(Element element) {
+        return "b".equals(element.tagName());
+    }
+
 
     // Tools
 
