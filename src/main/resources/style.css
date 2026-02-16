@@ -251,3 +251,70 @@ main {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* Scroll indicators (top-right / bottom-right) */
+.scroll-indicator {
+    position: fixed;
+    left: 14px;
+    z-index: 9999;
+    border: 1px solid var(--border);
+    background: rgba(20, 35, 58, 0.9);
+    color: var(--text);
+    border-radius: 999px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0);
+    transition: opacity 120ms ease, transform 120ms ease, border-color 120ms ease;
+    backdrop-filter: blur(6px);
+}
+
+.scroll-indicator:hover {
+    border-color: #3b82f6;
+}
+
+.scroll-indicator.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scroll-indicator--up {
+    top: 14px;
+}
+
+.scroll-indicator--down {
+    bottom: 14px;
+}
+
+.scroll-indicator svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* Optional: tiny badge that shows how many are above/below */
+.scroll-indicator .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: center;
+    background: rgba(0,0,0,.45);
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--text);
+    display: none;
+}
+
+.scroll-indicator.show-badge .badge {
+    display: block;
+}

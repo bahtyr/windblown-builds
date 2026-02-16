@@ -106,8 +106,6 @@ function collectEntityOptions() {
 }
 
 // --- Rendering helpers ---
-// NOTE: expects your CSS to have: .card, .card.faded, .entity-btn, etc.
-
 function richPartToNode(part) {
     if (part.key === "text") {
         const span = document.createElement("span");
@@ -182,7 +180,7 @@ function renderCard(gift, shouldFade) {
     if (gift.category) {
         const badge = document.createElement("span");
         badge.className = "badge";
-        badge.style = "display: none"
+        badge.style = "display: none";
         badge.textContent = gift.category;
         title.appendChild(badge);
     }
@@ -207,7 +205,7 @@ function renderCard(gift, shouldFade) {
     return card;
 }
 
-// --- Sections: keep headings always; clear section contents if no results in that section ---
+// --- Sections ---
 function createSectionSkeleton(category) {
     const section = document.createElement("section");
     section.className = "section";
@@ -222,13 +220,12 @@ function createSectionSkeleton(category) {
 
     const sub = document.createElement("div");
     sub.className = "section-sub";
-    sub.textContent = ""; // updated in render()
+    sub.textContent = "";
 
     head.appendChild(title);
     head.appendChild(sub);
     section.appendChild(head);
 
-    // content container (grid)
     const grid = document.createElement("div");
     grid.className = "grid";
     section.appendChild(grid);
@@ -245,78 +242,219 @@ function ensureSection(category) {
     return section;
 }
 
+// --- Scroll indicators ---
+const scrollUI = createScrollIndicators();
+
+function createScrollIndicators() {
+    const up = document.createElement("button");
+    up.type = "button";
+    up.className = "scroll-indicator scroll-indicator--up";
+    up.setAttribute("aria-label", "Scroll to previous match");
+    up.innerHTML = `
+    <span class="badge"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5l-7 7M12 5l7 7"></path>
+      <path d="M12 5v14"></path>
+    </svg>
+  `;
+
+    const down = document.createElement("button");
+    down.type = "button";
+    down.className = "scroll-indicator scroll-indicator--down";
+    down.setAttribute("aria-label", "Scroll to next match");
+    down.innerHTML = `
+    <span class="badge"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19l7-7M12 19l-7-7"></path>
+      <path d="M12 5v14"></path>
+    </svg>
+  `;
+
+    document.body.appendChild(up);
+    document.body.appendChild(down);
+
+    up.addEventListener("click", () => scrollToNearestUnfaded("up"));
+    down.addEventListener("click", () => scrollToNearestUnfaded("down"));
+
+    // Update on scroll/resize
+    const onMove = throttle(updateScrollIndicators, 100);
+    window.addEventListener("scroll", onMove, { passive: true });
+    window.addEventListener("resize", onMove);
+
+    return { up, down };
+}
+
+function getUnfadedCards() {
+    // unfaded = .card that does NOT have .faded and is in the DOM (and visible)
+    return [...document.querySelectorAll(".card:not(.faded)")].filter(el => {
+        const section = el.closest(".section");
+        if (!section) return true;
+        // if you ever hide empty sections, cards won't exist anyway
+        return true;
+    });
+}
+
+function updateScrollIndicators() {
+    const cards = getUnfadedCards();
+
+    // If no filter is active, we generally don't need indicators.
+    // BUT you asked "when there are unfaded cards outside view" — that would always be true on long pages.
+    // So: show indicators ONLY when filter is active (some are faded).
+    const filterActive = Boolean(elEntity.value || elSearch.value.trim());
+    if (!filterActive || cards.length === 0) {
+        scrollUI.up.classList.remove("show", "show-badge");
+        scrollUI.down.classList.remove("show", "show-badge");
+        return;
+    }
+
+    const topY = 0;
+    const bottomY = window.innerHeight;
+
+    let above = 0;
+    let below = 0;
+
+    for (const c of cards) {
+        const r = c.getBoundingClientRect();
+        if (r.bottom < topY) above++;
+        else if (r.top > bottomY) below++;
+    }
+
+    setIndicator(scrollUI.up, above);
+    setIndicator(scrollUI.down, below);
+}
+
+function setIndicator(el, count) {
+    const badge = el.querySelector(".badge");
+    if (count > 0) {
+        el.classList.add("show");
+        // show badge only for small-ish counts (optional)
+        if (count <= 99) {
+            el.classList.add("show-badge");
+            badge.textContent = String(count);
+        } else {
+            el.classList.remove("show-badge");
+            badge.textContent = "";
+        }
+    } else {
+        el.classList.remove("show", "show-badge");
+        badge.textContent = "";
+    }
+}
+
+function scrollToNearestUnfaded(direction) {
+    const cards = getUnfadedCards();
+    if (cards.length === 0) return;
+
+    const center = window.innerHeight / 2;
+
+    // Find candidates outside view in the target direction
+    const candidates = [];
+    for (const c of cards) {
+        const r = c.getBoundingClientRect();
+        if (direction === "up") {
+            if (r.bottom < 0) candidates.push({ el: c, dist: Math.abs(r.bottom) });
+        } else {
+            if (r.top > window.innerHeight) candidates.push({ el: c, dist: r.top - window.innerHeight });
+        }
+    }
+    if (candidates.length === 0) return;
+
+    // nearest one
+    candidates.sort((a, b) => a.dist - b.dist);
+    const target = candidates[0].el;
+
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    // After scroll animation starts, update indicators soon
+    setTimeout(updateScrollIndicators, 180);
+}
+
+function throttle(fn, wait) {
+    let last = 0;
+    let t = null;
+    return function (...args) {
+        const now = Date.now();
+        const remaining = wait - (now - last);
+        if (remaining <= 0) {
+            last = now;
+            fn.apply(this, args);
+        } else if (!t) {
+            t = setTimeout(() => {
+                t = null;
+                last = Date.now();
+                fn.apply(this, args);
+            }, remaining);
+        }
+    };
+}
+
+// --- render() ---
 function render() {
-    const selectedEntityId = elEntity.value;     // href-based filter key
+    const selectedEntityId = elEntity.value;
     const q = elSearch.value.trim();
     const filterActive = Boolean(selectedEntityId || q);
 
     let totalMatched = 0;
 
-    // Ensure all sections exist (headings always visible)
     const grouped = groupByCategory();
     const existingCats = new Set(grouped.map(([cat]) => cat));
 
-    // Optionally remove sections that no longer exist in data:
+    // Remove sections that no longer exist in data
     for (const sec of [...elSections.querySelectorAll(".section")]) {
         if (!existingCats.has(sec.dataset.category)) sec.remove();
     }
 
-    // Render each section
     for (const [cat, gifts] of grouped) {
         const section = ensureSection(cat);
         const title = section.querySelector(".section-title");
         const sub = section.querySelector(".section-sub");
         const grid = section.querySelector(".grid");
 
-        // Determine "results" for this section:
-        // "results" means any gift matches current filter (entity+search). If no filter active, results = all gifts.
-        let sectionMatches = 0;
+        // Determine if this section has any matches
+        let displayMatches = 0;
         for (const g of gifts) {
-            const m = matchesEntity(g, selectedEntityId) && matchesSearch(g, q);
-            if (m) sectionMatches++;
+            if (matchesEntity(g, selectedEntityId) && matchesSearch(g, q)) displayMatches++;
         }
 
-        title.classList.remove("faded");
-        // If there are no results for this section under the current filter:
-        // clear contents, keep heading
-        if (filterActive && sectionMatches === 0) {
-        //     grid.innerHTML = "";
-        //     // sub.textContent = `0 / ${gifts.length} match`;
-        //     sub.textContent = ``;
+        // Hide section with no gifts (your reverted behavior)
+        // If you want "hide only when filter active and no matches", change condition accordingly.
+        // Based on your note: "hide sections without gifts" (so if empty after rendering, hide).
+        // Here: if filter active and displayMatches === 0 => hide section (no grid)
+        // If filter not active => always show (since all gifts are visible).
+        // if (filterActive && displayMatches === 0) {
+        //     section.style.display = "none";
         //     continue;
+        // } else {
+        //     section.style.display = "";
+        // }
+        title.classList.remove("faded");
+        if (filterActive && displayMatches === 0) {
             title.classList.add("faded");
         }
 
-        // Otherwise: keep items (render all), fade unmatched
+        // Render all gifts; fade unmatched when filter active
         grid.innerHTML = "";
         for (const g of gifts) {
             const m = matchesEntity(g, selectedEntityId) && matchesSearch(g, q);
-            if (m) { sectionMatches++; totalMatched++; }
+            if (!filterActive || m) totalMatched += 1;
             grid.appendChild(renderCard(g, filterActive && !m));
         }
 
-        // Important: when filterActive=false, sectionMatches should show all
         if (!filterActive) {
             sub.textContent = `${gifts.length} gifts`;
-            totalMatched += gifts.length;
         } else {
-            // We double-counted sectionMatches above if filterActive; fix: recompute for display
-            // (cheap + clear)
-            let displayMatches = 0;
-            for (const g of gifts) {
-                if (matchesEntity(g, selectedEntityId) && matchesSearch(g, q)) displayMatches++;
-            }
-
-            // sub.textContent = `${displayMatches} of ${gifts.length} gifts`;
             sub.textContent = `${displayMatches} gifts`;
-            if (displayMatches === 0) {
-                sub.textContent = ''
-            }
+            if (displayMatches === 0) sub.textContent = "";
         }
+
+        title.classList.toggle("faded", filterActive && displayMatches === 0);
     }
 
     const total = GIFTS.length;
     elCount.textContent = filterActive ? `${totalMatched} / ${total} match` : `${total} / ${total} match`;
+
+    // Update scroll indicators after DOM changes
+    updateScrollIndicators();
 }
 
 // Init
