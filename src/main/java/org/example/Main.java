@@ -23,7 +23,7 @@ public class Main {
         WebDriver driver = new FirefoxDriver();
         driver.get(GiftsPage.URL);
 
-        for (String section : sections) {
+        for (String section : GiftsPage.SECTIONS) {
             WebElement table = driver.findElement(GiftsPage.tableOfSection(section));
             List<WebElement> rows = table.findElements(By.tagName("tr"));
             for (WebElement row : rows) {
