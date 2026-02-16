@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Windblown Gifts</title>
+    <style>
+        :root{
+            --bg:#0b0f14;
+            --panel:#101826;
+            --panel2:#0f1622;
+            --border:#223044;
+            --text:#e7eefc;
+            --muted:#9db0cc;
+            --chip:#132238;
+            --shadow: 0 10px 30px rgba(0,0,0,.35);
+        }
+        *{ box-sizing:border-box; }
+        body{
+            margin:0;
+            font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: radial-gradient(1200px 600px at 20% 0%, #101b2a, transparent 55%),
+            radial-gradient(900px 500px at 90% 10%, #14233a, transparent 55%),
+            var(--bg);
+            color:var(--text);
+        }
+        header{
+            padding:24px 16px 12px;
+            max-width:1100px;
+            margin:0 auto;
+        }
+        h1{
+            margin:0 0 10px;
+            font-size:20px;
+            letter-spacing:.2px;
+        }
+        .controls{
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            align-items:center;
+            padding:12px;
+            background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+            border:1px solid var(--border);
+            border-radius:14px;
+            box-shadow:var(--shadow);
+        }
+        .controls label{ color:var(--muted); }
+        select, input{
+            background:var(--panel2);
+            color:var(--text);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:8px 10px;
+            outline:none;
+        }
+        select:focus, input:focus{ border-color:#3b82f6; }
+        main{
+            max-width:1100px;
+            margin:0 auto;
+            padding:0 16px 28px;
+        }
+        .grid{
+            display:grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap:12px;
+            margin-top:14px;
+        }
+        .card{
+            background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:12px;
+            box-shadow:var(--shadow);
+        }
+        .top{
+            display:flex;
+            gap:12px;
+            align-items:flex-start;
+        }
+        .gift-icon{
+            width:48px;height:48px;
+            border-radius:12px;
+            background:#0a111c;
+            border:1px solid var(--border);
+            object-fit:contain;
+            flex:0 0 auto;
+        }
+        .meta{
+            flex:1;
+            min-width:0;
+        }
+        .title{
+            font-weight:700;
+            font-size:15px;
+            margin:0;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            flex-wrap:wrap;
+        }
+        .badge{
+            font-size:12px;
+            padding:2px 8px;
+            border-radius:999px;
+            border:1px solid var(--border);
+            background:rgba(255,255,255,.03);
+            color:var(--muted);
+        }
+        .desc{
+            margin-top:10px;
+            color:var(--text);
+            opacity:.96;
+        }
+        .rich{
+            display:flex;
+            flex-wrap:wrap;
+            gap:2px 4px;
+            align-items:center;
+        }
+        .rich .t{
+            white-space:pre-wrap;
+            color:var(--text);
+        }
+        .entity{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:3px 8px;
+            border-radius:999px;
+            background:var(--chip);
+            border:1px solid var(--border);
+            text-decoration:none;
+            max-width:100%;
+        }
+        .entity:hover{ border-color:#3b82f6; }
+        .entity img{
+            width:18px;height:18px;
+            border-radius:5px;
+            object-fit:contain;
+            background:#0a111c;
+            border:1px solid rgba(255,255,255,.08);
+        }
+        .entity span{
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
+        .muted{
+            color:var(--muted);
+            margin-top:10px;
+            font-size:12px;
+        }
+        .empty{
+            padding:22px;
+            border:1px dashed var(--border);
+            border-radius:16px;
+            color:var(--muted);
+            text-align:center;
+            margin-top:14px;
+            background:rgba(255,255,255,.02);
+        }
+        .count{
+            margin-left:auto;
+            color:var(--muted);
+            font-size:12px;
+        }
+        .btn{
+            background:#14233a;
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:10px;
+            padding:8px 10px;
+            cursor:pointer;
+        }
+        .btn:hover{ border-color:#3b82f6; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Gifts Browser</h1>
+    <div class="controls">
+        <label for="entitySelect">Entity filter:</label>
+        <select id="entitySelect">
+            <option value="">All entities</option>
+        </select>
+
+        <label for="searchInput">Search:</label>
+        <input id="searchInput" type="text" placeholder="name/category/text…" />
+
+        <button class="btn" id="clearBtn">Clear</button>
+        <div class="count" id="count"></div>
+    </div>
+</header>
+
+<main>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none;">No gifts match your filters.</div>
+</main>
+
+<script>
+    // ---- 1) YOUR DATA HERE ----
+    const GIFTS = [{"imageUrl":"https://windblown.wiki.gg/images/thumb/Countless_Scythes_Icon.png/48px-Countless_Scythes_Icon.png?611a62","name":"Countless Scythes","category":"Scythe","richDescription":[{"key":"text","text":"You can have "},{"key":"text","text":"12","color":"#00ff22","bold":true},{"key":"text","text":" more "},{"key":"entity","text":"Scythes","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" at the same time."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Damage_Scythe_Icon.png/48px-Damage_Scythe_Icon.png?2431b1","name":"Damage Scythe","category":"Scythe","richDescription":[{"key":"text","text":"Every "},{"key":"text","text":"250","bold":true},{"key":"entity","text":"Base Damage","href":"/wiki/Base_Damage","color":"#ffffff","bold":true},{"key":"text","text":" you deal, spawn a "},{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" for 5s ("},{"key":"entity","text":"","href":"/wiki/Auto_Scaling","icon":"/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb","color":"#ffffff"},{"key":"text","text":"10","color":"#00ff22","bold":true},{"key":"text","text":" damage)."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Deadly_Scythe_Icon.png/48px-Deadly_Scythe_Icon.png?c56371","name":"Deadly Scythe","category":"Scythe","richDescription":[{"key":"text","text":"Kills spawn "},{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" for 5s ("},{"key":"entity","text":"","href":"/wiki/Auto_Scaling","icon":"/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb","color":"#ffffff"},{"key":"text","text":"15","color":"#00ff22","bold":true},{"key":"text","text":" damage)."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Extended_Scythe_Icon.png/48px-Extended_Scythe_Icon.png?4a2baf","name":"Extended Scythe","category":"Scythe","richDescription":[{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" duration "},{"key":"text","text":"+100%","bold":true},{"key":"text","text":", and size "},{"key":"text","text":"+75%","bold":true},{"key":"text","text":"."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Fast_Scythe_Icon.png/48px-Fast_Scythe_Icon.png?76a557","name":"Fast Scythe","category":"Scythe","richDescription":[{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"entity","text":"Attack Speed","href":"/wiki/Attack_Speed","color":"#ffffff","bold":true},{"key":"text","text":"+50%","bold":true},{"key":"text","text":", and size "},{"key":"text","text":"+75%","bold":true},{"key":"text","text":"."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Merged_Scythe_Icon.png/48px-Merged_Scythe_Icon.png?bb0b43","name":"Merged Scythe","category":"Scythe","richDescription":[{"key":"entity","text":"Scythes","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" merge and combine their duration and damage. "},{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"entity","text":"total damage","href":"/wiki/Total_Damage","color":"#ffffff","bold":true},{"key":"text","text":"+20%","bold":true},{"key":"text","text":", with an additional "},{"key":"text","text":"5%","bold":true},{"key":"text","text":" for each one merged (up to "},{"key":"text","text":"8","color":"#ff5b00","bold":true},{"key":"text","text":" merges)."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Persistent_Scythe_Icon.png/48px-Persistent_Scythe_Icon.png?877361","name":"Persistent Scythe","category":"Scythe","richDescription":[{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" duration is increased by "},{"key":"text","text":"1%","bold":true},{"key":"text","text":" of your "},{"key":"entity","text":"Base Damage","href":"/wiki/Base_Damage","color":"#ffffff","bold":true},{"key":"text","text":"."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Powerful_Scythe_Icon.png/48px-Powerful_Scythe_Icon.png?6c18bb","name":"Powerful Scythe","category":"Scythe","richDescription":[{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"entity","text":"total damage","href":"/wiki/Total_Damage","color":"#ffffff","bold":true},{"key":"text","text":"+50%","bold":true},{"key":"text","text":", and size "},{"key":"text","text":"+75%","bold":true},{"key":"text","text":"."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Trinket_Scythe_Icon.png/48px-Trinket_Scythe_Icon.png?ddaf38","name":"Trinket Scythe","category":"Scythe","richDescription":[{"key":"text","text":"Using a "},{"key":"text","text":"Trinket","bold":true},{"key":"text","text":" spawns a "},{"key":"entity","text":"Scythe","href":"/wiki/Scythe","icon":"/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570","color":"#5f9fff","bold":true},{"key":"text","text":" for 8s ("},{"key":"entity","text":"","href":"/wiki/Auto_Scaling","icon":"/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb","color":"#ffffff"},{"key":"text","text":"10","color":"#00ff22","bold":true},{"key":"text","text":" damage)."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Cursed_Criticals_Icon.png/47px-Cursed_Criticals_Icon.png?f1adcd","name":"Cursed Criticals","category":"Curse","richDescription":[{"key":"entity","text":"Criticals","href":"/wiki/Criticals","icon":"/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9","color":"#ffdd00","bold":true},{"key":"text","text":" apply 1 "},{"key":"entity","text":"Curse","href":"/wiki/Curse","icon":"/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2","color":"#afa2ff","bold":true},{"key":"text","text":" ("},{"key":"entity","text":"","href":"/wiki/Auto_Scaling","icon":"/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb","color":"#ffffff"},{"key":"text","text":"5%","bold":true},{"key":"text","text":")."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Cursed_Hits_Icon.png/48px-Cursed_Hits_Icon.png?8d8484","name":"Cursed Hits","category":"Curse","richDescription":[{"key":"text","text":"Hits apply 1 "},{"key":"entity","text":"Curse","href":"/wiki/Curse","icon":"/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2","color":"#afa2ff","bold":true},{"key":"text","text":" ("},{"key":"entity","text":"","href":"/wiki/Auto_Scaling","icon":"/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb","color":"#ffffff"},{"key":"text","text":"3%","bold":true},{"key":"text","text":")"}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Cursed_Replication_Icon.png/48px-Cursed_Replication_Icon.png?e19453","name":"Cursed Replication","category":"Curse","richDescription":[{"key":"text","text":"50%","bold":true},{"key":"text","text":" of the damage you deal to a target with "},{"key":"entity","text":"Final Curse","href":"/wiki/Final_Curse","icon":"/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678","color":"#afa2ff","bold":true},{"key":"text","text":" is also dealt to all other targets with "},{"key":"entity","text":"Final Curse","href":"/wiki/Final_Curse","icon":"/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678","color":"#afa2ff","bold":true},{"key":"text","text":"."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Cursed_Stun_Icon.png/48px-Cursed_Stun_Icon.png?8eaffb","name":"Cursed Stun","category":"Curse","richDescription":[{"key":"text","text":"When "},{"key":"entity","text":"Final Curse","href":"/wiki/Final_Curse","icon":"/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678","color":"#afa2ff","bold":true},{"key":"text","text":" is triggered, gain an "},{"key":"entity","text":"Opportunity","href":"/wiki/Opportunity","icon":"/images/thumb/Opportunity_Icon.png/20px-Opportunity_Icon.png?affdba","color":"#ffffff","bold":true},{"key":"text","text":" to stun every target with a "},{"key":"entity","text":"Final Curse","href":"/wiki/Final_Curse","icon":"/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678","color":"#afa2ff","bold":true},{"key":"text","text":" for "},{"key":"text","text":"1.5s","bold":true},{"key":"text","text":"."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Persistent_Curse_Icon.png/48px-Persistent_Curse_Icon.png?8269ed","name":"Persistent Curse","category":"Curse","richDescription":[{"key":"entity","text":"Final Curse","href":"/wiki/Final_Curse","icon":"/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678","color":"#afa2ff","bold":true},{"key":"text","text":" duration "},{"key":"text","text":"+4s","bold":true},{"key":"text","text":" for the team."}]}, {"imageUrl":"https://windblown.wiki.gg/images/thumb/Weakening_Curse_Icon.png/48px-Weakening_Curse_Icon.png?7297f3","name":"Weakening Curse","category":"Curse","richDescription":[{"key":"text","text":"The team's "},{"key":"entity","text":"Curses","href":"/wiki/Curse","icon":"/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2","color":"#afa2ff","bold":true},{"key":"text","text":" reduce foe damage by "},{"key":"text","text":"2%","bold":true},{"key":"text","text":" per stack, and by "},{"key":"text","text":"40%","bold":true},{"key":"text","text":" during "},{"key":"entity","text":"Final Curse","href":"/wiki/Final_Curse","icon":"/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678","color":"#afa2ff","bold":true},{"key":"text","text":"."}]}];
+
+
+    // If your data contains relative links/icons (like "/wiki/Scythe"), this makes them work.
+    const WIKI_BASE = "https://windblown.wiki.gg";
+
+    const elGrid = document.getElementById("grid");
+    const elEmpty = document.getElementById("empty");
+    const elEntity = document.getElementById("entitySelect");
+    const elSearch = document.getElementById("searchInput");
+    const elCount = document.getElementById("count");
+    const elClear = document.getElementById("clearBtn");
+
+    function absUrl(u){
+        if(!u) return "";
+        if (u.startsWith("http://") || u.startsWith("https://")) return u;
+        if (u.startsWith("/")) return WIKI_BASE + u;
+        return u;
+    }
+
+    function giftEntities(gift){
+        const ents = [];
+        for (const part of (gift.richDescription || [])) {
+            if (part.key === "entity") {
+                // Some wiki entities can have empty text; give them a stable label fallback.
+                const label = (part.text && part.text.trim()) ? part.text.trim() : "";
+                ents.push(label);
+            }
+        }
+        return ents;
+    }
+
+    function collectEntityOptions(){
+        const set = new Set();
+        for (const g of GIFTS) for (const e of giftEntities(g)) set.add(e);
+        const options = [...set].sort((a,b)=>a.localeCompare(b));
+        for (const e of options){
+            const opt = document.createElement("option");
+            opt.value = e;
+            opt.textContent = e;
+            elEntity.appendChild(opt);
+        }
+    }
+
+    function richPartToNode(part){
+        if (part.key === "text") {
+            const span = document.createElement("span");
+            span.className = "t";
+            span.textContent = part.text ?? "";
+            if (part.color) span.style.color = part.color;
+            if (part.bold) span.style.fontWeight = "700";
+            return span;
+        }
+
+        if (part.key === "entity") {
+            const a = document.createElement("a");
+            a.className = "entity";
+            a.href = absUrl(part.href || "");
+            a.target = "_blank";
+            a.rel = "noreferrer";
+
+            if (part.icon) {
+                const img = document.createElement("img");
+                img.src = absUrl(part.icon);
+                img.alt = part.text || "entity";
+                a.appendChild(img);
+            }
+
+            const label = document.createElement("span");
+            label.textContent = (part.text && part.text.trim()) ? part.text.trim() : "";
+            if (part.color) label.style.color = part.color;
+            if (part.bold) label.style.fontWeight = "700";
+            a.appendChild(label);
+
+            return a;
+        }
+
+        // Unknown part: render as plain text fallback
+        const fallback = document.createElement("span");
+        fallback.className = "t";
+        fallback.textContent = String(part?.text ?? "");
+        return fallback;
+    }
+
+    function renderCard(gift){
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const top = document.createElement("div");
+        top.className = "top";
+
+        const img = document.createElement("img");
+        img.className = "gift-icon";
+        img.src = absUrl(gift.imageUrl);
+        img.alt = gift.name || gift.category || "gift";
+        top.appendChild(img);
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+
+        const title = document.createElement("div");
+        title.className = "title";
+
+        const mainName = (gift.name && gift.name.trim()) ? gift.name.trim() : "(Unnamed gift)";
+        const nameEl = document.createElement("span");
+        nameEl.textContent = mainName;
+        title.appendChild(nameEl);
+
+        if (gift.category) {
+            const badge = document.createElement("span");
+            badge.className = "badge";
+            badge.textContent = gift.category;
+            title.appendChild(badge);
+        }
+
+        meta.appendChild(title);
+
+        const desc = document.createElement("div");
+        desc.className = "desc";
+
+        const rich = document.createElement("div");
+        rich.className = "rich";
+        for (const part of (gift.richDescription || [])) {
+            rich.appendChild(richPartToNode(part));
+        }
+
+        desc.appendChild(rich);
+        meta.appendChild(desc);
+
+        // Small footer line: entities list (useful for debugging/filter visibility)
+        const ents = giftEntities(gift);
+        if (ents.length) {
+            const foot = document.createElement("div");
+            foot.className = "muted";
+            foot.textContent = "Entities: " + ents.join(", ");
+            meta.appendChild(foot);
+        }
+
+        top.appendChild(meta);
+        card.appendChild(top);
+
+        return card;
+    }
+
+    function matchesSearch(gift, q){
+        if (!q) return true;
+        q = q.toLowerCase();
+
+        const name = (gift.name || "").toLowerCase();
+        const cat = (gift.category || "").toLowerCase();
+        const text = (gift.richDescription || [])
+            .map(p => (p.text || ""))
+            .join(" ")
+            .toLowerCase();
+
+        return name.includes(q) || cat.includes(q) || text.includes(q);
+    }
+
+    function matchesEntity(gift, entity){
+        if (!entity) return true;
+        return giftEntities(gift).includes(entity);
+    }
+
+    function render(){
+        const entity = elEntity.value;
+        const q = elSearch.value.trim();
+
+        elGrid.innerHTML = "";
+
+        const filtered = GIFTS.filter(g => matchesEntity(g, entity) && matchesSearch(g, q));
+
+        for (const g of filtered) elGrid.appendChild(renderCard(g));
+
+        elEmpty.style.display = filtered.length ? "none" : "block";
+        elCount.textContent = `${filtered.length} / ${GIFTS.length} shown`;
+    }
+
+    // init
+    collectEntityOptions();
+    render();
+
+    elEntity.addEventListener("change", render);
+    elSearch.addEventListener("input", render);
+    elClear.addEventListener("click", () => {
+        elEntity.value = "";
+        elSearch.value = "";
+        render();
+    });
+</script>
+</body>
+</html>
