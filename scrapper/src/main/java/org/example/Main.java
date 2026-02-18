@@ -1,10 +1,13 @@
 package org.example;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,16 +15,11 @@ import java.util.stream.Collectors;
 public class Main {
 
     static ArrayList<Gift> gifts = new ArrayList<>();
-    static List<String> sections = List.of(
-            "Scythe Gifts",
-            "Curse Gifts"
-    );
 
-
-    static void main() throws InterruptedException {
-
+    static void main() throws Exception {
         WebDriver driver = new FirefoxDriver();
         driver.get(GiftsPage.URL);
+        Thread.sleep(2000);
 
         for (String section : GiftsPage.SECTIONS) {
             WebElement table = driver.findElement(GiftsPage.tableOfSection(section));
@@ -31,10 +29,10 @@ public class Main {
             }
         }
 
-        System.out.print(gifts);
+        System.out.println(gifts);
+        writeToJson(gifts);
 
         driver.quit();
-
     }
 
     static Gift parseGift(WebElement row, String section) {
@@ -49,6 +47,12 @@ public class Main {
                 .map(RichTextToken::toJsonLikeString)
                 .collect(Collectors.joining(",", "[", "]"));
         return gift;
+    }
+
+    static void writeToJson(List<Gift> gifts) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.writeValue(new File("gifts.json"), gifts);
     }
 
 }
