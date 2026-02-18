@@ -1,14 +1,12 @@
 #!/usr/bin/env node
+import { writeFile } from "fs/promises";
 import { scrapeGifts } from "./pages/gifts.js";
 
 async function main(): Promise<void> {
-  const args = new Set(process.argv.slice(2));
-  const pretty = args.has("--pretty");
-
   try {
     const gifts = await scrapeGifts();
-    const output = JSON.stringify(gifts, null, pretty ? 2 : 0);
-    process.stdout.write(`${output}\n`);
+    const output = JSON.stringify(gifts, null, 2);
+    await writeFile("./gifts.json", output, "utf-8");
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     process.stderr.write(`Scraping failed: ${message}\n`);
