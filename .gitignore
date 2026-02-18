@@ -34,3 +34,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+# Node
+node_modules/
+scrapper-ts/dist/
