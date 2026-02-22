@@ -1,5 +1,5 @@
 import {Cheerio, CheerioAPI, load} from "cheerio";
-import {Element, Node, Text} from "domhandler";
+import {Element, Node} from "domhandler";
 import {RichDescriptionNode, RichTextEntityNode, RichTextTextNode} from "../pages/types.js";
 import {
   attrOrUndefined,
@@ -18,6 +18,14 @@ const NUMBER_PATTERN = /^[+-]?\d+(?:\.\d+)?$/;
 
 // Public API
 
+/**
+ * Parse a rich HTML fragment into a normalized list of description tokens.
+ * @param $ Cheerio API instance (not used by this function).
+ * @param html HTML fragment to parse as <body> contents.
+ * @returns Ordered list of parsed tokens with merged adjacent text entries.
+ * Assumptions: `html` is a fragment intended to be wrapped in a single <body>; `$` may be any Cheerio API.
+ * Side effects: none.
+ */
 export function parseRichDescription($: CheerioAPI, html: string): RichDescriptionNode[] {
   void $;
   const root = load(`<body>${html}</body>`);
@@ -32,6 +40,16 @@ export function parseRichDescription($: CheerioAPI, html: string): RichDescripti
 
 // Parsing helpers
 
+/**
+ * Recursively traverse a node and append parsed tokens to the output array.
+ * @param $ Cheerio API bound to the same document as `node`.
+ * @param node DOM node to parse.
+ * @param tokens Accumulator array for parsed tokens.
+ * @param boldContext Whether surrounding context should mark text as bold.
+ * @returns Nothing; results are appended to `tokens`.
+ * Assumptions: `tokens` is mutable and shared across the traversal.
+ * Side effects: mutates `tokens` by appending parsed tokens.
+ */
 function parseNode(
   $: CheerioAPI,
   node: Node,
@@ -47,6 +65,7 @@ function parseNode(
     return;
   }
 
+  // Only element nodes can contain nested structure that affects parsing.
   if (node.type !== "tag") {
     return;
   }
@@ -55,6 +74,7 @@ function parseNode(
   const tag = element.tagName;
   const wrapped = $(element);
 
+  // Tooltip containers are parsed into a single entity token.
   if (isTooltip(tag, wrapped)) {
     const entity = parseEntity($, wrapped);
     if (entity) {
@@ -63,11 +83,13 @@ function parseNode(
     return;
   }
 
+  // Tooltip text is nested metadata that should not surface as tokens.
   if (isTooltipText(wrapped)) {
     return;
   }
 
   if (isBold(tag)) {
+    // Bold wrappers may represent numeric values that should be emitted as text.
     if (!parseNumberMaybe($, wrapped, tokens)) {
       wrapped.contents().each((_, child) => parseNode($, child, tokens, true));
     }
@@ -79,7 +101,13 @@ function parseNode(
 }
 
 /**
- * Extract a tooltip entity from the given wrapper, if present.
+ * Build a rich entity token from a tooltip container.
+ * @param $ Cheerio API bound to the same document as `tooltip`.
+ * @param tooltip Tooltip element wrapper.
+ * @returns Entity token when valid data is present, otherwise null.
+ * Assumptions: Tooltip markup follows the expected anchor/span structure.
+ * Side effects: none.
+ * Example: A tooltip containing <b><a><span>Entity</span></a></b> yields a token named "Entity".
  */
 function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNode | null {
   const link = tooltip.find("a[href]").first();
@@ -94,6 +122,7 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
   const nameLink = tooltip.find("b a").first();
   const fallback = link.text().trim();
 
+  // Prefer the most specific name source, falling back to the link text.
   const name =
     nameSpan.length > 0
       ? nameSpan.text().trim()
@@ -123,7 +152,14 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
 }
 
 /**
- * Parse bold numeric spans to preserve numeric emphasis and color.
+ * Parse a bold span as a numeric text token when it matches a number pattern.
+ * @param $ Cheerio API bound to the same document as `boldElement`.
+ * @param boldElement Bold element wrapper to inspect.
+ * @param tokens Accumulator array for parsed tokens.
+ * @returns True when a numeric token is appended; otherwise false.
+ * Assumptions: Numeric values are contained in the first <span> under the bold element.
+ * Side effects: may append a token to `tokens`.
+ * Example: <b><span style="color: red">12</span></b> yields a bold text token "12".
  */
 function parseNumberMaybe(
   $: CheerioAPI,
