@@ -112,7 +112,7 @@
     "imageUrl": "/images/thumb/Crippling_Dodge_Icon.png/48px-Crippling_Dodge_Icon.png?9d5fad",
     "name": "Crippling Dodge",
     "category": "General",
-    "description": "DodgingDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  applies 10 CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3% each) and GooGoo DebuffTargets are unable to move for the duration (degressive).  for 4s.Gain 10% chance to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  attacks.",
+    "description": "DodgingDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  applies 10 CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3% each) and GooGoo DebuffTargets are unable to move for the duration (degressive).  for 4s.Gain 10% chance to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  attacks.",
     "richDescription": [
       {
         "key": "entity",
@@ -342,7 +342,7 @@
     "imageUrl": "/images/thumb/Enraged_Dodge_Icon.png/48px-Enraged_Dodge_Icon.png?8f8f7a",
     "name": "Enraged Dodge",
     "category": "General",
-    "description": "DodgingDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 4s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 50%) and FreezesFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  for 2s.Gain a 10% chance to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  any damage.",
+    "description": "DodgingDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 4s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 50%) and FreezesFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  for 2s.Gain a 10% chance to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  any damage.",
     "richDescription": [
       {
         "key": "entity",
@@ -1966,7 +1966,7 @@
     "imageUrl": "/images/thumb/Corrosive_Alterattack_Icon.png/48px-Corrosive_Alterattack_Icon.png?83657b",
     "name": "Corrosive Alterattack",
     "category": "Corrosive",
-    "description": "AlterattacksAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  create a Corrosive PoolCorrosive Pool Special AttackArea that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s.  for 3s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 25 damage).",
+    "description": "AlterattacksAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  create a Corrosive PoolCorrosive Pool Special AttackArea that deals Corrosive damage every 0.5s.  for 3s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 25 damage).",
     "richDescription": [
       {
         "key": "entity",
@@ -2008,7 +2008,7 @@
     "imageUrl": "/images/thumb/Corrosive_Control_Icon.png/48px-Corrosive_Control_Icon.png?468edb",
     "name": "Corrosive Control",
     "category": "Corrosive",
-    "description": "GooGoo DebuffTargets are unable to move for the duration (degressive).  and FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  deal Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 10 CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s for the full duration of the effect, even if resisted.",
+    "description": "GooGoo DebuffTargets are unable to move for the duration (degressive).  and FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  deal Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 10 CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s for the full duration of the effect, even if resisted.",
     "richDescription": [
       {
         "key": "entity",
@@ -2058,7 +2058,7 @@
     "imageUrl": "/images/thumb/Corrosive_Trinkets_Icon.png/48px-Corrosive_Trinkets_Icon.png?52114b",
     "name": "Corrosive Trinkets",
     "category": "Corrosive",
-    "description": "Using a Trinket creates a Corrosive PoolCorrosive Pool Special AttackArea that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s.  for 6s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 25 damage).",
+    "description": "Using a Trinket creates a Corrosive PoolCorrosive Pool Special AttackArea that deals Corrosive damage every 0.5s.  for 6s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 25 damage).",
     "richDescription": [
       {
         "key": "text",
@@ -2133,7 +2133,7 @@
     "imageUrl": "/images/thumb/Complete_Crystallize_Icon.png/48px-Complete_Crystallize_Icon.png?9b720a",
     "name": "Complete Crystallize",
     "category": "Crystallize",
-    "description": "Weak foes can be CrystallizedCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment. .  by the team.",
+    "description": "Weak foes can be CrystallizedCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  by the team.",
     "richDescription": [
       {
         "key": "text",
@@ -2157,7 +2157,7 @@
     "imageUrl": "/images/thumb/Crystallize_Barrier_Icon.png/47px-Crystallize_Barrier_Icon.png?2230a4",
     "name": "Crystallize Barrier",
     "category": "Crystallize",
-    "description": "CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment. .  gives 8 BarrierBarrier BuffWhen taking damage, Barrier is consumed before HP. .",
+    "description": "CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  gives 8 BarrierBarrier BuffWhen taking damage, Barrier is consumed before HP. .",
     "richDescription": [
       {
         "key": "entity",
@@ -2195,7 +2195,7 @@
     "imageUrl": "/images/thumb/Refilling_Crystallize_Icon.png/48px-Refilling_Crystallize_Icon.png?91a5cd",
     "name": "Refilling Crystallize",
     "category": "Crystallize",
-    "description": "CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment. .  refills Trinkets by 15s.",
+    "description": "CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  refills Trinkets by 15s.",
     "richDescription": [
       {
         "key": "entity",
@@ -2233,7 +2233,7 @@
     "imageUrl": "/images/thumb/Upgrading_Crystallize_Icon.png/47px-Upgrading_Crystallize_Icon.png?4a79f0",
     "name": "Upgrading Crystallize",
     "category": "Crystallize",
-    "description": "Every CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment. .  permanently increases your damage by 2%.Reduced to +1% after 200%.(Currently: x%).",
+    "description": "Every CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  permanently increases your damage by 2%.Reduced to +1% after 200%.(Currently: x%).",
     "richDescription": [
       {
         "key": "text",
@@ -2266,7 +2266,7 @@
     "imageUrl": "/images/thumb/Cursed_Criticals_Icon.png/47px-Cursed_Criticals_Icon.png?f1adcd",
     "name": "Cursed Criticals",
     "category": "Curse",
-    "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. apply 1 CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 5%).",
+    "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. apply 1 CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 5%).",
     "richDescription": [
       {
         "key": "entity",
@@ -2307,7 +2307,7 @@
     "imageUrl": "/images/thumb/Cursed_Hits_Icon.png/48px-Cursed_Hits_Icon.png?8d8484",
     "name": "Cursed Hits",
     "category": "Curse",
-    "description": "Hits apply 1 CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3%)",
+    "description": "Hits apply 1 CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3%)",
     "richDescription": [
       {
         "key": "text",
@@ -2340,7 +2340,7 @@
     "imageUrl": "/images/thumb/Cursed_Replication_Icon.png/48px-Cursed_Replication_Icon.png?e19453",
     "name": "Cursed Replication",
     "category": "Curse",
-    "description": "50% of the damage you deal to a target with Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is also dealt to all other targets with Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. .",
+    "description": "50% of the damage you deal to a target with Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is also dealt to all other targets with Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. .",
     "richDescription": [
       {
         "key": "text",
@@ -2381,7 +2381,7 @@
     "imageUrl": "/images/thumb/Cursed_Stun_Icon.png/48px-Cursed_Stun_Icon.png?8eaffb",
     "name": "Cursed Stun",
     "category": "Curse",
-    "description": "When Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is triggered, gain an OpportunityOpportunity Special AttackA short time window, during which you can use [Crystallize keybind] to launch a special attack.  to stun every target with a Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  for 1.5s.",
+    "description": "When Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is triggered, gain an OpportunityOpportunity Special AttackA short time window, during which you can use [Crystallize keybind] to launch a special attack.  to stun every target with a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  for 1.5s.",
     "richDescription": [
       {
         "key": "text",
@@ -2438,7 +2438,7 @@
     "imageUrl": "/images/thumb/Persistent_Curse_Icon.png/48px-Persistent_Curse_Icon.png?8269ed",
     "name": "Persistent Curse",
     "category": "Curse",
-    "description": "Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  duration +4s for the team.",
+    "description": "Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  duration +4s for the team.",
     "richDescription": [
       {
         "key": "entity",
@@ -2467,7 +2467,7 @@
     "imageUrl": "/images/thumb/Weakening_Curse_Icon.png/48px-Weakening_Curse_Icon.png?7297f3",
     "name": "Weakening Curse",
     "category": "Curse",
-    "description": "The team's CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. reduce foe damage by 2% per stack, and by 40% during Final CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. .",
+    "description": "The team's CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. reduce foe damage by 2% per stack, and by 40% during Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. .",
     "richDescription": [
       {
         "key": "text",
@@ -2569,7 +2569,7 @@
     "imageUrl": "/images/thumb/Echoing_Effects_Icon.png/48px-Echoing_Effects_Icon.png?b1a833",
     "name": "Echoing Effects",
     "category": "Echo",
-    "description": "Shattering a FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses.. , triggering a MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. , and hits from RushRush BuffYour next Dash deals damage and stuns for 2s.  can all apply EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  (125%).",
+    "description": "Shattering a FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage. , triggering a MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. , and hits from RushRush BuffYour next Dash deals damage and stuns for 2s.  can all apply EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  (125%).",
     "richDescription": [
       {
         "key": "text",
@@ -2758,7 +2758,7 @@
     "imageUrl": "/images/thumb/Deep_Freeze_Icon.png/48px-Deep_Freeze_Icon.png?553aba",
     "name": "Deep Freeze",
     "category": "Freeze",
-    "description": "After being shattered, the team's FreezesFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  stay active for 1s.",
+    "description": "After being shattered, the team's FreezesFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  stay active for 1s.",
     "richDescription": [
       {
         "key": "text",
@@ -2791,7 +2791,7 @@
     "imageUrl": "/images/thumb/Intense_Freeze_Icon.png/48px-Intense_Freeze_Icon.png?ea9ae4",
     "name": "Intense Freeze",
     "category": "Freeze",
-    "description": "Shattering FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  deals +75% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. and explodes around the target.",
+    "description": "Shattering FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  deals +75% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. and explodes around the target.",
     "richDescription": [
       {
         "key": "text",
@@ -3167,7 +3167,7 @@
     "imageUrl": "/images/thumb/Assassinate_Icon.png/48px-Assassinate_Icon.png?97146d",
     "name": "Assassinate",
     "category": "Overwhelm",
-    "description": "Your first hit against a target OverwhelmsOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  them, and subsequent attacks have a +25% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  for 2s (stackable).",
+    "description": "Your first hit against a target OverwhelmsOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  them, and subsequent attacks have a +25% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  for 2s (stackable).",
     "richDescription": [
       {
         "key": "text",
@@ -3212,7 +3212,7 @@
     "imageUrl": "/images/thumb/Overpower_Icon.png/48px-Overpower_Icon.png?1b3798",
     "name": "Overpower",
     "category": "Overwhelm",
-    "description": "OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  deals +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
+    "description": "OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  deals +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
     "richDescription": [
       {
         "key": "entity",
@@ -3248,7 +3248,7 @@
     "imageUrl": "/images/thumb/Overwhelming_Afflictions_Icon.png/48px-Overwhelming_Afflictions_Icon.png?431f7c",
     "name": "Overwhelming Afflictions",
     "category": "Overwhelm",
-    "description": "Every stack of Burn, Bleed, and Curse on a target gives +1% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  with Weapons and Trinkets against that target (Final Curse counts as 10).",
+    "description": "Every stack of Burn, Bleed, and Curse on a target gives +1% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  with Weapons and Trinkets against that target (Final Curse counts as 10).",
     "richDescription": [
       {
         "key": "text",
@@ -3281,7 +3281,7 @@
     "imageUrl": "/images/thumb/Overwhelming_Dash_Icon.png/48px-Overwhelming_Dash_Icon.png?f5bb64",
     "name": "Overwhelming Dash",
     "category": "Overwhelm",
-    "description": "Dashes give +20% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..  with Weapons and Trinkets for 1s (not stackable).",
+    "description": "Dashes give +20% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  with Weapons and Trinkets for 1s (not stackable).",
     "richDescription": [
       {
         "key": "text",
@@ -3314,7 +3314,7 @@
     "imageUrl": "/images/thumb/Overwhelming_Hits_Icon.png/48px-Overwhelming_Hits_Icon.png?ca38d1",
     "name": "Overwhelming Hits",
     "category": "Overwhelm",
-    "description": "Hits have a 5% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses.. .",
+    "description": "Hits have a 5% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage. .",
     "richDescription": [
       {
         "key": "text",
@@ -3347,7 +3347,7 @@
     "imageUrl": "/images/thumb/Sneaky_Icon.png/48px-Sneaky_Icon.png?83e95d",
     "name": "Sneaky",
     "category": "Overwhelm",
-    "description": "BackstabsBackstabs Hit TypeHits against the back of enemies. Deal increased damage.  give +30% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses.. .",
+    "description": "BackstabsBackstabs Hit TypeHits against the back of enemies. Deal increased damage.  give +30% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage. .",
     "richDescription": [
       {
         "key": "entity",
