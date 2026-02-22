@@ -1,0 +1,26 @@
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+coverage/
+
+# Scraper generated files
+scrapper-ts/output/
+
+# Logs / temp
+*.log
+*.tmp
+*.cache/
+
+# Environment
+.env
+.env.*
