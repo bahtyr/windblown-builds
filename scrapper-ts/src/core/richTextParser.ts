@@ -1,11 +1,16 @@
-import { Cheerio, CheerioAPI } from "cheerio";
-import { Element, Node } from "domhandler";
-import { RichDescriptionNode, RichTextEntityNode, RichTextTextNode } from "../pages/types.js";
+import {Cheerio, CheerioAPI, load} from "cheerio";
+import {Element, Node, Text} from "domhandler";
+import {RichDescriptionNode, RichTextEntityNode, RichTextTextNode} from "../pages/types.js";
+
+// Constants
 
 const NUMBER_PATTERN = /^[+-]?\d+(?:\.\d+)?$/;
 
+// Public API
+
 export function parseRichDescription($: CheerioAPI, html: string): RichDescriptionNode[] {
-  const root = $.load(`<body>${html}</body>`);
+  void $;
+  const root = load(`<body>${html}</body>`);
   const tokens: RichDescriptionNode[] = [];
 
   root("body")
@@ -15,16 +20,18 @@ export function parseRichDescription($: CheerioAPI, html: string): RichDescripti
   return mergeNeighborTextTokens(tokens);
 }
 
+// Parsing helpers
+
 function parseNode(
   $: CheerioAPI,
   node: Node,
   tokens: RichDescriptionNode[],
   boldContext: boolean,
 ): void {
-  if (node.type === "text") {
-    const text = normalizeWhitespace(node.data ?? "");
+  if (isTextNode(node)) {
+    const text = normalizeWhitespace(node.data);
     if (text.trim().length > 0) {
-      const token: RichTextTextNode = { key: "text", text, ...(boldContext ? { bold: true } : {}) };
+      const token: RichTextTextNode = {key: "text", text, ...(boldContext ? {bold: true} : {})};
       tokens.push(token);
     }
     return;
@@ -61,6 +68,9 @@ function parseNode(
   wrapped.contents().each((_, child) => parseNode($, child, tokens, nextBoldContext));
 }
 
+/**
+ * Extract a tooltip entity from the given wrapper, if present.
+ */
 function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNode | null {
   const link = tooltip.find("a[href]").first();
   if (link.length === 0) {
@@ -95,13 +105,16 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
   return {
     key: "entity",
     text: name,
-    ...(href ? { href } : {}),
-    ...(icon ? { icon } : {}),
-    ...(color ? { color } : {}),
-    ...(bold ? { bold: true } : {}),
+    ...(href ? {href} : {}),
+    ...(icon ? {icon} : {}),
+    ...(color ? {color} : {}),
+    ...(bold ? {bold: true} : {}),
   };
 }
 
+/**
+ * Parse bold numeric spans to preserve numeric emphasis and color.
+ */
 function parseNumberMaybe(
   $: CheerioAPI,
   boldElement: Cheerio<Element>,
@@ -118,9 +131,11 @@ function parseNumberMaybe(
   }
 
   const color = getColor(span.attr("style"));
-  tokens.push({ key: "text", text: value, bold: true, ...(color ? { color } : {}) });
+  tokens.push({key: "text", text: value, bold: true, ...(color ? {color} : {})});
   return true;
 }
+
+// DOM helpers
 
 function isTooltip(element: Cheerio<Element>, tagName: string): boolean {
   return tagName === "span" && element.hasClass("tooltip");
@@ -134,6 +149,13 @@ function isBold(tagName: string): boolean {
   return tagName === "b";
 }
 
+function isTextNode(node: Node): node is Text {
+  return node.type === "text";
+}
+
+/**
+ * Parse a style declaration string for a text color value.
+ */
 function getColor(style: string | undefined): string | undefined {
   if (!style) {
     return undefined;
@@ -149,10 +171,15 @@ function getColor(style: string | undefined): string | undefined {
   return undefined;
 }
 
+// Token helpers
+
 function normalizeWhitespace(raw: string): string {
   return raw.replace(/\s+/g, " ");
 }
 
+/**
+ * Merge adjacent text tokens that share the same formatting.
+ */
 function mergeNeighborTextTokens(tokens: RichDescriptionNode[]): RichDescriptionNode[] {
   const merged: RichDescriptionNode[] = [];
 
@@ -175,6 +202,9 @@ function mergeNeighborTextTokens(tokens: RichDescriptionNode[]): RichDescription
   return merged;
 }
 
+/**
+ * Normalize empty or whitespace-only attribute values to undefined.
+ */
 function attrOrUndefined(value: string | undefined): string | undefined {
   if (!value) {
     return undefined;
