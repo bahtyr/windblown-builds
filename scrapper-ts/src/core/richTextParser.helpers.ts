@@ -1,21 +1,41 @@
-import {Cheerio, CheerioAPI, load} from "cheerio";
+import {Cheerio} from "cheerio";
 import {Element, Node, Text} from "domhandler";
-import {RichDescriptionNode, RichTextEntityNode, RichTextTextNode} from "../pages/types.js";
+import {RichDescriptionNode} from "../pages/types.js";
 
-export function isTooltip(element: Cheerio<Element>, tagName: string): boolean {
-  return tagName === "span" && element.hasClass("tooltip");
+// DOM helpers
+
+export function isTextNode(node: Node): node is Text {
+  return node.type === "text";
 }
 
 export function isTooltipText(element: Cheerio<Element>): boolean {
   return element.hasClass("tooltiptext");
 }
 
+export function isTooltip(tagName: string, element: Cheerio<Element>): boolean {
+  return tagName === "span" && element.hasClass("tooltip");
+}
+
 export function isBold(tagName: string): boolean {
   return tagName === "b";
 }
 
-export function isTextNode(node: Node): node is Text {
-  return node.type === "text";
+// Token helpers
+
+export function normalizeWhitespace(raw: string): string {
+  return raw.replace(/\s+/g, " ");
+}
+
+/**
+ * Normalize empty or whitespace-only attribute values to undefined.
+ */
+export function attrOrUndefined(value: string | undefined): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
 }
 
 /**
@@ -34,10 +54,6 @@ export function getColor(style: string | undefined): string | undefined {
   }
 
   return undefined;
-}
-
-export function normalizeWhitespace(raw: string): string {
-  return raw.replace(/\s+/g, " ");
 }
 
 /**
@@ -63,16 +79,4 @@ export function mergeNeighborTextTokens(tokens: RichDescriptionNode[]): RichDesc
   }
 
   return merged;
-}
-
-/**
- * Normalize empty or whitespace-only attribute values to undefined.
- */
-export function attrOrUndefined(value: string | undefined): string | undefined {
-  if (!value) {
-    return undefined;
-  }
-
-  const trimmed = value.trim();
-  return trimmed.length > 0 ? trimmed : undefined;
 }

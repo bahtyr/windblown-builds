@@ -55,7 +55,7 @@ function parseNode(
   const tag = element.tagName;
   const wrapped = $(element);
 
-  if (isTooltip(wrapped, tag)) {
+  if (isTooltip(tag, wrapped)) {
     const entity = parseEntity($, wrapped);
     if (entity) {
       tokens.push(entity);
@@ -144,8 +144,3 @@ function parseNumberMaybe(
   tokens.push({key: "text", text: value, bold: true, ...(color ? {color} : {})});
   return true;
 }
-
-// DOM helpers
-
-// Token helpers
-
