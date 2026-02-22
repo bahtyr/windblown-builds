@@ -14,6 +14,28 @@ const elEntity = document.getElementById("entitySelect");
 const elSearch = document.getElementById("searchInput");
 const elCount = document.getElementById("count");
 const elClear = document.getElementById("clearBtn");
+const elDeck = document.getElementById("deck");
+const elDeckToggle = document.getElementById("deckToggle");
+const elDeckPanel = document.getElementById("deckPanel");
+const elDeckSlots = document.getElementById("deckSlots");
+const elDeckEntities = document.getElementById("deckEntities");
+const elCopyDeckLink = document.getElementById("copyDeckLink");
+const elDeckStatus = document.getElementById("deckStatus");
+
+const MAX_DECK = 20;
+const DECK_PARAM = "gifts";
+const DECK_STORAGE_KEY = "windblown.deck";
+
+const giftsById = new Map();
+for (const g of GIFTS) {
+    const id = (g.name || "").trim();
+    if (id) giftsById.set(id, g);
+}
+
+const deckState = {
+    ids: [],
+    open: false
+};
 
 function absUrl(u) {
     if (!u) return "";
@@ -53,6 +75,17 @@ function giftEntityIds(gift) {
         if (id) ids.push(id);
     }
     return ids;
+}
+
+function giftEntities(gift) {
+    const items = [];
+    for (const part of (gift.richDescription || [])) {
+        if (part.key !== "entity") continue;
+        const id = entityId(part);
+        if (!id) continue;
+        items.push({ id, label: entityDisplayText(part) });
+    }
+    return items;
 }
 
 function matchesEntity(gift, selectedEntityId) {
@@ -154,8 +187,13 @@ function richPartToNode(part) {
 }
 
 function renderCard(gift, shouldFade) {
+    const options = arguments.length > 2 ? arguments[2] : {};
     const card = document.createElement("div");
     card.className = "card" + (shouldFade ? " faded" : "");
+    if (options.compact) card.classList.add("card--compact");
+    if (options.mode === "deck") card.classList.add("card--deck");
+    const giftId = (gift.name || "").trim();
+    if (giftId) card.dataset.giftId = giftId;
 
     const top = document.createElement("div");
     top.className = "top";
@@ -201,6 +239,30 @@ function renderCard(gift, shouldFade) {
 
     top.appendChild(meta);
     card.appendChild(top);
+
+    if (options.showAdd) {
+        const addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.className = "add-btn";
+        addBtn.textContent = "Add";
+        addBtn.addEventListener("click", (ev) => {
+            ev.stopPropagation();
+            options.onAdd?.(gift);
+        });
+        card.appendChild(addBtn);
+    }
+
+    if (options.showRemove) {
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "deck-remove";
+        removeBtn.textContent = "×";
+        removeBtn.addEventListener("click", (ev) => {
+            ev.stopPropagation();
+            options.onRemove?.(gift);
+        });
+        card.appendChild(removeBtn);
+    }
 
     return card;
 }
@@ -437,7 +499,10 @@ function render() {
         for (const g of gifts) {
             const m = matchesEntity(g, selectedEntityId) && matchesSearch(g, q);
             if (!filterActive || m) totalMatched += 1;
-            grid.appendChild(renderCard(g, filterActive && !m));
+            grid.appendChild(renderCard(g, filterActive && !m, {
+                showAdd: true,
+                onAdd: addGiftToDeck
+            }));
         }
 
         if (!filterActive) {
@@ -455,11 +520,13 @@ function render() {
 
     // Update scroll indicators after DOM changes
     updateScrollIndicators();
+    updateAddButtonStates();
 }
 
 // Init
 collectEntityOptions();
 render();
+initDeck();
 
 elEntity.addEventListener("change", render);
 elSearch.addEventListener("input", render);
@@ -468,3 +535,230 @@ elClear.addEventListener("click", () => {
     elSearch.value = "";
     render();
 });
+
+// --- Deck builder ---
+function setDeckOpen(isOpen) {
+    deckState.open = isOpen;
+    elDeck.classList.toggle("is-open", isOpen);
+    elDeckToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+}
+
+function updateDeckHeader() {
+    elDeckToggle.textContent = `Deck (${deckState.ids.length}/${MAX_DECK})`;
+}
+
+function updateAddButtonStates() {
+    const inDeck = new Set(deckState.ids);
+    for (const btn of document.querySelectorAll(".add-btn")) {
+        const card = btn.closest(".card");
+        const id = card?.dataset?.giftId;
+        const isInDeck = id && inDeck.has(id);
+        btn.classList.toggle("add-btn--disabled", Boolean(isInDeck));
+        btn.textContent = isInDeck ? "Added" : "Add";
+    }
+}
+
+function renderDeckSlots() {
+    elDeckSlots.innerHTML = "";
+    for (let i = 0; i < MAX_DECK; i++) {
+        const slot = document.createElement("div");
+        slot.className = "deck-slot" + (i < 8 ? " deck-slot--priority" : "");
+        const giftId = deckState.ids[i];
+        if (giftId && giftsById.has(giftId)) {
+            const gift = giftsById.get(giftId);
+            slot.appendChild(renderCard(gift, false, {
+                mode: "deck",
+                compact: true,
+                showRemove: true,
+                onRemove: () => removeGiftAtIndex(i)
+            }));
+        } else {
+            const placeholder = document.createElement("div");
+            placeholder.className = "deck-placeholder";
+            slot.appendChild(placeholder);
+        }
+        elDeckSlots.appendChild(slot);
+    }
+}
+
+function renderDeckEntities() {
+    const map = new Map();
+    for (const id of deckState.ids) {
+        const gift = giftsById.get(id);
+        if (!gift) continue;
+        for (const ent of giftEntities(gift)) {
+            if (!map.has(ent.id)) map.set(ent.id, { label: ent.label, count: 0 });
+            map.get(ent.id).count += 1;
+        }
+    }
+
+    elDeckEntities.innerHTML = "";
+    const entries = [...map.entries()].sort((a, b) => a[1].label.localeCompare(b[1].label));
+    if (entries.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "deck-status";
+        empty.textContent = "No entities yet.";
+        elDeckEntities.appendChild(empty);
+        return;
+    }
+
+    for (const [id, data] of entries) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "deck-entity-btn";
+        btn.innerHTML = `<span>${data.label}</span><span class="count">${data.count}</span>`;
+        btn.addEventListener("click", () => {
+            elEntity.value = id;
+            render();
+        });
+        elDeckEntities.appendChild(btn);
+    }
+}
+
+function buildShareUrl() {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    params.delete(DECK_PARAM);
+    const base = `${url.origin}${url.pathname}`;
+    const encoded = deckState.ids.map(id => encodeURIComponent(id)).join(",");
+    const qs = params.toString();
+    if (deckState.ids.length === 0) return qs ? `${base}?${qs}` : base;
+    return qs ? `${base}?${qs}&${DECK_PARAM}=${encoded}` : `${base}?${DECK_PARAM}=${encoded}`;
+}
+
+function updateDeckUrl() {
+    const url = buildShareUrl();
+    history.replaceState({}, "", url);
+}
+
+function parseDeckFromUrl() {
+    let raw = getRawQueryParam(DECK_PARAM);
+    if (!raw && window.location.hash) {
+        const hash = window.location.hash.replace(/^#/, "");
+        if (hash.startsWith(`${DECK_PARAM}=`)) raw = hash.slice(DECK_PARAM.length + 1);
+    }
+    if (!raw) return [];
+    return raw.split(",").map(x => decodeURIComponent(x)).map(s => s.trim()).filter(Boolean);
+}
+
+function getRawQueryParam(name) {
+    const q = window.location.search.replace(/^\?/, "");
+    if (!q) return "";
+    const parts = q.split("&");
+    for (const part of parts) {
+        const [k, v] = part.split("=");
+        if (k === name) return v || "";
+    }
+    return "";
+}
+
+function saveDeckToStorage() {
+    try {
+        localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(deckState.ids));
+    } catch {
+    }
+}
+
+function loadDeckFromStorage() {
+    try {
+        const raw = localStorage.getItem(DECK_STORAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        return parsed.map(String).map(s => s.trim()).filter(Boolean);
+    } catch {
+        return [];
+    }
+}
+
+function setDeck(ids) {
+    const next = [];
+    const seen = new Set();
+    for (const id of ids) {
+        if (!id || seen.has(id) || !giftsById.has(id)) continue;
+        next.push(id);
+        seen.add(id);
+        if (next.length >= MAX_DECK) break;
+    }
+    deckState.ids = next;
+    renderDeckSlots();
+    renderDeckEntities();
+    updateDeckHeader();
+    updateDeckUrl();
+    saveDeckToStorage();
+    updateAddButtonStates();
+}
+
+function addGiftToDeck(gift) {
+    const id = (gift.name || "").trim();
+    if (!id) return;
+    if (deckState.ids.includes(id)) {
+        showToast("Already in deck.");
+        return;
+    }
+    if (deckState.ids.length >= MAX_DECK) {
+        showToast("Deck is full (20). Remove a gift to add another.");
+        return;
+    }
+    deckState.ids.push(id);
+    renderDeckSlots();
+    renderDeckEntities();
+    updateDeckHeader();
+    updateDeckUrl();
+    saveDeckToStorage();
+    updateAddButtonStates();
+}
+
+function removeGiftAtIndex(index) {
+    if (index < 0 || index >= deckState.ids.length) return;
+    deckState.ids.splice(index, 1);
+    renderDeckSlots();
+    renderDeckEntities();
+    updateDeckHeader();
+    updateDeckUrl();
+    saveDeckToStorage();
+    updateAddButtonStates();
+}
+
+function showToast(text) {
+    let toast = document.querySelector(".toast");
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.className = "toast";
+        document.body.appendChild(toast);
+    }
+    toast.textContent = text;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+async function copyShareLink() {
+    const url = buildShareUrl();
+    try {
+        await navigator.clipboard.writeText(url);
+        showToast("Share link copied.");
+    } catch {
+        const fallback = window.prompt("Copy share link:", url);
+        if (fallback !== null) showToast("Share link ready.");
+    }
+}
+
+function initDeck() {
+    updateDeckHeader();
+    renderDeckSlots();
+    renderDeckEntities();
+    setDeckOpen(false);
+
+    const fromUrl = parseDeckFromUrl();
+    if (fromUrl.length > 0) {
+        setDeck(fromUrl);
+    } else {
+        const stored = loadDeckFromStorage();
+        if (stored.length > 0) setDeck(stored);
+    }
+
+    elDeckToggle.addEventListener("click", () => setDeckOpen(!deckState.open));
+    elCopyDeckLink.addEventListener("click", copyShareLink);
+    updateAddButtonStates();
+}

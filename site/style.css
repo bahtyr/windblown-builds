@@ -137,6 +137,7 @@ main {
     padding: 12px;
     box-shadow: var(--shadow);
     transition: opacity .12s ease;
+    position: relative;
 }
 
 .faded {
@@ -157,6 +158,36 @@ main {
     border: 1px solid var(--border);
     object-fit: contain;
     flex: 0 0 auto;
+}
+
+.add-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 5px 8px;
+    font-size: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #101a28;
+    color: var(--text);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .12s ease, border-color .12s ease;
+}
+
+.card:hover .add-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.add-btn:hover {
+    border-color: #3b82f6;
+}
+
+.add-btn--disabled {
+    opacity: .5;
+    pointer-events: none;
 }
 
 .meta {
@@ -250,6 +281,189 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* Deck builder */
+.deck {
+    margin-top: 12px;
+}
+
+.deck-toggle {
+    width: 100%;
+    text-align: left;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .02));
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 14px;
+    padding: 10px 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.deck-toggle:hover {
+    border-color: #3b82f6;
+}
+
+.deck-panel {
+    display: none;
+    margin-top: 10px;
+    gap: 12px;
+    grid-template-columns: minmax(180px, 240px) 1fr;
+}
+
+.deck.is-open .deck-panel {
+    display: grid;
+}
+
+.deck-side {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    background: rgba(0, 0, 0, .14);
+    height: fit-content;
+}
+
+.deck-entities-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.deck-entities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.deck-entity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0f1622;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.deck-entity-btn:hover {
+    border-color: #3b82f6;
+}
+
+.deck-entity-btn .count {
+    margin-left: 8px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.deck-main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.deck-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.deck-slot {
+    border: 1px dashed rgba(255, 255, 255, .12);
+    border-radius: 10px;
+    padding: 8px;
+    min-height: 92px;
+}
+
+.deck-slot--priority {
+    border-color: rgba(59, 130, 246, .7);
+}
+
+.deck-placeholder {
+    height: 100%;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .02);
+}
+
+.card--compact .desc {
+    display: none;
+}
+
+.card--compact .gift-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.card--compact .title {
+    font-size: 13px;
+}
+
+.deck-remove {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #0f1622;
+    color: var(--text);
+    cursor: pointer;
+    line-height: 18px;
+    text-align: center;
+}
+
+.deck-remove:hover {
+    border-color: #ef4444;
+}
+
+.deck-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deck-status {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.toast {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background: #0f1622;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+    transform: translateY(6px);
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (hover: none) {
+    .add-btn {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 900px) {
+    .deck-panel {
+        grid-template-columns: 1fr;
+    }
+    .deck-side {
+        order: 2;
+    }
 }
 
 /* Scroll indicators - bright / inverse style */
