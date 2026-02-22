@@ -14,7 +14,7 @@ out/
 coverage/
 
 # Scraper generated files
-scrapper-ts/output/
+scrapper/output/
 
 # Logs / temp
 *.log
