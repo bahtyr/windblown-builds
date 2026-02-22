@@ -6,6 +6,16 @@ export interface WikiHtmlDocument {
   url: string;
 }
 
+/**
+ * Fetch a wiki page and return a parsed Cheerio document wrapper.
+ *
+ * Assumptions: `url` points to an HTML page that can be parsed by Cheerio.
+ *
+ * Side effects: performs a network request.
+ *
+ * @param url Page URL to fetch.
+ * @returns Parsed document and the original URL.
+ */
 export async function fetchWikiDocument(url: string): Promise<WikiHtmlDocument> {
   const response = await fetch(url, {
     headers: {
@@ -21,6 +31,17 @@ export async function fetchWikiDocument(url: string): Promise<WikiHtmlDocument> 
   return { $: load(html), url };
 }
 
+/**
+ * Locate the first table under a given H3 section and return its row elements.
+ *
+ * Assumptions: Section headings use `h3 > span.mw-headline` and tables follow the heading.
+ *
+ * Side effects: none.
+ *
+ * @param $ Cheerio API bound to the target document.
+ * @param sectionHeading Heading text to match exactly after trimming.
+ * @returns Array of row elements from the first matching table, or empty when not found.
+ */
 export function findSectionTableRows(
   $: CheerioAPI,
   sectionHeading: string,
