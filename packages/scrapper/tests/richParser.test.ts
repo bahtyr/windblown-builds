@@ -26,8 +26,8 @@ describe("rich text parser", () => {
       {
         "key": "entity",
         "text": "Crystallized",
-        "href": "/wiki/Crystallize",
-        "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+        "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
       },
@@ -46,8 +46,9 @@ describe("rich text parser", () => {
       {
         key: "entity",
         text: "Criticals",
-        href: "/wiki/Criticals",
-        icon: "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        id: "Criticals",
+        href: "https://windblown.wiki.gg/wiki/Criticals",
+        icon: "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         color: "#ffdd00",
         bold: true,
       },
@@ -55,17 +56,19 @@ describe("rich text parser", () => {
       {
         key: "entity",
         text: "Curse",
-        href: "/wiki/Curse",
-        icon: "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        id: "Curse",
+        href: "https://windblown.wiki.gg/wiki/Curse",
+        icon: "https://windblown.wiki.gg/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
         color: "#afa2ff",
         bold: true,
       },
       {key: "text", text: " ("},
       {
         key: "entity",
-        text: "Auto Scaling",
-        href: "/wiki/Auto_Scaling",
-        icon: "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        text: "",
+        id: "Auto_Scaling",
+        href: "https://windblown.wiki.gg/wiki/Auto_Scaling",
+        icon: "https://windblown.wiki.gg/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
         color: "",
         bold: false,
       },
@@ -79,3 +82,9 @@ describe("rich text parser", () => {
     expect(asText).not.toContain("Each stack increases damage");
   });
 });
+
+// required changes
+// all text should consider color & bold
+// sometimes entity text can be empty "" but its link will be present "/wiki/Auto_Scaling". expected entity: text empty, id auto_scaling, link: "wiki/Auto_Scaling"
+// sometimes entity text can be "Scythes" but its link can be "/wiki/Scythe". expected entity text "Scythes" id: scythe, link "/wiki/Scythe"
+// do not skip autoscaling -- currently it is ignored
