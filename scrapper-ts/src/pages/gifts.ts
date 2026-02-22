@@ -70,6 +70,6 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
     name,
     category: section.replace(/\s+Gifts$/, "").trim(),
     description,
-    richDescription: parseRichDescription($, descriptionCell.html() ?? ""),
+    richDescription: parseRichDescription(descriptionCell.html() ?? ""),
   };
 }

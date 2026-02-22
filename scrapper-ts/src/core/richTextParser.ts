@@ -20,14 +20,12 @@ const NUMBER_PATTERN = /^[+-]?\d+(?:\.\d+)?$/;
 
 /**
  * Parse a rich HTML fragment into a normalized list of description tokens.
- * @param $ Cheerio API instance (not used by this function).
  * @param html HTML fragment to parse as <body> contents.
  * @returns Ordered list of parsed tokens with merged adjacent text entries.
  * Assumptions: `html` is a fragment intended to be wrapped in a single <body>; `$` may be any Cheerio API.
  * Side effects: none.
  */
-export function parseRichDescription($: CheerioAPI, html: string): RichDescriptionNode[] {
-  void $;
+export function parseRichDescription(html: string): RichDescriptionNode[] {
   const root = load(`<body>${html}</body>`);
   const tokens: RichDescriptionNode[] = [];
 
@@ -90,7 +88,7 @@ function parseNode(
 
   if (isBold(tag)) {
     // Bold wrappers may represent numeric values that should be emitted as text.
-    if (!parseNumberMaybe($, wrapped, tokens)) {
+    if (!parseNumberMaybe(wrapped, tokens)) {
       wrapped.contents().each((_, child) => parseNode($, child, tokens, true));
     }
     return;
@@ -153,7 +151,6 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
 
 /**
  * Parse a bold span as a numeric text token when it matches a number pattern.
- * @param $ Cheerio API bound to the same document as `boldElement`.
  * @param boldElement Bold element wrapper to inspect.
  * @param tokens Accumulator array for parsed tokens.
  * @returns True when a numeric token is appended; otherwise false.
@@ -162,7 +159,6 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
  * Example: <b><span style="color: red">12</span></b> yields a bold text token "12".
  */
 function parseNumberMaybe(
-  $: CheerioAPI,
   boldElement: Cheerio<Element>,
   tokens: RichDescriptionNode[],
 ): boolean {
