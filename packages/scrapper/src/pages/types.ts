@@ -1,20 +1,20 @@
 export interface RichTextBaseNode {
   key: "text" | "entity";
   bold?: boolean;
+  color?: string;
 }
 
 export interface RichTextTextNode extends RichTextBaseNode {
   key: "text";
   text: string;
-  color?: string;
 }
 
 export interface RichTextEntityNode extends RichTextBaseNode {
   key: "entity";
   text: string;
+  id?: string;
   href?: string;
   icon?: string;
-  color?: string;
 }
 
 export type RichDescriptionNode = RichTextTextNode | RichTextEntityNode;

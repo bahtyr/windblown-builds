@@ -2,8 +2,8 @@ import {Cheerio, CheerioAPI, load} from "cheerio";
 import {Element, Node} from "domhandler";
 import {RichDescriptionNode, RichTextEntityNode, RichTextTextNode} from "../pages/types.js";
 import {
-  attrOrUndefined,
   getColor,
+  hasBoldStyle,
   isBold,
   isTextNode,
   isTooltip,
@@ -15,6 +15,7 @@ import {
 // Constants
 
 const NUMBER_PATTERN = /^[+-]?\d+(?:\.\d+)?$/;
+const WIKI_BASE_URL = "https://windblown.wiki.gg/";
 
 // Public API
 
@@ -34,7 +35,7 @@ export function parseRichDescription(html: string): RichDescriptionNode[] {
 
   root("body")
     .contents()
-    .each((_, node) => parseNode(root, node, tokens, false));
+    .each((_, node) => parseNode(root, node, tokens, false, undefined));
 
   return mergeNeighborTextTokens(tokens);
 }
@@ -52,6 +53,7 @@ export function parseRichDescription(html: string): RichDescriptionNode[] {
  * @param node DOM node to parse.
  * @param tokens Accumulator array for parsed tokens.
  * @param boldContext Whether surrounding context should mark text as bold.
+ * @param colorContext Whether surrounding context should color text.
  * @returns Nothing; results are appended to `tokens`.
  */
 function parseNode(
@@ -59,11 +61,17 @@ function parseNode(
   node: Node,
   tokens: RichDescriptionNode[],
   boldContext: boolean,
+  colorContext: string | undefined,
 ): void {
   if (isTextNode(node)) {
     const text = normalizeWhitespace(node.data);
     if (text.trim().length > 0) {
-      const token: RichTextTextNode = {key: "text", text, ...(boldContext ? {bold: true} : {})};
+      const token: RichTextTextNode = {
+        key: "text",
+        text,
+        ...(boldContext ? {bold: true} : {}),
+        ...(colorContext ? {color: colorContext} : {}),
+      };
       tokens.push(token);
     }
     return;
@@ -77,6 +85,11 @@ function parseNode(
   const element = node as Element;
   const tag = element.tagName;
   const wrapped = $(element);
+  const style = wrapped.attr("style");
+  const elementColor = getColor(style);
+  const elementBold = hasBoldStyle(style);
+  const nextColorContext = elementColor ?? colorContext;
+  const nextBoldContext = boldContext || elementBold || tag === "strong";
 
   // Tooltip containers are parsed into a single entity token.
   if (isTooltip(tag, wrapped)) {
@@ -94,14 +107,13 @@ function parseNode(
 
   if (isBold(tag)) {
     // Bold wrappers may represent numeric values that should be emitted as text.
-    if (!parseNumberMaybe(wrapped, tokens)) {
-      wrapped.contents().each((_, child) => parseNode($, child, tokens, true));
+    if (!parseNumberMaybe(wrapped, tokens, nextColorContext)) {
+      wrapped.contents().each((_, child) => parseNode($, child, tokens, true, nextColorContext));
     }
     return;
   }
 
-  const nextBoldContext = boldContext || tag === "strong";
-  wrapped.contents().each((_, child) => parseNode($, child, tokens, nextBoldContext));
+  wrapped.contents().each((_, child) => parseNode($, child, tokens, nextBoldContext, nextColorContext));
 }
 
 /**
@@ -123,8 +135,14 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
     return null;
   }
 
-  const href = attrOrUndefined(link.attr("href"));
-  const icon = attrOrUndefined(tooltip.find("img[src]").first().attr("src"));
+  const hrefRaw = link.attr("href");
+  if (hrefRaw === undefined) {
+    return null;
+  }
+
+  const href = normalizeUrl(hrefRaw.trim());
+  const icon = normalizeUrl(tooltip.find("img[src]").first().attr("src")?.trim());
+  const id = deriveEntityId(href);
 
   const nameSpan = tooltip.find("b a span").first();
   const nameLink = tooltip.find("b a").first();
@@ -138,10 +156,6 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
         ? nameLink.text().trim()
         : fallback;
 
-  if (name.length === 0) {
-    return null;
-  }
-
   const color =
     nameSpan.length > 0
       ? getColor(nameSpan.attr("style"))
@@ -152,8 +166,9 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
   return {
     key: "entity",
     text: name,
-    ...(href ? {href} : {}),
-    ...(icon ? {icon} : {}),
+    ...(href !== undefined ? {href} : {}),
+    ...(id ? {id} : {}),
+    ...(icon !== undefined ? {icon} : {}),
     ...(color ? {color} : {}),
     ...(bold ? {bold: true} : {}),
   };
@@ -175,6 +190,7 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
 function parseNumberMaybe(
   boldElement: Cheerio<Element>,
   tokens: RichDescriptionNode[],
+  colorContext: string | undefined,
 ): boolean {
   const span = boldElement.find("span").first();
   if (span.length === 0) {
@@ -186,7 +202,38 @@ function parseNumberMaybe(
     return false;
   }
 
-  const color = getColor(span.attr("style"));
+  const color = getColor(span.attr("style")) ?? colorContext;
   tokens.push({key: "text", text: value, bold: true, ...(color ? {color} : {})});
   return true;
+}
+
+function normalizeUrl(value: string | undefined): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  if (trimmed.length === 0) {
+    return "";
+  }
+
+  if (trimmed.startsWith("/")) {
+    return `${WIKI_BASE_URL}${trimmed}`;
+  }
+
+  return trimmed;
+}
+
+function deriveEntityId(href: string | undefined): string | undefined {
+  if (!href) {
+    return undefined;
+  }
+
+  const wikiIndex = href.indexOf("/wiki/");
+  if (wikiIndex === -1) {
+    return undefined;
+  }
+
+  const slug = href.slice(wikiIndex + "/wiki/".length).split(/[?#]/)[0];
+  return slug.length > 0 ? slug : undefined;
 }

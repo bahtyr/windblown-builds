@@ -15,9 +15,9 @@ const FULL_Crystallize = `<td style=""><span>Weak foes can be <span class="toolt
 
 describe("rich text parser", () => {
 
-  it("parses Complete Crystallize correctly", () => {
+  it("parse full gift: Complete Crystallize", () => {
     const tokens = parse(FULL_Crystallize);
-    console.log(JSON.stringify(tokens, null, 2));
+    // console.log(JSON.stringify(tokens, null, 2));
     expect(tokens).toEqual([
       {
         "key": "text",
@@ -27,6 +27,7 @@ describe("rich text parser", () => {
         "key": "entity",
         "text": "Crystallized",
         "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "id": "Crystallize",
         "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
@@ -38,42 +39,55 @@ describe("rich text parser", () => {
     ]);
   });
 
-  it("parses Cursed Criticals correctly", () => {
+  it("parse full gift: Cursed Criticals", () => {
     const tokens = parse(FULL_CURSE);
-    console.log(JSON.stringify(tokens, null, 2));
-
+    // console.log(JSON.stringify(tokens, null, 2));
     expect(tokens).toEqual([
       {
-        key: "entity",
-        text: "Criticals",
-        id: "Criticals",
-        href: "https://windblown.wiki.gg/wiki/Criticals",
-        icon: "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
-        color: "#ffdd00",
-        bold: true,
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
       },
-      {key: "text", text: " apply 1 "},
       {
-        key: "entity",
-        text: "Curse",
-        id: "Curse",
-        href: "https://windblown.wiki.gg/wiki/Curse",
-        icon: "https://windblown.wiki.gg/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
-        color: "#afa2ff",
-        bold: true,
+        "key": "text",
+        "text": " apply 1 "
       },
-      {key: "text", text: " ("},
       {
-        key: "entity",
-        text: "",
-        id: "Auto_Scaling",
-        href: "https://windblown.wiki.gg/wiki/Auto_Scaling",
-        icon: "https://windblown.wiki.gg/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-        color: "",
-        bold: false,
+        "key": "entity",
+        "text": "Curse",
+        "href": "https://windblown.wiki.gg//wiki/Curse",
+        "id": "Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "color": "#afa2ff",
+        "bold": true
       },
-      {key: "text", text: "5%", color: "#00ff22", bold: true},
-      {key: "text", text: ")."},
+      {
+        "key": "text",
+        "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "5%",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "text",
+        "text": ")."
+      }
     ]);
 
     const asText = tokens.map((t) => t.text).join("");

@@ -1,21 +1,34 @@
 window.GIFTS_DATA =
   [
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Abundance_Icon.png/48px-Abundance_Icon.png?388375",
+      "imageUrl": "/images/thumb/Abundance_Icon.png/48px-Abundance_Icon.png?388375",
       "name": "Abundance",
       "category": "General",
+      "description": "Cogs looted +25% for the team.",
       "richDescription": [
         {
           "key": "text",
-          "text": "Cogs looted +25% for the team.",
+          "text": "Cogs looted ",
+          "bold": true
+        },
+        {
+          "key": "text",
+          "text": "+25%",
+          "bold": true,
+          "color": "#00ff22"
+        },
+        {
+          "key": "text",
+          "text": " for the team.",
           "bold": true
         }
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Balance_Icon.png/48px-Balance_Icon.png?2c79f3",
+      "imageUrl": "/images/thumb/Balance_Icon.png/48px-Balance_Icon.png?2c79f3",
       "name": "Balance",
       "category": "General",
+      "description": "Damage +0.2% for every point of Max HP above your starting total (Currently: +x%).",
       "richDescription": [
         {
           "key": "text",
@@ -24,7 +37,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+0.2%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -33,9 +47,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Berserk_Fury_Icon.png/48px-Berserk_Fury_Icon.png?c23b9e",
+      "imageUrl": "/images/thumb/Berserk_Fury_Icon.png/48px-Berserk_Fury_Icon.png?c23b9e",
       "name": "Berserk Fury",
       "category": "General",
+      "description": "Damage +0.5% for every missing HP (Currently: +x%).",
       "richDescription": [
         {
           "key": "text",
@@ -44,7 +59,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+0.5%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -53,9 +69,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Boost_Stock_Icon.png/48px-Boost_Stock_Icon.png?574a28",
+      "imageUrl": "/images/thumb/Boost_Stock_Icon.png/48px-Boost_Stock_Icon.png?574a28",
       "name": "Boost Stock",
       "category": "General",
+      "description": "Elite and Boss arenas drop a Boost when completed.",
       "richDescription": [
         {
           "key": "text",
@@ -73,21 +90,24 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Boss_Killer_Icon.png/48px-Boss_Killer_Icon.png?4f04f7",
+      "imageUrl": "/images/thumb/Boss_Killer_Icon.png/48px-Boss_Killer_Icon.png?4f04f7",
       "name": "Boss Killer",
       "category": "General",
+      "description": "Total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +35% against Bosses.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+35%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -105,15 +125,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Crippling_Dodge_Icon.png/48px-Crippling_Dodge_Icon.png?9d5fad",
+      "imageUrl": "/images/thumb/Crippling_Dodge_Icon.png/48px-Crippling_Dodge_Icon.png?9d5fad",
       "name": "Crippling Dodge",
       "category": "General",
+      "description": "DodgingDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  applies 10 CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3% each) and GooGoo DebuffTargets are unable to move for the duration (degressive).  for 4s.Gain 10% chance to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  attacks.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Dodging",
-          "href": "/wiki/Dodge",
-          "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+          "href": "https://windblown.wiki.gg//wiki/Dodge",
+          "id": "Dodge",
+          "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
           "color": "#ffffff",
           "bold": true
         },
@@ -124,8 +146,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Curses",
-          "href": "/wiki/Curse",
-          "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+          "href": "https://windblown.wiki.gg//wiki/Curse",
+          "id": "Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
           "color": "#afa2ff",
           "bold": true
         },
@@ -136,14 +159,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "3%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -152,8 +178,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Goo",
-          "href": "/wiki/Goo",
-          "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+          "href": "https://windblown.wiki.gg//wiki/Goo",
+          "id": "Goo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
           "color": "#ff45ee",
           "bold": true
         },
@@ -164,7 +191,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "4s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -173,7 +201,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "10%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -182,8 +211,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Dodge",
-          "href": "/wiki/Dodge",
-          "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+          "href": "https://windblown.wiki.gg//wiki/Dodge",
+          "id": "Dodge",
+          "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
           "color": "#ffffff",
           "bold": true
         },
@@ -194,15 +224,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Critical_Refill_Icon.png/48px-Critical_Refill_Icon.png?7569cd",
+      "imageUrl": "/images/thumb/Critical_Refill_Icon.png/48px-Critical_Refill_Icon.png?7569cd",
       "name": "Critical Refill",
       "category": "General",
+      "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. refill Trinkets by 1s (up to 6 times per second).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -222,7 +254,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "1s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -231,9 +264,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Deadly_Explosion_Icon.png/48px-Deadly_Explosion_Icon.png?43b48f",
+      "imageUrl": "/images/thumb/Deadly_Explosion_Icon.png/48px-Deadly_Explosion_Icon.png?43b48f",
       "name": "Deadly Explosion",
       "category": "General",
+      "description": "Kills create an explosion that stuns for 2s.",
       "richDescription": [
         {
           "key": "text",
@@ -242,7 +276,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "2s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -251,9 +286,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Deadly_Extension_Icon.png/48px-Deadly_Extension_Icon.png?24da63",
+      "imageUrl": "/images/thumb/Deadly_Extension_Icon.png/48px-Deadly_Extension_Icon.png?24da63",
       "name": "Deadly Extension",
       "category": "General",
+      "description": "Effects triggered by killing foes are also triggered when they reach 50% HP, and also each 15% of HP lost by Bosses.",
       "richDescription": [
         {
           "key": "text",
@@ -262,7 +298,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -271,7 +308,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "15%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -280,9 +318,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Deadly_Refill_Icon.png/48px-Deadly_Refill_Icon.png?1b62e1",
+      "imageUrl": "/images/thumb/Deadly_Refill_Icon.png/48px-Deadly_Refill_Icon.png?1b62e1",
       "name": "Deadly Refill",
       "category": "General",
+      "description": "Kills refill Trinkets by 5s.",
       "richDescription": [
         {
           "key": "text",
@@ -300,7 +339,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "5s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -309,9 +349,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Duelist_Icon.png/48px-Duelist_Icon.png?606351",
+      "imageUrl": "/images/thumb/Duelist_Icon.png/48px-Duelist_Icon.png?606351",
       "name": "Duelist",
       "category": "General",
+      "description": "Weapon and Trinket total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +25% against isolated enemies.",
       "richDescription": [
         {
           "key": "text",
@@ -320,14 +361,16 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+25%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -336,15 +379,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Enraged_Dodge_Icon.png/48px-Enraged_Dodge_Icon.png?8f8f7a",
+      "imageUrl": "/images/thumb/Enraged_Dodge_Icon.png/48px-Enraged_Dodge_Icon.png?8f8f7a",
       "name": "Enraged Dodge",
       "category": "General",
+      "description": "DodgingDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 4s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 50%) and FreezesFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  for 2s.Gain a 10% chance to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  any damage.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Dodging",
-          "href": "/wiki/Dodge",
-          "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+          "href": "https://windblown.wiki.gg//wiki/Dodge",
+          "id": "Dodge",
+          "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
           "color": "#ffffff",
           "bold": true
         },
@@ -355,8 +400,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -367,19 +413,23 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -388,8 +438,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Freezes",
-          "href": "/wiki/Freeze",
-          "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+          "href": "https://windblown.wiki.gg//wiki/Freeze",
+          "id": "Freeze",
+          "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
           "color": "#00fff2",
           "bold": true
         },
@@ -400,7 +451,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "2s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -409,7 +461,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "10%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -418,8 +471,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Dodge",
-          "href": "/wiki/Dodge",
-          "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+          "href": "https://windblown.wiki.gg//wiki/Dodge",
+          "id": "Dodge",
+          "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
           "color": "#ffffff",
           "bold": true
         },
@@ -430,9 +484,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Golden_Health_Icon.png/48px-Golden_Health_Icon.png?62e244",
+      "imageUrl": "/images/thumb/Golden_Health_Icon.png/48px-Golden_Health_Icon.png?62e244",
       "name": "Golden Health",
       "category": "General",
+      "description": "When hit, lose 4  Shells for each point of damage instead of HP.",
       "richDescription": [
         {
           "key": "text",
@@ -441,8 +496,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "4",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -456,9 +511,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Lifesteal_Flasks_Icon.png/48px-Lifesteal_Flasks_Icon.png?da8ec3",
+      "imageUrl": "/images/thumb/Lifesteal_Flasks_Icon.png/48px-Lifesteal_Flasks_Icon.png?da8ec3",
       "name": "Lifesteal Flasks",
       "category": "General",
+      "description": "Health Flasks activate a LifestealLifesteal BuffYou heal for a portion of the damage dealt.  effect that heals the team (10% of Base DamageBase Damage MechanicDamage done before any modification (bonuses, debuffs, gear level, etc...). Calculation: Base x Sum of bonuses x Sum of Total bonuses. for 10s).",
       "richDescription": [
         {
           "key": "text",
@@ -472,8 +528,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Lifesteal",
-          "href": "/wiki/Lifesteal",
-          "icon": "/images/thumb/Lifesteal_Icon.png/20px-Lifesteal_Icon.png?2be557",
+          "href": "https://windblown.wiki.gg//wiki/Lifesteal",
+          "id": "Lifesteal",
+          "icon": "https://windblown.wiki.gg//images/thumb/Lifesteal_Icon.png/20px-Lifesteal_Icon.png?2be557",
           "color": "#00ff22",
           "bold": true
         },
@@ -484,8 +541,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "10",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -494,7 +551,8 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Base Damage",
-          "href": "/wiki/Base_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+          "id": "Base_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -505,9 +563,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Lucky_Boosts_Icon.png/48px-Lucky_Boosts_Icon.png?8f2f83",
+      "imageUrl": "/images/thumb/Lucky_Boosts_Icon.png/48px-Lucky_Boosts_Icon.png?8f2f83",
       "name": "Lucky Boosts",
       "category": "General",
+      "description": "Boosts chance to be enhanced +30%.",
       "richDescription": [
         {
           "key": "text",
@@ -521,7 +580,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+30%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -530,9 +590,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Midas_Icon.png/47px-Midas_Icon.png?1a9e2a",
+      "imageUrl": "/images/thumb/Midas_Icon.png/47px-Midas_Icon.png?1a9e2a",
       "name": "Midas",
       "category": "General",
+      "description": "Damage +4% for every 100  Shells you have.Reduced to +2% after 200%.(Currently: x%).",
       "richDescription": [
         {
           "key": "text",
@@ -541,7 +602,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+4%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -550,9 +612,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Necromancy_Icon.png/47px-Necromancy_Icon.png?72b88d",
+      "imageUrl": "/images/thumb/Necromancy_Icon.png/47px-Necromancy_Icon.png?72b88d",
       "name": "Necromancy",
       "category": "General",
+      "description": "Kills heal you for 4%.",
       "richDescription": [
         {
           "key": "text",
@@ -561,7 +624,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "4%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -570,9 +634,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Power_Refill_Icon.png/47px-Power_Refill_Icon.png?4fda0c",
+      "imageUrl": "/images/thumb/Power_Refill_Icon.png/47px-Power_Refill_Icon.png?4fda0c",
       "name": "Power Refill",
       "category": "General",
+      "description": "Weapons refill your Trinkets depending on their damage. The amount increases exponentially through Base DamageBase Damage MechanicDamage done before any modification (bonuses, debuffs, gear level, etc...). Calculation: Base x Sum of bonuses x Sum of Total bonuses., up to 2.5s.",
       "richDescription": [
         {
           "key": "text",
@@ -595,7 +660,8 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Base Damage",
-          "href": "/wiki/Base_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+          "id": "Base_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -606,7 +672,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "2.5s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -615,9 +682,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Protection_Icon.png/48px-Protection_Icon.png?784d5d",
+      "imageUrl": "/images/thumb/Protection_Icon.png/48px-Protection_Icon.png?784d5d",
       "name": "Protection",
       "category": "General",
+      "description": "Protects you from a hit and makes you invincible for 5s. Recharges after 20 kills (Kills left: x).",
       "richDescription": [
         {
           "key": "text",
@@ -635,8 +703,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "20",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -645,9 +713,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Proximity_Icon.png/48px-Proximity_Icon.png?3e34ca",
+      "imageUrl": "/images/thumb/Proximity_Icon.png/48px-Proximity_Icon.png?3e34ca",
       "name": "Proximity",
       "category": "General",
+      "description": "Melee Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +35%.",
       "richDescription": [
         {
           "key": "text",
@@ -656,14 +725,16 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+35%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -672,9 +743,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Refillable_Flask_Icon.png/47px-Refillable_Flask_Icon.png?bf1b0b",
+      "imageUrl": "/images/thumb/Refillable_Flask_Icon.png/47px-Refillable_Flask_Icon.png?bf1b0b",
       "name": "Refillable Flask",
       "category": "General",
+      "description": "Gain a Health Flask that refills via 1% of the Base DamageBase Damage MechanicDamage done before any modification (bonuses, debuffs, gear level, etc...). Calculation: Base x Sum of bonuses x Sum of Total bonuses. of Weapons and Trinkets.",
       "richDescription": [
         {
           "key": "text",
@@ -683,7 +755,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "Health Flask",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -692,7 +765,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "1%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -701,7 +775,8 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Base Damage",
-          "href": "/wiki/Base_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+          "id": "Base_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -712,9 +787,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Strong_Recovery_Icon.png/47px-Strong_Recovery_Icon.png?7822fa",
+      "imageUrl": "/images/thumb/Strong_Recovery_Icon.png/47px-Strong_Recovery_Icon.png?7822fa",
       "name": "Strong Recovery",
       "category": "General",
+      "description": "You can RecoverRecovery MechanicFor a short time after taking damage, you may recover up to 25% of the lost HP by dealing weapon damage.  100% of lost HP for 50% longer, and Trinkets can trigger this effect.",
       "richDescription": [
         {
           "key": "text",
@@ -723,8 +799,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Recover",
-          "href": "/wiki/Recovery",
-          "icon": "/images/thumb/Recovery_Icon.png/20px-Recovery_Icon.png?5ea0cf",
+          "href": "https://windblown.wiki.gg//wiki/Recovery",
+          "id": "Recovery",
+          "icon": "https://windblown.wiki.gg//images/thumb/Recovery_Icon.png/20px-Recovery_Icon.png?5ea0cf",
           "color": "#00ff22",
           "bold": true
         },
@@ -735,7 +812,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -753,9 +831,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Survivor_Icon.png/48px-Survivor_Icon.png?51946a",
+      "imageUrl": "/images/thumb/Survivor_Icon.png/48px-Survivor_Icon.png?51946a",
       "name": "Survivor",
       "category": "General",
+      "description": "Saves you from death once and heals you for 100%. Destroyed when used.",
       "richDescription": [
         {
           "key": "text",
@@ -764,7 +843,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -773,9 +853,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Tranquility_Icon.png/48px-Tranquility_Icon.png?15452a",
+      "imageUrl": "/images/thumb/Tranquility_Icon.png/48px-Tranquility_Icon.png?15452a",
       "name": "Tranquility",
       "category": "General",
+      "description": "Ranged Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +25%.",
       "richDescription": [
         {
           "key": "text",
@@ -784,14 +865,16 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+25%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -800,9 +883,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Unstable_Icon.png/48px-Unstable_Icon.png?3ef65d",
+      "imageUrl": "/images/thumb/Unstable_Icon.png/48px-Unstable_Icon.png?3ef65d",
       "name": "Unstable",
       "category": "General",
+      "description": "When hit, creates an explosion that stuns for 2s and deals 400% of the damage.",
       "richDescription": [
         {
           "key": "text",
@@ -820,7 +904,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "400%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -829,9 +914,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Advanced_Alterattacks_Icon.png/48px-Advanced_Alterattacks_Icon.png?87480f",
+      "imageUrl": "/images/thumb/Advanced_Alterattacks_Icon.png/48px-Advanced_Alterattacks_Icon.png?87480f",
       "name": "Advanced Alterattacks",
       "category": "Alterattack",
+      "description": "Your AlterattacksAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  are always chainedChained Alterattack MechanicChain several  signals to increase Alterattack power.  with bonusesAlterattack Bonus MechanicDamage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed.  x0.6.",
       "richDescription": [
         {
           "key": "text",
@@ -840,8 +926,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Alterattacks",
-          "href": "/wiki/Alterattack",
-          "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack",
+          "id": "Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
           "color": "#ef917e",
           "bold": true
         },
@@ -852,8 +939,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "chained",
-          "href": "/wiki/Chained_Alterattack",
-          "icon": "/images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
+          "href": "https://windblown.wiki.gg//wiki/Chained_Alterattack",
+          "id": "Chained_Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
           "color": "#ffffff",
           "bold": true
         },
@@ -864,15 +952,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "bonuses",
-          "href": "/wiki/Alterattack_Bonus",
-          "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+          "id": "Alterattack_Bonus",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "x0.6",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -881,30 +971,34 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Aggressive_Alterattacks_Icon.png/48px-Aggressive_Alterattacks_Icon.png?36808e",
+      "imageUrl": "/images/thumb/Aggressive_Alterattacks_Icon.png/48px-Aggressive_Alterattacks_Icon.png?36808e",
       "name": "Aggressive Alterattacks",
       "category": "Alterattack",
+      "description": "ChainedChained Alterattack MechanicChain several  signals to increase Alterattack power.  Alterattack bonusesAlterattack Bonus MechanicDamage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed.  x1.4.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Chained",
-          "href": "/wiki/Chained_Alterattack",
-          "icon": "/images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
+          "href": "https://windblown.wiki.gg//wiki/Chained_Alterattack",
+          "id": "Chained_Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "entity",
           "text": "Alterattack bonuses",
-          "href": "/wiki/Alterattack_Bonus",
-          "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+          "id": "Alterattack_Bonus",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "x1.4",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -913,9 +1007,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Double_Alterattack_Icon.png/48px-Double_Alterattack_Icon.png?f40e45",
+      "imageUrl": "/images/thumb/Double_Alterattack_Icon.png/48px-Double_Alterattack_Icon.png?f40e45",
       "name": "Double Alterattack",
       "category": "Alterattack",
+      "description": "Triggers another AlterattackAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  after the 1st one, with a bonusAlterattack Bonus MechanicDamage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed.  x0.5",
       "richDescription": [
         {
           "key": "text",
@@ -924,8 +1019,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Alterattack",
-          "href": "/wiki/Alterattack",
-          "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack",
+          "id": "Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
           "color": "#ef917e",
           "bold": true
         },
@@ -936,35 +1032,40 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "bonus",
-          "href": "/wiki/Alterattack_Bonus",
-          "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+          "id": "Alterattack_Bonus",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "x0.5",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         }
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Megalterattacks_Icon.png/48px-Megalterattacks_Icon.png?cf3996",
+      "imageUrl": "/images/thumb/Megalterattacks_Icon.png/48px-Megalterattacks_Icon.png?cf3996",
       "name": "Megalterattacks",
       "category": "Alterattack",
+      "description": "Alterattack bonusesAlterattack Bonus MechanicDamage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed.  x1.25.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Alterattack bonuses",
-          "href": "/wiki/Alterattack_Bonus",
-          "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+          "id": "Alterattack_Bonus",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "x1.25",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -973,15 +1074,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Critical_Blast_Icon.png/48px-Critical_Blast_Icon.png?27e7a3",
+      "imageUrl": "/images/thumb/Critical_Blast_Icon.png/48px-Critical_Blast_Icon.png?27e7a3",
       "name": "Critical Blast",
       "category": "Blast",
+      "description": "BlastsBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. and are treated as CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. to trigger other effects.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Blasts",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
@@ -992,12 +1095,14 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -1008,8 +1113,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -1020,29 +1126,33 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Enhanced_Blast_Icon.png/48px-Enhanced_Blast_Icon.png?ddfde6",
+      "imageUrl": "/images/thumb/Enhanced_Blast_Icon.png/48px-Enhanced_Blast_Icon.png?ddfde6",
       "name": "Enhanced Blast",
       "category": "Blast",
+      "description": "BlastBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50% and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Blast",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1051,7 +1161,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1060,9 +1171,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Explosive_Criticals_Icon.png/48px-Explosive_Criticals_Icon.png?2f646c",
+      "imageUrl": "/images/thumb/Explosive_Criticals_Icon.png/48px-Explosive_Criticals_Icon.png?2f646c",
       "name": "Explosive Criticals",
       "category": "Blast",
+      "description": "Weapon CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. create a BlastBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. that deals 30% of its damage to the target and 80% to those behind it.",
       "richDescription": [
         {
           "key": "text",
@@ -1071,8 +1183,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -1083,8 +1196,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Blast",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
@@ -1095,7 +1209,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "30%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1104,7 +1219,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "80%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1113,9 +1229,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Explosive_Hits_Icon.png/48px-Explosive_Hits_Icon.png?b265e7",
+      "imageUrl": "/images/thumb/Explosive_Hits_Icon.png/48px-Explosive_Hits_Icon.png?b265e7",
       "name": "Explosive Hits",
       "category": "Blast",
+      "description": "Weapon hits create a BlastBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. that deals 20% of its damage to the target and 60% to those behind it.",
       "richDescription": [
         {
           "key": "text",
@@ -1124,8 +1241,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Blast",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
@@ -1136,7 +1254,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "20%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1145,7 +1264,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "60%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1154,15 +1274,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Full_Blast_Icon.png/48px-Full_Blast_Icon.png?8e98e8",
+      "imageUrl": "/images/thumb/Full_Blast_Icon.png/48px-Full_Blast_Icon.png?8e98e8",
       "name": "Full Blast",
       "category": "Blast",
+      "description": "BlastsBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. change shape and hit in all directions around the target.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Blasts",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
@@ -1173,15 +1295,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Goo_Blast_Icon.png/48px-Goo_Blast_Icon.png?995e0e",
+      "imageUrl": "/images/thumb/Goo_Blast_Icon.png/48px-Goo_Blast_Icon.png?995e0e",
       "name": "Goo Blast",
       "category": "Blast",
+      "description": "BlastsBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. apply GooGoo DebuffTargets are unable to move for the duration (degressive).  for 3s (Cooldown: 6s), and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Blasts",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
@@ -1192,8 +1316,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Goo",
-          "href": "/wiki/Goo",
-          "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+          "href": "https://windblown.wiki.gg//wiki/Goo",
+          "id": "Goo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
           "color": "#ff45ee",
           "bold": true
         },
@@ -1204,7 +1329,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "6s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1213,7 +1339,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1222,15 +1349,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Marked_Blast_Icon.png/48px-Marked_Blast_Icon.png?fa2bb7",
+      "imageUrl": "/images/thumb/Marked_Blast_Icon.png/48px-Marked_Blast_Icon.png?fa2bb7",
       "name": "Marked Blast",
       "category": "Blast",
+      "description": "BlastsBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. can both trigger and apply MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 125 damage, cooldown: 2s).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Blasts",
-          "href": "/wiki/Blast",
-          "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+          "href": "https://windblown.wiki.gg//wiki/Blast",
+          "id": "Blast",
+          "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
           "color": "#ffdb96",
           "bold": true
         },
@@ -1241,8 +1370,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Marks",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -1253,15 +1383,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "125",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1270,7 +1402,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "2s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1279,15 +1412,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Bleeding_Criticals_Icon.png/48px-Bleeding_Criticals_Icon.png?b195d6",
+      "imageUrl": "/images/thumb/Bleeding_Criticals_Icon.png/48px-Bleeding_Criticals_Icon.png?b195d6",
       "name": "Bleeding Criticals",
       "category": "Bleed",
+      "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 1.5 bonus damage).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -1298,8 +1433,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1310,15 +1446,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "1.5",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1327,9 +1465,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Bleeding_Hits_Icon.png/48px-Bleeding_Hits_Icon.png?75f2bb",
+      "imageUrl": "/images/thumb/Bleeding_Hits_Icon.png/48px-Bleeding_Hits_Icon.png?75f2bb",
       "name": "Bleeding Hits",
       "category": "Bleed",
+      "description": "Hits apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 1 bonus damage).",
       "richDescription": [
         {
           "key": "text",
@@ -1338,8 +1477,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1350,15 +1490,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "1",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1367,9 +1509,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Blood_Boil_Icon.png/48px-Blood_Boil_Icon.png?14a33f",
+      "imageUrl": "/images/thumb/Blood_Boil_Icon.png/48px-Blood_Boil_Icon.png?14a33f",
       "name": "Blood Boil",
       "category": "Bleed",
+      "description": "Applying BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. also applies BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -1378,8 +1521,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1390,8 +1534,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -1402,15 +1547,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "3",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1419,15 +1566,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Blood_Gush_Icon.png/48px-Blood_Gush_Icon.png?296e50",
+      "imageUrl": "/images/thumb/Blood_Gush_Icon.png/48px-Blood_Gush_Icon.png?296e50",
       "name": "Blood Gush",
       "category": "Bleed",
+      "description": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. can be triggered 9 more times per second.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1438,8 +1587,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "9",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1448,15 +1597,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Heavy_Bleeding_Icon.png/48px-Heavy_Bleeding_Icon.png?290094",
+      "imageUrl": "/images/thumb/Heavy_Bleeding_Icon.png/48px-Heavy_Bleeding_Icon.png?290094",
       "name": "Heavy Bleeding",
       "category": "Bleed",
+      "description": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. applications +1, and +15 max stacks for the team.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1467,8 +1618,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+1",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1477,8 +1628,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+15",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1487,9 +1638,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Hemorrhage_Icon.png/47px-Hemorrhage_Icon.png?c75536",
+      "imageUrl": "/images/thumb/Hemorrhage_Icon.png/47px-Hemorrhage_Icon.png?c75536",
       "name": "Hemorrhage",
       "category": "Bleed",
+      "description": "Your BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. deals +100% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. at max stacks.",
       "richDescription": [
         {
           "key": "text",
@@ -1498,8 +1650,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1510,12 +1663,14 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -1526,9 +1681,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Brutal_Alternation_Icon.png/48px-Brutal_Alternation_Icon.png?888abf",
+      "imageUrl": "/images/thumb/Brutal_Alternation_Icon.png/48px-Brutal_Alternation_Icon.png?888abf",
       "name": "Brutal Alternation",
       "category": "Brutality",
+      "description": "Switching weapons activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 2s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 30%).",
       "richDescription": [
         {
           "key": "text",
@@ -1537,8 +1693,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -1549,19 +1706,23 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "30%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1570,9 +1731,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Brutal_Dash_Icon.png/48px-Brutal_Dash_Icon.png?b81168",
+      "imageUrl": "/images/thumb/Brutal_Dash_Icon.png/48px-Brutal_Dash_Icon.png?b81168",
       "name": "Brutal Dash",
       "category": "Brutality",
+      "description": "Dashes activate BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 1s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 30%).",
       "richDescription": [
         {
           "key": "text",
@@ -1581,8 +1743,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -1593,19 +1756,23 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "30%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1614,9 +1781,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Brutal_Trinkets_Icon.png/48px-Brutal_Trinkets_Icon.png?d4ba71",
+      "imageUrl": "/images/thumb/Brutal_Trinkets_Icon.png/48px-Brutal_Trinkets_Icon.png?d4ba71",
       "name": "Brutal Trinkets",
       "category": "Brutality",
+      "description": "Using a Trinket activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 8s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 50%).",
       "richDescription": [
         {
           "key": "text",
@@ -1634,8 +1802,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -1646,19 +1815,23 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1667,9 +1840,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Deadly_Brutality_Icon.png/48px-Deadly_Brutality_Icon.png?d63729",
+      "imageUrl": "/images/thumb/Deadly_Brutality_Icon.png/48px-Deadly_Brutality_Icon.png?d63729",
       "name": "Deadly Brutality",
       "category": "Brutality",
+      "description": "Kills activate BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 4s (+Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 60%).",
       "richDescription": [
         {
           "key": "text",
@@ -1678,8 +1852,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -1690,19 +1865,23 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "60%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1711,15 +1890,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Persistent_Brutality_Icon.png/48px-Persistent_Brutality_Icon.png?4e98b2",
+      "imageUrl": "/images/thumb/Persistent_Brutality_Icon.png/48px-Persistent_Brutality_Icon.png?4e98b2",
       "name": "Persistent Brutality",
       "category": "Brutality",
+      "description": "BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. duration +100%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -1730,7 +1911,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1739,15 +1921,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Powerful_Brutality_Icon.png/48px-Powerful_Brutality_Icon.png?ba7b02",
+      "imageUrl": "/images/thumb/Powerful_Brutality_Icon.png/48px-Powerful_Brutality_Icon.png?ba7b02",
       "name": "Powerful Brutality",
       "category": "Brutality",
+      "description": "BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. bonus damage +Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 8% per second it's active (bonus maximized after 15 seconds).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Brutality",
-          "href": "/wiki/Brutality",
-          "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+          "href": "https://windblown.wiki.gg//wiki/Brutality",
+          "id": "Brutality",
+          "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
           "color": "#ff8689",
           "bold": true
         },
@@ -1758,19 +1942,23 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "8%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1779,15 +1967,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Burning_Criticals_Icon.png/48px-Burning_Criticals_Icon.png?d44d01",
+      "imageUrl": "/images/thumb/Burning_Criticals_Icon.png/48px-Burning_Criticals_Icon.png?d44d01",
       "name": "Burning Criticals",
       "category": "Burn",
+      "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3 damage).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -1798,8 +1988,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -1810,15 +2001,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "3",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1827,9 +2020,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Burning_Hits_Icon.png/48px-Burning_Hits_Icon.png?868a7a",
+      "imageUrl": "/images/thumb/Burning_Hits_Icon.png/48px-Burning_Hits_Icon.png?868a7a",
       "name": "Burning Hits",
       "category": "Burn",
+      "description": "Hits apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 2 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -1838,8 +2032,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -1850,15 +2045,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "2",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1867,9 +2064,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Fireball_Icon.png/48px-Fireball_Icon.png?b8e212",
+      "imageUrl": "/images/thumb/Fireball_Icon.png/48px-Fireball_Icon.png?b8e212",
       "name": "Fireball",
       "category": "Burn",
+      "description": "Kills create a fireball that repeatedly applies 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 2 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -1878,8 +2076,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -1890,15 +2089,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "2",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1907,9 +2108,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Gory_Flame_Icon.png/48px-Gory_Flame_Icon.png?195a48",
+      "imageUrl": "/images/thumb/Gory_Flame_Icon.png/48px-Gory_Flame_Icon.png?195a48",
       "name": "Gory Flame",
       "category": "Burn",
+      "description": "Applying BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. also applies BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 1.5 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -1918,8 +2120,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -1930,8 +2133,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Bleed",
-          "href": "/wiki/Bleed",
-          "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+          "href": "https://windblown.wiki.gg//wiki/Bleed",
+          "id": "Bleed",
+          "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
           "color": "#e70000",
           "bold": true
         },
@@ -1942,15 +2146,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "1.5",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1959,15 +2165,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Incandescent_Burn_Icon.png/48px-Incandescent_Burn_Icon.png?87a055",
+      "imageUrl": "/images/thumb/Incandescent_Burn_Icon.png/48px-Incandescent_Burn_Icon.png?87a055",
       "name": "Incandescent Burn",
       "category": "Burn",
+      "description": "BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. damage rate +50% for the team, and duration +50%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -1978,7 +2186,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1987,7 +2196,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -1996,9 +2206,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Intense_Burn_Icon.png/48px-Intense_Burn_Icon.png?afb014",
+      "imageUrl": "/images/thumb/Intense_Burn_Icon.png/48px-Intense_Burn_Icon.png?afb014",
       "name": "Intense Burn",
       "category": "Burn",
+      "description": "Max BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. stacks +15 for the team, and total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +10% per 5 stacks.",
       "richDescription": [
         {
           "key": "text",
@@ -2007,8 +2218,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -2019,8 +2231,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+15",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2029,14 +2241,16 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+10%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2045,15 +2259,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Corrosive_Alterattack_Icon.png/48px-Corrosive_Alterattack_Icon.png?83657b",
+      "imageUrl": "/images/thumb/Corrosive_Alterattack_Icon.png/48px-Corrosive_Alterattack_Icon.png?83657b",
       "name": "Corrosive Alterattack",
       "category": "Corrosive",
+      "description": "AlterattacksAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  create a Corrosive PoolCorrosive Pool Special AttackArea that deals Corrosive damage every 0.5s.  for 3s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 25 damage).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Alterattacks",
-          "href": "/wiki/Alterattack",
-          "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack",
+          "id": "Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
           "color": "#ef917e",
           "bold": true
         },
@@ -2064,8 +2280,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Corrosive Pool",
-          "href": "/wiki/Corrosive_Pool",
-          "icon": "/images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
+          "href": "https://windblown.wiki.gg//wiki/Corrosive_Pool",
+          "id": "Corrosive_Pool",
+          "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
           "color": "#8cbc00",
           "bold": true
         },
@@ -2076,15 +2293,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "25",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2093,15 +2312,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Corrosive_Control_Icon.png/48px-Corrosive_Control_Icon.png?468edb",
+      "imageUrl": "/images/thumb/Corrosive_Control_Icon.png/48px-Corrosive_Control_Icon.png?468edb",
       "name": "Corrosive Control",
       "category": "Corrosive",
+      "description": "GooGoo DebuffTargets are unable to move for the duration (degressive).  and FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  deal Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 10 CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s for the full duration of the effect, even if resisted.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Goo",
-          "href": "/wiki/Goo",
-          "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+          "href": "https://windblown.wiki.gg//wiki/Goo",
+          "id": "Goo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
           "color": "#ff45ee",
           "bold": true
         },
@@ -2112,8 +2333,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Freeze",
-          "href": "/wiki/Freeze",
-          "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+          "href": "https://windblown.wiki.gg//wiki/Freeze",
+          "id": "Freeze",
+          "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
           "color": "#00fff2",
           "bold": true
         },
@@ -2124,21 +2346,24 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "10",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "Corrosive",
-          "href": "/wiki/Corrosive",
-          "icon": "/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+          "href": "https://windblown.wiki.gg//wiki/Corrosive",
+          "id": "Corrosive",
+          "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
           "color": "#8cbc00",
           "bold": true
         },
@@ -2149,9 +2374,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Corrosive_Trinkets_Icon.png/48px-Corrosive_Trinkets_Icon.png?52114b",
+      "imageUrl": "/images/thumb/Corrosive_Trinkets_Icon.png/48px-Corrosive_Trinkets_Icon.png?52114b",
       "name": "Corrosive Trinkets",
       "category": "Corrosive",
+      "description": "Using a Trinket creates a Corrosive PoolCorrosive Pool Special AttackArea that deals Corrosive damage every 0.5s.  for 6s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 25 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -2169,8 +2395,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Corrosive Pool",
-          "href": "/wiki/Corrosive_Pool",
-          "icon": "/images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
+          "href": "https://windblown.wiki.gg//wiki/Corrosive_Pool",
+          "id": "Corrosive_Pool",
+          "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
           "color": "#8cbc00",
           "bold": true
         },
@@ -2181,15 +2408,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "25",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2198,29 +2427,33 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Dissolve_Icon.png/48px-Dissolve_Icon.png?708973",
+      "imageUrl": "/images/thumb/Dissolve_Icon.png/48px-Dissolve_Icon.png?708973",
       "name": "Dissolve",
       "category": "Corrosive",
+      "description": "CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +100%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Corrosive",
-          "href": "/wiki/Corrosive",
-          "icon": "/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+          "href": "https://windblown.wiki.gg//wiki/Corrosive",
+          "id": "Corrosive",
+          "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
           "color": "#8cbc00",
           "bold": true
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2229,9 +2462,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Complete_Crystallize_Icon.png/48px-Complete_Crystallize_Icon.png?9b720a",
+      "imageUrl": "/images/thumb/Complete_Crystallize_Icon.png/48px-Complete_Crystallize_Icon.png?9b720a",
       "name": "Complete Crystallize",
       "category": "Crystallize",
+      "description": "Weak foes can be CrystallizedCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  by the team.",
       "richDescription": [
         {
           "key": "text",
@@ -2240,8 +2474,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Crystallized",
-          "href": "/wiki/Crystallize",
-          "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+          "href": "https://windblown.wiki.gg//wiki/Crystallize",
+          "id": "Crystallize",
+          "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
           "color": "#0089ff",
           "bold": true
         },
@@ -2252,15 +2487,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Crystallize_Barrier_Icon.png/47px-Crystallize_Barrier_Icon.png?2230a4",
+      "imageUrl": "/images/thumb/Crystallize_Barrier_Icon.png/47px-Crystallize_Barrier_Icon.png?2230a4",
       "name": "Crystallize Barrier",
       "category": "Crystallize",
+      "description": "CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  gives 8 BarrierBarrier BuffWhen taking damage, Barrier is consumed before HP. .",
       "richDescription": [
         {
           "key": "entity",
           "text": "Crystallize",
-          "href": "/wiki/Crystallize",
-          "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+          "href": "https://windblown.wiki.gg//wiki/Crystallize",
+          "id": "Crystallize",
+          "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
           "color": "#0089ff",
           "bold": true
         },
@@ -2271,14 +2508,15 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "8",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "Barrier",
-          "href": "/wiki/Barrier",
-          "icon": "/images/thumb/Barrier_Icon.png/20px-Barrier_Icon.png?105737",
+          "href": "https://windblown.wiki.gg//wiki/Barrier",
+          "id": "Barrier",
+          "icon": "https://windblown.wiki.gg//images/thumb/Barrier_Icon.png/20px-Barrier_Icon.png?105737",
           "color": "#00beff",
           "bold": true
         },
@@ -2289,15 +2527,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Refilling_Crystallize_Icon.png/48px-Refilling_Crystallize_Icon.png?91a5cd",
+      "imageUrl": "/images/thumb/Refilling_Crystallize_Icon.png/48px-Refilling_Crystallize_Icon.png?91a5cd",
       "name": "Refilling Crystallize",
       "category": "Crystallize",
+      "description": "CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  refills Trinkets by 15s.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Crystallize",
-          "href": "/wiki/Crystallize",
-          "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+          "href": "https://windblown.wiki.gg//wiki/Crystallize",
+          "id": "Crystallize",
+          "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
           "color": "#0089ff",
           "bold": true
         },
@@ -2317,7 +2557,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "15s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2326,9 +2567,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Upgrading_Crystallize_Icon.png/47px-Upgrading_Crystallize_Icon.png?4a79f0",
+      "imageUrl": "/images/thumb/Upgrading_Crystallize_Icon.png/47px-Upgrading_Crystallize_Icon.png?4a79f0",
       "name": "Upgrading Crystallize",
       "category": "Crystallize",
+      "description": "Every CrystallizeCrystallize Special AttackWeaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create Memonites.  permanently increases your damage by 2%.Reduced to +1% after 200%.(Currently: x%).",
       "richDescription": [
         {
           "key": "text",
@@ -2337,8 +2579,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Crystallize",
-          "href": "/wiki/Crystallize",
-          "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+          "href": "https://windblown.wiki.gg//wiki/Crystallize",
+          "id": "Crystallize",
+          "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
           "color": "#0089ff",
           "bold": true
         },
@@ -2349,7 +2592,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "2%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2358,15 +2602,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Cursed_Criticals_Icon.png/47px-Cursed_Criticals_Icon.png?f1adcd",
+      "imageUrl": "/images/thumb/Cursed_Criticals_Icon.png/47px-Cursed_Criticals_Icon.png?f1adcd",
       "name": "Cursed Criticals",
       "category": "Curse",
+      "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. apply 1 CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 5%).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -2377,8 +2623,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Curse",
-          "href": "/wiki/Curse",
-          "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+          "href": "https://windblown.wiki.gg//wiki/Curse",
+          "id": "Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2389,14 +2636,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "5%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2405,9 +2655,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Cursed_Hits_Icon.png/48px-Cursed_Hits_Icon.png?8d8484",
+      "imageUrl": "/images/thumb/Cursed_Hits_Icon.png/48px-Cursed_Hits_Icon.png?8d8484",
       "name": "Cursed Hits",
       "category": "Curse",
+      "description": "Hits apply 1 CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 3%)",
       "richDescription": [
         {
           "key": "text",
@@ -2416,8 +2667,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Curse",
-          "href": "/wiki/Curse",
-          "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+          "href": "https://windblown.wiki.gg//wiki/Curse",
+          "id": "Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2428,14 +2680,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "3%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2444,14 +2699,16 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Cursed_Replication_Icon.png/48px-Cursed_Replication_Icon.png?e19453",
+      "imageUrl": "/images/thumb/Cursed_Replication_Icon.png/48px-Cursed_Replication_Icon.png?e19453",
       "name": "Cursed Replication",
       "category": "Curse",
+      "description": "50% of the damage you deal to a target with Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is also dealt to all other targets with Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. .",
       "richDescription": [
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2460,8 +2717,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Final Curse",
-          "href": "/wiki/Final_Curse",
-          "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+          "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+          "id": "Final_Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2472,8 +2730,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Final Curse",
-          "href": "/wiki/Final_Curse",
-          "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+          "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+          "id": "Final_Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2484,9 +2743,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Cursed_Stun_Icon.png/48px-Cursed_Stun_Icon.png?8eaffb",
+      "imageUrl": "/images/thumb/Cursed_Stun_Icon.png/48px-Cursed_Stun_Icon.png?8eaffb",
       "name": "Cursed Stun",
       "category": "Curse",
+      "description": "When Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is triggered, gain an OpportunityOpportunity Special AttackA short time window, during which you can use [Crystallize keybind] to launch a special attack.  to stun every target with a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  for 1.5s.",
       "richDescription": [
         {
           "key": "text",
@@ -2495,8 +2755,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Final Curse",
-          "href": "/wiki/Final_Curse",
-          "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+          "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+          "id": "Final_Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2507,8 +2768,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Opportunity",
-          "href": "/wiki/Opportunity",
-          "icon": "/images/thumb/Opportunity_Icon.png/20px-Opportunity_Icon.png?affdba",
+          "href": "https://windblown.wiki.gg//wiki/Opportunity",
+          "id": "Opportunity",
+          "icon": "https://windblown.wiki.gg//images/thumb/Opportunity_Icon.png/20px-Opportunity_Icon.png?affdba",
           "color": "#ffffff",
           "bold": true
         },
@@ -2519,8 +2781,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Final Curse",
-          "href": "/wiki/Final_Curse",
-          "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+          "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+          "id": "Final_Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2531,7 +2794,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "1.5s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2540,15 +2804,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Persistent_Curse_Icon.png/48px-Persistent_Curse_Icon.png?8269ed",
+      "imageUrl": "/images/thumb/Persistent_Curse_Icon.png/48px-Persistent_Curse_Icon.png?8269ed",
       "name": "Persistent Curse",
       "category": "Curse",
+      "description": "Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  duration +4s for the team.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Final Curse",
-          "href": "/wiki/Final_Curse",
-          "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+          "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+          "id": "Final_Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2559,7 +2825,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+4s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2568,9 +2835,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Weakening_Curse_Icon.png/48px-Weakening_Curse_Icon.png?7297f3",
+      "imageUrl": "/images/thumb/Weakening_Curse_Icon.png/48px-Weakening_Curse_Icon.png?7297f3",
       "name": "Weakening Curse",
       "category": "Curse",
+      "description": "The team's CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. reduce foe damage by 2% per stack, and by 40% during Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. .",
       "richDescription": [
         {
           "key": "text",
@@ -2579,8 +2847,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Curses",
-          "href": "/wiki/Curse",
-          "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+          "href": "https://windblown.wiki.gg//wiki/Curse",
+          "id": "Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2591,7 +2860,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "2%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2600,7 +2870,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "40%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2609,8 +2880,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Final Curse",
-          "href": "/wiki/Final_Curse",
-          "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+          "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+          "id": "Final_Curse",
+          "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
           "color": "#afa2ff",
           "bold": true
         },
@@ -2621,15 +2893,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Critical_Echo_Icon.png/48px-Critical_Echo_Icon.png?274fc6",
+      "imageUrl": "/images/thumb/Critical_Echo_Icon.png/48px-Critical_Echo_Icon.png?274fc6",
       "name": "Critical Echo",
       "category": "Echo",
+      "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  deals +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. and is treated as CriticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. to trigger other effects.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Echo",
-          "href": "/wiki/Echo",
-          "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+          "href": "https://windblown.wiki.gg//wiki/Echo",
+          "id": "Echo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
           "color": "#94a9e9",
           "bold": true
         },
@@ -2640,12 +2914,14 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -2656,8 +2932,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Critical",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -2668,9 +2945,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Echoing_Effects_Icon.png/48px-Echoing_Effects_Icon.png?b1a833",
+      "imageUrl": "/images/thumb/Echoing_Effects_Icon.png/48px-Echoing_Effects_Icon.png?b1a833",
       "name": "Echoing Effects",
       "category": "Echo",
+      "description": "Shattering a FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage. , triggering a MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. , and hits from RushRush BuffYour next Dash deals damage and stuns for 2s.  can all apply EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  (125%).",
       "richDescription": [
         {
           "key": "text",
@@ -2679,8 +2957,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Freeze",
-          "href": "/wiki/Freeze",
-          "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+          "href": "https://windblown.wiki.gg//wiki/Freeze",
+          "id": "Freeze",
+          "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
           "color": "#00fff2",
           "bold": true
         },
@@ -2691,8 +2970,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Mark",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -2703,8 +2983,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Rush",
-          "href": "/wiki/Rush",
-          "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+          "href": "https://windblown.wiki.gg//wiki/Rush",
+          "id": "Rush",
+          "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
           "color": "#ffa56d",
           "bold": true
         },
@@ -2715,8 +2996,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Echo",
-          "href": "/wiki/Echo",
-          "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+          "href": "https://windblown.wiki.gg//wiki/Echo",
+          "id": "Echo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
           "color": "#94a9e9",
           "bold": true
         },
@@ -2727,7 +3009,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "125%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2736,9 +3019,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Echoing_Hits_Icon.png/48px-Echoing_Hits_Icon.png?eeb1de",
+      "imageUrl": "/images/thumb/Echoing_Hits_Icon.png/48px-Echoing_Hits_Icon.png?eeb1de",
       "name": "Echoing Hits",
       "category": "Echo",
+      "description": "Weapon and Trinket hits apply EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  (125%).",
       "richDescription": [
         {
           "key": "text",
@@ -2747,8 +3031,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Echo",
-          "href": "/wiki/Echo",
-          "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+          "href": "https://windblown.wiki.gg//wiki/Echo",
+          "id": "Echo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
           "color": "#94a9e9",
           "bold": true
         },
@@ -2759,7 +3044,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "125%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2768,15 +3054,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Hammer_Echo_Icon.png/48px-Hammer_Echo_Icon.png?4071f0",
+      "imageUrl": "/images/thumb/Hammer_Echo_Icon.png/48px-Hammer_Echo_Icon.png?4071f0",
       "name": "Hammer Echo",
       "category": "Echo",
+      "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  stuns for 1s.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Echo",
-          "href": "/wiki/Echo",
-          "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+          "href": "https://windblown.wiki.gg//wiki/Echo",
+          "id": "Echo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
           "color": "#94a9e9",
           "bold": true
         },
@@ -2787,7 +3075,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "1s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2796,15 +3085,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Spread_Echo_Icon.png/47px-Spread_Echo_Icon.png?1e754c",
+      "imageUrl": "/images/thumb/Spread_Echo_Icon.png/47px-Spread_Echo_Icon.png?1e754c",
       "name": "Spread Echo",
       "category": "Echo",
+      "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  triggers again on all nearby foes for 50% of its damage.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Echo",
-          "href": "/wiki/Echo",
-          "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+          "href": "https://windblown.wiki.gg//wiki/Echo",
+          "id": "Echo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
           "color": "#94a9e9",
           "bold": true
         },
@@ -2815,7 +3106,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2824,15 +3116,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Swift_Echo_Icon.png/48px-Swift_Echo_Icon.png?7e7112",
+      "imageUrl": "/images/thumb/Swift_Echo_Icon.png/48px-Swift_Echo_Icon.png?7e7112",
       "name": "Swift Echo",
       "category": "Echo",
+      "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  replication delay -0.2s.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Echo",
-          "href": "/wiki/Echo",
-          "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+          "href": "https://windblown.wiki.gg//wiki/Echo",
+          "id": "Echo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
           "color": "#94a9e9",
           "bold": true
         },
@@ -2843,7 +3137,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "-0.2s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2852,9 +3147,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Deep_Freeze_Icon.png/48px-Deep_Freeze_Icon.png?553aba",
+      "imageUrl": "/images/thumb/Deep_Freeze_Icon.png/48px-Deep_Freeze_Icon.png?553aba",
       "name": "Deep Freeze",
       "category": "Freeze",
+      "description": "After being shattered, the team's FreezesFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  stay active for 1s.",
       "richDescription": [
         {
           "key": "text",
@@ -2863,8 +3159,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Freezes",
-          "href": "/wiki/Freeze",
-          "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+          "href": "https://windblown.wiki.gg//wiki/Freeze",
+          "id": "Freeze",
+          "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
           "color": "#00fff2",
           "bold": true
         },
@@ -2875,7 +3172,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "1s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2884,9 +3182,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Intense_Freeze_Icon.png/48px-Intense_Freeze_Icon.png?ea9ae4",
+      "imageUrl": "/images/thumb/Intense_Freeze_Icon.png/48px-Intense_Freeze_Icon.png?ea9ae4",
       "name": "Intense Freeze",
       "category": "Freeze",
+      "description": "Shattering FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  deals +75% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. and explodes around the target.",
       "richDescription": [
         {
           "key": "text",
@@ -2895,8 +3194,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Freeze",
-          "href": "/wiki/Freeze",
-          "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+          "href": "https://windblown.wiki.gg//wiki/Freeze",
+          "id": "Freeze",
+          "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
           "color": "#00fff2",
           "bold": true
         },
@@ -2907,12 +3207,14 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -2923,15 +3225,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Cruel_Goo_Icon.png/48px-Cruel_Goo_Icon.png?aa596c",
+      "imageUrl": "/images/thumb/Cruel_Goo_Icon.png/48px-Cruel_Goo_Icon.png?aa596c",
       "name": "Cruel Goo",
       "category": "Goo",
+      "description": "BackstabsBackstabs Hit TypeHits against the back of enemies. Deal increased damage.  deal +100% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. to targets with GooGoo DebuffTargets are unable to move for the duration (degressive). .",
       "richDescription": [
         {
           "key": "entity",
           "text": "Backstabs",
-          "href": "/wiki/Backstabs",
-          "icon": "/images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
+          "href": "https://windblown.wiki.gg//wiki/Backstabs",
+          "id": "Backstabs",
+          "icon": "https://windblown.wiki.gg//images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
           "color": "#ff0078",
           "bold": true
         },
@@ -2942,12 +3246,14 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -2958,8 +3264,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Goo",
-          "href": "/wiki/Goo",
-          "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+          "href": "https://windblown.wiki.gg//wiki/Goo",
+          "id": "Goo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
           "color": "#ff45ee",
           "bold": true
         },
@@ -2970,15 +3277,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Enduring_Goo_Icon.png/47px-Enduring_Goo_Icon.png?ac2e21",
+      "imageUrl": "/images/thumb/Enduring_Goo_Icon.png/47px-Enduring_Goo_Icon.png?ac2e21",
       "name": "Enduring Goo",
       "category": "Goo",
+      "description": "GooGoo DebuffTargets are unable to move for the duration (degressive).  duration +100%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Goo",
-          "href": "/wiki/Goo",
-          "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+          "href": "https://windblown.wiki.gg//wiki/Goo",
+          "id": "Goo",
+          "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
           "color": "#ff45ee",
           "bold": true
         },
@@ -2989,7 +3298,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -2998,9 +3308,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Alter_Mark_Icon.png/48px-Alter_Mark_Icon.png?2ee51e",
+      "imageUrl": "/images/thumb/Alter_Mark_Icon.png/48px-Alter_Mark_Icon.png?2ee51e",
       "name": "Alter Mark",
       "category": "Mark",
+      "description": "When you trigger a MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. , launch an AlterattackAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  signal (Cooldown: 5s).",
       "richDescription": [
         {
           "key": "text",
@@ -3009,8 +3320,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Mark",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3021,8 +3333,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Alterattack",
-          "href": "/wiki/Alterattack",
-          "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack",
+          "id": "Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
           "color": "#ef917e",
           "bold": true
         },
@@ -3033,7 +3346,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "5s",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3042,9 +3356,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Burning_Mark_Icon.png/48px-Burning_Mark_Icon.png?11fa99",
+      "imageUrl": "/images/thumb/Burning_Mark_Icon.png/48px-Burning_Mark_Icon.png?11fa99",
       "name": "Burning Mark",
       "category": "Mark",
+      "description": "Triggering a MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  applies 5 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 2 damage each).",
       "richDescription": [
         {
           "key": "text",
@@ -3053,8 +3368,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Mark",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3065,8 +3381,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Burn",
-          "href": "/wiki/Burn",
-          "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+          "href": "https://windblown.wiki.gg//wiki/Burn",
+          "id": "Burn",
+          "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
           "color": "#ff5b00",
           "bold": true
         },
@@ -3077,15 +3394,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "2",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3094,15 +3413,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Critical_Mark_Icon.png/48px-Critical_Mark_Icon.png?70ae6a",
+      "imageUrl": "/images/thumb/Critical_Mark_Icon.png/48px-Critical_Mark_Icon.png?70ae6a",
       "name": "Critical Mark",
       "category": "Mark",
+      "description": "MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  deal CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
       "richDescription": [
         {
           "key": "entity",
           "text": "Marks",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3113,8 +3434,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Criticals",
-          "href": "/wiki/Criticals",
-          "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+          "href": "https://windblown.wiki.gg//wiki/Criticals",
+          "id": "Criticals",
+          "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
           "color": "#ffdd00",
           "bold": true
         },
@@ -3125,9 +3447,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Dash_Mark_Icon.png/47px-Dash_Mark_Icon.png?1c7186",
+      "imageUrl": "/images/thumb/Dash_Mark_Icon.png/47px-Dash_Mark_Icon.png?1c7186",
       "name": "Dash Mark",
       "category": "Mark",
+      "description": "Dashing through a foe marksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  it (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 50 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -3136,8 +3459,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "marks",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3148,15 +3472,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "50",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3165,9 +3491,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Random_Mark_Icon.png/48px-Random_Mark_Icon.png?58250d",
+      "imageUrl": "/images/thumb/Random_Mark_Icon.png/48px-Random_Mark_Icon.png?58250d",
       "name": "Random Mark",
       "category": "Mark",
+      "description": "Randomly MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  a nearby foe every 3s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 125 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -3176,8 +3503,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Mark",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3188,15 +3516,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "125",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3205,15 +3535,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Spread_Mark_Icon.png/48px-Spread_Mark_Icon.png?6e13b6",
+      "imageUrl": "/images/thumb/Spread_Mark_Icon.png/48px-Spread_Mark_Icon.png?6e13b6",
       "name": "Spread Mark",
       "category": "Mark",
+      "description": "MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  trigger again on all nearby foes for 50% of their damage.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Marks",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3224,7 +3556,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3233,9 +3566,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Trinket_Mark_Icon.png/48px-Trinket_Mark_Icon.png?dcf35d",
+      "imageUrl": "/images/thumb/Trinket_Mark_Icon.png/48px-Trinket_Mark_Icon.png?dcf35d",
       "name": "Trinket Mark",
       "category": "Mark",
+      "description": "Using a Trinket marksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  all nearby foes (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 100 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -3249,8 +3583,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "marks",
-          "href": "/wiki/Mark",
-          "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+          "href": "https://windblown.wiki.gg//wiki/Mark",
+          "id": "Mark",
+          "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
           "color": "#d3ff00",
           "bold": true
         },
@@ -3261,15 +3596,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "100",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3278,9 +3615,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Assassinate_Icon.png/48px-Assassinate_Icon.png?97146d",
+      "imageUrl": "/images/thumb/Assassinate_Icon.png/48px-Assassinate_Icon.png?97146d",
       "name": "Assassinate",
       "category": "Overwhelm",
+      "description": "Your first hit against a target OverwhelmsOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  them, and subsequent attacks have a +25% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  for 2s (stackable).",
       "richDescription": [
         {
           "key": "text",
@@ -3289,8 +3627,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Overwhelms",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3301,7 +3640,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+25%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3310,8 +3650,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Overwhelm",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3322,15 +3663,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Overpower_Icon.png/48px-Overpower_Icon.png?1b3798",
+      "imageUrl": "/images/thumb/Overpower_Icon.png/48px-Overpower_Icon.png?1b3798",
       "name": "Overpower",
       "category": "Overwhelm",
+      "description": "OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  deals +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
       "richDescription": [
         {
           "key": "entity",
           "text": "Overwhelm",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3341,12 +3684,14 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+125%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -3357,9 +3702,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Overwhelming_Afflictions_Icon.png/48px-Overwhelming_Afflictions_Icon.png?431f7c",
+      "imageUrl": "/images/thumb/Overwhelming_Afflictions_Icon.png/48px-Overwhelming_Afflictions_Icon.png?431f7c",
       "name": "Overwhelming Afflictions",
       "category": "Overwhelm",
+      "description": "Every stack of Burn, Bleed, and Curse on a target gives +1% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  with Weapons and Trinkets against that target (Final Curse counts as 10).",
       "richDescription": [
         {
           "key": "text",
@@ -3368,7 +3714,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+1%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3377,8 +3724,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Overwhelm",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3389,9 +3737,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Overwhelming_Dash_Icon.png/48px-Overwhelming_Dash_Icon.png?f5bb64",
+      "imageUrl": "/images/thumb/Overwhelming_Dash_Icon.png/48px-Overwhelming_Dash_Icon.png?f5bb64",
       "name": "Overwhelming Dash",
       "category": "Overwhelm",
+      "description": "Dashes give +20% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage.  with Weapons and Trinkets for 1s (not stackable).",
       "richDescription": [
         {
           "key": "text",
@@ -3400,7 +3749,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+20%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3409,8 +3759,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Overwhelm",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3421,9 +3772,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Overwhelming_Hits_Icon.png/48px-Overwhelming_Hits_Icon.png?ca38d1",
+      "imageUrl": "/images/thumb/Overwhelming_Hits_Icon.png/48px-Overwhelming_Hits_Icon.png?ca38d1",
       "name": "Overwhelming Hits",
       "category": "Overwhelm",
+      "description": "Hits have a 5% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage. .",
       "richDescription": [
         {
           "key": "text",
@@ -3432,7 +3784,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "5%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3441,8 +3794,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Overwhelm",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3453,15 +3807,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Sneaky_Icon.png/48px-Sneaky_Icon.png?83e95d",
+      "imageUrl": "/images/thumb/Sneaky_Icon.png/48px-Sneaky_Icon.png?83e95d",
       "name": "Sneaky",
       "category": "Overwhelm",
+      "description": "BackstabsBackstabs Hit TypeHits against the back of enemies. Deal increased damage.  give +30% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage. .",
       "richDescription": [
         {
           "key": "entity",
           "text": "Backstabs",
-          "href": "/wiki/Backstabs",
-          "icon": "/images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
+          "href": "https://windblown.wiki.gg//wiki/Backstabs",
+          "id": "Backstabs",
+          "icon": "https://windblown.wiki.gg//images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
           "color": "#ff0078",
           "bold": true
         },
@@ -3472,7 +3828,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+30%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3481,8 +3838,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Overwhelm",
-          "href": "/wiki/Overwhelm",
-          "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+          "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+          "id": "Overwhelm",
+          "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
           "color": "#ff8200",
           "bold": true
         },
@@ -3493,15 +3851,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Double_Rush_Icon.png/48px-Double_Rush_Icon.png?243c78",
+      "imageUrl": "/images/thumb/Double_Rush_Icon.png/48px-Double_Rush_Icon.png?243c78",
       "name": "Double Rush",
       "category": "Rush",
+      "description": "RushRush BuffYour next Dash deals damage and stuns for 2s.  can be used twice in a row.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Rush",
-          "href": "/wiki/Rush",
-          "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+          "href": "https://windblown.wiki.gg//wiki/Rush",
+          "id": "Rush",
+          "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
           "color": "#ffa56d",
           "bold": true
         },
@@ -3512,15 +3872,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Heavy_Rush_Icon.png/48px-Heavy_Rush_Icon.png?f7307d",
+      "imageUrl": "/images/thumb/Heavy_Rush_Icon.png/48px-Heavy_Rush_Icon.png?f7307d",
       "name": "Heavy Rush",
       "category": "Rush",
+      "description": "RushRush BuffYour next Dash deals damage and stuns for 2s.  stun duration +50%, and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Rush",
-          "href": "/wiki/Rush",
-          "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+          "href": "https://windblown.wiki.gg//wiki/Rush",
+          "id": "Rush",
+          "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
           "color": "#ffa56d",
           "bold": true
         },
@@ -3531,7 +3893,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3540,7 +3903,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3549,29 +3913,33 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Powerful_Rush_Icon.png/47px-Powerful_Rush_Icon.png?833a29",
+      "imageUrl": "/images/thumb/Powerful_Rush_Icon.png/47px-Powerful_Rush_Icon.png?833a29",
       "name": "Powerful Rush",
       "category": "Rush",
+      "description": "RushRush BuffYour next Dash deals damage and stuns for 2s.  total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50%, and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Rush",
-          "href": "/wiki/Rush",
-          "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+          "href": "https://windblown.wiki.gg//wiki/Rush",
+          "id": "Rush",
+          "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
           "color": "#ffa56d",
           "bold": true
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3580,7 +3948,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3589,15 +3958,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Rush_Alterattacks_Icon.png/48px-Rush_Alterattacks_Icon.png?7ae7ed",
+      "imageUrl": "/images/thumb/Rush_Alterattacks_Icon.png/48px-Rush_Alterattacks_Icon.png?7ae7ed",
       "name": "Rush Alterattacks",
       "category": "Rush",
+      "description": "AlterattacksAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  activate RushRush BuffYour next Dash deals damage and stuns for 2s.  (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 150 damage).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Alterattacks",
-          "href": "/wiki/Alterattack",
-          "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+          "href": "https://windblown.wiki.gg//wiki/Alterattack",
+          "id": "Alterattack",
+          "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
           "color": "#ef917e",
           "bold": true
         },
@@ -3608,8 +3979,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Rush",
-          "href": "/wiki/Rush",
-          "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+          "href": "https://windblown.wiki.gg//wiki/Rush",
+          "id": "Rush",
+          "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
           "color": "#ffa56d",
           "bold": true
         },
@@ -3620,15 +3992,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "150",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3637,9 +4011,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Rush_Trinkets_Icon.png/48px-Rush_Trinkets_Icon.png?340679",
+      "imageUrl": "/images/thumb/Rush_Trinkets_Icon.png/48px-Rush_Trinkets_Icon.png?340679",
       "name": "Rush Trinkets",
       "category": "Rush",
+      "description": "Using a Trinket activates RushRush BuffYour next Dash deals damage and stuns for 2s.  (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 150 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -3657,8 +4032,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Rush",
-          "href": "/wiki/Rush",
-          "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+          "href": "https://windblown.wiki.gg//wiki/Rush",
+          "id": "Rush",
+          "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
           "color": "#ffa56d",
           "bold": true
         },
@@ -3669,15 +4045,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "150",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3686,9 +4064,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Countless_Scythes_Icon.png/48px-Countless_Scythes_Icon.png?611a62",
+      "imageUrl": "/images/thumb/Countless_Scythes_Icon.png/48px-Countless_Scythes_Icon.png?611a62",
       "name": "Countless Scythes",
       "category": "Scythe",
+      "description": "You can have 12 more ScythesScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  at the same time.",
       "richDescription": [
         {
           "key": "text",
@@ -3697,8 +4076,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "12",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3707,8 +4086,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Scythes",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -3719,9 +4099,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Damage_Scythe_Icon.png/48px-Damage_Scythe_Icon.png?2431b1",
+      "imageUrl": "/images/thumb/Damage_Scythe_Icon.png/48px-Damage_Scythe_Icon.png?2431b1",
       "name": "Damage Scythe",
       "category": "Scythe",
+      "description": "Every 250 Base DamageBase Damage MechanicDamage done before any modification (bonuses, debuffs, gear level, etc...). Calculation: Base x Sum of bonuses x Sum of Total bonuses. you deal, spawn a ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  for 5s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 10 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -3735,7 +4116,8 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Base Damage",
-          "href": "/wiki/Base_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+          "id": "Base_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -3746,8 +4128,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -3758,15 +4141,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "10",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3775,9 +4160,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Deadly_Scythe_Icon.png/48px-Deadly_Scythe_Icon.png?c56371",
+      "imageUrl": "/images/thumb/Deadly_Scythe_Icon.png/48px-Deadly_Scythe_Icon.png?c56371",
       "name": "Deadly Scythe",
       "category": "Scythe",
+      "description": "Kills spawn ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  for 5s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 15 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -3786,8 +4172,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -3798,15 +4185,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "15",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3815,15 +4204,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Extended_Scythe_Icon.png/48px-Extended_Scythe_Icon.png?4a2baf",
+      "imageUrl": "/images/thumb/Extended_Scythe_Icon.png/48px-Extended_Scythe_Icon.png?4a2baf",
       "name": "Extended Scythe",
       "category": "Scythe",
+      "description": "ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  duration +100%, and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -3834,7 +4225,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+100%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3843,7 +4235,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3852,29 +4245,33 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Fast_Scythe_Icon.png/48px-Fast_Scythe_Icon.png?76a557",
+      "imageUrl": "/images/thumb/Fast_Scythe_Icon.png/48px-Fast_Scythe_Icon.png?76a557",
       "name": "Fast Scythe",
       "category": "Scythe",
+      "description": "ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%).  +50%, and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
         {
           "key": "entity",
           "text": "Attack Speed",
-          "href": "/wiki/Attack_Speed",
+          "href": "https://windblown.wiki.gg//wiki/Attack_Speed",
+          "id": "Attack_Speed",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3883,7 +4280,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3892,15 +4290,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Merged_Scythe_Icon.png/48px-Merged_Scythe_Icon.png?bb0b43",
+      "imageUrl": "/images/thumb/Merged_Scythe_Icon.png/48px-Merged_Scythe_Icon.png?bb0b43",
       "name": "Merged Scythe",
       "category": "Scythe",
+      "description": "ScythesScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  merge and combine their duration and damage. ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +20%, with an additional 5% for each one merged (up to 8 merges).",
       "richDescription": [
         {
           "key": "entity",
           "text": "Scythes",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -3911,22 +4311,25 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+20%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3935,7 +4338,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "5%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3944,8 +4348,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "8",
-          "color": "#ff5b00",
-          "bold": true
+          "bold": true,
+          "color": "#ff5b00"
         },
         {
           "key": "text",
@@ -3954,15 +4358,17 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Persistent_Scythe_Icon.png/48px-Persistent_Scythe_Icon.png?877361",
+      "imageUrl": "/images/thumb/Persistent_Scythe_Icon.png/48px-Persistent_Scythe_Icon.png?877361",
       "name": "Persistent Scythe",
       "category": "Scythe",
+      "description": "ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  duration is increased by 1% of your Base DamageBase Damage MechanicDamage done before any modification (bonuses, debuffs, gear level, etc...). Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
       "richDescription": [
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -3973,7 +4379,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "1%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -3982,7 +4389,8 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Base Damage",
-          "href": "/wiki/Base_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+          "id": "Base_Damage",
           "color": "#ffffff",
           "bold": true
         },
@@ -3993,29 +4401,33 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Powerful_Scythe_Icon.png/48px-Powerful_Scythe_Icon.png?6c18bb",
+      "imageUrl": "/images/thumb/Powerful_Scythe_Icon.png/48px-Powerful_Scythe_Icon.png?6c18bb",
       "name": "Powerful Scythe",
       "category": "Scythe",
+      "description": "ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50%, and size +75%.",
       "richDescription": [
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
         {
           "key": "entity",
           "text": "total damage",
-          "href": "/wiki/Total_Damage",
+          "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+          "id": "Total_Damage",
           "color": "#ffffff",
           "bold": true
         },
         {
           "key": "text",
           "text": "+50%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -4024,7 +4436,8 @@ window.GIFTS_DATA =
         {
           "key": "text",
           "text": "+75%",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",
@@ -4033,9 +4446,10 @@ window.GIFTS_DATA =
       ]
     },
     {
-      "imageUrl": "https://windblown.wiki.gg/images/thumb/Trinket_Scythe_Icon.png/48px-Trinket_Scythe_Icon.png?ddaf38",
+      "imageUrl": "/images/thumb/Trinket_Scythe_Icon.png/48px-Trinket_Scythe_Icon.png?ddaf38",
       "name": "Trinket Scythe",
       "category": "Scythe",
+      "description": "Using a Trinket spawns a ScytheScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  for 8s (Auto Scaling MechanicValues with this scale automatically with the amount of Bosses killed. Bosses killed: x. 10 damage).",
       "richDescription": [
         {
           "key": "text",
@@ -4053,8 +4467,9 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "Scythe",
-          "href": "/wiki/Scythe",
-          "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+          "href": "https://windblown.wiki.gg//wiki/Scythe",
+          "id": "Scythe",
+          "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
           "color": "#5f9fff",
           "bold": true
         },
@@ -4065,15 +4480,17 @@ window.GIFTS_DATA =
         {
           "key": "entity",
           "text": "",
-          "href": "/wiki/Auto_Scaling",
-          "icon": "/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
-          "color": "#ffffff"
+          "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+          "id": "Auto_Scaling",
+          "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+          "color": "#ffffff",
+          "bold": true
         },
         {
           "key": "text",
           "text": "10",
-          "color": "#00ff22",
-          "bold": true
+          "bold": true,
+          "color": "#00ff22"
         },
         {
           "key": "text",

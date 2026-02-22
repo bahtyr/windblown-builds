@@ -1,17 +1,12 @@
-npm# Windblown scraper (TypeScript)
-
-## Install & run
+# Windblown scraper (TypeScript)
 
 ```bash
 npm install
-npm start
-```
-
-## Build & typecheck
-
-```bash
+npm run dev
 npm run check
 npm run build
+npm start
+npm test
 ```
 
 ## Project structure

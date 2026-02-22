@@ -7,7 +7,18 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Cogs looted +25% for the team.",
+        "text": "Cogs looted ",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "+25%",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "text",
+        "text": " for the team.",
         "bold": true
       }
     ]
@@ -25,7 +36,8 @@
       {
         "key": "text",
         "text": "+0.2%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -46,7 +58,8 @@
       {
         "key": "text",
         "text": "+0.5%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -84,14 +97,16 @@
       {
         "key": "entity",
         "text": "Total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+35%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -117,8 +132,9 @@
       {
         "key": "entity",
         "text": "Dodging",
-        "href": "/wiki/Dodge",
-        "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+        "href": "https://windblown.wiki.gg//wiki/Dodge",
+        "id": "Dodge",
+        "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
         "color": "#ffffff",
         "bold": true
       },
@@ -129,8 +145,9 @@
       {
         "key": "entity",
         "text": "Curses",
-        "href": "/wiki/Curse",
-        "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "href": "https://windblown.wiki.gg//wiki/Curse",
+        "id": "Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
         "color": "#afa2ff",
         "bold": true
       },
@@ -139,9 +156,19 @@
         "text": " ("
       },
       {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
         "key": "text",
         "text": "3%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -150,8 +177,9 @@
       {
         "key": "entity",
         "text": "Goo",
-        "href": "/wiki/Goo",
-        "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+        "href": "https://windblown.wiki.gg//wiki/Goo",
+        "id": "Goo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
         "color": "#ff45ee",
         "bold": true
       },
@@ -162,7 +190,8 @@
       {
         "key": "text",
         "text": "4s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -171,7 +200,8 @@
       {
         "key": "text",
         "text": "10%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -180,8 +210,9 @@
       {
         "key": "entity",
         "text": "Dodge",
-        "href": "/wiki/Dodge",
-        "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+        "href": "https://windblown.wiki.gg//wiki/Dodge",
+        "id": "Dodge",
+        "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
         "color": "#ffffff",
         "bold": true
       },
@@ -200,8 +231,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -221,7 +253,8 @@
       {
         "key": "text",
         "text": "1s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -242,7 +275,8 @@
       {
         "key": "text",
         "text": "2s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -263,7 +297,8 @@
       {
         "key": "text",
         "text": "50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -272,7 +307,8 @@
       {
         "key": "text",
         "text": "15%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -302,7 +338,8 @@
       {
         "key": "text",
         "text": "5s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -323,14 +360,16 @@
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+25%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -347,8 +386,9 @@
       {
         "key": "entity",
         "text": "Dodging",
-        "href": "/wiki/Dodge",
-        "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+        "href": "https://windblown.wiki.gg//wiki/Dodge",
+        "id": "Dodge",
+        "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
         "color": "#ffffff",
         "bold": true
       },
@@ -359,8 +399,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -370,8 +411,24 @@
       },
       {
         "key": "text",
-        "text": "+50%",
+        "text": "+",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
         "bold": true
+      },
+      {
+        "key": "text",
+        "text": "50%",
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -380,8 +437,9 @@
       {
         "key": "entity",
         "text": "Freezes",
-        "href": "/wiki/Freeze",
-        "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+        "href": "https://windblown.wiki.gg//wiki/Freeze",
+        "id": "Freeze",
+        "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
         "color": "#00fff2",
         "bold": true
       },
@@ -392,7 +450,8 @@
       {
         "key": "text",
         "text": "2s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -401,7 +460,8 @@
       {
         "key": "text",
         "text": "10%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -410,8 +470,9 @@
       {
         "key": "entity",
         "text": "Dodge",
-        "href": "/wiki/Dodge",
-        "icon": "/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+        "href": "https://windblown.wiki.gg//wiki/Dodge",
+        "id": "Dodge",
+        "icon": "https://windblown.wiki.gg//images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
         "color": "#ffffff",
         "bold": true
       },
@@ -466,8 +527,9 @@
       {
         "key": "entity",
         "text": "Lifesteal",
-        "href": "/wiki/Lifesteal",
-        "icon": "/images/thumb/Lifesteal_Icon.png/20px-Lifesteal_Icon.png?2be557",
+        "href": "https://windblown.wiki.gg//wiki/Lifesteal",
+        "id": "Lifesteal",
+        "icon": "https://windblown.wiki.gg//images/thumb/Lifesteal_Icon.png/20px-Lifesteal_Icon.png?2be557",
         "color": "#00ff22",
         "bold": true
       },
@@ -488,7 +550,8 @@
       {
         "key": "entity",
         "text": "Base Damage",
-        "href": "/wiki/Base_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+        "id": "Base_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -516,7 +579,8 @@
       {
         "key": "text",
         "text": "+30%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -537,7 +601,8 @@
       {
         "key": "text",
         "text": "+4%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -558,7 +623,8 @@
       {
         "key": "text",
         "text": "4%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -593,7 +659,8 @@
       {
         "key": "entity",
         "text": "Base Damage",
-        "href": "/wiki/Base_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+        "id": "Base_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -604,7 +671,8 @@
       {
         "key": "text",
         "text": "2.5s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -656,14 +724,16 @@
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+35%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -684,7 +754,8 @@
       {
         "key": "text",
         "text": "Health Flask",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -693,7 +764,8 @@
       {
         "key": "text",
         "text": "1%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -702,7 +774,8 @@
       {
         "key": "entity",
         "text": "Base Damage",
-        "href": "/wiki/Base_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+        "id": "Base_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -725,8 +798,9 @@
       {
         "key": "entity",
         "text": "Recover",
-        "href": "/wiki/Recovery",
-        "icon": "/images/thumb/Recovery_Icon.png/20px-Recovery_Icon.png?5ea0cf",
+        "href": "https://windblown.wiki.gg//wiki/Recovery",
+        "id": "Recovery",
+        "icon": "https://windblown.wiki.gg//images/thumb/Recovery_Icon.png/20px-Recovery_Icon.png?5ea0cf",
         "color": "#00ff22",
         "bold": true
       },
@@ -737,7 +811,8 @@
       {
         "key": "text",
         "text": "50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -767,7 +842,8 @@
       {
         "key": "text",
         "text": "100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -788,14 +864,16 @@
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+25%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -825,7 +903,8 @@
       {
         "key": "text",
         "text": "400%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -846,8 +925,9 @@
       {
         "key": "entity",
         "text": "Alterattacks",
-        "href": "/wiki/Alterattack",
-        "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack",
+        "id": "Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
         "color": "#ef917e",
         "bold": true
       },
@@ -858,8 +938,9 @@
       {
         "key": "entity",
         "text": "chained",
-        "href": "/wiki/Chained_Alterattack",
-        "icon": "/images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
+        "href": "https://windblown.wiki.gg//wiki/Chained_Alterattack",
+        "id": "Chained_Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
         "color": "#ffffff",
         "bold": true
       },
@@ -870,15 +951,17 @@
       {
         "key": "entity",
         "text": "bonuses",
-        "href": "/wiki/Alterattack_Bonus",
-        "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+        "id": "Alterattack_Bonus",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "x0.6",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -895,23 +978,26 @@
       {
         "key": "entity",
         "text": "Chained",
-        "href": "/wiki/Chained_Alterattack",
-        "icon": "/images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
+        "href": "https://windblown.wiki.gg//wiki/Chained_Alterattack",
+        "id": "Chained_Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Signal.png/20px-Alterattack_Signal.png?8768e3",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "entity",
         "text": "Alterattack bonuses",
-        "href": "/wiki/Alterattack_Bonus",
-        "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+        "id": "Alterattack_Bonus",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "x1.4",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -932,8 +1018,9 @@
       {
         "key": "entity",
         "text": "Alterattack",
-        "href": "/wiki/Alterattack",
-        "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack",
+        "id": "Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
         "color": "#ef917e",
         "bold": true
       },
@@ -944,15 +1031,17 @@
       {
         "key": "entity",
         "text": "bonus",
-        "href": "/wiki/Alterattack_Bonus",
-        "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+        "id": "Alterattack_Bonus",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "x0.5",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       }
     ]
   },
@@ -965,15 +1054,17 @@
       {
         "key": "entity",
         "text": "Alterattack bonuses",
-        "href": "/wiki/Alterattack_Bonus",
-        "icon": "/images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack_Bonus",
+        "id": "Alterattack_Bonus",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Bonus_Icon.png/20px-Alterattack_Bonus_Icon.png?befd39",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "x1.25",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -990,8 +1081,9 @@
       {
         "key": "entity",
         "text": "Blasts",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
@@ -1002,12 +1094,14 @@
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -1018,8 +1112,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -1038,22 +1133,25 @@
       {
         "key": "entity",
         "text": "Blast",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1062,7 +1160,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1083,8 +1182,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -1095,8 +1195,9 @@
       {
         "key": "entity",
         "text": "Blast",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
@@ -1107,7 +1208,8 @@
       {
         "key": "text",
         "text": "30%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1116,7 +1218,8 @@
       {
         "key": "text",
         "text": "80%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1137,8 +1240,9 @@
       {
         "key": "entity",
         "text": "Blast",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
@@ -1149,7 +1253,8 @@
       {
         "key": "text",
         "text": "20%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1158,7 +1263,8 @@
       {
         "key": "text",
         "text": "60%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1175,8 +1281,9 @@
       {
         "key": "entity",
         "text": "Blasts",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
@@ -1195,8 +1302,9 @@
       {
         "key": "entity",
         "text": "Blasts",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
@@ -1207,8 +1315,9 @@
       {
         "key": "entity",
         "text": "Goo",
-        "href": "/wiki/Goo",
-        "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+        "href": "https://windblown.wiki.gg//wiki/Goo",
+        "id": "Goo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
         "color": "#ff45ee",
         "bold": true
       },
@@ -1219,7 +1328,8 @@
       {
         "key": "text",
         "text": "6s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1228,7 +1338,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1245,8 +1356,9 @@
       {
         "key": "entity",
         "text": "Blasts",
-        "href": "/wiki/Blast",
-        "icon": "/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
+        "href": "https://windblown.wiki.gg//wiki/Blast",
+        "id": "Blast",
+        "icon": "https://windblown.wiki.gg//images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
         "color": "#ffdb96",
         "bold": true
       },
@@ -1257,14 +1369,24 @@
       {
         "key": "entity",
         "text": "Marks",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1279,7 +1401,8 @@
       {
         "key": "text",
         "text": "2s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1296,8 +1419,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -1308,14 +1432,24 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1342,14 +1476,24 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1376,8 +1520,9 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
@@ -1388,14 +1533,24 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1418,8 +1573,9 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
@@ -1448,8 +1604,9 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
@@ -1492,8 +1649,9 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
@@ -1504,12 +1662,14 @@
       {
         "key": "text",
         "text": "+100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -1532,8 +1692,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -1543,8 +1704,24 @@
       },
       {
         "key": "text",
-        "text": "+30%",
+        "text": "+",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
         "bold": true
+      },
+      {
+        "key": "text",
+        "text": "30%",
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1565,8 +1742,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -1576,8 +1754,24 @@
       },
       {
         "key": "text",
-        "text": "+30%",
+        "text": "+",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
         "bold": true
+      },
+      {
+        "key": "text",
+        "text": "30%",
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1607,8 +1801,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -1618,8 +1813,24 @@
       },
       {
         "key": "text",
-        "text": "+50%",
+        "text": "+",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
         "bold": true
+      },
+      {
+        "key": "text",
+        "text": "50%",
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1640,8 +1851,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -1651,8 +1863,24 @@
       },
       {
         "key": "text",
-        "text": "+60%",
+        "text": "+",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
         "bold": true
+      },
+      {
+        "key": "text",
+        "text": "60%",
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1669,8 +1897,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -1681,7 +1910,8 @@
       {
         "key": "text",
         "text": "+100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1698,8 +1928,9 @@
       {
         "key": "entity",
         "text": "Brutality",
-        "href": "/wiki/Brutality",
-        "icon": "/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "href": "https://windblown.wiki.gg//wiki/Brutality",
+        "id": "Brutality",
+        "icon": "https://windblown.wiki.gg//images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
         "color": "#ff8689",
         "bold": true
       },
@@ -1709,8 +1940,24 @@
       },
       {
         "key": "text",
-        "text": "+8%",
+        "text": "+",
+        "bold": true,
+        "color": "#00ff22"
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
         "bold": true
+      },
+      {
+        "key": "text",
+        "text": "8%",
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1727,8 +1974,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -1739,14 +1987,24 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1773,14 +2031,24 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1807,14 +2075,24 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1841,8 +2119,9 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
@@ -1853,14 +2132,24 @@
       {
         "key": "entity",
         "text": "Bleed",
-        "href": "/wiki/Bleed",
-        "icon": "/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "href": "https://windblown.wiki.gg//wiki/Bleed",
+        "id": "Bleed",
+        "icon": "https://windblown.wiki.gg//images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
         "color": "#e70000",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -1883,8 +2172,9 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
@@ -1895,7 +2185,8 @@
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1904,7 +2195,8 @@
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1925,8 +2217,9 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
@@ -1947,14 +2240,16 @@
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+10%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -1971,8 +2266,9 @@
       {
         "key": "entity",
         "text": "Alterattacks",
-        "href": "/wiki/Alterattack",
-        "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack",
+        "id": "Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
         "color": "#ef917e",
         "bold": true
       },
@@ -1983,14 +2279,24 @@
       {
         "key": "entity",
         "text": "Corrosive Pool",
-        "href": "/wiki/Corrosive_Pool",
-        "icon": "/images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
+        "href": "https://windblown.wiki.gg//wiki/Corrosive_Pool",
+        "id": "Corrosive_Pool",
+        "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
         "color": "#8cbc00",
         "bold": true
       },
       {
         "key": "text",
         "text": " for 3s ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -2013,8 +2319,9 @@
       {
         "key": "entity",
         "text": "Goo",
-        "href": "/wiki/Goo",
-        "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+        "href": "https://windblown.wiki.gg//wiki/Goo",
+        "id": "Goo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
         "color": "#ff45ee",
         "bold": true
       },
@@ -2025,14 +2332,24 @@
       {
         "key": "entity",
         "text": "Freeze",
-        "href": "/wiki/Freeze",
-        "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+        "href": "https://windblown.wiki.gg//wiki/Freeze",
+        "id": "Freeze",
+        "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
         "color": "#00fff2",
         "bold": true
       },
       {
         "key": "text",
         "text": " deal "
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -2043,8 +2360,9 @@
       {
         "key": "entity",
         "text": "Corrosive",
-        "href": "/wiki/Corrosive",
-        "icon": "/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+        "href": "https://windblown.wiki.gg//wiki/Corrosive",
+        "id": "Corrosive",
+        "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
         "color": "#8cbc00",
         "bold": true
       },
@@ -2076,14 +2394,24 @@
       {
         "key": "entity",
         "text": "Corrosive Pool",
-        "href": "/wiki/Corrosive_Pool",
-        "icon": "/images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
+        "href": "https://windblown.wiki.gg//wiki/Corrosive_Pool",
+        "id": "Corrosive_Pool",
+        "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
         "color": "#8cbc00",
         "bold": true
       },
       {
         "key": "text",
         "text": " for 6s ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -2106,22 +2434,25 @@
       {
         "key": "entity",
         "text": "Corrosive",
-        "href": "/wiki/Corrosive",
-        "icon": "/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+        "href": "https://windblown.wiki.gg//wiki/Corrosive",
+        "id": "Corrosive",
+        "icon": "https://windblown.wiki.gg//images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
         "color": "#8cbc00",
         "bold": true
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2142,8 +2473,9 @@
       {
         "key": "entity",
         "text": "Crystallized",
-        "href": "/wiki/Crystallize",
-        "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+        "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "id": "Crystallize",
+        "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
       },
@@ -2162,8 +2494,9 @@
       {
         "key": "entity",
         "text": "Crystallize",
-        "href": "/wiki/Crystallize",
-        "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+        "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "id": "Crystallize",
+        "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
       },
@@ -2180,8 +2513,9 @@
       {
         "key": "entity",
         "text": "Barrier",
-        "href": "/wiki/Barrier",
-        "icon": "/images/thumb/Barrier_Icon.png/20px-Barrier_Icon.png?105737",
+        "href": "https://windblown.wiki.gg//wiki/Barrier",
+        "id": "Barrier",
+        "icon": "https://windblown.wiki.gg//images/thumb/Barrier_Icon.png/20px-Barrier_Icon.png?105737",
         "color": "#00beff",
         "bold": true
       },
@@ -2200,8 +2534,9 @@
       {
         "key": "entity",
         "text": "Crystallize",
-        "href": "/wiki/Crystallize",
-        "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+        "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "id": "Crystallize",
+        "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
       },
@@ -2221,7 +2556,8 @@
       {
         "key": "text",
         "text": "15s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2242,8 +2578,9 @@
       {
         "key": "entity",
         "text": "Crystallize",
-        "href": "/wiki/Crystallize",
-        "icon": "/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+        "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "id": "Crystallize",
+        "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
       },
@@ -2254,7 +2591,8 @@
       {
         "key": "text",
         "text": "2%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2271,8 +2609,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -2283,8 +2622,9 @@
       {
         "key": "entity",
         "text": "Curse",
-        "href": "/wiki/Curse",
-        "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "href": "https://windblown.wiki.gg//wiki/Curse",
+        "id": "Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2293,9 +2633,19 @@
         "text": " ("
       },
       {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
         "key": "text",
         "text": "5%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2316,8 +2666,9 @@
       {
         "key": "entity",
         "text": "Curse",
-        "href": "/wiki/Curse",
-        "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "href": "https://windblown.wiki.gg//wiki/Curse",
+        "id": "Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2326,9 +2677,19 @@
         "text": " ("
       },
       {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
         "key": "text",
         "text": "3%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2345,7 +2706,8 @@
       {
         "key": "text",
         "text": "50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2354,8 +2716,9 @@
       {
         "key": "entity",
         "text": "Final Curse",
-        "href": "/wiki/Final_Curse",
-        "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+        "id": "Final_Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2366,8 +2729,9 @@
       {
         "key": "entity",
         "text": "Final Curse",
-        "href": "/wiki/Final_Curse",
-        "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+        "id": "Final_Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2390,8 +2754,9 @@
       {
         "key": "entity",
         "text": "Final Curse",
-        "href": "/wiki/Final_Curse",
-        "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+        "id": "Final_Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2402,8 +2767,9 @@
       {
         "key": "entity",
         "text": "Opportunity",
-        "href": "/wiki/Opportunity",
-        "icon": "/images/thumb/Opportunity_Icon.png/20px-Opportunity_Icon.png?affdba",
+        "href": "https://windblown.wiki.gg//wiki/Opportunity",
+        "id": "Opportunity",
+        "icon": "https://windblown.wiki.gg//images/thumb/Opportunity_Icon.png/20px-Opportunity_Icon.png?affdba",
         "color": "#ffffff",
         "bold": true
       },
@@ -2414,8 +2780,9 @@
       {
         "key": "entity",
         "text": "Final Curse",
-        "href": "/wiki/Final_Curse",
-        "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+        "id": "Final_Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2426,7 +2793,8 @@
       {
         "key": "text",
         "text": "1.5s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2443,8 +2811,9 @@
       {
         "key": "entity",
         "text": "Final Curse",
-        "href": "/wiki/Final_Curse",
-        "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+        "id": "Final_Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2455,7 +2824,8 @@
       {
         "key": "text",
         "text": "+4s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2476,8 +2846,9 @@
       {
         "key": "entity",
         "text": "Curses",
-        "href": "/wiki/Curse",
-        "icon": "/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "href": "https://windblown.wiki.gg//wiki/Curse",
+        "id": "Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2488,7 +2859,8 @@
       {
         "key": "text",
         "text": "2%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2497,7 +2869,8 @@
       {
         "key": "text",
         "text": "40%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2506,8 +2879,9 @@
       {
         "key": "entity",
         "text": "Final Curse",
-        "href": "/wiki/Final_Curse",
-        "icon": "/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "href": "https://windblown.wiki.gg//wiki/Final_Curse",
+        "id": "Final_Curse",
+        "icon": "https://windblown.wiki.gg//images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
         "color": "#afa2ff",
         "bold": true
       },
@@ -2526,8 +2900,9 @@
       {
         "key": "entity",
         "text": "Echo",
-        "href": "/wiki/Echo",
-        "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+        "href": "https://windblown.wiki.gg//wiki/Echo",
+        "id": "Echo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
         "color": "#94a9e9",
         "bold": true
       },
@@ -2538,12 +2913,14 @@
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -2554,8 +2931,9 @@
       {
         "key": "entity",
         "text": "Critical",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -2578,8 +2956,9 @@
       {
         "key": "entity",
         "text": "Freeze",
-        "href": "/wiki/Freeze",
-        "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+        "href": "https://windblown.wiki.gg//wiki/Freeze",
+        "id": "Freeze",
+        "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
         "color": "#00fff2",
         "bold": true
       },
@@ -2590,8 +2969,9 @@
       {
         "key": "entity",
         "text": "Mark",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
@@ -2602,8 +2982,9 @@
       {
         "key": "entity",
         "text": "Rush",
-        "href": "/wiki/Rush",
-        "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+        "href": "https://windblown.wiki.gg//wiki/Rush",
+        "id": "Rush",
+        "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
         "color": "#ffa56d",
         "bold": true
       },
@@ -2614,8 +2995,9 @@
       {
         "key": "entity",
         "text": "Echo",
-        "href": "/wiki/Echo",
-        "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+        "href": "https://windblown.wiki.gg//wiki/Echo",
+        "id": "Echo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
         "color": "#94a9e9",
         "bold": true
       },
@@ -2626,7 +3008,8 @@
       {
         "key": "text",
         "text": "125%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2647,8 +3030,9 @@
       {
         "key": "entity",
         "text": "Echo",
-        "href": "/wiki/Echo",
-        "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+        "href": "https://windblown.wiki.gg//wiki/Echo",
+        "id": "Echo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
         "color": "#94a9e9",
         "bold": true
       },
@@ -2659,7 +3043,8 @@
       {
         "key": "text",
         "text": "125%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2676,8 +3061,9 @@
       {
         "key": "entity",
         "text": "Echo",
-        "href": "/wiki/Echo",
-        "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+        "href": "https://windblown.wiki.gg//wiki/Echo",
+        "id": "Echo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
         "color": "#94a9e9",
         "bold": true
       },
@@ -2688,7 +3074,8 @@
       {
         "key": "text",
         "text": "1s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2705,8 +3092,9 @@
       {
         "key": "entity",
         "text": "Echo",
-        "href": "/wiki/Echo",
-        "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+        "href": "https://windblown.wiki.gg//wiki/Echo",
+        "id": "Echo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
         "color": "#94a9e9",
         "bold": true
       },
@@ -2717,7 +3105,8 @@
       {
         "key": "text",
         "text": "50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2734,8 +3123,9 @@
       {
         "key": "entity",
         "text": "Echo",
-        "href": "/wiki/Echo",
-        "icon": "/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
+        "href": "https://windblown.wiki.gg//wiki/Echo",
+        "id": "Echo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
         "color": "#94a9e9",
         "bold": true
       },
@@ -2746,7 +3136,8 @@
       {
         "key": "text",
         "text": "-0.2s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2767,8 +3158,9 @@
       {
         "key": "entity",
         "text": "Freezes",
-        "href": "/wiki/Freeze",
-        "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+        "href": "https://windblown.wiki.gg//wiki/Freeze",
+        "id": "Freeze",
+        "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
         "color": "#00fff2",
         "bold": true
       },
@@ -2779,7 +3171,8 @@
       {
         "key": "text",
         "text": "1s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2800,8 +3193,9 @@
       {
         "key": "entity",
         "text": "Freeze",
-        "href": "/wiki/Freeze",
-        "icon": "/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+        "href": "https://windblown.wiki.gg//wiki/Freeze",
+        "id": "Freeze",
+        "icon": "https://windblown.wiki.gg//images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
         "color": "#00fff2",
         "bold": true
       },
@@ -2812,12 +3206,14 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -2836,8 +3232,9 @@
       {
         "key": "entity",
         "text": "Backstabs",
-        "href": "/wiki/Backstabs",
-        "icon": "/images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
+        "href": "https://windblown.wiki.gg//wiki/Backstabs",
+        "id": "Backstabs",
+        "icon": "https://windblown.wiki.gg//images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
         "color": "#ff0078",
         "bold": true
       },
@@ -2848,12 +3245,14 @@
       {
         "key": "text",
         "text": "+100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -2864,8 +3263,9 @@
       {
         "key": "entity",
         "text": "Goo",
-        "href": "/wiki/Goo",
-        "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+        "href": "https://windblown.wiki.gg//wiki/Goo",
+        "id": "Goo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
         "color": "#ff45ee",
         "bold": true
       },
@@ -2884,8 +3284,9 @@
       {
         "key": "entity",
         "text": "Goo",
-        "href": "/wiki/Goo",
-        "icon": "/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+        "href": "https://windblown.wiki.gg//wiki/Goo",
+        "id": "Goo",
+        "icon": "https://windblown.wiki.gg//images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
         "color": "#ff45ee",
         "bold": true
       },
@@ -2896,7 +3297,8 @@
       {
         "key": "text",
         "text": "+100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2917,8 +3319,9 @@
       {
         "key": "entity",
         "text": "Mark",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
@@ -2929,8 +3332,9 @@
       {
         "key": "entity",
         "text": "Alterattack",
-        "href": "/wiki/Alterattack",
-        "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack",
+        "id": "Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
         "color": "#ef917e",
         "bold": true
       },
@@ -2941,7 +3345,8 @@
       {
         "key": "text",
         "text": "5s",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -2962,8 +3367,9 @@
       {
         "key": "entity",
         "text": "Mark",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
@@ -2974,14 +3380,24 @@
       {
         "key": "entity",
         "text": "Burn",
-        "href": "/wiki/Burn",
-        "icon": "/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "href": "https://windblown.wiki.gg//wiki/Burn",
+        "id": "Burn",
+        "icon": "https://windblown.wiki.gg//images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
         "color": "#ff5b00",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3004,8 +3420,9 @@
       {
         "key": "entity",
         "text": "Marks",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
@@ -3016,8 +3433,9 @@
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "/wiki/Criticals",
-        "icon": "/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "id": "Criticals",
+        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -3040,14 +3458,24 @@
       {
         "key": "entity",
         "text": "marks",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
       {
         "key": "text",
         "text": " it ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3074,14 +3502,24 @@
       {
         "key": "entity",
         "text": "Mark",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
       {
         "key": "text",
         "text": " a nearby foe every 3s ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3104,8 +3542,9 @@
       {
         "key": "entity",
         "text": "Marks",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
@@ -3116,7 +3555,8 @@
       {
         "key": "text",
         "text": "50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3142,14 +3582,24 @@
       {
         "key": "entity",
         "text": "marks",
-        "href": "/wiki/Mark",
-        "icon": "/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "href": "https://windblown.wiki.gg//wiki/Mark",
+        "id": "Mark",
+        "icon": "https://windblown.wiki.gg//images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
         "color": "#d3ff00",
         "bold": true
       },
       {
         "key": "text",
         "text": " all nearby foes ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3176,8 +3626,9 @@
       {
         "key": "entity",
         "text": "Overwhelms",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3188,7 +3639,8 @@
       {
         "key": "text",
         "text": "+25%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3197,8 +3649,9 @@
       {
         "key": "entity",
         "text": "Overwhelm",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3217,8 +3670,9 @@
       {
         "key": "entity",
         "text": "Overwhelm",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3229,12 +3683,14 @@
       {
         "key": "text",
         "text": "+125%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -3257,7 +3713,8 @@
       {
         "key": "text",
         "text": "+1%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3266,8 +3723,9 @@
       {
         "key": "entity",
         "text": "Overwhelm",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3290,7 +3748,8 @@
       {
         "key": "text",
         "text": "+20%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3299,8 +3758,9 @@
       {
         "key": "entity",
         "text": "Overwhelm",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3323,7 +3783,8 @@
       {
         "key": "text",
         "text": "5%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3332,8 +3793,9 @@
       {
         "key": "entity",
         "text": "Overwhelm",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3352,8 +3814,9 @@
       {
         "key": "entity",
         "text": "Backstabs",
-        "href": "/wiki/Backstabs",
-        "icon": "/images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
+        "href": "https://windblown.wiki.gg//wiki/Backstabs",
+        "id": "Backstabs",
+        "icon": "https://windblown.wiki.gg//images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
         "color": "#ff0078",
         "bold": true
       },
@@ -3364,7 +3827,8 @@
       {
         "key": "text",
         "text": "+30%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3373,8 +3837,9 @@
       {
         "key": "entity",
         "text": "Overwhelm",
-        "href": "/wiki/Overwhelm",
-        "icon": "/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "href": "https://windblown.wiki.gg//wiki/Overwhelm",
+        "id": "Overwhelm",
+        "icon": "https://windblown.wiki.gg//images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
         "color": "#ff8200",
         "bold": true
       },
@@ -3393,8 +3858,9 @@
       {
         "key": "entity",
         "text": "Rush",
-        "href": "/wiki/Rush",
-        "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+        "href": "https://windblown.wiki.gg//wiki/Rush",
+        "id": "Rush",
+        "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
         "color": "#ffa56d",
         "bold": true
       },
@@ -3413,8 +3879,9 @@
       {
         "key": "entity",
         "text": "Rush",
-        "href": "/wiki/Rush",
-        "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+        "href": "https://windblown.wiki.gg//wiki/Rush",
+        "id": "Rush",
+        "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
         "color": "#ffa56d",
         "bold": true
       },
@@ -3425,7 +3892,8 @@
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3434,7 +3902,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3451,22 +3920,25 @@
       {
         "key": "entity",
         "text": "Rush",
-        "href": "/wiki/Rush",
-        "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+        "href": "https://windblown.wiki.gg//wiki/Rush",
+        "id": "Rush",
+        "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
         "color": "#ffa56d",
         "bold": true
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3475,7 +3947,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3492,8 +3965,9 @@
       {
         "key": "entity",
         "text": "Alterattacks",
-        "href": "/wiki/Alterattack",
-        "icon": "/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+        "href": "https://windblown.wiki.gg//wiki/Alterattack",
+        "id": "Alterattack",
+        "icon": "https://windblown.wiki.gg//images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
         "color": "#ef917e",
         "bold": true
       },
@@ -3504,14 +3978,24 @@
       {
         "key": "entity",
         "text": "Rush",
-        "href": "/wiki/Rush",
-        "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+        "href": "https://windblown.wiki.gg//wiki/Rush",
+        "id": "Rush",
+        "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
         "color": "#ffa56d",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3547,14 +4031,24 @@
       {
         "key": "entity",
         "text": "Rush",
-        "href": "/wiki/Rush",
-        "icon": "/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
+        "href": "https://windblown.wiki.gg//wiki/Rush",
+        "id": "Rush",
+        "icon": "https://windblown.wiki.gg//images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
         "color": "#ffa56d",
         "bold": true
       },
       {
         "key": "text",
         "text": " ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3591,8 +4085,9 @@
       {
         "key": "entity",
         "text": "Scythes",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
@@ -3620,7 +4115,8 @@
       {
         "key": "entity",
         "text": "Base Damage",
-        "href": "/wiki/Base_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+        "id": "Base_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -3631,14 +4127,24 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
       {
         "key": "text",
         "text": " for 5s ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3665,14 +4171,24 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
       {
         "key": "text",
         "text": " for 5s ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",
@@ -3695,8 +4211,9 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
@@ -3707,7 +4224,8 @@
       {
         "key": "text",
         "text": "+100%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3716,7 +4234,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3733,22 +4252,25 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
       {
         "key": "entity",
         "text": "Attack Speed",
-        "href": "/wiki/Attack_Speed",
+        "href": "https://windblown.wiki.gg//wiki/Attack_Speed",
+        "id": "Attack_Speed",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3757,7 +4279,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3774,8 +4297,9 @@
       {
         "key": "entity",
         "text": "Scythes",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
@@ -3786,22 +4310,25 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+20%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3810,7 +4337,8 @@
       {
         "key": "text",
         "text": "5%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3837,8 +4365,9 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
@@ -3849,7 +4378,8 @@
       {
         "key": "text",
         "text": "1%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3858,7 +4388,8 @@
       {
         "key": "entity",
         "text": "Base Damage",
-        "href": "/wiki/Base_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Base_Damage",
+        "id": "Base_Damage",
         "color": "#ffffff",
         "bold": true
       },
@@ -3877,22 +4408,25 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
       {
         "key": "entity",
         "text": "total damage",
-        "href": "/wiki/Total_Damage",
+        "href": "https://windblown.wiki.gg//wiki/Total_Damage",
+        "id": "Total_Damage",
         "color": "#ffffff",
         "bold": true
       },
       {
         "key": "text",
         "text": "+50%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3901,7 +4435,8 @@
       {
         "key": "text",
         "text": "+75%",
-        "bold": true
+        "bold": true,
+        "color": "#00ff22"
       },
       {
         "key": "text",
@@ -3931,14 +4466,24 @@
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "/wiki/Scythe",
-        "icon": "/images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
+        "href": "https://windblown.wiki.gg//wiki/Scythe",
+        "id": "Scythe",
+        "icon": "https://windblown.wiki.gg//images/thumb/Scythe_Icon.png/20px-Scythe_Icon.png?16e570",
         "color": "#5f9fff",
         "bold": true
       },
       {
         "key": "text",
         "text": " for 8s ("
+      },
+      {
+        "key": "entity",
+        "text": "",
+        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "id": "Auto_Scaling",
+        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "color": "#ffffff",
+        "bold": true
       },
       {
         "key": "text",

@@ -57,6 +57,24 @@ export function getColor(style: string | undefined): string | undefined {
 }
 
 /**
+ * Detect bold styling from inline font-weight declarations.
+ */
+export function hasBoldStyle(style: string | undefined): boolean {
+  if (!style) {
+    return false;
+  }
+
+  for (const declaration of style.split(";")) {
+    const [rawKey, rawValue] = declaration.split(":", 2);
+    if (rawKey?.trim().toLowerCase() === "font-weight" && rawValue?.trim()) {
+      return rawValue.trim().toLowerCase() === "bold";
+    }
+  }
+
+  return false;
+}
+
+/**
  * Merge adjacent text tokens that share the same formatting.
  */
 export function mergeNeighborTextTokens(tokens: RichDescriptionNode[]): RichDescriptionNode[] {
