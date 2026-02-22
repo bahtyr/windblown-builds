@@ -6,7 +6,7 @@ async function main(): Promise<void> {
   try {
     const gifts = await scrapeGifts();
     const output = JSON.stringify(gifts, null, 2);
-    await writeFile("./gifts.json", output, "utf-8");
+    await writeFile("./output/gifts.json", output, "utf-8");
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     process.stderr.write(`Scraping failed: ${message}\n`);

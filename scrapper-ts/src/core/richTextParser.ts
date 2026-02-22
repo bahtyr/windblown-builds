@@ -1,6 +1,6 @@
 import { Cheerio, CheerioAPI } from "cheerio";
 import { Element, Node } from "domhandler";
-import { RichDescriptionNode, RichTextEntityNode, RichTextTextNode } from "./types.js";
+import { RichDescriptionNode, RichTextEntityNode, RichTextTextNode } from "../pages/types.js";
 
 const NUMBER_PATTERN = /^[+-]?\d+(?:\.\d+)?$/;
 

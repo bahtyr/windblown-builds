@@ -1,21 +1,17 @@
-# Windblown scraper (TypeScript)
+npm# Windblown scraper (TypeScript)
 
-## Install
+## Install & run
 
 ```bash
 npm install
-```
-
-## Run gifts scraper
-
-```bash
 npm start
 ```
 
-Pretty JSON output:
+## Build & typecheck
 
 ```bash
-npm start -- --pretty
+npm run check
+npm run build
 ```
 
 ## Project structure
@@ -23,10 +19,3 @@ npm start -- --pretty
 - `src/core/wikiHtml.ts`: reusable wiki HTML fetch + section-table row helpers.
 - `src/pages/gifts.ts`: gifts-specific URL, sections, and row parsing.
 - `src/richTextParser.ts`: rich description parser used by page scrapers.
-
-## Build / typecheck
-
-```bash
-npm run check
-npm run build
-```

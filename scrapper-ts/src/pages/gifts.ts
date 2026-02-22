@@ -2,7 +2,7 @@ import { CheerioAPI } from "cheerio";
 import { Element } from "domhandler";
 import { findSectionTableRows, fetchWikiDocument } from "../core/wikiHtml.js";
 import { parseRichDescription } from "../core/richTextParser.js";
-import { Gift } from "../core/types.js";
+import { Gift } from "./types.js";
 
 export const GIFTS_PAGE_URL = "https://windblown.wiki.gg/wiki/Gifts";
 
