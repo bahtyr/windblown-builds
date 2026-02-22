@@ -4,40 +4,43 @@ import { findSectionTableRows, fetchWikiDocument } from "../core/wikiHtml.js";
 import { parseRichDescription } from "../core/richTextParser.js";
 import { Gift } from "./types.js";
 
-export const GIFTS_PAGE_URL = "https://windblown.wiki.gg/wiki/Gifts";
-
-export const GIFT_SECTIONS = [
-  "General Gifts",
-  "Alterattack Gifts",
-  "Blast Gifts",
-  "Bleed Gifts",
-  "Brutality Gifts",
-  "Burn Gifts",
-  "Corrosive Gifts",
-  "Crystallize Gifts",
-  "Curse Gifts",
-  "Echo Gifts",
-  "Freeze Gifts",
-  "Goo Gifts",
-  "Mark Gifts",
-  "Overwhelm Gifts",
-  "Rush Gifts",
-  "Scythe Gifts",
-] as const;
-
-export interface GiftsScrapeOptions {
-  url?: string;
-  sections?: readonly string[];
+const PAGE = {
+  url: "https://windblown.wiki.gg/wiki/Gifts",
+  sections: [
+    "General Gifts",
+    "Alterattack Gifts",
+    "Blast Gifts",
+    "Bleed Gifts",
+    "Brutality Gifts",
+    "Burn Gifts",
+    "Corrosive Gifts",
+    "Crystallize Gifts",
+    "Curse Gifts",
+    "Echo Gifts",
+    "Freeze Gifts",
+    "Goo Gifts",
+    "Mark Gifts",
+    "Overwhelm Gifts",
+    "Rush Gifts",
+    "Scythe Gifts",
+  ]
 }
 
-export async function scrapeGifts(options: GiftsScrapeOptions = {}): Promise<Gift[]> {
-  const url = options.url ?? GIFTS_PAGE_URL;
-  const sections = options.sections ?? GIFT_SECTIONS;
-
-  const document = await fetchWikiDocument(url);
+/**
+ * Scrape gifts from the wiki and return normalized gift records.
+ *
+ * Assumptions: The target page follows the expected section/table layout.
+ *
+ * Side effects: performs network requests to fetch wiki HTML.
+ *
+ * @returns Array of gifts parsed from the requested sections.
+ */
+export async function scrapeGifts(): Promise<Gift[]> {
+  const document = await fetchWikiDocument(PAGE.url);
   const gifts: Gift[] = [];
 
-  for (const section of sections) {
+  // For each section, find its table and loop through its rows to scrape gifts
+  for (const section of PAGE.sections) {
     const rows = findSectionTableRows(document.$, section);
     for (const row of rows) {
       const gift = parseGiftRow(document.$, row, section);
@@ -50,6 +53,18 @@ export async function scrapeGifts(options: GiftsScrapeOptions = {}): Promise<Gif
   return gifts;
 }
 
+/**
+ * Parse a table row element into a gift record when the required fields exist.
+ *
+ * Assumptions: The row has at least three cells: image, name, description.
+ *
+ * Side effects: none.
+ *
+ * @param $ Cheerio API bound to the document containing the row.
+ * @param row Table row element to parse.
+ * @param section Section heading used to derive the gift category.
+ * @returns Parsed gift record or null when data is incomplete.
+ */
 function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null {
   const cells = $(row).find("td");
   if (cells.length < 3) {
