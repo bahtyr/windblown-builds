@@ -14,13 +14,13 @@ export interface RichTextEntityNode extends RichTextBaseNode {
   text: string;
   id?: string;
   href?: string;
-  icon?: string;
+  image?: string;
 }
 
 export type RichDescriptionNode = RichTextTextNode | RichTextEntityNode;
 
 export interface Gift {
-  imageUrl: string;
+  image: string;
   name: string;
   category: string;
   description: string;

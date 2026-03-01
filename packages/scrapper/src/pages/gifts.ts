@@ -71,20 +71,21 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
     return null;
   }
 
-  const imageUrl = cells.eq(0).find("img").first().attr("src")?.trim();
+  const image = cells.eq(0).find("img").first().attr("src")?.trim();
   const name = cells.eq(1).text().trim();
   const descriptionCell = cells.eq(2);
   const description = descriptionCell.text().trim();
+  const richDescription = parseRichDescription(descriptionCell.html() ?? "");
 
-  if (!imageUrl || !name) {
+  if (!image || !name) {
     return null;
   }
 
   return {
-    imageUrl,
+    image,
     name,
     category: section.replace(/\s+Gifts$/, "").trim(),
     description,
-    richDescription: parseRichDescription(descriptionCell.html() ?? ""),
+    richDescription,
   };
 }

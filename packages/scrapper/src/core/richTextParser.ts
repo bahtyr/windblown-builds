@@ -141,7 +141,7 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
   }
 
   const href = normalizeUrl(hrefRaw.trim());
-  const icon = normalizeUrl(tooltip.find("img[src]").first().attr("src")?.trim());
+  const image = normalizeUrl(tooltip.find("img[src]").first().attr("src")?.trim());
   const id = deriveEntityId(href);
 
   const nameSpan = tooltip.find("b a span").first();
@@ -156,6 +156,10 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
         ? nameLink.text().trim()
         : fallback;
 
+  if (name.length === 0) {
+    // allowed
+  }
+
   const color =
     nameSpan.length > 0
       ? getColor(nameSpan.attr("style"))
@@ -168,7 +172,7 @@ function parseEntity($: CheerioAPI, tooltip: Cheerio<Element>): RichTextEntityNo
     text: name,
     ...(href !== undefined ? {href} : {}),
     ...(id ? {id} : {}),
-    ...(icon !== undefined ? {icon} : {}),
+    ...(image !== undefined ? {image: image} : {}),
     ...(color ? {color} : {}),
     ...(bold ? {bold: true} : {}),
   };
