@@ -164,9 +164,9 @@ function richPartToNode(part) {
             render();
         });
 
-        if (part.icon) {
+        if (part.image) {
             const img = document.createElement("img");
-            img.src = absUrl(part.icon);
+            img.src = absUrl(part.image);
             img.alt = label;
             btn.appendChild(img);
         }
@@ -200,7 +200,7 @@ function renderCard(gift, shouldFade) {
 
     const img = document.createElement("img");
     img.className = "gift-icon";
-    img.src = absUrl(gift.imageUrl);
+    img.src = absUrl(gift.image);
     img.alt = gift.name || gift.category || "gift";
     top.appendChild(img);
 

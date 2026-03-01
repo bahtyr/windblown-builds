@@ -2,6 +2,8 @@ import {Cheerio} from "cheerio";
 import {Element, Node, Text} from "domhandler";
 import {RichDescriptionNode} from "../pages/types.js";
 
+const WIKI_BASE_URL = "https://windblown.wiki.gg";
+
 // DOM helpers
 
 export function isTextNode(node: Node): node is Text {
@@ -24,6 +26,23 @@ export function isBold(tagName: string): boolean {
 
 export function normalizeWhitespace(raw: string): string {
   return raw.replace(/\s+/g, " ");
+}
+
+export function normalizeUrl(value: string | undefined): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  if (trimmed.length === 0) {
+    return "";
+  }
+
+  if (trimmed.startsWith("/")) {
+    return `${WIKI_BASE_URL}${trimmed}`;
+  }
+
+  return trimmed;
 }
 
 /**
@@ -97,4 +116,18 @@ export function mergeNeighborTextTokens(tokens: RichDescriptionNode[]): RichDesc
   }
 
   return merged;
+}
+
+export function deriveEntityId(href: string | undefined): string | undefined {
+  if (!href) {
+    return undefined;
+  }
+
+  const wikiIndex = href.indexOf("/wiki/");
+  if (wikiIndex === -1) {
+    return undefined;
+  }
+
+  const slug = href.slice(wikiIndex + "/wiki/".length).split(/[?#]/)[0];
+  return slug.length > 0 ? slug : undefined;
 }

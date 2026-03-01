@@ -17,7 +17,7 @@ describe("rich text parser", () => {
 
   it("parse full gift: Complete Crystallize", () => {
     const tokens = parse(FULL_Crystallize);
-    // console.log(JSON.stringify(tokens, null, 2));
+    console.log(JSON.stringify(tokens, null, 2));
     expect(tokens).toEqual([
       {
         "key": "text",
@@ -26,9 +26,9 @@ describe("rich text parser", () => {
       {
         "key": "entity",
         "text": "Crystallized",
-        "href": "https://windblown.wiki.gg//wiki/Crystallize",
+        "href": "https://windblown.wiki.gg/wiki/Crystallize",
         "id": "Crystallize",
-        "icon": "https://windblown.wiki.gg//images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
+        "image": "https://windblown.wiki.gg/images/thumb/Crystallize_Icon.png/20px-Crystallize_Icon.png?7021c1",
         "color": "#0089ff",
         "bold": true
       },
@@ -46,9 +46,9 @@ describe("rich text parser", () => {
       {
         "key": "entity",
         "text": "Criticals",
-        "href": "https://windblown.wiki.gg//wiki/Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
         "id": "Criticals",
-        "icon": "https://windblown.wiki.gg//images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
         "color": "#ffdd00",
         "bold": true
       },
@@ -59,9 +59,9 @@ describe("rich text parser", () => {
       {
         "key": "entity",
         "text": "Curse",
-        "href": "https://windblown.wiki.gg//wiki/Curse",
+        "href": "https://windblown.wiki.gg/wiki/Curse",
         "id": "Curse",
-        "icon": "https://windblown.wiki.gg//images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "image": "https://windblown.wiki.gg/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
         "color": "#afa2ff",
         "bold": true
       },
@@ -72,9 +72,9 @@ describe("rich text parser", () => {
       {
         "key": "entity",
         "text": "",
-        "href": "https://windblown.wiki.gg//wiki/Auto_Scaling",
+        "href": "https://windblown.wiki.gg/wiki/Auto_Scaling",
         "id": "Auto_Scaling",
-        "icon": "https://windblown.wiki.gg//images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
+        "image": "https://windblown.wiki.gg/images/thumb/Auto_Scaling_Icon.png/20px-Auto_Scaling_Icon.png?ceb0bb",
         "color": "#ffffff",
         "bold": true
       },

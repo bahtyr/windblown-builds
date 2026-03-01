@@ -9,13 +9,14 @@ import {
   isTooltip,
   isTooltipText,
   mergeNeighborTextTokens,
-  normalizeWhitespace
+  normalizeWhitespace,
+  normalizeUrl,
+  deriveEntityId,
 } from "./richTextParser.helpers.js";
 
 // Constants
 
 const NUMBER_PATTERN = /^[+-]?\d+(?:\.\d+)?$/;
-const WIKI_BASE_URL = "https://windblown.wiki.gg/";
 
 // Public API
 
@@ -209,35 +210,4 @@ function parseNumberMaybe(
   const color = getColor(span.attr("style")) ?? colorContext;
   tokens.push({key: "text", text: value, bold: true, ...(color ? {color} : {})});
   return true;
-}
-
-function normalizeUrl(value: string | undefined): string | undefined {
-  if (value === undefined) {
-    return undefined;
-  }
-
-  const trimmed = value.trim();
-  if (trimmed.length === 0) {
-    return "";
-  }
-
-  if (trimmed.startsWith("/")) {
-    return `${WIKI_BASE_URL}${trimmed}`;
-  }
-
-  return trimmed;
-}
-
-function deriveEntityId(href: string | undefined): string | undefined {
-  if (!href) {
-    return undefined;
-  }
-
-  const wikiIndex = href.indexOf("/wiki/");
-  if (wikiIndex === -1) {
-    return undefined;
-  }
-
-  const slug = href.slice(wikiIndex + "/wiki/".length).split(/[?#]/)[0];
-  return slug.length > 0 ? slug : undefined;
 }
