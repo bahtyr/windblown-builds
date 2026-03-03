@@ -1,6 +1,6 @@
 "use client";
 
-import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, useContext, useEffect, useMemo, useState, useCallback} from "react";
 import {loadEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
@@ -143,15 +143,18 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     return next;
   };
 
-  const ensureActiveDeck = (customName?: string): string => {
-    if (!hydrated) return customName ?? name;
-    const baseName = name === "" ? suggestName(saved) : name;
-    const targetName = customName ?? selectedSaved ?? baseName;
-    setNameState(targetName);
-    setSelectedSaved((prev) => prev ?? targetName);
-    setSaved((prev) => upsertSaved(prev, targetName, items));
-    return targetName;
-  };
+  const ensureActiveDeck = useCallback(
+    (customName?: string): string => {
+      if (!hydrated) return customName ?? name;
+      const baseName = name === "" ? suggestName(saved) : name;
+      const targetName = customName ?? selectedSaved ?? baseName;
+      setNameState(targetName);
+      setSelectedSaved((prev) => prev ?? targetName);
+      setSaved((prev) => upsertSaved(prev, targetName, items));
+      return targetName;
+    },
+    [hydrated, name, saved, selectedSaved, items],
+  );
 
   const api: DeckContextType = useMemo(
     () => ({
@@ -227,7 +230,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       resetDeck: () => setItems([]),
     }),
-    [items, name, saved, selectedSaved],
+    [items, name, saved, selectedSaved, ensureActiveDeck],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;

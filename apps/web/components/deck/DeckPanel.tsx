@@ -76,7 +76,7 @@ export default function DeckPanel() {
             <div className="deck-slots" id="deckSlots">
               {rows(deck.items).map((groups, rowIdx) => (
                 <div className="deck-row" key={rowIdx}>
-                  {groups.map(({type, list}) => (
+                  {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
                     list.length > 0 && (
                       <div className="deck-group" key={type}>
                         <div className="deck-group-items">
@@ -148,17 +148,15 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
   );
 }
 
-function rows(items: DeckItem[]) {
+function rows(items: DeckItem[]): { type: EntityType; list: DeckItem[] }[][] {
   const group = (type: EntityType) => items.filter((x) => x.type === type);
   return [
-    [{type: "gifts", list: group("gifts")}],
+    [{type: "gifts" as const, list: group("gifts")}],
     [
-      {type: "weapons", list: group("weapons")},
-      {type: "trinkets", list: group("trinkets")},
-      {type: "magifishes", list: group("magifishes")},
+      {type: "weapons" as const, list: group("weapons")},
+      {type: "trinkets" as const, list: group("trinkets")},
+      {type: "magifishes" as const, list: group("magifishes")},
     ],
-    [
-      {type: "hexes", list: group("hexes")},
-    ],
+    [{type: "hexes" as const, list: group("hexes")}],
   ];
 }

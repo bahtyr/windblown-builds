@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, useDeck} from "../../components/deck/DeckContext";
 import {useLikes} from "../../components/like/LikeContext";
@@ -70,12 +70,12 @@ export default function EntityPage({params}: { params: { type: string } }) {
       rect: el.getBoundingClientRect(),
     }));
 
-  const refreshMatchNav = () => {
+  const refreshMatchNav = useCallback(() => {
     const matches = collectMatches();
     const above = matches.filter((m) => m.rect.bottom < 0).length;
     const below = matches.filter((m) => m.rect.top > window.innerHeight).length;
     setMatchNav({above, below});
-  };
+  }, []);
 
   const scrollToNearest = (direction: "up" | "down") => {
     const matches = collectMatches();
@@ -103,7 +103,7 @@ export default function EntityPage({params}: { params: { type: string } }) {
       window.removeEventListener("scroll", handler);
       window.removeEventListener("resize", handler);
     };
-  }, [loading, error, items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items]);
+  }, [loading, error, items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items, refreshMatchNav]);
 
   const limits: DeckLimits = {
     gifts: 20,
