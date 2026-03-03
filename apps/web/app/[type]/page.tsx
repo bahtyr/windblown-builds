@@ -10,8 +10,13 @@ import {loadEntities} from "../../lib/loadEntities";
 
 const VALID_TYPES: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
 
-export default function EntityPage({params}: { params: { type: string } }) {
-  const type = (VALID_TYPES.includes(params.type as EntityType) ? params.type : "gifts") as EntityType;
+type PagePropsLocal = {
+  params?: Promise<Record<string, string>>;
+};
+
+export default function EntityPage({params}: PagePropsLocal) {
+  const rawParams = ((params as any)?.then ? undefined : params) || (params as any) || {};
+  const type = (VALID_TYPES.includes(rawParams.type as EntityType) ? rawParams.type : "gifts") as EntityType;
 
   const [items, setItems] = useState<ScrapedEntity[]>([]);
   const [loading, setLoading] = useState(true);
