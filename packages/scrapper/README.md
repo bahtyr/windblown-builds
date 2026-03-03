@@ -5,6 +5,7 @@ npm install
 npm run dev
 npm run check
 npm run build
+
 npm start
 npm test
 ```

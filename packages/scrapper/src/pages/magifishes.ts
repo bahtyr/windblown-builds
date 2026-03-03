@@ -2,6 +2,7 @@ import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
 import {fetchWikiDocument} from "../core/wikiHtml.js";
 import {parseRichDescription} from "../core/richTextParser.js";
+import {normalizeUrl} from "../core/richTextParser.helpers.js";
 import {Magifish} from "./types.js";
 
 const PAGE = {
@@ -29,7 +30,7 @@ function parseMagifishRow($: CheerioAPI, row: Element): Magifish | null {
     return null;
   }
 
-  const image = cells.eq(0).find("img").first().attr("src")?.trim();
+  const image = normalizeUrl(cells.eq(0).find("img").first().attr("src")?.trim());
   const name = cells.eq(1).text().trim();
   const descriptionCell = cells.eq(2);
   const description = descriptionCell.text().trim();

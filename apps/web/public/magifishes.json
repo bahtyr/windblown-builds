@@ -1,6 +1,6 @@
 [
   {
-    "image": "/images/thumb/Boing_Fish_Icon.png/48px-Boing_Fish_Icon.png?7cae03",
+    "image": "https://windblown.wiki.gg/images/thumb/Boing_Fish_Icon.png/48px-Boing_Fish_Icon.png?7cae03",
     "name": "Boing Fish",
     "description": "Dash on it to perform jump attacks.",
     "richDescription": [
@@ -13,7 +13,7 @@
     "unlockRequirement": "Drops from The Headbanger (Body 2nd kill)"
   },
   {
-    "image": "/images/thumb/Gobbling_Fish_Icon.png/48px-Gobbling_Fish_Icon.png?dd0927",
+    "image": "https://windblown.wiki.gg/images/thumb/Gobbling_Fish_Icon.png/48px-Gobbling_Fish_Icon.png?dd0927",
     "name": "Gobbling Fish",
     "description": "Swallows enemies in its path and explodes.Hit it to strengthen the explosion.",
     "richDescription": [
@@ -26,7 +26,7 @@
     "unlockRequirement": "Drops from The Pirate Captain (2nd kill)"
   },
   {
-    "image": "/images/thumb/Protector_Fish_Icon.png/46px-Protector_Fish_Icon.png?810c7d",
+    "image": "https://windblown.wiki.gg/images/thumb/Protector_Fish_Icon.png/46px-Protector_Fish_Icon.png?810c7d",
     "name": "Protector Fish",
     "description": "Protects all leapers inside its bubble.",
     "richDescription": [

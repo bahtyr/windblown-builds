@@ -1,6 +1,6 @@
 [
   {
-    "image": "/images/thumb/Blade_Storm_Icon.png/47px-Blade_Storm_Icon.png?e4e826",
+    "image": "https://windblown.wiki.gg/images/thumb/Blade_Storm_Icon.png/47px-Blade_Storm_Icon.png?e4e826",
     "name": "Blade Storm",
     "description": "Deals damage to nearby targets repeatedly.",
     "richDescription": [
@@ -16,7 +16,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Bleed_Aura_Icon.png/48px-Bleed_Aura_Icon.png?8fdbf8",
+    "image": "https://windblown.wiki.gg/images/thumb/Bleed_Aura_Icon.png/48px-Bleed_Aura_Icon.png?8fdbf8",
     "name": "Bleed Aura",
     "description": "Applies 5 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. to nearby foes, then gives Bleed InfusionBleed Infusion BuffHits apply 1 Bleed for the duration of the Infusion.  to nearby leapers.",
     "richDescription": [
@@ -58,7 +58,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Bomb_Icon.png/41px-Bomb_Icon.png?7d534e",
+    "image": "https://windblown.wiki.gg/images/thumb/Bomb_Icon.png/41px-Bomb_Icon.png?7d534e",
     "name": "Bomb",
     "description": "It goes BOOM around you!",
     "richDescription": [
@@ -74,7 +74,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Burn_Aura_Icon.png/48px-Burn_Aura_Icon.png?a8438f",
+    "image": "https://windblown.wiki.gg/images/thumb/Burn_Aura_Icon.png/48px-Burn_Aura_Icon.png?a8438f",
     "name": "Burn Aura",
     "description": "Applies 5 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. to nearby foes, then gives Burn InfusionBurn Infusion BuffHits apply 1 Burn for the duration of the infusion.  to nearby leapers.",
     "richDescription": [
@@ -116,7 +116,7 @@
     "unlockRequirement": "Drops from Rusher (Common)"
   },
   {
-    "image": "/images/thumb/Chrono_Catch_Icon.png/43px-Chrono_Catch_Icon.png?b05f13",
+    "image": "https://windblown.wiki.gg/images/thumb/Chrono_Catch_Icon.png/43px-Chrono_Catch_Icon.png?b05f13",
     "name": "Chrono Catch",
     "description": "SlowsSlow DebuffAll movements are slower.  enemies and their projectiles.",
     "richDescription": [
@@ -141,7 +141,7 @@
     "unlockRequirement": "Drops from The Memoreaper (1st kill)"
   },
   {
-    "image": "/images/thumb/Curse_Trap_Icon.png/46px-Curse_Trap_Icon.png?a3b33f",
+    "image": "https://windblown.wiki.gg/images/thumb/Curse_Trap_Icon.png/46px-Curse_Trap_Icon.png?a3b33f",
     "name": "Curse Trap",
     "description": "Create a zone that applies Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  every 0.5s",
     "richDescription": [
@@ -170,7 +170,7 @@
     "unlockRequirement": "Drops from Pirate Exploder (Common)"
   },
   {
-    "image": "/images/thumb/Death_Orb_Icon.png/48px-Death_Orb_Icon.png?7f944a",
+    "image": "https://windblown.wiki.gg/images/thumb/Death_Orb_Icon.png/48px-Death_Orb_Icon.png?7f944a",
     "name": "Death Orb",
     "description": "Repeatedly damages foes in its path.",
     "richDescription": [
@@ -186,7 +186,7 @@
     "unlockRequirement": "Drops from Gundog (Always)"
   },
   {
-    "image": "/images/thumb/Detonado_Icon.png/48px-Detonado_Icon.png?ef11f3",
+    "image": "https://windblown.wiki.gg/images/thumb/Detonado_Icon.png/48px-Detonado_Icon.png?ef11f3",
     "name": "Detonado",
     "description": "Attracts enemies and explodes.",
     "richDescription": [
@@ -216,7 +216,7 @@
     "unlockRequirement": "Drops from Worker Nailgun (Common)"
   },
   {
-    "image": "/images/thumb/Ethereal_Blades_Icon.png/43px-Ethereal_Blades_Icon.png?db6fdc",
+    "image": "https://windblown.wiki.gg/images/thumb/Ethereal_Blades_Icon.png/43px-Ethereal_Blades_Icon.png?db6fdc",
     "name": "Ethereal Blades",
     "description": "Throws piercing blades. You can stack up to 3 charges",
     "richDescription": [
@@ -246,7 +246,7 @@
     "unlockRequirement": "Drops from the Broken Banger (second kill)"
   },
   {
-    "image": "/images/thumb/Fireworks_Icon.png/48px-Fireworks_Icon.png?4feb8b",
+    "image": "https://windblown.wiki.gg/images/thumb/Fireworks_Icon.png/48px-Fireworks_Icon.png?4feb8b",
     "name": "Fireworks",
     "description": "Its explosion lightens and stuns nearby enemies MY EYES!",
     "richDescription": [
@@ -271,7 +271,7 @@
     "unlockRequirement": "Drops from Pirate Exploder"
   },
   {
-    "image": "/images/thumb/Frost_Nova_Icon.png/48px-Frost_Nova_Icon.png?501f08",
+    "image": "https://windblown.wiki.gg/images/thumb/Frost_Nova_Icon.png/48px-Frost_Nova_Icon.png?501f08",
     "name": "Frost Nova",
     "description": "FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  enemies around you.",
     "richDescription": [
@@ -296,7 +296,7 @@
     "unlockRequirement": "Drops from Bomber (Common)"
   },
   {
-    "image": "/images/thumb/Fury_Icon.png/48px-Fury_Icon.png?7583b5",
+    "image": "https://windblown.wiki.gg/images/thumb/Fury_Icon.png/48px-Fury_Icon.png?7583b5",
     "name": "Fury",
     "description": "For 8s: Gain a damage bonus, Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%).  +50% and damage taken +30%.",
     "richDescription": [
@@ -360,7 +360,7 @@
     "unlockRequirement": "Found in the starting secret area of Golem Gardens"
   },
   {
-    "image": "/images/thumb/Goo_Bomb_Icon.png/39px-Goo_Bomb_Icon.png?25b273",
+    "image": "https://windblown.wiki.gg/images/thumb/Goo_Bomb_Icon.png/39px-Goo_Bomb_Icon.png?25b273",
     "name": "Goo Bomb",
     "description": "Inflicts GooGoo DebuffTargets are unable to move for the duration (degressive).  and deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage for 4s.",
     "richDescription": [
@@ -402,7 +402,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Grenade_Icon.png/48px-Grenade_Icon.png?cd5864",
+    "image": "https://windblown.wiki.gg/images/thumb/Grenade_Icon.png/48px-Grenade_Icon.png?cd5864",
     "name": "Grenade",
     "description": "Throw an explosive towards a foe.",
     "richDescription": [
@@ -418,7 +418,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/L-BR0_Icon.png/48px-L-BR0_Icon.png?8ff420",
+    "image": "https://windblown.wiki.gg/images/thumb/L-BR0_Icon.png/48px-L-BR0_Icon.png?8ff420",
     "name": "L-BR0",
     "description": "Pet that shoots at nearby enemies. Use this Trinket to briefly increase its firing rate.",
     "richDescription": [
@@ -457,7 +457,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Leafade_Icon.png/48px-Leafade_Icon.png?58ac11",
+    "image": "https://windblown.wiki.gg/images/thumb/Leafade_Icon.png/48px-Leafade_Icon.png?58ac11",
     "name": "Leafade",
     "description": "Become temporarily undetectable, and your next hit activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 1s.",
     "richDescription": [
@@ -486,7 +486,7 @@
     "unlockRequirement": "Drops from Pirate Shield (Common)"
   },
   {
-    "image": "/images/thumb/Mark_Zone_Icon.png/48px-Mark_Zone_Icon.png?dfc7e2",
+    "image": "https://windblown.wiki.gg/images/thumb/Mark_Zone_Icon.png/48px-Mark_Zone_Icon.png?dfc7e2",
     "name": "Mark Zone",
     "description": "Triggers nearby MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon. , then strikes and MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  nearby enemies.",
     "richDescription": [
@@ -528,7 +528,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Smokey_Dokey_Icon.png/48px-Smokey_Dokey_Icon.png?bd77ad",
+    "image": "https://windblown.wiki.gg/images/thumb/Smokey_Dokey_Icon.png/48px-Smokey_Dokey_Icon.png?bd77ad",
     "name": "Smokey Dokey",
     "description": "Releases a thick smoke around you, allowing you to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  enemy hits.",
     "richDescription": [
@@ -567,7 +567,7 @@
     "unlockRequirement": "Drops from The Broken Banger (1st kill)"
   },
   {
-    "image": "/images/thumb/Ultra_Laser_Icon.png/48px-Ultra_Laser_Icon.png?9f54be",
+    "image": "https://windblown.wiki.gg/images/thumb/Ultra_Laser_Icon.png/48px-Ultra_Laser_Icon.png?9f54be",
     "name": "Ultra Laser",
     "description": "Fire a piercing laser towards the nearest target.",
     "richDescription": [
@@ -583,7 +583,7 @@
     "unlockRequirement": "Unlocked by default"
   },
   {
-    "image": "/images/thumb/Wind_Gust_Icon.png/48px-Wind_Gust_Icon.png?868f2a",
+    "image": "https://windblown.wiki.gg/images/thumb/Wind_Gust_Icon.png/48px-Wind_Gust_Icon.png?868f2a",
     "name": "Wind Gust",
     "description": "Throws nearby enemies backward and destroys projectiles.",
     "richDescription": [
