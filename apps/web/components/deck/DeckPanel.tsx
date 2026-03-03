@@ -41,7 +41,7 @@ export default function DeckPanel() {
         {/*<div className="deck-toggle" aria-expanded="true">Deck</div>*/}
         <div className="deck-panel" id="deckPanel">
           <div className="deck-side deck-entities-list">
-            <div className="deck-entities-title">Saved decks</div>
+            <div className="deck-entities-title">Deck</div>
             {deck.saved.length === 0 && <div className="muted">None</div>}
             {deck.saved.map((d) => (
               <div key={d.name} className={`saved-row ${deck.selectedSaved === d.name ? "active" : ""}`}>

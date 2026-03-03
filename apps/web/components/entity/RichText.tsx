@@ -4,11 +4,10 @@ import {RichDescriptionNode} from "../../lib/types";
 
 type Props = {
   parts: RichDescriptionNode[];
-  onEntityClick?: (id: string) => void;
   onEntityFilter?: (id: string) => void;
 };
 
-export default function RichText({parts, onEntityClick, onEntityFilter}: Props) {
+export default function RichText({parts, onEntityFilter}: Props) {
   return (
     <div className="rich">
       {parts.map((p, i) => {
@@ -29,8 +28,7 @@ export default function RichText({parts, onEntityClick, onEntityFilter}: Props) 
               e.stopPropagation();
               const id = p.href || p.id;
               if (id) {
-                if (onEntityFilter) onEntityFilter(id);
-                else if (onEntityClick) onEntityClick(id);
+                if (onEntityFilter) onEntityFilter(id); // todo make this toggle filter if filter already applied remove
               }
             }}
           >

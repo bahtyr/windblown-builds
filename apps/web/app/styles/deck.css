@@ -6,8 +6,8 @@
 }
 
 .deck-panel {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+    /*display: grid;*/
+    /*grid-template-columns: 280px 1fr;*/
     gap: 12px;
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -45,11 +45,13 @@
 
 .deck-entities-list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 6px;
     max-height: 240px;
     overflow: auto;
 }
+
+/* ---------- Deck main content ---------- */
 
 .deck-main {
     display: flex;

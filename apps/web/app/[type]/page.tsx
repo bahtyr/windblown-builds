@@ -152,7 +152,7 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // deck save or read from local storage not working
 // deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
-// deck list horizontal like tabs
+// ✅ deck list horizontal like tabs
 // deck list show delete on hover only
 // deck list text color white, selected blue
 
