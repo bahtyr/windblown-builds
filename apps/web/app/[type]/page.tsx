@@ -169,3 +169,6 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ browse // add filter to filter likes
 // ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
 // if results present show scroll down / or scroll up indicator at the corner of the scrfeen
+
+
+// browse / make likes checkbox pill/button like - hide checkbox square
