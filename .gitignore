@@ -32,9 +32,9 @@ coverage/
 #scrapper/*.json
 
 # Site build output (if applicable)
-#app/.next/
-#app/dist/
-#app/build/
+.next/
+dist/
+build/
 
 # Logs
 *.log
