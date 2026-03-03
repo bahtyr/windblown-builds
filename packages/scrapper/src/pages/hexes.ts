@@ -10,7 +10,7 @@ const PAGE = {
 
 export async function scrapeHexes(): Promise<Hex[]> {
   const document = await fetchWikiDocument(PAGE.url);
-  const rows = document.$("table").first().find("tbody tr").toArray();
+  const rows = document.$("h1 + div table.wikitable").first().find("tbody tr").toArray();
 
   const hexes: Hex[] = [];
   for (const row of rows) {

@@ -1,1 +1,1113 @@
-[]
+[
+  {
+    "image": "/images/thumb/Anchor_Boom_Icon.png/46px-Anchor_Boom_Icon.png?719468",
+    "name": "Anchor Boom",
+    "description": "Directs hits deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..[Held] Fires a burningBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. wrecking ball.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Directs hits deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Fires a "
+      },
+      {
+        "key": "entity",
+        "text": "burning",
+        "href": "https://windblown.wiki.gg/wiki/Burn",
+        "id": "Burn",
+        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "color": "#ff5b00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " wrecking ball."
+      }
+    ],
+    "baseDamage": "171",
+    "damageType": "DPS",
+    "alterattackBonus": "+60%",
+    "unlockCost": "8 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Pirate Captain (1st kill)"
+  },
+  {
+    "image": "/images/thumb/Beatbolt_Icon.png/48px-Beatbolt_Icon.png?eec9e1",
+    "name": "Beatbolt",
+    "description": "Fire with the right timing to inflict CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Fire with the "
+      },
+      {
+        "key": "text",
+        "text": "right timing",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " to inflict "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "80",
+    "damageType": "DPS",
+    "alterattackBonus": "+45%",
+    "unlockCost": "Free",
+    "unlockRequirement": "Repair FREND-43V3R"
+  },
+  {
+    "image": "/images/thumb/Boomerang_Icon.png/47px-Boomerang_Icon.png?a0c481",
+    "name": "Boomerang",
+    "description": "It goes away, and it comes back.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "It goes away, and it comes back."
+      }
+    ],
+    "baseDamage": "48",
+    "damageType": "DPS",
+    "alterattackBonus": "+110%",
+    "unlockCost": "5 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Navelless Brothers (1st kill)"
+  },
+  {
+    "image": "/images/thumb/Charged_Blade_Icon.png/48px-Charged_Blade_Icon.png?ea18a3",
+    "name": "Charged Blade",
+    "description": "[Held] inflicts criticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. heavy blows.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " inflicts "
+      },
+      {
+        "key": "entity",
+        "text": "critical",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "heavy blows",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "52",
+    "damageType": "DPS",
+    "alterattackBonus": "+345%",
+    "unlockCost": "12 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Worker Saw (Common)"
+  },
+  {
+    "image": "/images/thumb/Crocojaws_Icon.png/48px-Crocojaws_Icon.png?15cbfd",
+    "name": "Crocojaws",
+    "description": "Ancient, sharpened jaws... [Held] Hits activate BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 4s (+30%).",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Ancient, sharpened jaws... "
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Hits activate "
+      },
+      {
+        "key": "entity",
+        "text": "Brutality",
+        "href": "https://windblown.wiki.gg/wiki/Brutality",
+        "id": "Brutality",
+        "image": "https://windblown.wiki.gg/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
+        "color": "#ff8689",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for 4s (+30%)."
+      }
+    ],
+    "baseDamage": "83",
+    "damageType": "DPS",
+    "alterattackBonus": "+130%",
+    "unlockCost": "20 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Carved from Jaw variant (Forced)"
+  },
+  {
+    "image": "/images/thumb/Cuprik%27s_Hammer_Icon.png/42px-Cuprik%27s_Hammer_Icon.png?64a81b",
+    "name": "Cuprik's Hammer",
+    "description": "Launching its AlterattackAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.  activates its FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  mode.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Launching its",
+        "bold": true
+      },
+      {
+        "key": "entity",
+        "text": "Alterattack",
+        "href": "https://windblown.wiki.gg/wiki/Alterattack",
+        "id": "Alterattack",
+        "image": "https://windblown.wiki.gg/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
+        "color": "#ef917e",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " activates its "
+      },
+      {
+        "key": "entity",
+        "text": "Freeze",
+        "href": "https://windblown.wiki.gg/wiki/Freeze",
+        "id": "Freeze",
+        "image": "https://windblown.wiki.gg/images/thumb/Freeze_Icon.png/20px-Freeze_Icon.png?c2b813",
+        "color": "#00fff2",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "mode",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "50",
+    "damageType": "DPS",
+    "alterattackBonus": "+150%",
+    "unlockCost": "Free",
+    "unlockRequirement": "Given at the end of the Cuprik's Quest Line"
+  },
+  {
+    "image": "/images/thumb/Elder_Sword_Icon.png/48px-Elder_Sword_Icon.png?514cfc",
+    "name": "Elder Sword",
+    "description": "The last hit throws enemies backward and deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The "
+      },
+      {
+        "key": "text",
+        "text": "last hit throws enemies",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " backward and deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "79",
+    "damageType": "DPS",
+    "alterattackBonus": "+310%",
+    "unlockCost": "15 Memonite Shard Currency ItemMaterial used to unlock new gear. + 2 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Navelless Brothers (Big Warrior)"
+  },
+  {
+    "image": "/images/thumb/Eye_Blade_Icon.png/44px-Eye_Blade_Icon.png?2ef611",
+    "name": "Eye Blade",
+    "description": "The last strike deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. and applies MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  (50 damage).",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The last strike deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " and applies "
+      },
+      {
+        "key": "entity",
+        "text": "Mark",
+        "href": "https://windblown.wiki.gg/wiki/Mark",
+        "id": "Mark",
+        "image": "https://windblown.wiki.gg/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
+        "color": "#d3ff00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " (50 damage)."
+      }
+    ],
+    "baseDamage": "59",
+    "damageType": "DPS",
+    "alterattackBonus": "+100%",
+    "unlockCost": "5 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Navelless Horned Monster (Forced)"
+  },
+  {
+    "image": "/images/thumb/Fiery_Claws_Icon.png/47px-Fiery_Claws_Icon.png?3b17ba",
+    "name": "Fiery Claws",
+    "description": "Deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. against BurningBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. foes.[Held] Fires 3 homing heads that BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (2 damage).",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " against "
+      },
+      {
+        "key": "entity",
+        "text": "Burning",
+        "href": "https://windblown.wiki.gg/wiki/Burn",
+        "id": "Burn",
+        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "color": "#ff5b00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " foes."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Fires 3 homing heads that "
+      },
+      {
+        "key": "entity",
+        "text": "Burn",
+        "href": "https://windblown.wiki.gg/wiki/Burn",
+        "id": "Burn",
+        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "color": "#ff5b00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " (2 damage)."
+      }
+    ],
+    "baseDamage": "112",
+    "damageType": "DPS",
+    "alterattackBonus": "+185%",
+    "unlockCost": "5 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Navelless Brothers (Big Pyro)"
+  },
+  {
+    "image": "/images/thumb/Fish_Knife_Icon.png/47px-Fish_Knife_Icon.png?85ea43",
+    "name": "Fish Knife",
+    "description": "Perfect for fish!Good for adventure?The last hit is CriticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Perfect for fish!Good for adventure?The "
+      },
+      {
+        "key": "text",
+        "text": "last hit is",
+        "bold": true
+      },
+      {
+        "key": "entity",
+        "text": "Critical",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "80",
+    "damageType": "DPS",
+    "alterattackBonus": "+105%",
+    "unlockCost": "-",
+    "unlockRequirement": "Unlocked by default"
+  },
+  {
+    "image": "/images/thumb/Fishing_Rod_Icon.png/48px-Fishing_Rod_Icon.png?4b784a",
+    "name": "Fishing Rod",
+    "description": "So, are they biting?[Held] Hooks an enemy and pulls it behind you.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "So, are they biting?"
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Hooks an enemy and pulls it behind you."
+      }
+    ],
+    "baseDamage": "122",
+    "damageType": "DPS",
+    "alterattackBonus": "+165%",
+    "unlockCost": "30 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Bring Carlos the Cheese (Truffle is not required)."
+  },
+  {
+    "image": "/images/thumb/Golem_Flail_Icon.png/48px-Golem_Flail_Icon.png?4afcf7",
+    "name": "Golem Flail",
+    "description": "The finisher OverwhelmsOverwhelm Hit TypeHits that Overwhelm deal +125% total damage. .",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The finisher "
+      },
+      {
+        "key": "entity",
+        "text": "Overwhelms",
+        "href": "https://windblown.wiki.gg/wiki/Overwhelm",
+        "id": "Overwhelm",
+        "image": "https://windblown.wiki.gg/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
+        "color": "#ff8200",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "129",
+    "damageType": "DPS",
+    "alterattackBonus": "+150%",
+    "unlockCost": "20 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Carved from Golem Whip variant (Forced)"
+  },
+  {
+    "image": "/images/thumb/Goo_Brush_Icon.png/48px-Goo_Brush_Icon.png?8b718a",
+    "name": "Goo Brush",
+    "description": "Applies GooGoo DebuffTargets are unable to move for the duration (degressive).  to the target, facilitating CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Applies "
+      },
+      {
+        "key": "entity",
+        "text": "Goo",
+        "href": "https://windblown.wiki.gg/wiki/Goo",
+        "id": "Goo",
+        "image": "https://windblown.wiki.gg/images/thumb/Goo_Icon.png/20px-Goo_Icon.png?f62817",
+        "color": "#ff45ee",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " to the target, facilitating "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "125",
+    "damageType": "DPS",
+    "alterattackBonus": "+155%",
+    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Fenwick (Common)"
+  },
+  {
+    "image": "/images/thumb/Heavy_Blade_Icon.png/44px-Heavy_Blade_Icon.png?67db7d",
+    "name": "Heavy Blade",
+    "description": "A slow but powerful weapon. The last attack deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. and stuns.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "A slow but powerful weapon. The last attack deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " and "
+      },
+      {
+        "key": "text",
+        "text": "stuns",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "159",
+    "damageType": "DPS",
+    "alterattackBonus": "+330%",
+    "unlockCost": "3 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Tribomber (1st kill)"
+  },
+  {
+    "image": "/images/thumb/Hibiki%27s_Umbrella_Icon.png/48px-Hibiki%27s_Umbrella_Icon.png?d4ced4",
+    "name": "Hibiki's Umbrella",
+    "description": "The last attack unleashes a CriticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. tornado.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The last attack unleashes a "
+      },
+      {
+        "key": "entity",
+        "text": "Critical",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " tornado."
+      }
+    ],
+    "baseDamage": "219",
+    "damageType": "DPS",
+    "alterattackBonus": "+145%",
+    "unlockCost": "6 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Pirate Goblin (Epic), Pirate Goblin Alpha (Common)"
+  },
+  {
+    "image": "/images/thumb/Impactone_Icon.png/48px-Impactone_Icon.png?1763c2",
+    "name": "Impactone",
+    "description": "The weapon of a relentless and deadly Sentinel.The last hit deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The weapon of a relentless and deadly Sentinel.The last hit deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "175",
+    "damageType": "DPS",
+    "alterattackBonus": "+380%",
+    "unlockCost": "20 Memonite Dust Currency ItemMaterial used to unlock new gear. + 1 Obsidian Memonite Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Sentinel Paladin Alpha (Always)"
+  },
+  {
+    "image": "/images/thumb/Jar_Icon.png/48px-Jar_Icon.png?eabb1e",
+    "name": "Jar",
+    "description": "Throws your Shells!?",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Throws your "
+      },
+      {
+        "key": "text",
+        "text": "Shells",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "!?"
+      }
+    ],
+    "baseDamage": "191",
+    "damageType": "DPS",
+    "alterattackBonus": "+150%",
+    "unlockCost": "30 Memonite Shard Currency ItemMaterial used to unlock new gear. + 1 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Big Jar (Common)"
+  },
+  {
+    "image": "/images/thumb/Katars_Icon.png/48px-Katars_Icon.png?cc551c",
+    "name": "Katars",
+    "description": "BackstabsBackstabs Hit TypeHits against the back of enemies. Deal increased damage.  deal CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..[Held] Dash behind your target.",
+    "richDescription": [
+      {
+        "key": "entity",
+        "text": "Backstabs",
+        "href": "https://windblown.wiki.gg/wiki/Backstabs",
+        "id": "Backstabs",
+        "image": "https://windblown.wiki.gg/images/thumb/Backstabs_Icon.png/20px-Backstabs_Icon.png?10f191",
+        "color": "#ff0078",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " deal "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Dash behind your target."
+      }
+    ],
+    "baseDamage": "80",
+    "damageType": "DPS",
+    "alterattackBonus": "+220%",
+    "unlockCost": "-",
+    "unlockRequirement": "Unlocked by default"
+  },
+  {
+    "image": "/images/thumb/Kunai_Icon.png/48px-Kunai_Icon.png?d4e64a",
+    "name": "Kunai",
+    "description": "Applies CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. (3%).[Held] All CursesCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. explode, dealing CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Applies "
+      },
+      {
+        "key": "entity",
+        "text": "Curse",
+        "href": "https://windblown.wiki.gg/wiki/Curse",
+        "id": "Curse",
+        "image": "https://windblown.wiki.gg/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "color": "#afa2ff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " (3%)."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " All "
+      },
+      {
+        "key": "entity",
+        "text": "Curses",
+        "href": "https://windblown.wiki.gg/wiki/Curse",
+        "id": "Curse",
+        "image": "https://windblown.wiki.gg/images/thumb/Curse_Icon.png/20px-Curse_Icon.png?b90ff2",
+        "color": "#afa2ff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " explode, dealing "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "35",
+    "damageType": "DPS",
+    "alterattackBonus": "+50%",
+    "unlockCost": "2 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Bunker (Common)"
+  },
+  {
+    "image": "/images/thumb/Ninja_Stars_Icon.png/38px-Ninja_Stars_Icon.png?6cbd68",
+    "name": "Ninja Stars",
+    "description": "Damage based on distance. Inflicts CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. when used from max range.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Damage based on distance. Inflicts "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " when used from max range."
+      }
+    ],
+    "baseDamage": "35",
+    "damageType": "DPS",
+    "alterattackBonus": "+95%",
+    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Amassmouss (Common)"
+  },
+  {
+    "image": "/images/thumb/Ravenblade_Icon.png/46px-Ravenblade_Icon.png?4c3101",
+    "name": "Ravenblade",
+    "description": "Deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. after the 3rd strike.[Held] Jump attack.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " after the 3rd strike."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Jump attack."
+      }
+    ],
+    "baseDamage": "114",
+    "damageType": "DPS",
+    "alterattackBonus": "+230%",
+    "unlockCost": "-",
+    "unlockRequirement": "Unlocked by default"
+  },
+  {
+    "image": "/images/thumb/Sentinel_Wings_Icon.png/47px-Sentinel_Wings_Icon.png?4efd05",
+    "name": "Sentinel Wings",
+    "description": "Fly me to the moon ♫Fires mid-range lasers.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Fly me to the moon ♫Fires mid-range lasers."
+      }
+    ],
+    "baseDamage": "105",
+    "damageType": "DPS",
+    "alterattackBonus": "+40%",
+    "unlockCost": "5 Memonite Fragment Currency ItemMaterial used to unlock new gear. + 1 Obsidian Memonite Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Get blessed by the Sanctuary"
+  },
+  {
+    "image": "/images/thumb/Sharp_Sisters_Icon.png/48px-Sharp_Sisters_Icon.png?955c82",
+    "name": "Sharp Sisters",
+    "description": "The last hit deals 3 CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The "
+      },
+      {
+        "key": "text",
+        "text": "last hit deals 3",
+        "bold": true
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "baseDamage": "125",
+    "damageType": "DPS",
+    "alterattackBonus": "+275%",
+    "unlockCost": "15 Memonite Shard Currency ItemMaterial used to unlock new gear. + 2 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from Navelless Brothers (Big Rogue)"
+  },
+  {
+    "image": "/images/thumb/Shield_Icon.png/48px-Shield_Icon.png?e786a2",
+    "name": "Shield",
+    "description": "Reduces damage taken when held in hand.[Held] Raise your guardGuard MechanicProvokes enemies and heavily reduces damage received.  to block and parryParry MechanicRelease your guard just before being hit.  enemy attacks.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Reduces damage taken",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " when "
+      },
+      {
+        "key": "text",
+        "text": "held in hand",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Raise your "
+      },
+      {
+        "key": "entity",
+        "text": "guard",
+        "href": "https://windblown.wiki.gg/wiki/Guard",
+        "id": "Guard",
+        "color": "#bdf3ff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " to block and "
+      },
+      {
+        "key": "entity",
+        "text": "parry",
+        "href": "https://windblown.wiki.gg/wiki/Parry",
+        "id": "Parry",
+        "image": "https://windblown.wiki.gg/images/thumb/Parry_Icon.png/20px-Parry_Icon.png?f575c3",
+        "color": "#008aff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " enemy attacks."
+      }
+    ],
+    "baseDamage": "300",
+    "damageType": "DMG",
+    "alterattackBonus": "+400%",
+    "unlockCost": "12 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Headbanger(Body 1st kill)"
+  },
+  {
+    "image": "/images/thumb/Sirocco_Icon.png/45px-Sirocco_Icon.png?fc6ecd",
+    "name": "Sirocco",
+    "description": "Deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. against BurningBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. targets. The last strike applies BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. (2 damage).",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " against "
+      },
+      {
+        "key": "entity",
+        "text": "Burning",
+        "href": "https://windblown.wiki.gg/wiki/Burn",
+        "id": "Burn",
+        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "color": "#ff5b00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " targets. The last strike applies "
+      },
+      {
+        "key": "entity",
+        "text": "Burn",
+        "href": "https://windblown.wiki.gg/wiki/Burn",
+        "id": "Burn",
+        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "color": "#ff5b00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " (2 damage)."
+      }
+    ],
+    "baseDamage": "40",
+    "damageType": "DPS",
+    "alterattackBonus": "+80%",
+    "unlockCost": "-",
+    "unlockRequirement": "Unlocked by default"
+  },
+  {
+    "image": "/images/thumb/Spinalsword_Icon.png/46px-Spinalsword_Icon.png?c347a5",
+    "name": "Spinalsword",
+    "description": "The death of nearby enemy activates its CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. and grants +25% Attack speedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%).  for 8s.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "The "
+      },
+      {
+        "key": "text",
+        "text": "death of nearby enemy",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " activates its "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " and grants +25% "
+      },
+      {
+        "key": "entity",
+        "text": "Attack speed",
+        "href": "https://windblown.wiki.gg/wiki/Attack_Speed",
+        "id": "Attack_Speed",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for 8s."
+      }
+    ],
+    "baseDamage": "78",
+    "damageType": "DPS",
+    "alterattackBonus": "+130%",
+    "unlockCost": "15 Memonite Shard Currency ItemMaterial used to unlock new gear. + 1 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Carved from Tooth Beast variant (Forced)"
+  },
+  {
+    "image": "/images/thumb/Telepike_Icon.png/43px-Telepike_Icon.png?35c1cc",
+    "name": "Telepike",
+    "description": "Tip deals CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..[Held] Teleports to the target.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Tip deals "
+      },
+      {
+        "key": "entity",
+        "text": "Criticals",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Teleports to the target."
+      }
+    ],
+    "baseDamage": "73",
+    "damageType": "DPS",
+    "alterattackBonus": "+160%",
+    "unlockCost": "5 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Infected Tribomber (1st kill)"
+  },
+  {
+    "image": "/images/thumb/Worm_Claws_Icon.png/42px-Worm_Claws_Icon.png?69e5a4",
+    "name": "Worm Claws",
+    "description": "Deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage. [Held] Each hit also deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage over time.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Deals "
+      },
+      {
+        "key": "entity",
+        "text": "Corrosive",
+        "href": "https://windblown.wiki.gg/wiki/Corrosive",
+        "id": "Corrosive",
+        "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+        "color": "#8cbc00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " damage. "
+      },
+      {
+        "key": "text",
+        "text": "[Held]",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " Each hit also deals "
+      },
+      {
+        "key": "entity",
+        "text": "Corrosive",
+        "href": "https://windblown.wiki.gg/wiki/Corrosive",
+        "id": "Corrosive",
+        "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+        "color": "#8cbc00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " damage over time."
+      }
+    ],
+    "baseDamage": "73",
+    "damageType": "DPS",
+    "alterattackBonus": "+130%",
+    "unlockCost": "20 Memonite Dust Currency ItemMaterial used to unlock new gear. + 10 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Carved from Cavern variant (Forced)"
+  }
+]

@@ -1,1 +1,41 @@
-[]
+[
+  {
+    "image": "/images/thumb/Boing_Fish_Icon.png/48px-Boing_Fish_Icon.png?7cae03",
+    "name": "Boing Fish",
+    "description": "Dash on it to perform jump attacks.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Dash on it to perform jump attacks."
+      }
+    ],
+    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Headbanger (Body 2nd kill)"
+  },
+  {
+    "image": "/images/thumb/Gobbling_Fish_Icon.png/48px-Gobbling_Fish_Icon.png?dd0927",
+    "name": "Gobbling Fish",
+    "description": "Swallows enemies in its path and explodes.Hit it to strengthen the explosion.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Swallows enemies in its path and explodes.Hit it to strengthen the explosion."
+      }
+    ],
+    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Pirate Captain (2nd kill)"
+  },
+  {
+    "image": "/images/thumb/Protector_Fish_Icon.png/46px-Protector_Fish_Icon.png?810c7d",
+    "name": "Protector Fish",
+    "description": "Protects all leapers inside its bubble.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Protects all leapers inside its bubble."
+      }
+    ],
+    "unlockCost": "2 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockRequirement": "Drops from The Head (1st kill)"
+  }
+]

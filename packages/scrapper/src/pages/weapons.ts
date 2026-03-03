@@ -10,7 +10,7 @@ const PAGE = {
 
 export async function scrapeWeapons(): Promise<Weapon[]> {
   const document = await fetchWikiDocument(PAGE.url);
-  const rows = document.$("table").first().find("tbody tr").toArray();
+  const rows = document.$("h1 + div table.wikitable").first().find("tbody tr").toArray();
 
   const weapons: Weapon[] = [];
   for (const row of rows) {
