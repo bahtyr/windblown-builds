@@ -87,7 +87,7 @@ export default function EntityPage({params}: { params: { type: string } }) {
             return (
               <div className="section" key={cat}>
                 <div className="section-header">
-                  <h2>{cat}</h2>
+                  <h2 className={filtered.length === 0 ? "faded" : ""}>{cat}</h2>
                   <div className="section-sub">
                     {filtered.length === list.length ? list.length + " items" :
                       filtered.length === 0 ? "" :
@@ -149,16 +149,17 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // ✅ browse // move section count next to header
 // ✅ browse // adjust count on filter applied
-// browse // controls count same as section show filtered results
 // ✅ browse liked cards do not save or load from local storage
+// browse // controls show filtered results - similar to section count
+// ✅ browse // if section has no items to show
 
 // ✅ browsing card entity clicking on same entity should remove this filter
 // ✅ browsing card entity missing image
 // ✅ browsing card clicking on it adds to deck -- should be only on plus button
 
 // ✅ deck save or read from local storage not working
-// deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
 // ✅ deck list horizontal like tabs
+// deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
 // deck list show delete on hover only
 // deck list text color white, selected blue
 
@@ -167,3 +168,4 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // ✅ browse // add filter to filter likes
 // ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
+// if results present show scroll down / or scroll up indicator at the corner of the scrfeen
