@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 
-const tabs = [
+const tabs: {href: string; label: string}[] = [
   {href: "/gifts", label: "Gifts"},
   {href: "/weapons", label: "Weapons"},
   {href: "/trinkets", label: "Trinkets"},
@@ -19,7 +19,7 @@ export default function NavBar() {
       <h1>Windblown Browser</h1>
       <nav className="tabs">
         {tabs.map((tab) => {
-          const active = pathname === tab.href;
+          const active = pathname?.startsWith(tab.href);
           return (
             <Link key={tab.href} className={`tab ${active ? "active" : ""}`} href={tab.href}>
               {tab.label}

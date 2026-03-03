@@ -1,15 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useMemo, useState} from "react";
-import {useDeck} from "./DeckContext";
+import {useEffect, useState} from "react";
+import {DeckItem, useDeck} from "./DeckContext";
 import {EntityType} from "../../lib/types";
 
 export default function DeckPanel() {
   const deck = useDeck();
   const [status, setStatus] = useState<string>("");
   const total = deck.items.length;
+  const [shareLink, setShareLink] = useState("");
 
-  const shareLink = useMemo(() => {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const params = new URLSearchParams();
     if (deck.name.trim()) params.set("name", deck.name.trim());
     if (deck.items.length) {
@@ -20,7 +23,7 @@ export default function DeckPanel() {
           .join(","),
       );
     }
-    return `${typeof window !== "undefined" ? window.location.origin : ""}/gifts?${params.toString()}`;
+    setShareLink(`${window.location.origin}/gifts?${params.toString()}`);
   }, [deck.items, deck.name]);
 
   const handleCopy = async () => {
@@ -69,17 +72,17 @@ export default function DeckPanel() {
             </div>
           </div>
           <div className="deck-slots" id="deckSlots">
-            {groupedByType(deck.items).map(({type, list}) => (
+            {groupedByType(deck.items).map(({type, label, list}) => (
               <div className="deck-group" key={type}>
-                <div className="deck-group-title">{type}</div>
+                <div className="deck-group-title">{label}</div>
                 <div className="deck-group-items">
                   {list.map((item, idx) => (
                     <DeckDraggable
                       key={item.id}
                       item={item}
                       index={idx}
-                      type={type as EntityType}
-                      onDrop={(from, to) => deck.moveWithinType(type as EntityType, from, to)}
+                      type={type}
+                      onDrop={(from, to) => deck.moveWithinType(type, from, to)}
                       onRemove={() => deck.remove(item.id)}
                       highlight={type === "gifts" && idx < 8}
                     />
@@ -97,7 +100,7 @@ export default function DeckPanel() {
 }
 
 type DragProps = {
-  item: {id: string; name: string; image?: string};
+  item: DeckItem;
   index: number;
   type: EntityType;
   onDrop: (from: number, to: number) => void;
@@ -136,7 +139,13 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
   );
 }
 
-function groupedByType(items: {type: EntityType}[]) {
-  const order: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes"];
-  return order.map((t) => ({type: t, list: items.filter((x) => x.type === t)}));
+function groupedByType(items: DeckItem[]) {
+  const order: {type: EntityType; label: string}[] = [
+    {type: "gifts", label: "Gifts"},
+    {type: "weapons", label: "Weapons"},
+    {type: "trinkets", label: "Trinkets"},
+    {type: "hexes", label: "Hexes"},
+    {type: "magifishes", label: "Magifish"},
+  ];
+  return order.map((t) => ({...t, list: items.filter((x) => x.type === t.type)}));
 }

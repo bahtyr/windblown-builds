@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import {ScrapedEntity, EntityType} from "../../lib/types";
@@ -29,7 +30,9 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
 
   return (
     <article
-      className={`card ${highlight || presentInDeck ? "highlight" : ""} ${presentInDeck ? "in-deck" : ""} ${fade ? "faded" : ""}`}
+      className={`card ${highlight || presentInDeck ? "highlight" : ""} ${presentInDeck ? "in-deck" : ""} ${
+        fade ? "faded" : ""
+      }`}
       onClick={() => {
         if (!presentInDeck && type !== "effects") handleAdd();
       }}
