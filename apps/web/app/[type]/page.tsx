@@ -169,7 +169,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ deck list horizontal like tabs
 // deck better smoother draggable
 // ✅ deck opening copied deck link does not show image
-// >> but hardcoded to url -- can we not find it instead?
+// ✅ deck share link hardcoded to url
 
 // move deck separate from header nav. make it sticky footer
 // ✅ deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
@@ -182,14 +182,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ browse / make likes checkbox pill/button like - hide checkbox square
 
 
-// deck
-// deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
-// ok how about...
-// we start with empty deck
-// there is button to create new deck which inits deck
-// if the user clicks on add on a card we init a deck - if not existing
-// then all changes on active deck are saved instantly
-// there is button to remove deck - which we have
+//✅ deck fix save / refresh name issue
 //✅ clear button is renamed to reset current deck
 
 //✅ deck list show delete on hover only

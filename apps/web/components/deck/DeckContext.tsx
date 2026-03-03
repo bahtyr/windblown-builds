@@ -1,6 +1,7 @@
 "use client";
 
 import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import {loadEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type DeckItem = {
@@ -87,10 +88,48 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   }, [hydrated, saved]);
 
   useEffect(() => {
+    if (!hydrated) return;
+    if (selectedSaved && name !== selectedSaved) {
+      setNameState(selectedSaved);
+    }
+  }, [hydrated, selectedSaved, name]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const missingTypes = Array.from(
+      new Set(items.filter((i) => !i.image).map((i) => i.type)),
+    );
+    if (missingTypes.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      const fetched = new Map<EntityType, ScrapedEntity[]>();
+      for (const t of missingTypes) {
+        try {
+          fetched.set(t, await loadEntities(t));
+        } catch {
+          // ignore fetch errors; keep existing items
+        }
+      }
+      if (cancelled) return;
+      setItems((prev) =>
+        prev.map((item) => {
+          if (item.image) return item;
+          const match = fetched.get(item.type)?.find((e) => e.name === item.name);
+          if (match?.image) return {...item, image: match.image};
+          return item;
+        }),
+      );
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated, items]);
+
+  useEffect(() => {
     if (!hydrated || !selectedSaved) return;
     setSaved((prev) => {
       const others = prev.filter((d) => d.name !== selectedSaved);
-      return [...others, {name, items}];
+      return [...others, {name: selectedSaved, items}];
     });
   }, [hydrated, items, selectedSaved]);
 
@@ -100,9 +139,8 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     setNameState(targetName);
     setSelectedSaved((prev) => prev ?? targetName);
     setSaved((prev) => {
-      const key = selectedSaved ?? targetName;
-      const others = prev.filter((d) => d.name !== key && d.name !== targetName);
-      return [...others, {name: targetName, items}];
+      if (prev.some((d) => d.name === targetName)) return prev;
+      return [...prev, {name: targetName, items: []}];
     });
     return targetName;
   };
@@ -140,8 +178,12 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setNameState(targetName);
         setSelectedSaved(targetName);
         setSaved((prev) => {
-          const others = prev.filter((d) => d.name !== targetName);
-          return [...others, {name: targetName, items}];
+          const exists = prev.find((d) => d.name === targetName);
+          const filtered = prev.filter((d) => d.name !== (selectedSaved ?? targetName));
+          if (exists) {
+            return [...filtered, {name: targetName, items: exists.items}];
+          }
+          return [...filtered, {name: targetName, items}];
         });
       },
       createDeck: () => {
@@ -215,12 +257,11 @@ function parseDeckParam(raw: string): DeckItem[] {
   const parts = raw.split(",");
   const items: DeckItem[] = [];
   for (const part of parts) {
-    const [type, nameEncoded, imageEncoded] = part.split("|");
+    const [type, nameEncoded] = part.split("|");
     if (!type || !nameEncoded) continue;
     if (!["gifts", "hexes", "magifishes", "trinkets", "weapons", "boosts"].includes(type)) continue;
     const name = decodeURIComponent(nameEncoded);
-    const image = imageEncoded ? decodeURIComponent(imageEncoded) : undefined;
-    items.push({type: type as EntityType, name, id: deckId(type as EntityType, name), image: image || undefined});
+    items.push({type: type as EntityType, name, id: deckId(type as EntityType, name)});
   }
   return items;
 }
