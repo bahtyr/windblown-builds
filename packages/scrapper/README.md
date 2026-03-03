@@ -19,4 +19,5 @@ npm test
 - `src/pages/magifishes.ts`: magifish scraper.
 - `src/pages/trinkets.ts`: trinket scraper.
 - `src/pages/weapons.ts`: weapon scraper.
+- `src/pages/effects.ts`: effects (buffs/debuffs/etc.) scraper.
 - `src/richTextParser.ts`: rich description parser used by page scrapers.

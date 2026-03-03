@@ -6,6 +6,7 @@ import {scrapeHexes} from "./pages/hexes.js";
 import {scrapeMagifishes} from "./pages/magifishes.js";
 import {scrapeTrinkets} from "./pages/trinkets.js";
 import {scrapeWeapons} from "./pages/weapons.js";
+import {scrapeEffects} from "./pages/effects.js";
 
 const OUTPUT_DIR = "../../apps/web/public";
 
@@ -23,6 +24,7 @@ async function main(): Promise<void> {
       {name: "magifishes", scrape: scrapeMagifishes},
       {name: "trinkets", scrape: scrapeTrinkets},
       {name: "weapons", scrape: scrapeWeapons},
+      {name: "effects", scrape: scrapeEffects},
     ];
 
     for (const task of tasks) {

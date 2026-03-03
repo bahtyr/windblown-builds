@@ -30,6 +30,14 @@ export interface Gift extends ScrapedEntity {
   category: string;
 }
 
+export interface Effect extends ScrapedEntity {
+  category: string;
+  advancedDescription: string;
+  richAdvancedDescription: RichDescriptionNode[];
+  notes: string;
+  richNotes: RichDescriptionNode[];
+}
+
 export interface Boost extends ScrapedEntity {
   healthBonus?: string;
 }
