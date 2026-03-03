@@ -137,6 +137,25 @@
     background: transparent;
     margin-right: 2px;
     cursor: pointer;
+    user-select: none;
+}
+
+.entity:hover {
+    border-color: #3b82f6;
+}
+
+.entity:active {
+    transform: translateY(1px);
+}
+
+.entity img {
+    width: 14px;
+    height: 14px;
+    /*border-radius: 5px;*/
+    object-fit: contain;
+    margin-right: 8px;
+    /*background: #0a111c;*/
+    /*border: 1px solid rgba(255, 255, 255, .08);*/
 }
 
 .pill {

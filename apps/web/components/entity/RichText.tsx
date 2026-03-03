@@ -34,6 +34,7 @@ export default function RichText({parts, onEntityClick, onEntityFilter}: Props) 
               }
             }}
           >
+            {p.image ? <img src={p.image} alt={(p.text || p.id) + " image"}/> : null}
             {p.text || p.id}
           </span>
         );

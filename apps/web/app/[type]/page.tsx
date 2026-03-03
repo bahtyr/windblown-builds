@@ -147,7 +147,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // browse // adjust count on filter applied to .controls count same as section
 
 // browsing card entity clicking on same entity should remove this filter
-// browsing card entity missing image
+// ✅ browsing card entity missing image
 // ✅ browsing card clicking on it adds to deck -- should be only on plus button
 
 // deck save or read from local storage not working
