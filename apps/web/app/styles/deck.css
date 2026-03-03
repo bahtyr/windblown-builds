@@ -129,10 +129,18 @@
     background: #122030;
     cursor: grab;
     margin-right: 2px;
+    transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
 }
 
 .deck-chip.highlight {
     box-shadow: 0 0 0 2px #4fa3ff;
+}
+
+.deck-chip.dragging {
+    opacity: 0.7;
+    box-shadow: 0 0 0 2px #7ce0ff;
+    transform: scale(1.02);
+    cursor: grabbing;
 }
 
 .deck-chip-img {

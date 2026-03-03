@@ -19,6 +19,7 @@ export default function EntityPage({params}: { params: { type: string } }) {
   const [search, setSearch] = useState("");
   const [selectedEntity, setSelectedEntity] = useState<string>("");
   const [likedOnly, setLikedOnly] = useState(false);
+  const [deckOnly, setDeckOnly] = useState(false);
 
   const deck = useDeck();
   const likes = useLikes();
@@ -49,14 +50,47 @@ export default function EntityPage({params}: { params: { type: string } }) {
     const matchEntity = !selectedEntity || entityIds(item).includes(selectedEntity);
     const liked = likes.ids.has(`${type}:${item.name}`);
     const matchLiked = !likedOnly || liked;
-    return matchSearch && matchEntity && matchLiked;
+    const inDeck = deck.items.some((d) => d.id === `${type}:${item.name}`);
+    const matchDeck = !deckOnly || inDeck;
+    return matchSearch && matchEntity && matchLiked && matchDeck;
   };
 
   const filteredCount = useMemo(
     () => items.filter(matchesFilters).length,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [items, search, selectedEntity, likedOnly, likes.ids],
+    [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
+
+  const [matchNav, setMatchNav] = useState<{ hasPrev: boolean; hasNext: boolean }>({hasPrev: false, hasNext: false});
+
+  const refreshMatchNav = () => {
+    const matches = Array.from(document.querySelectorAll<HTMLElement>(".card:not(.faded)"));
+    const current = window.scrollY + 10;
+    const hasPrev = matches.some((el) => el.offsetTop < current);
+    const hasNext = matches.some((el) => el.offsetTop > current);
+    setMatchNav({hasPrev, hasNext});
+  };
+
+  const scrollToMatch = (dir: "next" | "prev") => {
+    const matches = Array.from(document.querySelectorAll<HTMLElement>(".card:not(.faded)"));
+    if (matches.length === 0) return;
+    const current = window.scrollY + 10;
+    if (dir === "next") {
+      const target = matches.find((el) => el.offsetTop > current);
+      (target ?? matches[matches.length - 1]).scrollIntoView({behavior: "smooth", block: "start"});
+    } else {
+      const target = [...matches].reverse().find((el) => el.offsetTop < current);
+      (target ?? matches[0]).scrollIntoView({behavior: "smooth", block: "start"});
+    }
+    setTimeout(refreshMatchNav, 100);
+  };
+
+  useEffect(() => {
+    if (loading || error) return;
+    refreshMatchNav();
+    window.addEventListener("scroll", refreshMatchNav, {passive: true});
+    return () => window.removeEventListener("scroll", refreshMatchNav);
+  }, [loading, error, items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items]);
 
   const limits: DeckLimits = {
     gifts: 20,
@@ -78,6 +112,8 @@ export default function EntityPage({params}: { params: { type: string } }) {
             onEntityChange={setSelectedEntity}
             likedOnly={likedOnly}
             onLikedChange={setLikedOnly}
+            deckOnly={deckOnly}
+            onDeckChange={setDeckOnly}
           />
           <div className="count">
             {filteredCount === items.length ? `${items.length} total` : `${filteredCount} of ${items.length} filtered`}
@@ -126,6 +162,16 @@ export default function EntityPage({params}: { params: { type: string } }) {
             );
           })}
         </section>
+      )}
+      {!loading && !error && filteredCount > 0 && filteredCount < items.length && (
+        <div className="scroll-hints">
+          <button className="pill-toggle" type="button" disabled={!matchNav.hasPrev} onClick={() => scrollToMatch("prev")}>
+            Previous match
+          </button>
+          <button className="pill-toggle" type="button" disabled={!matchNav.hasNext} onClick={() => scrollToMatch("next")}>
+            Next match
+          </button>
+        </div>
       )}
     </div>
   );
@@ -177,6 +223,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ browse // add filter to filter likes
 // ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
 // if results present show scroll down / or scroll up indicator at the corner of the scrfeen
+// ✅ scroll hints show up/down buttons
 
 
 // ✅ browse / make likes checkbox pill/button like - hide checkbox square
@@ -193,3 +240,4 @@ function entityIds(item: ScrapedEntity): string[] {
 
 
 // similar to liked filter, add in deck only filter
+// automation should write simple commit message

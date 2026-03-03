@@ -89,13 +89,6 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    if (selectedSaved && name !== selectedSaved) {
-      setNameState(selectedSaved);
-    }
-  }, [hydrated, selectedSaved, name]);
-
-  useEffect(() => {
-    if (!hydrated) return;
     const missingTypes = Array.from(
       new Set(items.filter((i) => !i.image).map((i) => i.type)),
     );
@@ -133,15 +126,17 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     });
   }, [hydrated, items, selectedSaved]);
 
+  const upsertSaved = (list: SavedDeck[], deckName: string, deckItems: DeckItem[]): SavedDeck[] => {
+    const others = list.filter((d) => d.name !== deckName);
+    return [...others, {name: deckName, items: deckItems}];
+  };
+
   const ensureActiveDeck = (customName?: string): string => {
     if (!hydrated) return customName?.trim() || name;
     const targetName = customName?.trim() || selectedSaved || name.trim() || suggestName(saved);
     setNameState(targetName);
     setSelectedSaved((prev) => prev ?? targetName);
-    setSaved((prev) => {
-      if (prev.some((d) => d.name === targetName)) return prev;
-      return [...prev, {name: targetName, items: []}];
-    });
+    setSaved((prev) => upsertSaved(prev, targetName, items));
     return targetName;
   };
 
@@ -174,16 +169,14 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setItems((prev) => reorderWithinType(prev, type, from, to)),
       setName: (nextName: string) => {
         const targetName = nextName.trim() || "Untitled Deck";
-        ensureActiveDeck(targetName);
+        const sourceName = selectedSaved ?? name;
         setNameState(targetName);
         setSelectedSaved(targetName);
         setSaved((prev) => {
-          const exists = prev.find((d) => d.name === targetName);
-          const filtered = prev.filter((d) => d.name !== (selectedSaved ?? targetName));
-          if (exists) {
-            return [...filtered, {name: targetName, items: exists.items}];
-          }
-          return [...filtered, {name: targetName, items}];
+          const source = prev.find((d) => d.name === sourceName);
+          const payload = source ? source.items : items;
+          const without = prev.filter((d) => d.name !== sourceName && d.name !== targetName);
+          return [...without, {name: targetName, items: payload}];
         });
       },
       createDeck: () => {

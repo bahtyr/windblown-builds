@@ -11,9 +11,21 @@ type Props = {
   onEntityChange: (id: string) => void;
   likedOnly: boolean;
   onLikedChange: (v: boolean) => void;
+  deckOnly: boolean;
+  onDeckChange: (v: boolean) => void;
 };
 
-export default function Filters({items, search, onSearch, selectedEntity, onEntityChange, likedOnly, onLikedChange}: Props) {
+export default function Filters({
+  items,
+  search,
+  onSearch,
+  selectedEntity,
+  onEntityChange,
+  likedOnly,
+  onLikedChange,
+  deckOnly,
+  onDeckChange,
+}: Props) {
   const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
 
   return (
@@ -44,12 +56,21 @@ export default function Filters({items, search, onSearch, selectedEntity, onEnti
         Liked only
       </button>
       <button
+        type="button"
+        className={`pill-toggle ${deckOnly ? "active" : ""}`}
+        onClick={() => onDeckChange(!deckOnly)}
+        aria-pressed={deckOnly}
+      >
+        In deck only
+      </button>
+      <button
         className="btn"
         type="button"
         onClick={() => {
           onSearch("");
           onEntityChange("");
           onLikedChange(false);
+          onDeckChange(false);
         }}
       >
         Clear

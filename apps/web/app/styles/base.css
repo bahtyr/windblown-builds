@@ -108,6 +108,21 @@ input::placeholder {
     color: var(--muted);
 }
 
+.scroll-hints {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 20;
+    align-items: flex-end;
+}
+
+.scroll-hints .pill-toggle:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
 /* ---------- Tabs / links ---------- */
 .tabs {
     display: flex;

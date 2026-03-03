@@ -125,6 +125,7 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
       onDragStart={(e) => {
         e.dataTransfer.setData("text/plain", `${index}`);
         e.dataTransfer.effectAllowed = "move";
+        e.currentTarget.classList.add("dragging");
       }}
       onDragOver={(e) => {
         e.preventDefault();
@@ -137,6 +138,7 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
           onDrop(from, index);
         }
       }}
+      onDragEnd={(e) => e.currentTarget.classList.remove("dragging")}
       title={`${type} - ${item.name}`}
     >
       {item.image && <img src={item.image} alt="" className="deck-chip-img"/>}
