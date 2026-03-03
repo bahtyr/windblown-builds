@@ -140,31 +140,80 @@ input::placeholder {
 
 .deck-slots {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 8px;
-}
-
-.slot {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px;
-    background: #111b28;
-}
-
-.slot-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.slot-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
 }
 
 .deck-status {
     color: var(--muted);
+}
+
+.deck-group {
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    background: #0e1622;
+}
+
+.deck-group-title {
+    text-transform: capitalize;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.deck-group-items {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.deck-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #122030;
+    cursor: grab;
+}
+
+.deck-chip.highlight {
+    box-shadow: 0 0 0 2px #4fa3ff;
+}
+
+.deck-chip-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.deck-chip-name {
+    display: none;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deck-chip-remove {
+    display: none;
+    border: none;
+    background: #1f2c3d;
+    color: var(--text);
+    border-radius: 8px;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.deck-chip:hover .deck-chip-remove {
+    display: inline-block;
+}
+
+.deck-chip:hover .deck-chip-name {
+    display: block;
 }
 
 .sections {
@@ -206,10 +255,20 @@ input::placeholder {
     border-radius: 12px;
     padding: 10px;
     background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+    position: relative;
+    transition: transform .1s ease, box-shadow .1s ease, opacity .2s ease;
 }
 
 .card.highlight {
     box-shadow: 0 0 0 2px #4fa3ff;
+}
+
+.card.in-deck {
+    box-shadow: 0 0 0 2px #7ce0ff;
+}
+
+.card.faded {
+    opacity: 0.3;
 }
 
 .card-head {
@@ -242,6 +301,20 @@ input::placeholder {
     margin-right: 2px;
 }
 
+.card-actions {
+    margin-top: 8px;
+    min-height: 32px;
+}
+
+.add-btn {
+    display: none;
+}
+
+.card:hover .add-btn,
+.card.in-deck .add-btn {
+    display: inline-block;
+}
+
 .pill {
     padding: 2px 6px;
     border-radius: 999px;
@@ -256,10 +329,17 @@ input::placeholder {
     background: transparent;
     color: #8091aa;
     cursor: pointer;
+    opacity: 0;
+    transition: opacity .15s ease;
 }
 
 .like.liked {
     color: #ff6fa8;
+    opacity: 1;
+}
+
+.card:hover .like {
+    opacity: 1;
 }
 
 .tab {

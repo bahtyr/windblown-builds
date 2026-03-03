@@ -1,7 +1,7 @@
 "use client";
 
 import {useMemo, useState} from "react";
-import {useDeck, deckId} from "./DeckContext";
+import {useDeck} from "./DeckContext";
 import {EntityType} from "../../lib/types";
 
 export default function DeckPanel() {
@@ -39,23 +39,13 @@ export default function DeckPanel() {
       </div>
       <div className="deck-panel" id="deckPanel">
         <div className="deck-side">
-          <div className="deck-entities-title">Entities in this deck</div>
-          <div className="deck-entities-list" id="deckEntities">
-            {deck.items.map((item, idx) => (
-              <div className="deck-entity" key={item.id}>
-                <span className="muted">#{idx + 1}</span> {item.name} <span className="pill">{item.type}</span>
-              </div>
-            ))}
-          </div>
-          <div className="deck-saved">
-            <div className="deck-entities-title">Saved decks</div>
-            {deck.saved.length === 0 && <div className="muted">None</div>}
-            {deck.saved.map((d) => (
-              <button key={d.name} className="link" onClick={() => deck.loadDeck(d.name)}>
-                {d.name} ({d.items.length})
-              </button>
-            ))}
-          </div>
+          <div className="deck-entities-title">Saved decks</div>
+          {deck.saved.length === 0 && <div className="muted">None</div>}
+          {deck.saved.map((d) => (
+            <button key={d.name} className="link" onClick={() => deck.loadDeck(d.name)}>
+              {d.name} ({d.items.length})
+            </button>
+          ))}
         </div>
         <div className="deck-main">
           <div className="deck-actions">
@@ -79,27 +69,22 @@ export default function DeckPanel() {
             </div>
           </div>
           <div className="deck-slots" id="deckSlots">
-            {deck.items.map((item, idx) => (
-              <div className="slot" key={item.id}>
-                <div className="slot-head">
-                  <div className="pill">{item.type}</div>
-                  <div className="muted">#{idx + 1}</div>
-                </div>
-                <div className="slot-title">{item.name}</div>
-                <div className="slot-actions">
-                  <button className="btn ghost" onClick={() => deck.move(item.id, -1)} disabled={idx === 0}>
-                    ↑
-                  </button>
-                  <button
-                    className="btn ghost"
-                    onClick={() => deck.move(item.id, 1)}
-                    disabled={idx === deck.items.length - 1}
-                  >
-                    ↓
-                  </button>
-                  <button className="btn ghost" onClick={() => deck.remove(item.id)}>
-                    Remove
-                  </button>
+            {groupedByType(deck.items).map(({type, list}) => (
+              <div className="deck-group" key={type}>
+                <div className="deck-group-title">{type}</div>
+                <div className="deck-group-items">
+                  {list.map((item, idx) => (
+                    <DeckDraggable
+                      key={item.id}
+                      item={item}
+                      index={idx}
+                      type={type as EntityType}
+                      onDrop={(from, to) => deck.moveWithinType(type as EntityType, from, to)}
+                      onRemove={() => deck.remove(item.id)}
+                      highlight={type === "gifts" && idx < 8}
+                    />
+                  ))}
+                  {list.length === 0 && <div className="muted">Empty</div>}
                 </div>
               </div>
             ))}
@@ -109,4 +94,49 @@ export default function DeckPanel() {
       </div>
     </div>
   );
+}
+
+type DragProps = {
+  item: {id: string; name: string; image?: string};
+  index: number;
+  type: EntityType;
+  onDrop: (from: number, to: number) => void;
+  onRemove: () => void;
+  highlight?: boolean;
+};
+
+function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragProps) {
+  return (
+    <div
+      className={`deck-chip ${highlight ? "highlight" : ""}`}
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("text/plain", `${index}`);
+        e.dataTransfer.effectAllowed = "move";
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        const from = Number(e.dataTransfer.getData("text/plain"));
+        if (!Number.isNaN(from)) {
+          onDrop(from, index);
+        }
+      }}
+      title={`${type} - ${item.name}`}
+    >
+      {item.image && <img src={item.image} alt="" className="deck-chip-img" />}
+      <div className="deck-chip-name">{item.name}</div>
+      <button className="deck-chip-remove" onClick={onRemove} aria-label="Remove">
+        ×
+      </button>
+    </div>
+  );
+}
+
+function groupedByType(items: {type: EntityType}[]) {
+  const order: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes"];
+  return order.map((t) => ({type: t, list: items.filter((x) => x.type === t)}));
 }

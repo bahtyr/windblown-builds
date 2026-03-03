@@ -20,7 +20,7 @@ type DeckContextType = {
   saved: SavedDeck[];
   add: (item: DeckItem, limits: DeckLimits) => {ok: boolean; reason?: string};
   remove: (id: string) => void;
-  move: (id: string, delta: number) => void;
+  moveWithinType: (type: EntityType, from: number, to: number) => void;
   setName: (name: string) => void;
   saveDeck: () => void;
   loadDeck: (name: string) => void;
@@ -94,20 +94,12 @@ export function DeckProvider({children}: {children: React.ReactNode}) {
             return {ok: false, reason: `Limit reached for ${item.type}`};
           }
         }
-        setItems((prev) => [...prev, item]);
+        setItems((prev) => insertByType(prev, item));
         return {ok: true};
       },
       remove: (id) => setItems((prev) => prev.filter((x) => x.id !== id)),
-      move: (id, delta) =>
-        setItems((prev) => {
-          const idx = prev.findIndex((x) => x.id === id);
-          if (idx === -1) return prev;
-          const next = [...prev];
-          const newIdx = Math.max(0, Math.min(prev.length - 1, idx + delta));
-          const [item] = next.splice(idx, 1);
-          next.splice(newIdx, 0, item);
-          return next;
-        }),
+      moveWithinType: (type, from, to) =>
+        setItems((prev) => reorderWithinType(prev, type, from, to)),
       setName,
       saveDeck: () => {
         if (!name.trim()) return;
@@ -156,4 +148,39 @@ function parseDeckParam(raw: string): DeckItem[] {
     items.push({type: type as EntityType, name, id: deckId(type as EntityType, name)});
   }
   return items;
+}
+
+const TYPE_ORDER: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "boosts", "effects"];
+
+function insertByType(list: DeckItem[], item: DeckItem): DeckItem[] {
+  const order = TYPE_ORDER.indexOf(item.type);
+  if (order === -1) return [...list, item];
+  const next = [...list];
+  let insertAt = next.length;
+  for (let i = 0; i < next.length; i++) {
+    const otherOrder = TYPE_ORDER.indexOf(next[i].type);
+    if (otherOrder > order) {
+      insertAt = i;
+      break;
+    }
+    if (otherOrder === order) {
+      insertAt = i + 1; // keep after existing of same type
+    }
+  }
+  next.splice(insertAt, 0, item);
+  return next;
+}
+
+function reorderWithinType(list: DeckItem[], type: EntityType, from: number, to: number): DeckItem[] {
+  const sameType = list.filter((x) => x.type === type);
+  if (from < 0 || from >= sameType.length || to < 0 || to >= sameType.length) return list;
+  const movingId = sameType[from].id;
+
+  const indices = list.map((x, idx) => (x.type === type ? idx : -1)).filter((idx) => idx !== -1);
+  const globalFrom = indices[from];
+  const globalTo = indices[to];
+  const next = [...list];
+  const [item] = next.splice(globalFrom, 1);
+  next.splice(globalTo, 0, item);
+  return next;
 }
