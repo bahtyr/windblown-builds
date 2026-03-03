@@ -22,6 +22,7 @@ export type RichDescriptionNode = RichTextTextNode | RichTextEntityNode;
 export interface ScrapedEntity {
   image: string;
   name: string;
+  nameColor?: string;
   description: string;
   richDescription: RichDescriptionNode[];
 }

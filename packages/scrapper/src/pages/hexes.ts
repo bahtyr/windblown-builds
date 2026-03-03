@@ -2,7 +2,7 @@ import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
 import {fetchWikiDocument} from "../core/wikiHtml.js";
 import {parseRichDescription} from "../core/richTextParser.js";
-import {normalizeUrl} from "../core/richTextParser.helpers.js";
+import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
 import {Hex} from "./types.js";
 
 const PAGE = {
@@ -31,7 +31,9 @@ function parseHexRow($: CheerioAPI, row: Element): Hex | null {
   }
 
   const image = normalizeUrl(cells.eq(0).find("img").first().attr("src")?.trim());
-  const name = cells.eq(1).text().trim();
+  const nameCell = cells.eq(1);
+  const name = nameCell.text().trim();
+  const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
   const description = descriptionCell.text().trim();
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
@@ -45,6 +47,7 @@ function parseHexRow($: CheerioAPI, row: Element): Hex | null {
   return {
     image,
     name,
+    ...(nameColor ? {nameColor} : {}),
     description,
     richDescription,
     unlockCost,
