@@ -84,7 +84,9 @@ export default function EntityPage({params}: { params: { type: string } }) {
                 <div className="section-header">
                   <h2>{cat}</h2>
                   <div className="section-sub">
-                    {filtered.length}/{list.length} items
+                    {filtered.length === list.length ? list.length + " items" :
+                      filtered.length === 0 ? "" :
+                        filtered.length + " of " + list.length}
                   </div>
                 </div>
                 <div className="cards">
@@ -140,11 +142,13 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // todo
 
-// browse // move section count next to header
-// browse // adjust count on filter applied
+// ✅ browse // move section count next to header
+// ✅ browse // adjust count on filter applied
+// browse // adjust count on filter applied to .controls count same as section
 
 // browsing card entity clicking on same entity should remove this filter
 // browsing card entity missing image
+// browsing card clicking on it adds to deck -- should be only on plus button
 
 // deck save or read from local storage not working
 // deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
