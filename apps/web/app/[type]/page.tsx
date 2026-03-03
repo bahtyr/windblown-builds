@@ -18,6 +18,7 @@ export default function EntityPage({params}: { params: { type: string } }) {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [selectedEntity, setSelectedEntity] = useState<string>("");
+  const [likedOnly, setLikedOnly] = useState(false);
 
   const deck = useDeck();
   const likes = useLikes();
@@ -46,7 +47,9 @@ export default function EntityPage({params}: { params: { type: string } }) {
   const matchesFilters = (item: ScrapedEntity) => {
     const matchSearch = !search || (item.name + " " + item.description).toLowerCase().includes(search.toLowerCase());
     const matchEntity = !selectedEntity || entityIds(item).includes(selectedEntity);
-    return matchSearch && matchEntity;
+    const liked = likes.ids.has(`${type}:${item.name}`);
+    const matchLiked = !likedOnly || liked;
+    return matchSearch && matchEntity && matchLiked;
   };
 
   const limits: DeckLimits = {
@@ -67,6 +70,8 @@ export default function EntityPage({params}: { params: { type: string } }) {
             onSearch={setSearch}
             selectedEntity={selectedEntity}
             onEntityChange={setSelectedEntity}
+            likedOnly={likedOnly}
+            onLikedChange={setLikedOnly}
           />
           <div className="count">{items.length} total</div>
         </div>
@@ -144,7 +149,7 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // ✅ browse // move section count next to header
 // ✅ browse // adjust count on filter applied
-// browse // adjust count on filter applied to .controls count same as section
+// browse // controls count same as section show filtered results
 // ✅ browse liked cards do not save or load from local storage
 
 // ✅ browsing card entity clicking on same entity should remove this filter
@@ -159,3 +164,6 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // move deck separate from header nav. make it sticky footer
 // deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
+
+// ✅ browse // add filter to filter likes
+// ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
