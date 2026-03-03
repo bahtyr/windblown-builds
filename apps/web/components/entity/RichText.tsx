@@ -28,7 +28,7 @@ export default function RichText({parts, onEntityFilter}: Props) {
               e.stopPropagation();
               const id = p.href || p.id;
               if (id) {
-                if (onEntityFilter) onEntityFilter(id); // todo make this toggle filter if filter already applied remove
+                if (onEntityFilter) onEntityFilter(id);
               }
             }}
           >

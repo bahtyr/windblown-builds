@@ -39,8 +39,10 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   const [name, setName] = useState<string>("Untitled Deck");
   const [saved, setSaved] = useState<SavedDeck[]>([]);
   const [selectedSaved, setSelectedSaved] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
@@ -70,23 +72,26 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       if (parsed.length) setItems(parsed);
     }
     if (paramName) setName(paramName);
+    setHydrated(true);
   }, []);
 
   useEffect(() => {
+    if (!hydrated || typeof window === "undefined") return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify({items, name}));
-  }, [items, name]);
+  }, [hydrated, items, name]);
 
   useEffect(() => {
+    if (!hydrated || typeof window === "undefined") return;
     localStorage.setItem(STORAGE_SAVED, JSON.stringify(saved));
-  }, [saved]);
+  }, [hydrated, saved]);
 
   useEffect(() => {
-    if (!selectedSaved) return;
+    if (!hydrated || !selectedSaved) return;
     setSaved((prev) => {
       const others = prev.filter((d) => d.name !== selectedSaved);
       return [...others, {name: selectedSaved, items}];
     });
-  }, [items, selectedSaved]);
+  }, [hydrated, items, selectedSaved]);
 
   const api: DeckContextType = useMemo(
     () => ({

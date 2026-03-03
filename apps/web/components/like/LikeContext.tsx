@@ -12,8 +12,10 @@ const STORAGE_KEY = "windblown.likes.v1";
 
 export function LikeProvider({children}: { children: React.ReactNode }) {
   const [ids, setIds] = useState<Set<string>>(new Set());
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
@@ -22,11 +24,13 @@ export function LikeProvider({children}: { children: React.ReactNode }) {
         // ignore
       }
     }
+    setHydrated(true);
   }, []);
 
   useEffect(() => {
+    if (!hydrated || typeof window === "undefined") return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...ids]));
-  }, [ids]);
+  }, [hydrated, ids]);
 
   const value = useMemo<LikeCtx>(
     () => ({

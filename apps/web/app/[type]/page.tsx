@@ -104,7 +104,7 @@ export default function EntityPage({params}: { params: { type: string } }) {
                         limits={limits}
                         fade={!matched}
                         inDeck={inDeck}
-                        onEntityFilter={(id) => setSelectedEntity(id)}
+                        onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
                       />
                     );
                   })}
@@ -145,12 +145,13 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ browse // move section count next to header
 // ✅ browse // adjust count on filter applied
 // browse // adjust count on filter applied to .controls count same as section
+// ✅ browse liked cards do not save or load from local storage
 
-// browsing card entity clicking on same entity should remove this filter
+// ✅ browsing card entity clicking on same entity should remove this filter
 // ✅ browsing card entity missing image
 // ✅ browsing card clicking on it adds to deck -- should be only on plus button
 
-// deck save or read from local storage not working
+// ✅ deck save or read from local storage not working
 // deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
 // ✅ deck list horizontal like tabs
 // deck list show delete on hover only
