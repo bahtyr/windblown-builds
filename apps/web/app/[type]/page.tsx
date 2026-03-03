@@ -135,3 +135,6 @@ function entityIds(item: ScrapedEntity): string[] {
   }
   return ids;
 }
+
+// todo clicking on  card rich entity adds to deck -- it should add filter of the entity - not add card to deck
+// deck ui - sections should not be width 100% - the icons of weapons, trinkets and magfishes next to each other can be a little bit of margin

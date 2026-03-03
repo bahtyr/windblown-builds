@@ -1,0 +1,133 @@
+/* ---------- Deck layout ---------- */
+.deck {
+    max-width: var(--max-width);
+    margin: 10px auto 0;
+    padding: 0 16px;
+}
+
+.deck-panel {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    background: #0f1622;
+    box-shadow: var(--shadow);
+}
+
+.deck-side {
+    border-right: 1px solid var(--border);
+    padding-right: 12px;
+}
+
+.deck-entities-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.deck-entities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 240px;
+    overflow: auto;
+}
+
+.deck-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.deck-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.deck-name {
+    background: #0f1622;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 160px;
+}
+
+.deck-slots {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.deck-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+}
+
+/* ---------- Deck groups ---------- */
+.deck-status {
+    color: var(--muted);
+}
+
+.deck-group {
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    background: #0e1622;
+}
+
+.deck-group-items {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ---------- Deck chips ---------- */
+.deck-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #122030;
+    cursor: grab;
+}
+
+.deck-chip.highlight {
+    box-shadow: 0 0 0 2px #4fa3ff;
+}
+
+.deck-chip-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.deck-chip-remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--border);
+    background: #1f2c3d;
+    color: var(--text);
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.deck-chip:hover .deck-chip-remove {
+    opacity: 1;
+}
