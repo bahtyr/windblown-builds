@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, useDeck} from "../../components/deck/DeckContext";
 import {useLikes} from "../../components/like/LikeContext";
@@ -61,35 +61,48 @@ export default function EntityPage({params}: { params: { type: string } }) {
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
 
-  const [matchNav, setMatchNav] = useState<{ hasPrev: boolean; hasNext: boolean }>({hasPrev: false, hasNext: false});
+  const [matchNav, setMatchNav] = useState<{ above: number; below: number }>({above: 0, below: 0});
+  const scrollTimer = useRef<number | null>(null);
+
+  const collectMatches = () =>
+    Array.from(document.querySelectorAll<HTMLElement>(".card:not(.faded)")).map((el) => ({
+      el,
+      rect: el.getBoundingClientRect(),
+    }));
 
   const refreshMatchNav = () => {
-    const matches = Array.from(document.querySelectorAll<HTMLElement>(".card:not(.faded)"));
-    const current = window.scrollY + 10;
-    const hasPrev = matches.some((el) => el.offsetTop < current);
-    const hasNext = matches.some((el) => el.offsetTop > current);
-    setMatchNav({hasPrev, hasNext});
+    const matches = collectMatches();
+    const above = matches.filter((m) => m.rect.bottom < 0).length;
+    const below = matches.filter((m) => m.rect.top > window.innerHeight).length;
+    setMatchNav({above, below});
   };
 
-  const scrollToMatch = (dir: "next" | "prev") => {
-    const matches = Array.from(document.querySelectorAll<HTMLElement>(".card:not(.faded)"));
+  const scrollToNearest = (direction: "up" | "down") => {
+    const matches = collectMatches();
     if (matches.length === 0) return;
-    const current = window.scrollY + 10;
-    if (dir === "next") {
-      const target = matches.find((el) => el.offsetTop > current);
-      (target ?? matches[matches.length - 1]).scrollIntoView({behavior: "smooth", block: "start"});
-    } else {
-      const target = [...matches].reverse().find((el) => el.offsetTop < current);
-      (target ?? matches[0]).scrollIntoView({behavior: "smooth", block: "start"});
-    }
-    setTimeout(refreshMatchNav, 100);
+    const candidates =
+      direction === "up"
+        ? matches.filter((m) => m.rect.bottom < 0).sort((a, b) => b.rect.bottom - a.rect.bottom)
+        : matches.filter((m) => m.rect.top > window.innerHeight).sort((a, b) => a.rect.top - b.rect.top);
+    if (candidates.length === 0) return;
+    candidates[0].el.scrollIntoView({behavior: "smooth", block: "center"});
+    window.clearTimeout(scrollTimer.current ?? undefined);
+    scrollTimer.current = window.setTimeout(refreshMatchNav, 200);
   };
 
   useEffect(() => {
     if (loading || error) return;
     refreshMatchNav();
-    window.addEventListener("scroll", refreshMatchNav, {passive: true});
-    return () => window.removeEventListener("scroll", refreshMatchNav);
+    const handler = () => {
+      window.clearTimeout(scrollTimer.current ?? undefined);
+      scrollTimer.current = window.setTimeout(refreshMatchNav, 80);
+    };
+    window.addEventListener("scroll", handler, {passive: true});
+    window.addEventListener("resize", handler);
+    return () => {
+      window.removeEventListener("scroll", handler);
+      window.removeEventListener("resize", handler);
+    };
   }, [loading, error, items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items]);
 
   const limits: DeckLimits = {
@@ -165,12 +178,16 @@ export default function EntityPage({params}: { params: { type: string } }) {
       )}
       {!loading && !error && filteredCount > 0 && filteredCount < items.length && (
         <div className="scroll-hints">
-          <button className="pill-toggle" type="button" disabled={!matchNav.hasPrev} onClick={() => scrollToMatch("prev")}>
-            Previous match
-          </button>
-          <button className="pill-toggle" type="button" disabled={!matchNav.hasNext} onClick={() => scrollToMatch("next")}>
-            Next match
-          </button>
+          {matchNav.above + matchNav.below > 0 && (
+            <>
+              <button className="pill-toggle" type="button" disabled={matchNav.above === 0} onClick={() => scrollToNearest("up")}>
+                Previous match {matchNav.above > 0 && <span className="badge">{matchNav.above}</span>}
+              </button>
+              <button className="pill-toggle" type="button" disabled={matchNav.below === 0} onClick={() => scrollToNearest("down")}>
+                Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>

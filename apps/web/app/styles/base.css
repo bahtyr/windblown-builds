@@ -123,6 +123,21 @@ input::placeholder {
     opacity: .4;
     cursor: not-allowed;
 }
+
+.badge {
+    display: inline-flex;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 999px;
+    background: #4fa3ff;
+    color: #0b0f14;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+}
 /* ---------- Tabs / links ---------- */
 .tabs {
     display: flex;
