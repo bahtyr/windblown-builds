@@ -134,3 +134,21 @@ input::placeholder {
 .status.error {
     color: #ff9d9d;
 }
+
+/* click effect */
+
+a:active {
+    transform: translateY(1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+.entity:hover {
+    /*border-color: #3b82f6;*/
+}
+
+.entity:active {
+    transform: translateY(1px);
+}
