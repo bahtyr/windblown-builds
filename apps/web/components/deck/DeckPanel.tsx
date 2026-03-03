@@ -62,14 +62,11 @@ export default function DeckPanel() {
                 onChange={(e) => deck.setName(e.target.value)}
                 placeholder="Deck name"
               />
-              <button className="btn" type="button" onClick={() => deck.saveDeck()}>
-                Save deck
+              <button className="btn" type="button" onClick={() => deck.createDeck()}>
+                New deck
               </button>
-              <button className="btn" type="button" onClick={() => deck.saveDeck(true)}>
-                Save as new
-              </button>
-              <button className="btn ghost" type="button" onClick={() => deck.clear()}>
-                Clear
+              <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
+                Reset deck
               </button>
               <button className="btn" id="copyDeckLink" type="button" onClick={handleCopy}>
                 Copy share link

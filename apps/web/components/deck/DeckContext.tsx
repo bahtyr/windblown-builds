@@ -24,9 +24,10 @@ type DeckContextType = {
   moveWithinType: (type: EntityType, from: number, to: number) => void;
   setName: (name: string) => void;
   saveDeck: (asNew?: boolean) => void;
+  createDeck: () => void;
   loadDeck: (name: string) => void;
   deleteDeck: (name: string) => void;
-  clear: () => void;
+  resetDeck: () => void;
 };
 
 const DeckContext = createContext<DeckContextType | null>(null);
@@ -36,7 +37,7 @@ const STORAGE_SAVED = "windblown.deck.saved.v2";
 
 export function DeckProvider({children}: { children: React.ReactNode }) {
   const [items, setItems] = useState<DeckItem[]>([]);
-  const [name, setName] = useState<string>("Untitled Deck");
+  const [name, setNameState] = useState<string>("Untitled Deck");
   const [saved, setSaved] = useState<SavedDeck[]>([]);
   const [selectedSaved, setSelectedSaved] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
@@ -48,7 +49,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       try {
         const parsed = JSON.parse(stored) as { items: DeckItem[]; name?: string };
         setItems(parsed.items || []);
-        if (parsed.name) setName(parsed.name);
+        if (parsed.name) setNameState(parsed.name);
       } catch {
         // ignore
       }
@@ -71,7 +72,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       const parsed = parseDeckParam(paramDeck);
       if (parsed.length) setItems(parsed);
     }
-    if (paramName) setName(paramName);
+    if (paramName) setNameState(paramName);
     setHydrated(true);
   }, []);
 
@@ -89,9 +90,21 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     if (!hydrated || !selectedSaved) return;
     setSaved((prev) => {
       const others = prev.filter((d) => d.name !== selectedSaved);
-      return [...others, {name: selectedSaved, items}];
+      return [...others, {name, items}];
     });
   }, [hydrated, items, selectedSaved]);
+
+  const ensureActiveDeck = (customName?: string): string => {
+    const targetName = customName?.trim() || selectedSaved || name.trim() || suggestName(saved);
+    setNameState(targetName);
+    setSelectedSaved((prev) => prev ?? targetName);
+    setSaved((prev) => {
+      const key = selectedSaved ?? targetName;
+      const others = prev.filter((d) => d.name !== key && d.name !== targetName);
+      return [...others, {name: targetName, items}];
+    });
+    return targetName;
+  };
 
   const api: DeckContextType = useMemo(
     () => ({
@@ -100,6 +113,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       saved,
       selectedSaved,
       add: (item, limits) => {
+        ensureActiveDeck();
         if (items.some((x) => x.id === item.id)) {
           return {ok: false, reason: "Duplicate not allowed"};
         }
@@ -119,22 +133,41 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       remove: (id) => setItems((prev) => prev.filter((x) => x.id !== id)),
       moveWithinType: (type, from, to) =>
         setItems((prev) => reorderWithinType(prev, type, from, to)),
-      setName,
-      saveDeck: (asNew?: boolean) => {
-        const targetName = asNew ? suggestName(saved) : name.trim() || "Untitled Deck";
-        setName(targetName);
+      setName: (nextName: string) => {
+        const targetName = nextName.trim() || "Untitled Deck";
+        ensureActiveDeck(targetName);
+        setNameState(targetName);
+        setSelectedSaved(targetName);
         setSaved((prev) => {
           const others = prev.filter((d) => d.name !== targetName);
-          const next = [...others, {name: targetName, items}];
-          return next;
+          return [...others, {name: targetName, items}];
         });
+      },
+      createDeck: () => {
+        const newName = suggestName(saved);
+        setItems([]);
+        setNameState(newName);
+        setSelectedSaved(newName);
+        setSaved((prev) => {
+          const others = prev.filter((d) => d.name !== newName);
+          return [...others, {name: newName, items: []}];
+        });
+      },
+      saveDeck: (asNew?: boolean) => {
+        const targetName = asNew ? suggestName(saved) : name.trim() || "Untitled Deck";
+        ensureActiveDeck(targetName);
+        setNameState(targetName);
         setSelectedSaved(targetName);
+        setSaved((prev) => {
+          const others = prev.filter((d) => d.name !== targetName);
+          return [...others, {name: targetName, items}];
+        });
       },
       loadDeck: (deckName: string) => {
         const match = saved.find((d) => d.name === deckName);
         if (match) {
           setItems(match.items);
-          setName(match.name);
+          setNameState(match.name);
           setSelectedSaved(deckName);
         }
       },
@@ -142,9 +175,11 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setSaved((prev) => prev.filter((d) => d.name !== deckName));
         if (selectedSaved === deckName) {
           setSelectedSaved(null);
+          setItems([]);
+          setNameState("Untitled Deck");
         }
       },
-      clear: () => setItems([]),
+      resetDeck: () => setItems([]),
     }),
     [items, name, saved, selectedSaved],
   );

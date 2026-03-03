@@ -29,13 +29,23 @@
     padding: 2px 0;
 }
 
+.saved-row .link {
+    color: #e7eefc;
+}
+
 .saved-row.active .link {
-    color: #ff6fa8;
+    color: #4fa3ff;
 }
 
 .icon-btn.small {
     width: 24px;
     height: 24px;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.saved-row:hover .icon-btn.small {
+    opacity: 1;
 }
 
 .deck-entities-title {

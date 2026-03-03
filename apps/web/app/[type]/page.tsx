@@ -173,17 +173,15 @@ function entityIds(item: ScrapedEntity): string[] {
 // browse / make likes checkbox pill/button like - hide checkbox square
 
 
-// deck todo
-
+// deck
 // deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
-
 // ok how about...
 // we start with empty deck
 // there is button to create new deck which inits deck
 // if the user clicks on add on a card we init a deck - if not existing
 // then all changes on active deck are saved instantly
 // there is button to remove deck - which we have
-// clear button is renamed to reset current deck
+//✅ clear button is renamed to reset current deck
 
-// deck list show delete on hover only
-// deck list text color white, selected blue
+//✅ deck list show delete on hover only
+//✅ deck list text color white, selected blue
