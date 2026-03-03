@@ -46,7 +46,7 @@ export function findSectionTableRows(
   $: CheerioAPI,
   sectionHeading: string,
 ): Element[] {
-  const headingSpan = $("h3 > span.mw-headline")
+  const headingSpan = $("h3 > span.mw-headline, h2 > span.mw-headline")
     .filter((_, span) => $(span).text().trim() === sectionHeading)
     .first();
 
@@ -54,7 +54,7 @@ export function findSectionTableRows(
     return [];
   }
 
-  const tableBody = headingSpan.closest("h3").nextAll("table").first().find("tbody").first();
+  const tableBody = headingSpan.closest("h3, h2").nextAll("table").first().find("tbody").first();
   if (tableBody.length === 0) {
     return [];
   }

@@ -1,0 +1,1019 @@
+[
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Barrier_Icon.png/32px-Barrier_Icon.png?105737",
+    "name": "Barrier",
+    "nameColor": "#00beff",
+    "category": "Buffs",
+    "description": "When taking damage, Barrier is consumed before HP.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "When taking damage, Barrier is consumed before HP."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Does not protect the loss of the Killstreak, nor damageless Challenges.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Does not protect the loss of the Killstreak, nor damageless Challenges."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Bleed_Infusion_Icon.png/32px-Bleed_Infusion_Icon.png?dbb5e1",
+    "name": "Bleed Infusion",
+    "nameColor": "#e70000",
+    "category": "Buffs",
+    "description": "Hits apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. for the duration of the Infusion.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Hits apply 1 "
+      },
+      {
+        "key": "entity",
+        "text": "Bleed",
+        "href": "https://windblown.wiki.gg/wiki/Bleed",
+        "id": "Bleed",
+        "image": "https://windblown.wiki.gg/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
+        "color": "#e70000",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for the duration of the Infusion."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Brutality_Icon.png/32px-Brutality_Icon.png?d5fb3d",
+    "name": "Brutality",
+    "nameColor": "#ff8689",
+    "category": "Buffs",
+    "description": "Gives a damage bonus for the duration.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Gives a "
+      },
+      {
+        "key": "text",
+        "text": "damage bonus",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for the duration."
+      }
+    ],
+    "advancedDescription": "If several effects are applied, Brutality takes the maximum bonus and duration among them.",
+    "richAdvancedDescription": [
+      {
+        "key": "text",
+        "text": "If several effects are applied, Brutality takes the maximum bonus and duration among them."
+      }
+    ],
+    "notes": "Icon while active: .",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Icon while active: ."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Burn_Infusion_Icon.png/32px-Burn_Infusion_Icon.png?3b1412",
+    "name": "Burn Infusion",
+    "nameColor": "#ff5b00",
+    "category": "Buffs",
+    "description": "Hits apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. for the duration of the infusion.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Hits apply 1 "
+      },
+      {
+        "key": "entity",
+        "text": "Burn",
+        "href": "https://windblown.wiki.gg/wiki/Burn",
+        "id": "Burn",
+        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
+        "color": "#ff5b00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for the duration of the infusion."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Lifesteal_Icon.png/32px-Lifesteal_Icon.png?2be557",
+    "name": "Lifesteal",
+    "nameColor": "#00ff22",
+    "category": "Buffs",
+    "description": "You heal for a portion of the damage dealt.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "You "
+      },
+      {
+        "key": "text",
+        "text": "heal",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for a portion of the damage dealt."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Rush_Icon.png/32px-Rush_Icon.png?505fd2",
+    "name": "Rush",
+    "nameColor": "#ffa56d",
+    "category": "Buffs",
+    "description": "Your next Dash deals damage and stuns for 2s.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Your next "
+      },
+      {
+        "key": "text",
+        "text": "Dash",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " deals damage and stuns for "
+      },
+      {
+        "key": "text",
+        "text": "2s",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Icon while active: .",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Icon while active: ."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Thick_Smoke_Icon.png/32px-Thick_Smoke_Icon.png?597e90",
+    "name": "Thick Smoke",
+    "nameColor": "Thick Smoke",
+    "category": "Buffs",
+    "description": "",
+    "richDescription": [],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "When this buff is active, you DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  almost any incoming attack.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "When this buff is active, you "
+      },
+      {
+        "key": "entity",
+        "text": "Dodge",
+        "href": "https://windblown.wiki.gg/wiki/Dodge",
+        "id": "Dodge",
+        "image": "https://windblown.wiki.gg/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " almost any incoming attack."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Bleed_Icon.png/32px-Bleed_Icon.png?896598",
+    "name": "Bleed",
+    "nameColor": "#e70000",
+    "category": "Debuffs",
+    "description": "Hits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Hits deal bonus damage for each stack. "
+      },
+      {
+        "key": "text",
+        "text": "Triggered max 6 times per second. Max stacks: 15",
+        "color": "#ff5b00"
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "At max stacks, applying a stronger Bleed will always replace a weaker one.",
+    "richAdvancedDescription": [
+      {
+        "key": "text",
+        "text": "At max stacks, applying a stronger Bleed will always replace a weaker one."
+      }
+    ],
+    "notes": "Lasts for 4s. Every new bleed application resets the timer of the entire stack.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Lasts for 4s. Every new bleed application resets the timer of the entire stack."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/32px-Burn_Icon.png?928e17",
+    "name": "Burn",
+    "nameColor": "#ff5b00",
+    "category": "Debuffs",
+    "description": "Deals its damage every 0.5s for 4s. Max stacks: 15.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Deals its damage every "
+      },
+      {
+        "key": "text",
+        "text": "0.5s",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for "
+      },
+      {
+        "key": "text",
+        "text": "4s",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": ". "
+      },
+      {
+        "key": "text",
+        "text": "Max stacks: 15",
+        "color": "#ff5b00"
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "At max stacks, applying a stronger Burn will always replace a weaker one.",
+    "richAdvancedDescription": [
+      {
+        "key": "text",
+        "text": "At max stacks, applying a stronger Burn will always replace a weaker one."
+      }
+    ],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Curse_Icon.png/32px-Curse_Icon.png?b90ff2",
+    "name": "Curse",
+    "nameColor": "#afa2ff",
+    "category": "Debuffs",
+    "description": "Each stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  that multiplies the bonus by 2 for 4s.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Each stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a "
+      },
+      {
+        "key": "entity",
+        "text": "Final Curse",
+        "href": "https://windblown.wiki.gg/wiki/Final_Curse",
+        "id": "Final_Curse",
+        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "color": "#afa2ff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " that multiplies the bonus by 2 for 4s."
+      }
+    ],
+    "advancedDescription": "In this state, stronger Curses replace the bonuses of weaker ones.",
+    "richAdvancedDescription": [
+      {
+        "key": "text",
+        "text": "In this state, stronger Curses replace the bonuses of weaker ones."
+      }
+    ],
+    "notes": "Lasts for 4s. Every new curse application resets the timer of the entire stack, except when Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is reached.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Lasts for 4s. Every new curse application resets the timer of the entire stack, except when "
+      },
+      {
+        "key": "entity",
+        "text": "Final Curse",
+        "href": "https://windblown.wiki.gg/wiki/Final_Curse",
+        "id": "Final_Curse",
+        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
+        "color": "#afa2ff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " is reached."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Freeze_Icon.png/32px-Freeze_Icon.png?c2b813",
+    "name": "Freeze",
+    "nameColor": "#00fff2",
+    "category": "Debuffs",
+    "description": "Incapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Incapacitates a target for the duration (degressive).The player that launched the effect can "
+      },
+      {
+        "key": "text",
+        "text": "shatter",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " it to deal "
+      },
+      {
+        "key": "text",
+        "text": "+50%",
+        "bold": true
+      },
+      {
+        "key": "entity",
+        "text": "total damage",
+        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
+        "id": "Total_Damage",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Goo_Icon.png/32px-Goo_Icon.png?f62817",
+    "name": "Goo",
+    "nameColor": "#ff45ee",
+    "category": "Debuffs",
+    "description": "Targets are unable to move for the duration (degressive).",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Targets",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " are "
+      },
+      {
+        "key": "text",
+        "text": "unable to move",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " for the duration (degressive)."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Mark_Icon.png/32px-Mark_Icon.png?b0bc3d",
+    "name": "Mark",
+    "nameColor": "#d3ff00",
+    "category": "Debuffs",
+    "description": "Trigger a Mark on a target by hitting it with a Weapon.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Trigger a Mark on a target by hitting it with a "
+      },
+      {
+        "key": "text",
+        "text": "Weapon",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Provocation_Icon.png/32px-Provocation_Icon.png?3e93d8",
+    "name": "Provocation",
+    "nameColor": "Provocation",
+    "category": "Debuffs",
+    "description": "",
+    "richDescription": [],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Force nearby enemies to focus you instead of other targets.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Force nearby enemies to focus you instead of other targets."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Slow_Icon.png/32px-Slow_Icon.png?4da93a",
+    "name": "Slow",
+    "nameColor": "#adadad",
+    "category": "Debuffs",
+    "description": "All movements are slower.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "All "
+      },
+      {
+        "key": "text",
+        "text": "movements are slower",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Alterattack_Bonus_Icon.png/32px-Alterattack_Bonus_Icon.png?befd39",
+    "name": "Alterattack Bonus",
+    "nameColor": "#ffffff",
+    "category": "Mechanics",
+    "description": "Damage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Damage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Auto_Scaling_Icon.png/32px-Auto_Scaling_Icon.png?ceb0bb",
+    "name": "Auto Scaling",
+    "nameColor": "#ffffff",
+    "category": "Mechanics",
+    "description": "Values with this scale automatically with the amount of Bosses killed. Bosses killed: x.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Values with this scale automatically with the amount of Bosses killed. "
+      },
+      {
+        "key": "text",
+        "text": "Bosses killed: x.",
+        "bold": true
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Value is auto-scaled by 40%/Boss killed.A first 40% is given when playing in Stormy or higher difficulty.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Value is auto-scaled by 40%/Boss killed.A first 40% is given when playing in "
+      },
+      {
+        "key": "text",
+        "text": "Stormy",
+        "color": "Stormy"
+      },
+      {
+        "key": "text",
+        "text": " or higher difficulty."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Parry_Icon.png/32px-Parry_Icon.png?f575c3",
+    "name": "Parry",
+    "nameColor": "#008aff",
+    "category": "Mechanics",
+    "description": "Release your guard just before being hit.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Release",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " your guard "
+      },
+      {
+        "key": "text",
+        "text": "just before",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " being hit."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Recovery_Icon.png/32px-Recovery_Icon.png?5ea0cf",
+    "name": "Recovery",
+    "nameColor": "#00ff22",
+    "category": "Mechanics",
+    "description": "For a short time after taking damage, you may recover up to 25% of the lost HP by dealing weapon damage.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "For a short time after taking damage, you may recover up to 25% of the lost HP by dealing weapon damage."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Changed to 100% of lost HP and Weapons and Trinkets damage when Strong Recovery Strong Recovery General GiftYou can RecoverRecovery MechanicFor a short time after taking damage, you may recover up to 25% of the lost HP by dealing weapon damage.  100% of lost HP for 50% longer, and Trinkets can trigger this effect. is equipped.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Changed to 100% of lost HP and "
+      },
+      {
+        "key": "text",
+        "text": "Weapons",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " and "
+      },
+      {
+        "key": "text",
+        "text": "Trinkets",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " damage when "
+      },
+      {
+        "key": "entity",
+        "text": "Recover",
+        "href": "https://windblown.wiki.gg/wiki/Strong_Recovery",
+        "id": "Strong_Recovery",
+        "image": "https://windblown.wiki.gg/images/thumb/Strong_Recovery_Icon.png/20px-Strong_Recovery_Icon.png?7822fa",
+        "color": "#00ff22",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " is equipped."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Backstabs_Icon.png/32px-Backstabs_Icon.png?10f191",
+    "name": "Backstabs",
+    "nameColor": "#ff0078",
+    "category": "Hit Types",
+    "description": "Hits against the back of enemies. Deal increased damage.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Hits against the back of enemies. Deal increased damage."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Doesn't actually deal increased damage unless the player has something that does.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Doesn't actually deal increased damage unless the player has something that does."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Icon.png/32px-Corrosive_Icon.png?328767",
+    "name": "Corrosive",
+    "nameColor": "#8cbc00",
+    "category": "Hit Types",
+    "description": "Special damage type shared by several effects.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Special damage type shared by several effects."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/32px-Criticals_Icon.png?c53df9",
+    "name": "Criticals",
+    "nameColor": "#ffdd00",
+    "category": "Hit Types",
+    "description": "Hits that deal +50% damage.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Hits that deal "
+      },
+      {
+        "key": "text",
+        "text": "+50%",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " damage."
+      }
+    ],
+    "advancedDescription": "Most charged attacks and Alterattacks deal Criticals.",
+    "richAdvancedDescription": [
+      {
+        "key": "text",
+        "text": "Most charged attacks and Alterattacks deal Criticals."
+      }
+    ],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Overwhelm_Icon.png/32px-Overwhelm_Icon.png?ef031f",
+    "name": "Overwhelm",
+    "nameColor": "#ff8200",
+    "category": "Hit Types",
+    "description": "Hits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Hits that Overwhelm deal "
+      },
+      {
+        "key": "text",
+        "text": "+125%",
+        "bold": true
+      },
+      {
+        "key": "entity",
+        "text": "total damage",
+        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
+        "id": "Total_Damage",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Alterattack_Icon.png/32px-Alterattack_Icon.png?b0f277",
+    "name": "Alterattack",
+    "nameColor": "#ef917e",
+    "category": "Special Attacks",
+    "description": "Use one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Use one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Main article: Alterattack",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Main article:Alterattack"
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Blast_Icon.png/32px-Blast_Icon.png?97a67d",
+    "name": "Blast",
+    "nameColor": "#ffdb96",
+    "category": "Special Attacks",
+    "description": "A burst of damage against a target and the enemies behind it.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "A burst of damage against a target and the enemies behind it."
+      }
+    ],
+    "advancedDescription": "If several are launched at the same time, they merge.",
+    "richAdvancedDescription": [
+      {
+        "key": "text",
+        "text": "If several are launched at the same time, they merge."
+      }
+    ],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Pool_Icon.png/32px-Corrosive_Pool_Icon.png?4cc1e9",
+    "name": "Corrosive Pool",
+    "nameColor": "#8cbc00",
+    "category": "Special Attacks",
+    "description": "Area that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Area that deals "
+      },
+      {
+        "key": "entity",
+        "text": "Corrosive",
+        "href": "https://windblown.wiki.gg/wiki/Corrosive",
+        "id": "Corrosive",
+        "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
+        "color": "#8cbc00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " damage every "
+      },
+      {
+        "key": "text",
+        "text": "0.5s",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Crystallize_Icon.png/32px-Crystallize_Icon.png?7021c1",
+    "name": "Crystallize",
+    "nameColor": "#0089ff",
+    "category": "Special Attacks",
+    "description": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment. .",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create "
+      },
+      {
+        "key": "entity",
+        "text": "Memonites",
+        "href": "https://windblown.wiki.gg/wiki/Memonites",
+        "id": "Memonites",
+        "image": "https://windblown.wiki.gg/images/thumb/Memonite_Dust_Icon.png/20px-Memonite_Dust_Icon.png?6b0ee2",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Enemies that can be crystallized are weak enough when reaching 15% of their HP, or 7.5% of their HP for bosses.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Enemies that can be crystallized are weak enough when reaching 15% of their HP, or 7.5% of their HP for bosses."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Perfect_dodge_Icon.png/32px-Perfect_dodge_Icon.png?5680c9",
+    "name": "Dodge",
+    "nameColor": "#ffffff",
+    "category": "Special Attacks",
+    "description": "Dodging an attack at the last moment. Reflects part of the damage towards the attacking foe.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Dodging",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " an attack at the "
+      },
+      {
+        "key": "text",
+        "text": "last moment",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": ". Reflects part of the damage towards the attacking foe."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "During one second after a DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe. , the next damage instance is a criticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "During one second after a "
+      },
+      {
+        "key": "entity",
+        "text": "Dodge",
+        "href": "https://windblown.wiki.gg/wiki/Dodge",
+        "id": "Dodge",
+        "image": "https://windblown.wiki.gg/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
+        "color": "#ffffff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": ", the next damage instance is a "
+      },
+      {
+        "key": "entity",
+        "text": "critical",
+        "href": "https://windblown.wiki.gg/wiki/Criticals",
+        "id": "Criticals",
+        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
+        "color": "#ffdd00",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ]
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Echo_Icon.png/32px-Echo_Icon.png?59222f",
+    "name": "Echo",
+    "nameColor": "#94a9e9",
+    "category": "Special Attacks",
+    "description": "Replicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Replicate a percentage of the damage dealt after "
+      },
+      {
+        "key": "text",
+        "text": "0.5s",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": ". Reapplying Echo resets the effect."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Opportunity_Icon.png/32px-Opportunity_Icon.png?affdba",
+    "name": "Opportunity",
+    "nameColor": "#ffffff",
+    "category": "Special Attacks",
+    "description": "A short time window, during which you can use [Crystallize keybind] to launch a special attack.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "A short time window, during which you can use [Crystallize keybind] to launch a special attack."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "",
+    "richNotes": []
+  },
+  {
+    "image": "https://windblown.wiki.gg/images/thumb/Scythe_Icon.png/32px-Scythe_Icon.png?16e570",
+    "name": "Scythe",
+    "nameColor": "#5f9fff",
+    "category": "Special Attacks",
+    "description": "Blade that rotates around you and deals damage every 0.5s. Max 8 at the same time.",
+    "richDescription": [
+      {
+        "key": "text",
+        "text": "Blade that rotates around you and deals damage every "
+      },
+      {
+        "key": "text",
+        "text": "0.5s",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": ". "
+      },
+      {
+        "key": "text",
+        "text": "Max 8 at the same time",
+        "color": "#ff5b00"
+      },
+      {
+        "key": "text",
+        "text": "."
+      }
+    ],
+    "advancedDescription": "",
+    "richAdvancedDescription": [],
+    "notes": "Max 20 at the same time, when Countless Scythes Countless Scythes Scythe GiftYou can have 12 more ScythesScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  at the same time. is equipped.",
+    "richNotes": [
+      {
+        "key": "text",
+        "text": "Max 20 at the same time",
+        "color": "#ff5b00"
+      },
+      {
+        "key": "text",
+        "text": ", when "
+      },
+      {
+        "key": "entity",
+        "text": "Scythes",
+        "href": "https://windblown.wiki.gg/wiki/Countless_Scythes",
+        "id": "Countless_Scythes",
+        "image": "https://windblown.wiki.gg/images/thumb/Countless_Scythes_Icon.png/20px-Countless_Scythes_Icon.png?611a62",
+        "color": "#5f9fff",
+        "bold": true
+      },
+      {
+        "key": "text",
+        "text": " is equipped."
+      }
+    ]
+  }
+]
