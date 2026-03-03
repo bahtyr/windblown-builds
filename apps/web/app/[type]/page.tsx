@@ -239,7 +239,7 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // ✅ browse // add filter to filter likes
 // ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
-// if results present show scroll down / or scroll up indicator at the corner of the scrfeen
+// ✅ if results present show scroll down / or scroll up indicator at the corner of the scrfeen
 // ✅ scroll hints show up/down buttons
 
 
@@ -252,9 +252,9 @@ function entityIds(item: ScrapedEntity): string[] {
 //✅ deck list show delete on hover only
 //✅ deck list text color white, selected blue
 // deck active deck name jumps around
-// deck name renaming the current deck - can create temp ghost items in the saved deck list - they go away on refresh
+// ✅ deck name renaming the current deck - can create temp ghost items in the saved deck list - they go away on refresh
 // deck name should allow space
 
 
-// similar to liked filter, add in deck only filter
+// ✅ similar to liked filter, add in deck only filter
 // automation should write simple commit message
