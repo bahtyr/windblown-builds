@@ -52,6 +52,12 @@ export default function EntityPage({params}: { params: { type: string } }) {
     return matchSearch && matchEntity && matchLiked;
   };
 
+  const filteredCount = useMemo(
+    () => items.filter(matchesFilters).length,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [items, search, selectedEntity, likedOnly, likes.ids],
+  );
+
   const limits: DeckLimits = {
     gifts: 20,
     hexes: 3,
@@ -73,7 +79,9 @@ export default function EntityPage({params}: { params: { type: string } }) {
             likedOnly={likedOnly}
             onLikedChange={setLikedOnly}
           />
-          <div className="count">{items.length} total</div>
+          <div className="count">
+            {filteredCount === items.length ? `${items.length} total` : `${filteredCount} of ${items.length} filtered`}
+          </div>
         </div>
       </div>
 
@@ -150,7 +158,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ browse // move section count next to header
 // ✅ browse // adjust count on filter applied
 // ✅ browse liked cards do not save or load from local storage
-// browse // controls show filtered results - similar to section count
+// ✅ browse // controls show filtered results - similar to section count
 // ✅ browse // if section has no items to show
 
 // ✅ browsing card entity clicking on same entity should remove this filter
@@ -160,7 +168,8 @@ function entityIds(item: ScrapedEntity): string[] {
 // ✅ deck save or read from local storage not working
 // ✅ deck list horizontal like tabs
 // deck better smoother draggable
-// deck opening copied deck link does not show image
+// ✅ deck opening copied deck link does not show image
+// >> but hardcoded to url -- can we not find it instead?
 
 // move deck separate from header nav. make it sticky footer
 // ✅ deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
@@ -170,7 +179,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // if results present show scroll down / or scroll up indicator at the corner of the scrfeen
 
 
-// browse / make likes checkbox pill/button like - hide checkbox square
+// ✅ browse / make likes checkbox pill/button like - hide checkbox square
 
 
 // deck

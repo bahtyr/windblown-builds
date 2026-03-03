@@ -19,7 +19,7 @@ export default function DeckPanel() {
       params.set(
         "deck",
         deck.items
-          .map((i) => `${i.type}|${encodeURIComponent(i.name)}`)
+          .map((i) => `${i.type}|${encodeURIComponent(i.name)}|${encodeURIComponent(i.image ?? "")}`)
           .join(","),
       );
     }

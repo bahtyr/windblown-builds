@@ -35,13 +35,14 @@ export default function Filters({items, search, onSearch, selectedEntity, onEnti
         value={search}
         onChange={(e) => onSearch(e.target.value)}
       />
-      <label htmlFor="likedOnly">Liked only:</label>
-      <input
-        id="likedOnly"
-        type="checkbox"
-        checked={likedOnly}
-        onChange={(e) => onLikedChange(e.target.checked)}
-      />
+      <button
+        type="button"
+        className={`pill-toggle ${likedOnly ? "active" : ""}`}
+        onClick={() => onLikedChange(!likedOnly)}
+        aria-pressed={likedOnly}
+      >
+        Liked only
+      </button>
       <button
         className="btn"
         type="button"

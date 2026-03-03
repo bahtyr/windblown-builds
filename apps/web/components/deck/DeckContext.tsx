@@ -95,6 +95,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   }, [hydrated, items, selectedSaved]);
 
   const ensureActiveDeck = (customName?: string): string => {
+    if (!hydrated) return customName?.trim() || name;
     const targetName = customName?.trim() || selectedSaved || name.trim() || suggestName(saved);
     setNameState(targetName);
     setSelectedSaved((prev) => prev ?? targetName);
@@ -214,11 +215,12 @@ function parseDeckParam(raw: string): DeckItem[] {
   const parts = raw.split(",");
   const items: DeckItem[] = [];
   for (const part of parts) {
-    const [type, nameEncoded] = part.split("|");
+    const [type, nameEncoded, imageEncoded] = part.split("|");
     if (!type || !nameEncoded) continue;
     if (!["gifts", "hexes", "magifishes", "trinkets", "weapons", "boosts"].includes(type)) continue;
     const name = decodeURIComponent(nameEncoded);
-    items.push({type: type as EntityType, name, id: deckId(type as EntityType, name)});
+    const image = imageEncoded ? decodeURIComponent(imageEncoded) : undefined;
+    items.push({type: type as EntityType, name, id: deckId(type as EntityType, name), image: image || undefined});
   }
   return items;
 }
