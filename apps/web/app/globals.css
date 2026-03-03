@@ -141,8 +141,14 @@ input::placeholder {
 
 .deck-slots {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.deck-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
 }
 
 .deck-status {
@@ -154,12 +160,6 @@ input::placeholder {
     border-radius: 10px;
     padding: 8px;
     background: #0e1622;
-}
-
-.deck-group-title {
-    text-transform: capitalize;
-    color: var(--muted);
-    margin-bottom: 6px;
 }
 
 .deck-group-items {
@@ -191,30 +191,26 @@ input::placeholder {
     border-radius: 6px;
 }
 
-.deck-chip-name {
-    display: none;
-    max-width: 140px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .deck-chip-remove {
-    display: none;
-    border: none;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--border);
     background: #1f2c3d;
     color: var(--text);
-    border-radius: 8px;
-    padding: 2px 6px;
+    border-radius: 50%;
+    padding: 0;
     cursor: pointer;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    transition: opacity .15s ease;
 }
 
 .deck-chip:hover .deck-chip-remove {
-    display: inline-block;
-}
-
-.deck-chip:hover .deck-chip-name {
-    display: block;
+    opacity: 1;
 }
 
 .sections {
@@ -259,7 +255,7 @@ input::placeholder {
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 10px;
-    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+    background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01));
     position: relative;
     transition: transform .1s ease, box-shadow .1s ease, opacity .2s ease;
 }
@@ -280,12 +276,61 @@ input::placeholder {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+}
+
+.card-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .card-title {
     font-weight: 700;
-    margin: 4px 0 6px;
+    margin: 0;
+}
+
+.card-thumb {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #0c1420;
+}
+
+.card-icons {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: #162233;
+    color: var(--text);
+    display: none;
+    place-items: center;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.card:hover .icon-btn {
+    display: grid;
+}
+
+.card.in-deck .icon-btn {
+    display: grid;
+}
+
+.icon-btn:hover {
+    background: #1f3046;
+}
+
+.icon-btn.like.liked {
+    color: #ff6fa8;
 }
 
 .card-img {
@@ -307,25 +352,9 @@ input::placeholder {
     padding: 3px 8px;
     border: 1px solid var(--border);
     border-radius: 999px;
-    /*background: var(--chip);*/
     background: transparent;
     margin-right: 2px;
     cursor: pointer;
-
-}
-
-.card-actions {
-    margin-top: 8px;
-    min-height: 32px;
-}
-
-.add-btn {
-    display: none;
-}
-
-.card:hover .add-btn,
-.card.in-deck .add-btn {
-    display: inline-block;
 }
 
 .pill {

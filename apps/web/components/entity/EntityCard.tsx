@@ -28,6 +28,10 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
     }
   };
 
+  const handleRemove = () => {
+    deck.remove(`${type}:${item.name}`);
+  };
+
   return (
     <article
       className={`card ${highlight || presentInDeck ? "highlight" : ""} ${presentInDeck ? "in-deck" : ""} ${
@@ -38,50 +42,55 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
       }}
     >
       <div className="card-head">
-        <button
-          className={`like ${liked ? "liked" : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            likes.toggle(`${type}:${item.name}`);
-          }}
-        >
-          ♥
-        </button>
+        <div className="card-title-wrap">
+          {item.image && <img className="card-thumb" src={item.image} alt="" />}
+          <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
+            {item.name}
+          </div>
+        </div>
+        <div className="card-icons">
+          <button
+            className={`icon-btn like ${liked ? "liked" : ""}`}
+            aria-label={liked ? "Unheart" : "Heart"}
+            onClick={(e) => {
+              e.stopPropagation();
+              likes.toggle(`${type}:${item.name}`);
+            }}
+          >
+            ♥
+          </button>
+          {type !== "effects" && !presentInDeck && (
+            <button
+              className="icon-btn"
+              aria-label="Add to deck"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAdd();
+              }}
+            >
+              +
+            </button>
+          )}
+          {type !== "effects" && presentInDeck && (
+            <button
+              className="icon-btn"
+              aria-label="Remove from deck"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRemove();
+              }}
+            >
+              ×
+            </button>
+          )}
+        </div>
       </div>
-      <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
-        {item.name}
-      </div>
-      {item.image && <img className="card-img" src={item.image} alt={item.name} />}
       <RichText
         parts={item.richDescription}
         onEntityClick={() => {
           if (!presentInDeck && type !== "effects") handleAdd();
         }}
       />
-      <div className="card-actions">
-        {type !== "effects" && !presentInDeck && (
-          <button
-            className="btn add-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleAdd();
-            }}
-          >
-            Add to deck
-          </button>
-        )}
-        {type !== "effects" && presentInDeck && (
-          <button
-            className="btn ghost add-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              deck.remove(`${type}:${item.name}`);
-            }}
-          >
-            Remove
-          </button>
-        )}
-      </div>
     </article>
   );
 }

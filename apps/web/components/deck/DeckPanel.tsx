@@ -72,23 +72,27 @@ export default function DeckPanel() {
             </div>
           </div>
           <div className="deck-slots" id="deckSlots">
-            {groupedByType(deck.items).map(({type, label, list}) => (
-              <div className="deck-group" key={type}>
-                <div className="deck-group-title">{label}</div>
-                <div className="deck-group-items">
-                  {list.map((item, idx) => (
-                    <DeckDraggable
-                      key={item.id}
-                      item={item}
-                      index={idx}
-                      type={type}
-                      onDrop={(from, to) => deck.moveWithinType(type, from, to)}
-                      onRemove={() => deck.remove(item.id)}
-                      highlight={type === "gifts" && idx < 8}
-                    />
-                  ))}
-                  {list.length === 0 && <div className="muted">Empty</div>}
-                </div>
+            {rows(deck.items).map((groups, rowIdx) => (
+              <div className="deck-row" key={rowIdx}>
+                {groups.map(({type, list}) => (
+                  list.length > 0 && (
+                    <div className="deck-group" key={type}>
+                      <div className="deck-group-items">
+                        {list.map((item, idx) => (
+                          <DeckDraggable
+                            key={item.id}
+                            item={item}
+                            index={idx}
+                            type={type}
+                            onDrop={(from, to) => deck.moveWithinType(type, from, to)}
+                            onRemove={() => deck.remove(item.id)}
+                            highlight={type === "gifts" && idx < 8}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+                ))}
               </div>
             ))}
             {deck.items.length === 0 && <div className="muted">No items yet</div>}
@@ -139,13 +143,17 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
   );
 }
 
-function groupedByType(items: DeckItem[]) {
-  const order: {type: EntityType; label: string}[] = [
-    {type: "gifts", label: "Gifts"},
-    {type: "weapons", label: "Weapons"},
-    {type: "trinkets", label: "Trinkets"},
-    {type: "hexes", label: "Hexes"},
-    {type: "magifishes", label: "Magifish"},
+function rows(items: DeckItem[]) {
+  const group = (type: EntityType) => items.filter((x) => x.type === type);
+  return [
+    [{type: "gifts", list: group("gifts")}],
+    [
+      {type: "weapons", list: group("weapons")},
+      {type: "trinkets", list: group("trinkets")},
+    ],
+    [
+      {type: "hexes", list: group("hexes")},
+      {type: "magifishes", list: group("magifishes")},
+    ],
   ];
-  return order.map((t) => ({...t, list: items.filter((x) => x.type === t.type)}));
 }
