@@ -164,7 +164,7 @@ function entityIds(item: ScrapedEntity): string[] {
 // deck list text color white, selected blue
 
 // move deck separate from header nav. make it sticky footer
-// deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
+// ✅ deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
 
 // ✅ browse // add filter to filter likes
 // ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
