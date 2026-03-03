@@ -180,10 +180,12 @@ export default function EntityPage({params}: { params: { type: string } }) {
         <div className="scroll-hints">
           {matchNav.above + matchNav.below > 0 && (
             <>
-              <button className="pill-toggle" type="button" disabled={matchNav.above === 0} onClick={() => scrollToNearest("up")}>
+              <button className="pill-toggle" type="button" disabled={matchNav.above === 0}
+                      onClick={() => scrollToNearest("up")}>
                 Previous match {matchNav.above > 0 && <span className="badge">{matchNav.above}</span>}
               </button>
-              <button className="pill-toggle" type="button" disabled={matchNav.below === 0} onClick={() => scrollToNearest("down")}>
+              <button className="pill-toggle" type="button" disabled={matchNav.below === 0}
+                      onClick={() => scrollToNearest("down")}>
                 Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
               </button>
             </>
@@ -251,7 +253,7 @@ function entityIds(item: ScrapedEntity): string[] {
 
 //✅ deck list show delete on hover only
 //✅ deck list text color white, selected blue
-// deck active deck name jumps around
+// ✅ deck active deck name jumps around > preserve order
 // ✅ deck name renaming the current deck - can create temp ghost items in the saved deck list - they go away on refresh
 // ✅ deck name should allow space
 

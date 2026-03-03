@@ -121,14 +121,26 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   useEffect(() => {
     if (!hydrated || !selectedSaved) return;
     setSaved((prev) => {
-      const others = prev.filter((d) => d.name !== selectedSaved);
-      return [...others, {name: selectedSaved, items}];
+      return upsertSaved(prev, selectedSaved, items);
     });
   }, [hydrated, items, selectedSaved]);
 
   const upsertSaved = (list: SavedDeck[], deckName: string, deckItems: DeckItem[]): SavedDeck[] => {
-    const others = list.filter((d) => d.name !== deckName);
-    return [...others, {name: deckName, items: deckItems}];
+    const idx = list.findIndex((d) => d.name === deckName);
+    if (idx === -1) return [...list, {name: deckName, items: deckItems}];
+    const next = [...list];
+    next[idx] = {name: deckName, items: deckItems};
+    return next;
+  };
+
+  const renameSaved = (list: SavedDeck[], from: string, to: string, deckItems: DeckItem[]): SavedDeck[] => {
+    const targetIdx = list.findIndex((d) => d.name === from);
+    const fallbackIdx = targetIdx === -1 ? list.findIndex((d) => d.name === to) : targetIdx;
+    const idx = fallbackIdx === -1 ? list.length : fallbackIdx;
+    const filtered = list.filter((d) => d.name !== from && d.name !== to);
+    const next = [...filtered];
+    next.splice(idx, 0, {name: to, items: deckItems});
+    return next;
   };
 
   const ensureActiveDeck = (customName?: string): string => {
@@ -176,8 +188,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setSaved((prev) => {
           const source = prev.find((d) => d.name === sourceName);
           const payload = source ? source.items : items;
-          const without = prev.filter((d) => d.name !== sourceName && d.name !== targetName);
-          return [...without, {name: targetName, items: payload}];
+          return renameSaved(prev, sourceName, targetName, payload);
         });
       },
       createDeck: () => {
@@ -186,8 +197,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setNameState(newName);
         setSelectedSaved(newName);
         setSaved((prev) => {
-          const others = prev.filter((d) => d.name !== newName);
-          return [...others, {name: newName, items: []}];
+          return renameSaved(prev, newName, newName, []);
         });
       },
       saveDeck: (asNew?: boolean) => {
@@ -196,8 +206,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setNameState(targetName);
         setSelectedSaved(targetName);
         setSaved((prev) => {
-          const others = prev.filter((d) => d.name !== targetName);
-          return [...others, {name: targetName, items}];
+          return renameSaved(prev, targetName, targetName, items);
         });
       },
       loadDeck: (deckName: string) => {
