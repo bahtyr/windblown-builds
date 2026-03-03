@@ -220,43 +220,6 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // todo
 
-// ✅ browse // move section count next to header
-// ✅ browse // adjust count on filter applied
-// ✅ browse liked cards do not save or load from local storage
-// ✅ browse // controls show filtered results - similar to section count
-// ✅ browse // if section has no items to show
-
-// ✅ browsing card entity clicking on same entity should remove this filter
-// ✅ browsing card entity missing image
-// ✅ browsing card clicking on it adds to deck -- should be only on plus button
-
-// ✅ deck save or read from local storage not working
-// ✅ deck list horizontal like tabs
 // deck better smoother draggable
-// ✅ deck opening copied deck link does not show image
-// ✅ deck share link hardcoded to url
-
 // move deck separate from header nav. make it sticky footer
-// ✅ deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
-
-// ✅ browse // add filter to filter likes
-// ✅ browse // filter dropdown don't show url can substring base "https:///...../wiki/"
-// ✅ if results present show scroll down / or scroll up indicator at the corner of the scrfeen
-// ✅ scroll hints show up/down buttons
-
-
-// ✅ browse / make likes checkbox pill/button like - hide checkbox square
-
-
-//✅ deck fix save / refresh name issue
-//✅ clear button is renamed to reset current deck
-
-//✅ deck list show delete on hover only
-//✅ deck list text color white, selected blue
-// ✅ deck active deck name jumps around > preserve order
-// ✅ deck name renaming the current deck - can create temp ghost items in the saved deck list - they go away on refresh
-// ✅ deck name should allow space
-
-
-// ✅ similar to liked filter, add in deck only filter
 // automation should write simple commit message

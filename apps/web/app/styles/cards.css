@@ -157,9 +157,13 @@
     height: 14px;
     /*border-radius: 5px;*/
     object-fit: contain;
-    margin-right: 8px;
     /*background: #0a111c;*/
     /*border: 1px solid rgba(255, 255, 255, .08);*/
+}
+
+
+.entity img :has(+ span) {
+    margin-right: 8px;
 }
 
 .pill {
