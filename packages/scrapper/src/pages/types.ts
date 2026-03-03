@@ -19,10 +19,43 @@ export interface RichTextEntityNode extends RichTextBaseNode {
 
 export type RichDescriptionNode = RichTextTextNode | RichTextEntityNode;
 
-export interface Gift {
+export interface ScrapedEntity {
   image: string;
   name: string;
-  category: string;
   description: string;
   richDescription: RichDescriptionNode[];
+}
+
+export interface Gift extends ScrapedEntity {
+  category: string;
+}
+
+export interface Boost extends ScrapedEntity {
+  healthBonus?: string;
+}
+
+export interface Hex extends ScrapedEntity {
+  unlockCost: string;
+  unlockRequirement: string;
+}
+
+export interface Magifish extends ScrapedEntity {
+  unlockCost: string;
+  unlockRequirement: string;
+}
+
+export interface Trinket extends ScrapedEntity {
+  baseDamage: string;
+  damageType: string;
+  cooldown: string;
+  unlockCost: string;
+  unlockRequirement: string;
+}
+
+export interface Weapon extends ScrapedEntity {
+  baseDamage: string;
+  damageType: string;
+  alterattackBonus: string;
+  unlockCost: string;
+  unlockRequirement: string;
 }
