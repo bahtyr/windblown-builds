@@ -253,7 +253,7 @@ function entityIds(item: ScrapedEntity): string[] {
 //✅ deck list text color white, selected blue
 // deck active deck name jumps around
 // ✅ deck name renaming the current deck - can create temp ghost items in the saved deck list - they go away on refresh
-// deck name should allow space
+// ✅ deck name should allow space
 
 
 // ✅ similar to liked filter, add in deck only filter

@@ -132,8 +132,9 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   };
 
   const ensureActiveDeck = (customName?: string): string => {
-    if (!hydrated) return customName?.trim() || name;
-    const targetName = customName?.trim() || selectedSaved || name.trim() || suggestName(saved);
+    if (!hydrated) return customName ?? name;
+    const baseName = name === "" ? suggestName(saved) : name;
+    const targetName = customName ?? selectedSaved ?? baseName;
     setNameState(targetName);
     setSelectedSaved((prev) => prev ?? targetName);
     setSaved((prev) => upsertSaved(prev, targetName, items));
@@ -168,7 +169,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       moveWithinType: (type, from, to) =>
         setItems((prev) => reorderWithinType(prev, type, from, to)),
       setName: (nextName: string) => {
-        const targetName = nextName.trim() || "Untitled Deck";
+        const targetName = nextName === "" ? "Untitled Deck" : nextName;
         const sourceName = selectedSaved ?? name;
         setNameState(targetName);
         setSelectedSaved(targetName);
@@ -190,7 +191,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         });
       },
       saveDeck: (asNew?: boolean) => {
-        const targetName = asNew ? suggestName(saved) : name.trim() || "Untitled Deck";
+        const targetName = asNew ? suggestName(saved) : (name === "" ? "Untitled Deck" : name);
         ensureActiveDeck(targetName);
         setNameState(targetName);
         setSelectedSaved(targetName);
