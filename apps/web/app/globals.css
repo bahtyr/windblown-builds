@@ -311,18 +311,19 @@ input::placeholder {
     border: 1px solid var(--border);
     background: #162233;
     color: var(--text);
-    display: none;
+    display: grid;
+    visibility: hidden;
     place-items: center;
     cursor: pointer;
     transition: background .15s ease, color .15s ease;
 }
 
 .card:hover .icon-btn {
-    display: grid;
+    visibility: visible;
 }
 
 .card.in-deck .icon-btn {
-    display: grid;
+    visibility: visible;
 }
 
 .icon-btn:hover {
@@ -378,6 +379,7 @@ input::placeholder {
 .like.liked {
     color: #ff6fa8;
     opacity: 1;
+    visibility: visible;
 }
 
 .card:hover .like {
