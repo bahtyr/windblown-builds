@@ -80,6 +80,14 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     localStorage.setItem(STORAGE_SAVED, JSON.stringify(saved));
   }, [saved]);
 
+  useEffect(() => {
+    if (!selectedSaved) return;
+    setSaved((prev) => {
+      const others = prev.filter((d) => d.name !== selectedSaved);
+      return [...others, {name: selectedSaved, items}];
+    });
+  }, [items, selectedSaved]);
+
   const api: DeckContextType = useMemo(
     () => ({
       items,

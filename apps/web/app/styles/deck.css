@@ -74,14 +74,13 @@
 }
 
 .deck-slots {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
 }
 
 .deck-row {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -96,12 +95,14 @@
     border-radius: 10px;
     padding: 8px;
     background: #0e1622;
+    display: inline-flex;
 }
 
 .deck-group-items {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 /* ---------- Deck chips ---------- */
@@ -115,6 +116,7 @@
     border-radius: 10px;
     background: #122030;
     cursor: grab;
+    margin-right: 2px;
 }
 
 .deck-chip.highlight {
