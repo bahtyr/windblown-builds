@@ -6,6 +6,7 @@
     --chip: #132238;
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
     --fade: .3;
+    --max-width: 2400px;
 }
 
 * {
@@ -23,7 +24,7 @@ body {
 
 header {
     padding: 24px 16px 12px;
-    max-width: 1100px;
+    max-width: var(--max-width);
     margin: 0 auto;
 }
 
@@ -82,7 +83,7 @@ input::placeholder {
 }
 
 .deck {
-    max-width: 1100px;
+    max-width: var(--max-width);
     margin: 10px auto 0;
     padding: 0 16px;
 }
@@ -217,7 +218,7 @@ input::placeholder {
 }
 
 .sections {
-    max-width: 1100px;
+    max-width: var(--max-width);
     margin: 16px auto;
     padding: 0 16px 40px;
     display: flex;
@@ -226,17 +227,21 @@ input::placeholder {
 }
 
 .section {
-    border: 1px solid var(--border);
+    /*border: 1px solid var(--border);*/
     border-radius: 14px;
     padding: 12px;
-    background: #0f1622;
-    box-shadow: var(--shadow);
+    /*background: #0f1622;*/
+    /*box-shadow: var(--shadow);*/
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    /*justify-content: space-between;*/
+    gap: 0 8px;
+    /*border-bottom: 1px solid rgba(255, 255, 255, .06);*/
+    /*background: rgba(0, 0, 0, .12);*/
 }
 
 .section-sub {
@@ -252,7 +257,7 @@ input::placeholder {
 
 .card {
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 10px;
     background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
     position: relative;
@@ -285,20 +290,28 @@ input::placeholder {
 
 .card-img {
     max-width: 100%;
-    border-radius: 8px;
+    border-radius: 4px;
     display: block;
     margin: 6px 0;
 }
 
 .rich {
     color: var(--muted);
+    /*gap: 2px 4px;*/
+    gap: 0 4px;
 }
 
 .entity {
-    padding: 1px 4px;
-    border-radius: 6px;
-    background: var(--chip);
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    /*background: var(--chip);*/
+    background: transparent;
     margin-right: 2px;
+    cursor: pointer;
+
 }
 
 .card-actions {
