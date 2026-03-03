@@ -21,6 +21,23 @@
     padding-right: 12px;
 }
 
+.saved-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 2px 0;
+}
+
+.saved-row.active .link {
+    color: #ff6fa8;
+}
+
+.icon-btn.small {
+    width: 24px;
+    height: 24px;
+}
+
 .deck-entities-title {
     font-weight: 600;
     margin-bottom: 6px;
@@ -63,8 +80,9 @@
 }
 
 .deck-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
 }
 

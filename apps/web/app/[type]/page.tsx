@@ -7,7 +7,6 @@ import {useLikes} from "../../components/like/LikeContext";
 import EntityCard from "../../components/entity/EntityCard";
 import Filters from "../../components/entity/Filters";
 import {loadEntities} from "../../lib/loadEntities";
-import RichText from "../../components/entity/RichText";
 
 const VALID_TYPES: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
 
@@ -99,8 +98,9 @@ export default function EntityPage({params}: {params: {type: string}}) {
                         deck={deck}
                         likes={likes}
                         limits={limits}
-                        fade={!matched}
+                          fade={!matched}
                         inDeck={inDeck}
+                        onEntityFilter={(id) => setSelectedEntity(id)}
                       />
                     );
                   })}
@@ -135,6 +135,3 @@ function entityIds(item: ScrapedEntity): string[] {
   }
   return ids;
 }
-
-// todo clicking on  card rich entity adds to deck -- it should add filter of the entity - not add card to deck
-// deck ui - sections should not be width 100% - the icons of weapons, trinkets and magfishes next to each other can be a little bit of margin

@@ -95,10 +95,13 @@
     background: #162233;
     color: var(--text);
     display: grid;
-    visibility: hidden;
     place-items: center;
     cursor: pointer;
     transition: background .15s ease, color .15s ease;
+}
+
+.card .icon-btn {
+    visibility: hidden;
 }
 
 .card:hover .icon-btn,

@@ -33,7 +33,14 @@ export default function Filters({items, search, onSearch, selectedEntity, onEnti
         value={search}
         onChange={(e) => onSearch(e.target.value)}
       />
-      <button className="btn" type="button" onClick={() => onSearch("")}>
+      <button
+        className="btn"
+        type="button"
+        onClick={() => {
+          onSearch("");
+          onEntityChange("");
+        }}
+      >
         Clear
       </button>
     </>

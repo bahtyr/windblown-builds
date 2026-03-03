@@ -18,12 +18,14 @@ type DeckContextType = {
   items: DeckItem[];
   name: string;
   saved: SavedDeck[];
+  selectedSaved: string | null;
   add: (item: DeckItem, limits: DeckLimits) => {ok: boolean; reason?: string};
   remove: (id: string) => void;
   moveWithinType: (type: EntityType, from: number, to: number) => void;
   setName: (name: string) => void;
-  saveDeck: () => void;
+  saveDeck: (asNew?: boolean) => void;
   loadDeck: (name: string) => void;
+  deleteDeck: (name: string) => void;
   clear: () => void;
 };
 
@@ -36,6 +38,7 @@ export function DeckProvider({children}: {children: React.ReactNode}) {
   const [items, setItems] = useState<DeckItem[]>([]);
   const [name, setName] = useState<string>("Untitled Deck");
   const [saved, setSaved] = useState<SavedDeck[]>([]);
+  const [selectedSaved, setSelectedSaved] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -51,7 +54,9 @@ export function DeckProvider({children}: {children: React.ReactNode}) {
     const savedDecks = localStorage.getItem(STORAGE_SAVED);
     if (savedDecks) {
       try {
-        setSaved(JSON.parse(savedDecks) as SavedDeck[]);
+        const parsed = JSON.parse(savedDecks) as SavedDeck[];
+        setSaved(parsed);
+        setSelectedSaved(parsed[0]?.name ?? null);
       } catch {
         // ignore
       }
@@ -80,6 +85,7 @@ export function DeckProvider({children}: {children: React.ReactNode}) {
       items,
       name,
       saved,
+      selectedSaved,
       add: (item, limits) => {
         if (items.some((x) => x.id === item.id)) {
           return {ok: false, reason: "Duplicate not allowed"};
@@ -101,23 +107,33 @@ export function DeckProvider({children}: {children: React.ReactNode}) {
       moveWithinType: (type, from, to) =>
         setItems((prev) => reorderWithinType(prev, type, from, to)),
       setName,
-      saveDeck: () => {
-        if (!name.trim()) return;
+      saveDeck: (asNew?: boolean) => {
+        const targetName = asNew ? suggestName(saved) : name.trim() || "Untitled Deck";
+        setName(targetName);
         setSaved((prev) => {
-          const others = prev.filter((d) => d.name !== name.trim());
-          return [...others, {name: name.trim(), items}];
+          const others = prev.filter((d) => d.name !== targetName);
+          const next = [...others, {name: targetName, items}];
+          return next;
         });
+        setSelectedSaved(targetName);
       },
       loadDeck: (deckName: string) => {
         const match = saved.find((d) => d.name === deckName);
         if (match) {
           setItems(match.items);
           setName(match.name);
+          setSelectedSaved(deckName);
+        }
+      },
+      deleteDeck: (deckName: string) => {
+        setSaved((prev) => prev.filter((d) => d.name !== deckName));
+        if (selectedSaved === deckName) {
+          setSelectedSaved(null);
         }
       },
       clear: () => setItems([]),
     }),
-    [items, name, saved],
+    [items, name, saved, selectedSaved],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
@@ -135,6 +151,15 @@ export function deckId(type: EntityType, name: string): string {
 
 export function makeDeckItem(type: EntityType, entity: ScrapedEntity): DeckItem {
   return {type, name: entity.name, id: deckId(type, entity.name), image: entity.image};
+}
+
+function suggestName(existing: SavedDeck[]): string {
+  const base = "Deck";
+  let i = 1;
+  while (existing.some((d) => d.name === `${base} ${i}`)) {
+    i += 1;
+  }
+  return `${base} ${i}`;
 }
 
 function parseDeckParam(raw: string): DeckItem[] {

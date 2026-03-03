@@ -2,7 +2,13 @@
 
 import {RichDescriptionNode} from "../../lib/types";
 
-export default function RichText({parts, onEntityClick}: {parts: RichDescriptionNode[]; onEntityClick?: (id: string) => void}) {
+type Props = {
+  parts: RichDescriptionNode[];
+  onEntityClick?: (id: string) => void;
+  onEntityFilter?: (id: string) => void;
+};
+
+export default function RichText({parts, onEntityClick, onEntityFilter}: Props) {
   return (
     <div className="rich">
       {parts.map((p, i) => {
@@ -21,8 +27,10 @@ export default function RichText({parts, onEntityClick}: {parts: RichDescription
             title={p.href}
             onClick={(e) => {
               e.stopPropagation();
-              if (onEntityClick && (p.href || p.id)) {
-                onEntityClick(p.href || p.id!);
+              const id = p.href || p.id;
+              if (id) {
+                if (onEntityFilter) onEntityFilter(id);
+                else if (onEntityClick) onEntityClick(id);
               }
             }}
           >

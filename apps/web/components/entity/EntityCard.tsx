@@ -15,9 +15,10 @@ type Props = {
   limits: DeckLimits;
   fade?: boolean;
   inDeck?: boolean;
+  onEntityFilter?: (id: string) => void;
 };
 
-export default function EntityCard({item, type, highlight, deck, likes, limits, fade, inDeck}: Props) {
+export default function EntityCard({item, type, highlight, deck, likes, limits, fade, inDeck, onEntityFilter}: Props) {
   const presentInDeck = inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`);
   const liked = likes.ids.has(`${type}:${item.name}`);
 
@@ -87,9 +88,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
       </div>
       <RichText
         parts={item.richDescription}
-        onEntityClick={() => {
-          if (!presentInDeck && type !== "effects") handleAdd();
-        }}
+        onEntityFilter={onEntityFilter}
       />
     </article>
   );

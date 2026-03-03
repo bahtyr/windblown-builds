@@ -41,13 +41,18 @@ export default function DeckPanel() {
         Deck ({total})
       </div>
       <div className="deck-panel" id="deckPanel">
-        <div className="deck-side">
+        <div className="deck-side deck-entities-list">
           <div className="deck-entities-title">Saved decks</div>
           {deck.saved.length === 0 && <div className="muted">None</div>}
           {deck.saved.map((d) => (
-            <button key={d.name} className="link" onClick={() => deck.loadDeck(d.name)}>
-              {d.name} ({d.items.length})
-            </button>
+            <div key={d.name} className={`saved-row ${deck.selectedSaved === d.name ? "active" : ""}`}>
+              <button className="link" onClick={() => deck.loadDeck(d.name)}>
+                {d.name}
+              </button>
+              <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
+                ×
+              </button>
+            </div>
           ))}
         </div>
         <div className="deck-main">
@@ -60,6 +65,9 @@ export default function DeckPanel() {
             />
             <button className="btn" type="button" onClick={() => deck.saveDeck()}>
               Save deck
+            </button>
+            <button className="btn" type="button" onClick={() => deck.saveDeck(true)}>
+              Save as new
             </button>
             <button className="btn ghost" type="button" onClick={() => deck.clear()}>
               Clear
@@ -150,10 +158,10 @@ function rows(items: DeckItem[]) {
     [
       {type: "weapons", list: group("weapons")},
       {type: "trinkets", list: group("trinkets")},
+      {type: "magifishes", list: group("magifishes")},
     ],
     [
       {type: "hexes", list: group("hexes")},
-      {type: "magifishes", list: group("magifishes")},
     ],
   ];
 }
