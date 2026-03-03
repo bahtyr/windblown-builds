@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {ScrapedEntity, EntityType} from "../../lib/types";
+import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
 import RichText from "./RichText";
@@ -44,7 +44,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
     >
       <div className="card-head">
         <div className="card-title-wrap">
-          {item.image && <img className="card-thumb" src={item.image} alt="" />}
+          {item.image && <img className="card-thumb" src={item.image} alt=""/>}
           <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
             {item.name}
           </div>

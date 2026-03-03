@@ -1,7 +1,7 @@
 "use client";
 
 import {createContext, useContext, useEffect, useMemo, useState} from "react";
-import {ScrapedEntity, EntityType} from "../../lib/types";
+import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type DeckItem = {
   id: string;
@@ -12,14 +12,14 @@ export type DeckItem = {
 
 export type DeckLimits = Partial<Record<Exclude<EntityType, "effects">, number>>;
 
-type SavedDeck = {name: string; items: DeckItem[]};
+type SavedDeck = { name: string; items: DeckItem[] };
 
 type DeckContextType = {
   items: DeckItem[];
   name: string;
   saved: SavedDeck[];
   selectedSaved: string | null;
-  add: (item: DeckItem, limits: DeckLimits) => {ok: boolean; reason?: string};
+  add: (item: DeckItem, limits: DeckLimits) => { ok: boolean; reason?: string };
   remove: (id: string) => void;
   moveWithinType: (type: EntityType, from: number, to: number) => void;
   setName: (name: string) => void;
@@ -34,7 +34,7 @@ const DeckContext = createContext<DeckContextType | null>(null);
 const STORAGE_KEY = "windblown.deck.v2";
 const STORAGE_SAVED = "windblown.deck.saved.v2";
 
-export function DeckProvider({children}: {children: React.ReactNode}) {
+export function DeckProvider({children}: { children: React.ReactNode }) {
   const [items, setItems] = useState<DeckItem[]>([]);
   const [name, setName] = useState<string>("Untitled Deck");
   const [saved, setSaved] = useState<SavedDeck[]>([]);
@@ -44,7 +44,7 @@ export function DeckProvider({children}: {children: React.ReactNode}) {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        const parsed = JSON.parse(stored) as {items: DeckItem[]; name?: string};
+        const parsed = JSON.parse(stored) as { items: DeckItem[]; name?: string };
         setItems(parsed.items || []);
         if (parsed.name) setName(parsed.name);
       } catch {

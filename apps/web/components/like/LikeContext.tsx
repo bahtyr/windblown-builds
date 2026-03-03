@@ -10,7 +10,7 @@ type LikeCtx = {
 const LikeContext = createContext<LikeCtx | null>(null);
 const STORAGE_KEY = "windblown.likes.v1";
 
-export function LikeProvider({children}: {children: React.ReactNode}) {
+export function LikeProvider({children}: { children: React.ReactNode }) {
   const [ids, setIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {

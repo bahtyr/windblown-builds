@@ -10,7 +10,7 @@ import {loadEntities} from "../../lib/loadEntities";
 
 const VALID_TYPES: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
 
-export default function EntityPage({params}: {params: {type: string}}) {
+export default function EntityPage({params}: { params: { type: string } }) {
   const type = (VALID_TYPES.includes(params.type as EntityType) ? params.type : "gifts") as EntityType;
 
   const [items, setItems] = useState<ScrapedEntity[]>([]);
@@ -59,22 +59,24 @@ export default function EntityPage({params}: {params: {type: string}}) {
 
   return (
     <div className="page">
-      <div className="controls">
-        <Filters
-          items={items}
-          search={search}
-          onSearch={setSearch}
-          selectedEntity={selectedEntity}
-          onEntityChange={setSelectedEntity}
-        />
-        <div className="count">{items.length} total</div>
+      <div className="body-wrapper">
+        <div className="controls">
+          <Filters
+            items={items}
+            search={search}
+            onSearch={setSearch}
+            selectedEntity={selectedEntity}
+            onEntityChange={setSelectedEntity}
+          />
+          <div className="count">{items.length} total</div>
+        </div>
       </div>
 
       {loading && <div className="status">Loading…</div>}
       {error && <div className="status error">{error}</div>}
 
       {!loading && !error && (
-        <section className="sections">
+        <section className="sections body-wrapper">
           {grouped.map(([cat, list]) => {
             const filtered = list.filter(matchesFilters);
             return (
@@ -98,7 +100,7 @@ export default function EntityPage({params}: {params: {type: string}}) {
                         deck={deck}
                         likes={likes}
                         limits={limits}
-                          fade={!matched}
+                        fade={!matched}
                         inDeck={inDeck}
                         onEntityFilter={(id) => setSelectedEntity(id)}
                       />

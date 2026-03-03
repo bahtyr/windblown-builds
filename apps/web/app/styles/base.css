@@ -26,15 +26,21 @@ body {
 }
 
 header {
-    padding: 24px 16px 12px;
-    max-width: var(--max-width);
-    margin: 0 auto;
+    /*padding: 24px 16px 12px;*/
+    /*max-width: var(--max-width);*/
+    /*margin: 0 auto;*/
 }
 
 h1 {
     margin: 0 0 10px;
     font-size: 20px;
     letter-spacing: .2px;
+}
+
+.body-wrapper {
+    max-width: var(--max-width);
+    margin: 16px auto;
+    padding: 0 16px;
 }
 
 /* ---------- Controls ---------- */
@@ -48,7 +54,6 @@ h1 {
     border: 1px solid var(--border);
     border-radius: 14px;
     box-shadow: var(--shadow);
-    margin: 0 16px;
 }
 
 .controls label {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 
-const tabs: {href: string; label: string}[] = [
+const tabs: { href: string; label: string }[] = [
   {href: "/gifts", label: "Gifts"},
   {href: "/weapons", label: "Weapons"},
   {href: "/trinkets", label: "Trinkets"},
@@ -15,7 +15,7 @@ const tabs: {href: string; label: string}[] = [
 export default function NavBar() {
   const pathname = usePathname();
   return (
-    <header>
+    <header className="body-wrapper">
       <h1>Windblown Browser</h1>
       <nav className="tabs">
         {tabs.map((tab) => {

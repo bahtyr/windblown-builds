@@ -1,8 +1,8 @@
 /* ---------- Deck layout ---------- */
 .deck {
-    max-width: var(--max-width);
-    margin: 10px auto 0;
-    padding: 0 16px;
+    /*max-width: var(--max-width);*/
+    /*margin: 10px auto 0;*/
+    /*padding: 0 16px;*/
 }
 
 .deck-panel {
