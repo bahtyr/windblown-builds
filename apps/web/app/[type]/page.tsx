@@ -137,3 +137,19 @@ function entityIds(item: ScrapedEntity): string[] {
   }
   return ids;
 }
+
+// todo
+// clicking on same entity within card should remove this filter
+// deck save to local storage not working
+// cleanup deck save buttons very confusing right now
+// currently not clear when a deck is overritwn vs new deck
+// deck list ui
+// show remove on hover only
+// spacing beetween items reduce
+// regular saved text should be white regular color, selcted can be blue
+// save decks linearly horiztonal? like nav items at top isntead of veritcal
+// missing entity icons
+// move section count next to header
+// adjust count on filter applied
+// move deck separate from header nav. make it sticky footer
+// deck dashed border doesn't need to be per group of deck items. one dashed border for the whole deck is better
