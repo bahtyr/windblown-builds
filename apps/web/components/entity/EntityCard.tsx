@@ -38,9 +38,6 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
       className={`card ${highlight || presentInDeck ? "highlight" : ""} ${presentInDeck ? "in-deck" : ""} ${
         fade ? "faded" : ""
       }`}
-      onClick={() => {
-        if (!presentInDeck && type !== "effects") handleAdd();
-      }}
     >
       <div className="card-head">
         <div className="card-title-wrap">

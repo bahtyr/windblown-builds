@@ -148,7 +148,7 @@ function entityIds(item: ScrapedEntity): string[] {
 
 // browsing card entity clicking on same entity should remove this filter
 // browsing card entity missing image
-// browsing card clicking on it adds to deck -- should be only on plus button
+// ✅ browsing card clicking on it adds to deck -- should be only on plus button
 
 // deck save or read from local storage not working
 // deck cleanup save buttons very confusing right now currently not clear when a deck is overwritten vs new deck
