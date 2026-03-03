@@ -12,10 +12,7 @@ import RichText from "../../components/entity/RichText";
 const VALID_TYPES: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
 
 export default function EntityPage({params}: {params: {type: string}}) {
-  const type = (params.type || "gifts") as EntityType;
-  if (!VALID_TYPES.includes(type)) {
-    throw new Error("Unknown entity type");
-  }
+  const type = (VALID_TYPES.includes(params.type as EntityType) ? params.type : "gifts") as EntityType;
 
   const [items, setItems] = useState<ScrapedEntity[]>([]);
   const [loading, setLoading] = useState(true);
