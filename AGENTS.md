@@ -84,6 +84,16 @@ Allowed:
 Avoid:
 - Comments that simply restate the code
 
+### Method Organization
+
+- Group related methods together.
+- Use section divider comments to separate logical groups of functions.
+
+Rules:
+- Keep related methods near each other.
+- Use clear section divider comments.
+- Avoid scattering similar logic across the file.
+
 ---
 
 ## Documentation Requirements

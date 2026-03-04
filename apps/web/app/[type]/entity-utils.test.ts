@@ -1,0 +1,86 @@
+import {describe, expect, it} from "vitest";
+import {EntityType, ScrapedEntity} from "../../lib/types";
+import {DEFAULT_LIMITS, entityIds, groupByCategory, resolveType, VALID_TYPES} from "./entity-utils";
+
+const baseEntity: ScrapedEntity = {
+  image: "img",
+  name: "Alpha",
+  description: "Alpha desc",
+  richDescription: [],
+};
+
+describe("resolveType", () => {
+  it("returns default when params missing", () => {
+    expect(resolveType(undefined)).toBe("gifts");
+    expect(resolveType({})).toBe("gifts");
+  });
+
+  it("returns validated type when present", () => {
+    VALID_TYPES.forEach((type) => {
+      expect(resolveType({type})).toBe(type);
+    });
+  });
+
+  it("falls back when type is invalid", () => {
+    expect(resolveType({type: "invalid" as EntityType})).toBe("gifts");
+  });
+
+  it("ignores promised params", () => {
+    const promiseParams = Promise.resolve({type: "weapons"});
+    expect(resolveType(promiseParams)).toBe("gifts");
+  });
+});
+
+describe("groupByCategory", () => {
+  it("groups by explicit category with trimming", () => {
+    const list = [
+      {...baseEntity, name: "One", category: " Cat "},
+      {...baseEntity, name: "Two", category: "Cat"},
+    ];
+    const grouped = groupByCategory(list, "weapons");
+    expect(grouped).toHaveLength(1);
+    expect(grouped[0][0]).toBe("Cat");
+    expect(grouped[0][1].map((e) => e.name)).toEqual(["One", "Two"]);
+  });
+
+  it("falls back to capitalized type when category missing", () => {
+    const list = [{...baseEntity, name: "NoCat", category: undefined}];
+    const grouped = groupByCategory(list, "hexes");
+    expect(grouped[0][0]).toBe("Hexes");
+    expect(grouped[0][1][0].name).toBe("NoCat");
+  });
+});
+
+describe("entityIds", () => {
+  it("extracts ids from entity hrefs without query strings", () => {
+    const entity: ScrapedEntity = {
+      ...baseEntity,
+      richDescription: [
+        {key: "entity", text: "Link", href: "foo?id=123"},
+        {key: "entity", text: "Other", href: "bar"},
+      ],
+    };
+    expect(entityIds(entity)).toEqual(["foo", "bar"]);
+  });
+
+  it("ignores non-entity rich description nodes", () => {
+    const entity: ScrapedEntity = {
+      ...baseEntity,
+      richDescription: [
+        {key: "text", text: "plain text"},
+        {key: "entity", text: "Link", href: ""},
+      ],
+    };
+    expect(entityIds(entity)).toEqual([]);
+  });
+});
+
+describe("DEFAULT_LIMITS", () => {
+  it("defines limits for decked types", () => {
+    expect(DEFAULT_LIMITS.gifts).toBe(20);
+    expect(DEFAULT_LIMITS.weapons).toBe(2);
+    expect(DEFAULT_LIMITS.trinkets).toBe(2);
+    expect(DEFAULT_LIMITS.hexes).toBe(3);
+    expect(DEFAULT_LIMITS.magifishes).toBe(1);
+  });
+});
