@@ -30,23 +30,18 @@ export default function Filters({
 
   return (
     <>
-      <label htmlFor="entitySelect">Entities:</label>
-      <select id="entitySelect" value={selectedEntity} onChange={(e) => onEntityChange(e.target.value)}>
-        <option value="">No filter</option>
-        {entityOptions.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-      <label htmlFor="searchInput">Search:</label>
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="name/category/text…"
-        value={search}
-        onChange={(e) => onSearch(e.target.value)}
-      />
+      <button
+        className="btn"
+        type="button"
+        onClick={() => {
+          onSearch("");
+          onEntityChange("");
+          onLikedChange(false);
+          onDeckChange(false);
+        }}
+      >
+        Clear
+      </button>
       <button
         type="button"
         className={`pill-toggle ${likedOnly ? "active" : ""}`}
@@ -63,18 +58,22 @@ export default function Filters({
       >
         In deck only
       </button>
-      <button
-        className="btn"
-        type="button"
-        onClick={() => {
-          onSearch("");
-          onEntityChange("");
-          onLikedChange(false);
-          onDeckChange(false);
-        }}
-      >
-        Clear
-      </button>
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search name/category/text…"
+        value={search}
+        onChange={(e) => onSearch(e.target.value)}
+      />
+      <select id="entitySelect" value={selectedEntity} onChange={(e) => onEntityChange(e.target.value)}>
+        <option value="">Entities</option>
+        {entityOptions.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+
     </>
   );
 }

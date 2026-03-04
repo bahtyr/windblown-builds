@@ -13,7 +13,7 @@ type PagePropsLocal = {
   params?: Promise<Record<string, string>>;
 };
 
-type MatchNav = {above: number; below: number};
+type MatchNav = { above: number; below: number };
 
 const NAV_REFRESH_DELAY = 80;
 const NAV_AFTER_SCROLL_DELAY = 200;
@@ -75,7 +75,7 @@ export default function EntityPage({params}: PagePropsLocal) {
 
   return (
     <div className="page">
-      <div className="body-wrapper filters-shell">
+      <div className="filters-shell">
         <div className="controls">
           <Filters
             items={items}
@@ -88,6 +88,32 @@ export default function EntityPage({params}: PagePropsLocal) {
             deckOnly={deckOnly}
             onDeckChange={setDeckOnly}
           />
+
+          <div className="scroll-hints">
+            {!loading && !error && filteredCount > 0 && filteredCount < items.length && (
+              matchNav.above + matchNav.below > 0 && (
+                <>
+                  <button
+                    className="pill-toggle"
+                    type="button"
+                    disabled={matchNav.above === 0}
+                    onClick={() => scrollToNearest("up")}
+                  >
+                    Previous match {matchNav.above > 0 && <span className="badge">{matchNav.above}</span>}
+                  </button>
+                  <button
+                    className="pill-toggle"
+                    type="button"
+                    disabled={matchNav.below === 0}
+                    onClick={() => scrollToNearest("down")}
+                  >
+                    Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
+                  </button>
+                </>
+              )
+            )}
+          </div>
+
           <div className="count">
             {filteredCount === items.length ? `${items.length} total` : `${filteredCount} of ${items.length} filtered`}
           </div>
@@ -128,30 +154,6 @@ export default function EntityPage({params}: PagePropsLocal) {
             </div>
           ))}
         </section>
-      )}
-      {!loading && !error && filteredCount > 0 && filteredCount < items.length && (
-        <div className="scroll-hints">
-          {matchNav.above + matchNav.below > 0 && (
-            <>
-              <button
-                className="pill-toggle"
-                type="button"
-                disabled={matchNav.above === 0}
-                onClick={() => scrollToNearest("up")}
-              >
-                Previous match {matchNav.above > 0 && <span className="badge">{matchNav.above}</span>}
-              </button>
-              <button
-                className="pill-toggle"
-                type="button"
-                disabled={matchNav.below === 0}
-                onClick={() => scrollToNearest("down")}
-              >
-                Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
-              </button>
-            </>
-          )}
-        </div>
       )}
     </div>
   );

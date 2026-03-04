@@ -8,8 +8,8 @@
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
     --fade: .3;
     --max-width: 2400px;
-    --header-height: 110px;
-    --filters-offset: calc(var(--header-height) + 8px);
+    --header-height: 80px;
+    --filters-offset: var(--header-height);
 }
 
 /* ---------- Resets ---------- */
@@ -71,6 +71,7 @@ h1 {
     gap: 14px;
     padding: 16px 0 10px;
     margin: 0 auto;
+    height: var(--header-height);
 }
 
 .brand {
@@ -79,18 +80,6 @@ h1 {
     gap: 8px;
     font-weight: 700;
     letter-spacing: .3px;
-}
-
-.brand-mark {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #4fa3ff, #7ce0ff);
-    color: #0a1019;
-    font-weight: 800;
-    font-size: 14px;
 }
 
 .brand-text {
@@ -102,7 +91,7 @@ h1 {
     position: sticky;
     top: var(--filters-offset);
     z-index: 110;
-    padding-top: 8px;
+    /*padding-top: 8px;*/
 }
 
 .controls {
@@ -165,19 +154,20 @@ input::placeholder {
 }
 
 .count {
-    margin-left: auto;
+    /*margin-left: auto;*/
     color: var(--muted);
 }
 
 .scroll-hints {
-    position: fixed;
+    /*position: fixed;*/
+    margin-left: auto;
     right: 16px;
     bottom: 16px;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
     gap: 6px;
     z-index: 20;
-    align-items: flex-end;
+    /*align-items: flex-end;*/
 }
 
 .scroll-hints .pill-toggle:disabled {

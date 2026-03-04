@@ -19,7 +19,6 @@ export default function NavBar() {
     <header className="global-header">
       <div className="body-wrapper header-bar">
         <div className="brand">
-          <span className="brand-mark">WB</span>
           <span className="brand-text">Windblown Browser</span>
         </div>
         <nav className="tabs">
