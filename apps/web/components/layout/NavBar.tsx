@@ -20,13 +20,12 @@ export default function NavBar() {
       <h1>Windblown Browser</h1>
       <nav className="tabs">
         {tabs.map((tab) => {
-          const active = pathname?.startsWith("/" + tab.type);
+          const active = pathname?.startsWith(`/${tab.type}`);
           return (
             <Link
               key={tab.type}
               className={`tab ${active ? "active" : ""}`}
-              href={`/${tab.type}`}
-            >
+              href={`/${tab.type}`}>
               {tab.label}
             </Link>
           );
