@@ -1,2 +1,15 @@
-@import "styles/all.css";
+@import "styles/0_base.css";
+@import "styles/1_body.css";
+@import "styles/1_header.css";
+@import "styles/9_buttons.css";
+@import "styles/2_filters.css";
+@import "styles/3_card_headers.css";
+@import "styles/3_card.css";
+@import "styles/3_card_contents.css";
+@import "styles/deck_1.css";
+@import "styles/deck_2.css";
+@import "styles/deck_3.css";
+@import "styles/deck_4.css";
+@import "styles/overrides.css";
+@import "styles/utilities.css";
 

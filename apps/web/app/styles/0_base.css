@@ -1,0 +1,116 @@
+/* ---------- Base variables ---------- */
+:root {
+    --color-bg: #0b0f14;
+    --color-bg-alt: #0c1420;
+    --color-surface: #0f1622;
+    --color-surface-muted: #0d1521;
+    --color-surface-strong: #111a26;
+    --color-surface-chip: #122030;
+    --color-surface-tag: #132238;
+    --color-surface-button: #152234;
+    --color-surface-button-strong: #182536;
+    --color-surface-active: #1c2a3c;
+    --color-surface-hover: #1f3046;
+    --color-surface-selected: #1f3758;
+    --color-surface-close: #1f2c3d;
+    --color-border: #223044;
+    --color-text: #e7eefc;
+    --color-text-strong: #dceaff;
+    --color-text-muted: #9db0cc;
+    --color-text-placeholder: #70829c;
+    --color-text-link: #80b5ff;
+    --color-text-subtle: #8091aa;
+    --color-text-danger: #ff9d9d;
+    --color-accent: #4fa3ff;
+    --color-accent-soft: #7ce0ff;
+    --color-accent-hover: #3b82f6;
+    --color-like: #ff6fa8;
+    --color-overlay-header: rgba(12, 21, 33, 0.94);
+    --color-shadow-rgb: 0, 0, 0;
+    --color-card-top: rgba(255, 255, 255, .04);
+    --color-card-bottom: rgba(255, 255, 255, .01);
+    --gradient-body-primary: radial-gradient(1200px 600px at 20% 0%, #101b2a, transparent 55%);
+    --gradient-body-secondary: radial-gradient(900px 500px at 90% 10%, #14233a, transparent 55%);
+
+    --space-0: 0;
+    --space-1: 2px;
+    --space-2: 4px;
+    --space-3: 6px;
+    --space-4: 8px;
+    --space-5: 10px;
+    --space-6: 12px;
+    --space-7: 14px;
+    --space-8: 16px;
+    --space-9: 18px;
+    --space-10: 20px;
+    --space-12: 24px;
+    --space-20: 40px;
+    --space-60: 240px;
+
+    --font-family-sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    --font-size-2xs: 11px;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 20px;
+    --line-height-body: 1.45;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --letter-spacing-tight: .2px;
+    --letter-spacing-wide: .3px;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 10px;
+    --radius-2xl: 14px;
+    --radius-full: 999px;
+    --radius-round: 50%;
+
+    --shadow-sm: 0 8px 30px rgba(var(--color-shadow-rgb), .4);
+    --shadow-md: 0 10px 30px rgba(var(--color-shadow-rgb), .35);
+    --shadow-focus: 0 0 0 1px var(--color-accent) inset;
+
+    --transition-press: transform .1s ease;
+    --transition-fast: .15s ease;
+    --transition-card: transform .1s ease, box-shadow .1s ease, opacity .2s ease;
+    --transition-chip: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+
+    --z-deck: 95;
+    --z-filters: 110;
+    --z-header: 120;
+
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+
+    --max-width: 2400px;
+    --header-height: 80px;
+    --filters-offset: var(--header-height);
+    --fade: .3;
+
+    --bg: var(--color-bg);
+    --border: var(--color-border);
+    --text: var(--color-text);
+    --muted: var(--color-text-muted);
+    --chip: var(--color-surface-tag);
+    --shadow: var(--shadow-md);
+    --surface: var(--color-surface);
+    --surface-active: var(--color-surface-active);
+    --accent: var(--color-accent);
+    --accent-soft: var(--color-accent-soft);
+    --like: var(--color-like);
+}
+
+/* ---------- Resets ---------- */
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 0 0 var(--space-5);
+    font-size: var(--font-size-lg);
+    letter-spacing: var(--letter-spacing-tight);
+}

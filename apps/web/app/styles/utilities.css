@@ -1,0 +1,59 @@
+/* ---------- Status text when something is loading ---------- */
+
+.status {
+    padding: var(--space-8);
+    color: var(--muted);
+}
+
+.status.error {
+    color: var(--color-text-danger);
+}
+
+/* ========== UTILITIES ========== */
+.u-hidden {
+    display: none;
+}
+
+.u-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.u-stack-xs > * + * {
+    margin-top: var(--space-3);
+}
+
+.u-inline-gap-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.l-cluster-sm {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.c-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.is-hidden {
+    display: none;
+}
+
+.has-accent-ring {
+    box-shadow: 0 0 0 2px var(--accent);
+}

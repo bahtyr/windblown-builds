@@ -1,0 +1,24 @@
+/* ---------- Layout ---------- */
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--gradient-body-primary), var(--gradient-body-secondary), var(--bg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--text);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body);
+}
+
+.body-wrapper {
+    max-width: var(--max-width);
+    margin: var(--space-8) auto;
+    padding: 0 var(--space-8);
+}
+
+.page {
+    padding-bottom: var(--space-60);
+}

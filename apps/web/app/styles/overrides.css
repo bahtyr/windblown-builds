@@ -1,0 +1,13 @@
+/* ========== OVERRIDES / LEGACY ========== */
+/* click effect */
+
+a:active,
+button:active,
+.entity:active {
+    transform: translateY(1px);
+}
+
+.entity:hover {
+    /*border-color: #3b82f6;*/
+}
+

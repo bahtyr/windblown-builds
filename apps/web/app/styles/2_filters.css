@@ -1,0 +1,50 @@
+/* ---------- Filters (Controls) ---------- */
+
+.filters-shell {
+    position: sticky;
+    top: var(--filters-offset);
+    z-index: var(--z-filters);
+    /*padding-top: 8px;*/
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-6) var(--space-7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-muted);
+    box-shadow: var(--shadow);
+}
+
+.controls label {
+    color: var(--muted);
+}
+
+/* ---- Count text unique ---- */
+
+.count {
+    color: var(--muted);
+    /*margin-left: auto;*/
+}
+
+/* ---- Scroll hint buttons ---- */
+
+.scroll-hints {
+    right: var(--space-8);
+    bottom: var(--space-8);
+    z-index: 20;
+    gap: var(--space-3);
+    margin-left: auto;
+    /*position: fixed;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: flex-end;*/
+}
+
+.scroll-hints .pill-toggle:disabled {
+    cursor: not-allowed;
+    opacity: .4;
+}

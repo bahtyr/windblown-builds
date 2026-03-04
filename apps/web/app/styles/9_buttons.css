@@ -1,0 +1,67 @@
+/* ---------- Inputs ---------- */
+
+select,
+input {
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    outline: none;
+    background: var(--surface);
+    color: var(--text);
+}
+
+input::placeholder {
+    color: var(--color-text-placeholder);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    padding: var(--space-4) var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-button-strong);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.btn.ghost {
+    background: transparent;
+}
+
+/* ---------- Checkbox pill toggle ---------- */
+
+.pill-toggle {
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface-button);
+    color: var(--text);
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pill-toggle.active {
+    border-color: var(--accent);
+    background: var(--color-surface-selected);
+    color: var(--color-text-strong);
+}
+
+
+/* ---------- Circle badge counter ---------- */
+/* used on scroll hints & deck */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    margin-left: var(--space-3);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-full);
+    background: var(--accent);
+    color: var(--bg);
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-bold);
+}

@@ -1,0 +1,93 @@
+/* ---------- Cards grid ---------- */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-5);
+}
+
+/* ---------- Card shell ---------- */
+.card {
+    position: relative;
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--color-card-top), var(--color-card-bottom));
+    transition: var(--transition-card);
+}
+
+.card.highlight {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.card.in-deck {
+    box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.faded {
+    opacity: var(--fade);
+}
+
+/* ---------- Card header ---------- */
+.card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.card-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.card-title {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+}
+
+.card-thumb {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+    background: var(--color-bg-alt);
+    /*border: 1px solid var(--border);*/
+}
+
+.card-icons {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.icon-btn {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-round);
+    background: var(--color-surface-tag);
+    color: var(--text);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.card .icon-btn {
+    visibility: hidden;
+}
+
+.card:hover .icon-btn,
+.card.in-deck .icon-btn {
+    visibility: visible;
+}
+
+.icon-btn:hover {
+    background: var(--color-surface-hover);
+}
+
+.icon-btn.like.liked {
+    color: var(--like);
+}

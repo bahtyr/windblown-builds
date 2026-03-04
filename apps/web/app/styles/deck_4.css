@@ -1,0 +1,54 @@
+/* ---------- Deck chip ? item draggable ---------- */
+.deck-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-right: var(--space-1);
+    padding: var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-chip);
+    cursor: grab;
+    transition: var(--transition-chip);
+}
+
+.deck-chip.highlight {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.deck-chip.dragging {
+    cursor: grabbing;
+    opacity: .7;
+    box-shadow: 0 0 0 2px var(--accent-soft);
+    transform: scale(1.02);
+}
+
+.deck-chip-img {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+}
+
+.deck-chip-remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-round);
+    background: var(--color-surface-close);
+    color: var(--text);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.deck-chip:hover .deck-chip-remove {
+    opacity: 1;
+}
