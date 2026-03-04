@@ -1,42 +1,27 @@
-header {
+header,
+.header {
     position: sticky;
     top: 0;
     z-index: var(--z-header);
-}
-
-.global-header {
-    border-bottom: 1px solid var(--border);
-    background: var(--color-overlay-header);
-    backdrop-filter: blur(12px);
-    box-shadow: var(--shadow-sm);
-}
-
-.global-header .body-wrapper {
-    margin: 0 auto;
-}
-
-.header-bar {
+    /* layout */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-7);
     height: var(--header-height);
-    margin: 0 auto;
-    padding: var(--space-8) 0 var(--space-5);
+    /* bg*/
+    background: var(--color-overlay-header);
+    /*border-bottom: 1px solid var(--border);*/
+    /*box-shadow: var(--shadow-sm);*/
+    /*padding done through body-wrapper*/
 }
 
-/* ---------- Brand logo text ---------- */
+/* ---------- Logo text ---------- */
 
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-4);
+.logo-text {
+    font-size: var(--font-size-md);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--letter-spacing-wide);
-}
-
-.brand-text {
-    font-size: var(--font-size-md);
 }
 
 /* ---------- Tabs ---------- */
@@ -44,20 +29,14 @@ header {
 .tabs {
     display: flex;
     flex-wrap: wrap;
-    margin-top: var(--space-4);
 }
 
 .tab {
-    margin-right: var(--space-4);
     padding: var(--space-4) var(--space-6);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface-strong);
-    color: var(--text);
+    color: var(--muted);
     text-decoration: none;
 }
 
 .tab.active {
-    background: var(--surface-active);
-    box-shadow: var(--shadow-focus);
+    color: var(--text);
 }

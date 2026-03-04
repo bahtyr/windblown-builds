@@ -15,7 +15,7 @@ body {
 
 .body-wrapper {
     max-width: var(--max-width);
-    margin: var(--space-8) auto;
+    margin: 0 auto;
     padding: 0 var(--space-8);
 }
 

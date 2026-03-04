@@ -16,11 +16,8 @@ const tabs: { type: EntityType; label: string }[] = [
 export default function NavBar() {
   const pathname = usePathname();
   return (
-    <header className="global-header">
-      <div className="body-wrapper header-bar">
-        <div className="brand">
-          <span className="brand-text">Windblown Browser</span>
-        </div>
+    <header className="header body-wrapper">
+        <span className="logo-text">Windblown Browser</span>
         <nav className="tabs">
           {tabs.map((tab) => {
             const active = pathname?.startsWith(`/${tab.type}`);
@@ -34,7 +31,6 @@ export default function NavBar() {
             );
           })}
         </nav>
-      </div>
     </header>
   );
 }
