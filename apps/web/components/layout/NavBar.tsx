@@ -16,7 +16,8 @@ const tabs: { type: EntityType; label: string }[] = [
 export default function NavBar() {
   const pathname = usePathname();
   return (
-    <header className="header body-wrapper">
+    <header className="header">
+      <div className="header-body body-wrapper">
         <span className="logo-text">Windblown Browser</span>
         <nav className="tabs">
           {tabs.map((tab) => {
@@ -31,6 +32,7 @@ export default function NavBar() {
             );
           })}
         </nav>
+      </div>
     </header>
   );
 }

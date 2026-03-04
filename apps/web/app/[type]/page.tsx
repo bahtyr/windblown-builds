@@ -75,8 +75,8 @@ export default function EntityPage({params}: PagePropsLocal) {
 
   return (
     <div className="page">
-      <div className="filters-shell">
-        <div className="controls">
+      <div className="filters">
+        <div className="filters-body body-wrapper">
           <Filters
             items={items}
             search={search}

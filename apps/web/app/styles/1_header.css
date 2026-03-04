@@ -1,19 +1,19 @@
-header,
-.header {
+header, .header {
     position: sticky;
     top: 0;
     z-index: var(--z-header);
-    /* layout */
+    background: var(--color-overlay-header);
+    /*border-bottom: 1px solid var(--border);*/
+    /*box-shadow: var(--shadow-sm);*/
+    /*padding done through body-wrapper*/
+}
+
+.header-body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-7);
     height: var(--header-height);
-    /* bg*/
-    background: var(--color-overlay-header);
-    /*border-bottom: 1px solid var(--border);*/
-    /*box-shadow: var(--shadow-sm);*/
-    /*padding done through body-wrapper*/
 }
 
 /* ---------- Logo text ---------- */

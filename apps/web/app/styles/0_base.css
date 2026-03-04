@@ -87,7 +87,7 @@
     --breakpoint-xl: 1280px;
 
     --max-width: 2400px;
-    --header-height: 80px;
+    --header-height: 64px;
     --filters-offset: var(--header-height);
     --fade: .3;
 

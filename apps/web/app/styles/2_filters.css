@@ -1,25 +1,26 @@
 /* ---------- Filters (Controls) ---------- */
 
-.filters-shell {
+.filters {
     position: sticky;
     top: var(--filters-offset);
     z-index: var(--z-filters);
     /*padding-top: 8px;*/
+    border: 1px solid var(--border);
+    /*border-radius: var(--radius-xl);*/
+    background: var(--color-overlay-header);
+    /*background: var(--color-surface-muted);*/
+    /*box-shadow: var(--shadow);*/
 }
 
-.controls {
+.filters-body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-5);
     padding: var(--space-6) var(--space-7);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    background: var(--color-surface-muted);
-    box-shadow: var(--shadow);
 }
 
-.controls label {
+.filters-body label {
     color: var(--muted);
 }
 
