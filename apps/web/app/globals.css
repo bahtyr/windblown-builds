@@ -1,4 +1,2 @@
-@import "./styles/base.css";
-@import "./styles/deck.css";
-@import "./styles/cards.css";
+@import "styles/all.css";
 
