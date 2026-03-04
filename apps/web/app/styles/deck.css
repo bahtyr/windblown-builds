@@ -1,8 +1,46 @@
 /* ---------- Deck layout ---------- */
-.deck {
-    /*max-width: var(--max-width);*/
-    /*margin: 10px auto 0;*/
-    /*padding: 0 16px;*/
+.deck-drawer {
+    position: fixed;
+    bottom: 12px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 95;
+    pointer-events: none;
+}
+
+.deck-shell {
+    width: 100%;
+    max-width: var(--max-width);
+    pointer-events: auto;
+    padding: 0 16px;
+}
+
+.deck-toggle-row {
+    display: flex;
+    justify-content: center;
+    pointer-events: auto;
+    margin-bottom: 8px;
+}
+
+.deck-toggle {
+    border: 1px solid var(--border);
+    background: #0f1622;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deck-toggle.active {
+    background: #1c2a3c;
+    border-color: #4fa3ff;
 }
 
 .deck-panel {
@@ -115,6 +153,10 @@
     gap: 6px;
     flex-wrap: wrap;
     align-items: center;
+}
+
+.deck-drawer.collapsed .deck-panel {
+    display: none;
 }
 
 /* ---------- Deck chips ---------- */

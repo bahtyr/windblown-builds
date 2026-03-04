@@ -10,6 +10,7 @@ export default function DeckPanel() {
   const [status, setStatus] = useState<string>("");
   const total = deck.items.length;
   const [shareLink, setShareLink] = useState("");
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -36,72 +37,82 @@ export default function DeckPanel() {
   };
 
   return (
-    <div className="body-wrapper">
-      <div className="deck" id="deck">
-        <div className="deck-panel" id="deckPanel">
-          <div className="deck-side deck-entities-list">
-            <div className="deck-entities-title">Deck</div>
-            {deck.saved.map((d) => (
-              <div key={d.name} className={`saved-row ${deck.selectedSaved === d.name ? "active" : ""}`}>
-                <button className="link" onClick={() => deck.loadDeck(d.name)}>
-                  {d.name}
-                </button>
-                <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
-                  ×
-                </button>
+    <div className={`deck-drawer ${open ? "open" : "collapsed"}`}>
+      <div className="deck-toggle-row">
+        <button className={`deck-toggle ${open ? "active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
+          {open ? "Hide deck builder" : "Deck builder"}
+          {total > 0 && <span className="badge">{total}</span>}
+        </button>
+      </div>
+      {open && (
+        <div className="body-wrapper deck-shell">
+          <div className="deck" id="deck">
+            <div className="deck-panel" id="deckPanel">
+              <div className="deck-side deck-entities-list">
+                <div className="deck-entities-title">Deck</div>
+                {deck.saved.map((d) => (
+                  <div key={d.name} className={`saved-row ${deck.selectedSaved === d.name ? "active" : ""}`}>
+                    <button className="link" onClick={() => deck.loadDeck(d.name)}>
+                      {d.name}
+                    </button>
+                    <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
+                      Ã— 
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="deck-main">
-            <div className="deck-actions">
-              <input
-                className="deck-name"
-                value={deck.name}
-                onChange={(e) => deck.setName(e.target.value)}
-                placeholder="Deck name"
-              />
-              <button className="btn" type="button" onClick={() => deck.createDeck()}>
-                New deck
-              </button>
-              <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
-                Reset deck
-              </button>
-              <button className="btn" id="copyDeckLink" type="button" onClick={handleCopy}>
-                Copy share link
-              </button>
-              <div className="deck-status" id="deckStatus">
-                {status}
-              </div>
-            </div>
-            <div className="deck-slots" id="deckSlots">
-              {rows(deck.items).map((groups, rowIdx) => (
-                <div className="deck-row" key={rowIdx}>
-                  {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
-                    list.length > 0 && (
-                      <div className="deck-group" key={type}>
-                        <div className="deck-group-items">
-                          {list.map((item, idx) => (
-                            <DeckDraggable
-                              key={item.id}
-                              item={item}
-                              index={idx}
-                              type={type}
-                              onDrop={(from, to) => deck.moveWithinType(type, from, to)}
-                              onRemove={() => deck.remove(item.id)}
-                              highlight={type === "gifts" && idx < 8}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  ))}
+              <div className="deck-main">
+                <div className="deck-actions">
+                  <input
+                    className="deck-name"
+                    value={deck.name}
+                    onChange={(e) => deck.setName(e.target.value)}
+                    placeholder="Deck name"
+                  />
+                  <button className="btn" type="button" onClick={() => deck.createDeck()}>
+                    New deck
+                  </button>
+                  <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
+                    Reset deck
+                  </button>
+                  <button className="btn" id="copyDeckLink" type="button" onClick={handleCopy}>
+                    Copy share link
+                  </button>
+                  <div className="deck-status" id="deckStatus">
+                    {status}
+                  </div>
                 </div>
-              ))}
-              {deck.items.length === 0 && <div className="muted">No items yet</div>}
+                <div className="deck-slots" id="deckSlots">
+                  {rows(deck.items).map((groups, rowIdx) => (
+                    <div className="deck-row" key={rowIdx}>
+                      {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
+                        list.length > 0 && (
+                          <div className="deck-group" key={type}>
+                            <div className="deck-group-items">
+                              {list.map((item, idx) => (
+                                <DeckDraggable
+                                  key={item.id}
+                                  item={item}
+                                  index={idx}
+                                  type={type}
+                                  onDrop={(from, to) => deck.moveWithinType(type, from, to)}
+                                  onRemove={() => deck.remove(item.id)}
+                                  highlight={type === "gifts" && idx < 8}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        )
+                      ))}
+                    </div>
+                  ))}
+                  {deck.items.length === 0 && <div className="muted">No items yet</div>}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -142,7 +153,7 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
       {item.image && <img src={item.image} alt="" className="deck-chip-img"/>}
       <div className="deck-chip-name">{item.name}</div>
       <button className="deck-chip-remove" onClick={onRemove} aria-label="Remove">
-        ×
+        Ã— 
       </button>
     </div>
   );

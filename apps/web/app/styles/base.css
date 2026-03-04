@@ -8,6 +8,8 @@
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
     --fade: .3;
     --max-width: 2400px;
+    --header-height: 110px;
+    --filters-offset: calc(var(--header-height) + 8px);
 }
 
 /* ---------- Resets ---------- */
@@ -23,12 +25,16 @@ body {
     radial-gradient(900px 500px at 90% 10%, #14233a, transparent 55%),
     var(--bg);
     color: var(--text);
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 header {
-    /*padding: 24px 16px 12px;*/
-    /*max-width: var(--max-width);*/
-    /*margin: 0 auto;*/
+    position: sticky;
+    top: 0;
+    z-index: 120;
 }
 
 h1 {
@@ -43,16 +49,71 @@ h1 {
     padding: 0 16px;
 }
 
+.page {
+    padding-bottom: 240px;
+}
+
+.global-header {
+    background: rgba(12, 21, 33, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .4);
+}
+
+.global-header .body-wrapper {
+    margin: 0 auto;
+}
+
+.header-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 16px 0 10px;
+    margin: 0 auto;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #4fa3ff, #7ce0ff);
+    color: #0a1019;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.brand-text {
+    font-size: 16px;
+}
+
 /* ---------- Controls ---------- */
+.filters-shell {
+    position: sticky;
+    top: var(--filters-offset);
+    z-index: 110;
+    padding-top: 8px;
+}
+
 .controls {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     align-items: center;
-    padding: 12px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .02));
+    padding: 12px 14px;
+    background: #0d1521;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 10px;
     box-shadow: var(--shadow);
 }
 
@@ -148,7 +209,7 @@ input::placeholder {
 .tab {
     padding: 8px 12px;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 6px;
     margin-right: 8px;
     text-decoration: none;
     color: var(--text);
@@ -157,6 +218,7 @@ input::placeholder {
 
 .tab.active {
     background: #1c2a3c;
+    box-shadow: 0 0 0 1px #4fa3ff inset;
 }
 
 .link {
