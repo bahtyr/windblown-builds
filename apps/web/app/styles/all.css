@@ -10,6 +10,11 @@
     --max-width: 2400px;
     --header-height: 80px;
     --filters-offset: var(--header-height);
+    --surface: #0f1622;
+    --surface-active: #1c2a3c;
+    --accent: #4fa3ff;
+    --accent-soft: #7ce0ff;
+    --like: #ff6fa8;
 }
 
 /* ---------- Resets ---------- */
@@ -111,7 +116,7 @@ h1 {
 }
 
 select, input {
-    background: #0f1622;
+    background: var(--surface);
     color: var(--text);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -149,7 +154,7 @@ input::placeholder {
 
 .pill-toggle.active {
     background: #1f3758;
-    border-color: #4fa3ff;
+    border-color: var(--accent);
     color: #dceaff;
 }
 
@@ -182,8 +187,8 @@ input::placeholder {
     padding: 0 6px;
     margin-left: 6px;
     border-radius: 999px;
-    background: #4fa3ff;
-    color: #0b0f14;
+    background: var(--accent);
+    color: var(--bg);
     align-items: center;
     justify-content: center;
     font-size: 11px;
@@ -207,8 +212,8 @@ input::placeholder {
 }
 
 .tab.active {
-    background: #1c2a3c;
-    box-shadow: 0 0 0 1px #4fa3ff inset;
+    background: var(--surface-active);
+    box-shadow: 0 0 0 1px var(--accent) inset;
 }
 
 .link {
@@ -297,11 +302,11 @@ button:active {
 }
 
 .card.highlight {
-    box-shadow: 0 0 0 2px #4fa3ff;
+    box-shadow: 0 0 0 2px var(--accent);
 }
 
 .card.in-deck {
-    box-shadow: 0 0 0 2px #7ce0ff;
+    box-shadow: 0 0 0 2px var(--accent-soft);
 }
 
 .card.faded {
@@ -373,7 +378,7 @@ button:active {
 }
 
 .icon-btn.like.liked {
-    color: #ff6fa8;
+    color: var(--like);
 }
 
 /* ---------- Card body ---------- */
@@ -442,7 +447,7 @@ button:active {
 }
 
 .like.liked {
-    color: #ff6fa8;
+    color: var(--like);
     opacity: 1;
     visibility: visible;
 }
@@ -484,7 +489,7 @@ button:active {
 
 .deck-toggle {
     border: 1px solid var(--border);
-    background: #0f1622;
+    background: var(--surface);
     color: var(--text);
     border-radius: 10px;
     padding: 10px 16px;
@@ -497,8 +502,8 @@ button:active {
 }
 
 .deck-toggle.active {
-    background: #1c2a3c;
-    border-color: #4fa3ff;
+    background: var(--surface-active);
+    border-color: var(--accent);
 }
 
 .deck-panel {
@@ -508,7 +513,7 @@ button:active {
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 12px;
-    background: #0f1622;
+    background: var(--surface);
     box-shadow: var(--shadow);
 }
 
@@ -530,7 +535,7 @@ button:active {
 }
 
 .saved-row.active .link {
-    color: #4fa3ff;
+    color: var(--accent);
 }
 
 .icon-btn.small {
@@ -573,7 +578,7 @@ button:active {
 }
 
 .deck-name {
-    background: #0f1622;
+    background: var(--surface);
     color: var(--text);
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -633,12 +638,12 @@ button:active {
 }
 
 .deck-chip.highlight {
-    box-shadow: 0 0 0 2px #4fa3ff;
+    box-shadow: 0 0 0 2px var(--accent);
 }
 
 .deck-chip.dragging {
     opacity: 0.7;
-    box-shadow: 0 0 0 2px #7ce0ff;
+    box-shadow: 0 0 0 2px var(--accent-soft);
     transform: scale(1.02);
     cursor: grabbing;
 }
