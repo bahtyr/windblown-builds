@@ -39,6 +39,9 @@
 
 .entity:hover {
     border-color: var(--color-accent-hover);
+    /* there isn't much space in between lines, on click due to translateY it can be overlapped by another entity border*/
+    /* this ensure the border highlight is always visible */
+    z-index: 1;
 }
 
 .entity img {
