@@ -81,7 +81,7 @@
 
     --transition-press: transform .1s ease;
     --transition-fast: .15s ease;
-    --transition-card: transform .1s ease, box-shadow .1s ease, opacity .2s ease;
+    --transition-card: transform .1s ease, box-shadow .1s ease, opacity .2s ease, border-color .3s ease;
     --transition-chip: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
 
     --z-deck: 95;

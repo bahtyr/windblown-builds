@@ -14,13 +14,41 @@
     padding: var(--space-5);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, var(--color-card-top), var(--color-card-bottom));
-    transition: var(--transition-card);
+
+    background: linear-gradient(
+            180deg,
+            var(--color-card-top),
+            var(--color-card-bottom)
+    );
+
+    transition: border-color 0.2s ease;
     cursor: default;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+            120% 120% at 50% 0%,
+            rgba(60,120,255,0.12),
+            transparent
+    );
+
+    opacity: 0;
+    transition: opacity 0.25s ease;
+
+    pointer-events: none;
 }
 
 .card:hover {
-    transform: translateY(-4px)
+    border-color: var(--color-surface-selected);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 .card.highlight {
