@@ -33,6 +33,7 @@
     --gradient-body-secondary: radial-gradient(900px 500px at 90% 10%, #14233a, transparent 55%);
 
     --space-0: 0;
+    --space-00: 1px;
     --space-1: 2px;
     --space-2: 4px;
     --space-3: 6px;

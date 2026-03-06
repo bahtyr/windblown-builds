@@ -11,17 +11,26 @@
     color: var(--muted);
 }
 
+.rich span[style*="color"] {
+    opacity: 0.8; /* reduce very bright colors */
+}
+
+
 .entity {
     display: inline-flex;
     align-items: center;
-    margin-right: var(--space-1);
-    padding: 3px var(--space-4);
+    vertical-align: middle;
+    padding: var(--space-1) var(--space-3);
     border: 1px solid var(--border);
     border-radius: var(--radius-full);
     gap: var(--space-3);
     background: transparent;
     cursor: pointer;
     user-select: none;
+    font-size: var(--font-size-xs);
+    transition: border-color .3s ease;
+    position: relative;
+    top: -2px; /* is better than negative margin, this doesn't affect surrounding elements */
 }
 
 .entity, .entity span {
@@ -33,12 +42,9 @@
 }
 
 .entity img {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     object-fit: contain;
-    /*border-radius: 5px;*/
-    /*background: #0a111c;*/
-    /*border: 1px solid rgba(255, 255, 255, .08);*/
 }
 
 /* ---- Description entity pill ----*/
