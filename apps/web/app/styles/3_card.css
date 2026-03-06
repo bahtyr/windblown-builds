@@ -43,6 +43,28 @@
     pointer-events: none;
 }
 
+.card:has( .liked)::before {
+    /*background: radial-gradient(*/
+    /*        120% 120% at 50% 0%,*/
+    /*        rgba(255,111,168,0.14),*/
+    /*        transparent*/
+    /*);*/
+    /*opacity: 1;*/
+    /*transition: opacity 0.25s ease;*/
+}
+
+.card:has( .liked) {
+    --color-like-rgb: 255, 111, 168;
+    border-color: rgba(var(--color-like-rgb), 0.35);
+    /*border-style: double;*/
+}
+
+.card:has( .liked):hover {
+    --color-like-rgb: 255, 111, 168;
+    border-color: rgba(var(--color-like-rgb), 0.45);
+}
+
+
 .card:hover {
     border-color: var(--color-surface-selected);
 }
@@ -52,11 +74,18 @@
 }
 
 .card.highlight {
-    box-shadow: 0 0 0 2px var(--accent);
+    /*extra???*/
+    /*box-shadow: 0 0 0 2px var(--accent);*/
 }
 
 .card.in-deck {
-    box-shadow: 0 0 0 2px var(--accent-soft);
+    box-shadow: 0 0 0 1px var(--color-text-link);
+    /*border-width: 2px;*/
+}
+
+.card.in-deck:has( .liked) {
+    --color-like-rgb: 255, 111, 168;
+    box-shadow: 0 0 0 1px rgba(var(--color-like-rgb), 0.70);
 }
 
 .faded {
