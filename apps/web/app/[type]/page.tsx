@@ -128,7 +128,7 @@ export default function EntityPage({params}: PagePropsLocal) {
           {sections.map(({category, list, filtered}) => (
             <div className="section" key={category}>
               <div className="section-header">
-                <h2 className={"section-heading" + (filtered.length === 0 ? "faded" : "")}>{category}</h2>
+                <h2 className={"section-heading " + (filtered.length === 0 ? "faded" : "")}>{category}</h2>
                 <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
               </div>
               <div className="cards">
