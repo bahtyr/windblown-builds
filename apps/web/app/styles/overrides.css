@@ -2,7 +2,7 @@
 /* click effect */
 
 a:active,
-button:active,
+button:active:not([disabled]),
 .entity:active {
     transform: translateY(1px);
 }
