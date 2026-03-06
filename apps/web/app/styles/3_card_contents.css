@@ -18,9 +18,14 @@
     padding: 3px var(--space-4);
     border: 1px solid var(--border);
     border-radius: var(--radius-full);
+    gap: var(--space-3);
     background: transparent;
     cursor: pointer;
     user-select: none;
+}
+
+.entity, .entity span {
+    cursor: pointer;
 }
 
 .entity:hover {
