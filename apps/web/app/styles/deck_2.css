@@ -1,16 +1,11 @@
 /* ---------- Deck title ---------- */
 
-.deck-entities-title {
+.deck-saved-list {
     margin-bottom: var(--space-3);
     font-weight: var(--font-weight-semibold);
 }
 
 /* ---------- Deck saved decks list ---------- */
-
-.deck-side {
-    padding-right: var(--space-6);
-    border-right: 1px solid var(--border);
-}
 
 .deck-entities-list {
     display: flex;
@@ -20,7 +15,7 @@
     overflow: auto;
 }
 
-.saved-row {
+.deck-saved-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,15 +23,15 @@
     padding: var(--space-1) 0;
 }
 
-.saved-row .link {
+.deck-saved-item .link {
     color: var(--text);
 }
 
-.saved-row.active .link {
+.deck-saved-item.active .link {
     color: var(--accent);
 }
 
-.saved-row:hover .icon-btn.small {
+.deck-saved-item:hover .icon-btn.small {
     opacity: 1;
 }
 

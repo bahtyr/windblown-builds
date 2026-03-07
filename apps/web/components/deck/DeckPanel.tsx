@@ -48,10 +48,10 @@ export default function DeckPanel() {
         <div className="deck-shell">
           <div className="deck" id="deck">
             <div className="deck-panel" id="deckPanel">
-              <div className="deck-side deck-entities-list">
-                <div className="deck-entities-title">Deck</div>
+              <div className="deck-entities-list">
+                <div className="deck-saved-list">Deck</div>
                 {deck.saved.map((d) => (
-                  <div key={d.name} className={`saved-row ${deck.selectedSaved === d.name ? "active" : ""}`}>
+                  <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "active" : ""}`}>
                     <button className="link" onClick={() => deck.loadDeck(d.name)}>
                       {d.name}
                     </button>
@@ -84,11 +84,11 @@ export default function DeckPanel() {
                 </div>
                 <div className="deck-slots" id="deckSlots">
                   {rows(deck.items).map((groups, rowIdx) => (
-                    <div className="deck-row" key={rowIdx}>
+                    <div className="deck-groups" key={rowIdx}>
                       {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
                         list.length > 0 && (
                           <div className="deck-group" key={type}>
-                            <div className="deck-group-items">
+                            <div className="deck-items">
                               {list.map((item, idx) => (
                                 <DeckDraggable
                                   key={item.id}
