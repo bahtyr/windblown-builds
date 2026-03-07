@@ -1,7 +1,5 @@
-.deck-toggle-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: var(--space-4);
+.deck-toggle {
+    margin-left: auto;
 }
 
 .deck-toggle {

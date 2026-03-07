@@ -5,12 +5,15 @@ import {useEffect, useState} from "react";
 import {DeckItem, useDeck} from "./DeckContext";
 import {EntityType} from "../../lib/types";
 
-export default function DeckPanel() {
+type Props = {
+  open: boolean;
+};
+
+export default function DeckPanel({open}: Props) {
   const deck = useDeck();
   const [status, setStatus] = useState<string>("");
   const total = deck.items.length;
   const [shareLink, setShareLink] = useState("");
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -38,11 +41,6 @@ export default function DeckPanel() {
 
   return (
     <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
-      <div className="deck-toggle-container">
-        <button className={`deck-toggle ${open ? "is-active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
-          {open ? "Hide deck builder" : "Deck builder"}
-        </button>
-      </div>
       {open && (
         <div className="deck">
           <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>Start a new deck

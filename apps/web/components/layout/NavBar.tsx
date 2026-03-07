@@ -13,7 +13,12 @@ const tabs: { type: EntityType; label: string }[] = [
   {type: "effects", label: "Effects"},
 ] as const;
 
-export default function NavBar() {
+type Props = {
+  deckOpen: boolean;
+  onToggleDeck: () => void;
+};
+
+export default function NavBar({deckOpen, onToggleDeck}: Props) {
   const pathname = usePathname();
   return (
     <header className="header">
@@ -32,6 +37,9 @@ export default function NavBar() {
             );
           })}
         </nav>
+        <button className={`deck-toggle ${deckOpen ? "is-active" : ""}`} type="button" onClick={onToggleDeck}>
+          {deckOpen ? "Hide deck builder" : "Deck builder"}
+        </button>
       </div>
     </header>
   );
