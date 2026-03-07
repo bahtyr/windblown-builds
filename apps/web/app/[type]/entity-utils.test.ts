@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {EntityType, ScrapedEntity} from "../../lib/types";
+import {ScrapedEntity} from "../../lib/types";
 import {DEFAULT_LIMITS, entityIds, getVisibleItems, groupByCategory, resolveType, VALID_TYPES} from "./entity-utils";
 
 const baseEntity: ScrapedEntity = {
@@ -22,7 +22,7 @@ describe("resolveType", () => {
   });
 
   it("falls back when type is invalid", () => {
-    expect(resolveType({type: "invalid" as EntityType})).toBe("gifts");
+    expect(resolveType({type: "invalid" as unknown as "all"})).toBe("gifts");
   });
 
   it("ignores promised params", () => {
@@ -37,17 +37,27 @@ describe("groupByCategory", () => {
       {...baseEntity, name: "One", category: " Cat "},
       {...baseEntity, name: "Two", category: "Cat"},
     ];
-    const grouped = groupByCategory(list, "weapons");
+    const grouped = groupByCategory(list, (item) => (item.category || "").trim());
     expect(grouped).toHaveLength(1);
     expect(grouped[0][0]).toBe("Cat");
     expect(grouped[0][1].map((e) => e.name)).toEqual(["One", "Two"]);
   });
 
   it("falls back to capitalized type when category missing", () => {
-    const list = [{...baseEntity, name: "NoCat", category: undefined}];
-    const grouped = groupByCategory(list, "hexes");
+    const list: ScrapedEntity[] = [{...baseEntity, name: "NoCat", category: undefined}];
+    const grouped = groupByCategory(list, (item) => item.category ?? "Hexes");
     expect(grouped[0][0]).toBe("Hexes");
     expect(grouped[0][1][0].name).toBe("NoCat");
+  });
+
+  it("separates sections by entity type in all view", () => {
+    const list = [
+      {...baseEntity, name: "Weapon One", category: "Damage", entityType: "weapons"},
+      {...baseEntity, name: "Trinket One", category: "Damage", entityType: "trinkets"},
+      {...baseEntity, name: "Hex One", category: "Control", entityType: "hexes"},
+    ];
+    const grouped = groupByCategory(list, (item) => `${item.category} (${item.entityType})`);
+    expect(grouped.map(([key]) => key)).toEqual(["Damage (weapons)", "Damage (trinkets)", "Control (hexes)"]);
   });
 });
 

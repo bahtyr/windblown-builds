@@ -5,15 +5,23 @@ import {useDeck} from "../../components/deck/DeckContext";
 import EntityCard from "../../components/entity/EntityCard";
 import Filters from "../../components/entity/Filters";
 import {useLikes} from "../../components/like/LikeContext";
-import {loadEntities} from "../../lib/loadEntities";
+import {ENTITY_TYPES, loadEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
-import {DEFAULT_LIMITS, entityIds, getVisibleItems, groupByCategory, MatchDisplayMode, resolveType} from "./entity-utils";
+import {
+  DEFAULT_LIMITS,
+  entityIds,
+  getVisibleItems,
+  groupByCategory,
+  MatchDisplayMode,
+  resolveType,
+} from "./entity-utils";
 
 type PagePropsLocal = {
   params?: Promise<Record<string, string>>;
 };
 
 type MatchNav = { above: number; below: number };
+type DisplayEntity = ScrapedEntity & { entityType: EntityType };
 
 const NAV_REFRESH_DELAY = 80;
 const NAV_AFTER_SCROLL_DELAY = 200;
@@ -54,20 +62,28 @@ export default function EntityPage({params}: PagePropsLocal) {
 
   // compound filter predicate shared by counts and rendering
   const matchesFilters = useCallback(
-    (item: ScrapedEntity) => {
+    (item: DisplayEntity) => {
       const matchSearch = !search || (item.name + " " + item.description).toLowerCase().includes(search.toLowerCase());
       const matchEntity = !selectedEntity || entityIds(item).includes(selectedEntity);
-      const liked = likes.ids.has(`${type}:${item.name}`);
+      const liked = likes.ids.has(`${item.entityType}:${item.name}`);
       const matchLiked = !likedOnly || liked;
-      const inDeck = deckIds.has(`${type}:${item.name}`);
+      const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
       const matchDeck = !deckOnly || inDeck;
       return matchSearch && matchEntity && matchLiked && matchDeck;
     },
-    [deckIds, deckOnly, likedOnly, likes.ids, search, selectedEntity, type],
+    [deckIds, deckOnly, likedOnly, likes.ids, search, selectedEntity],
   );
 
   // pre-group entities into sections, keeping original order inside a category
-  const grouped = useMemo(() => groupByCategory(items, type), [items, type]);
+  const grouped = useMemo(
+    () =>
+      groupByCategory(items, (item) => {
+        const fallback = capitalize(item.entityType);
+        const category = item.category?.trim() ?? fallback;
+        return type === "all" ? `${category} (${item.entityType})` : category;
+      }),
+    [items, type],
+  );
   const sections = useMemo(
     () =>
       grouped.map(([category, list]) => {
@@ -151,12 +167,12 @@ export default function EntityPage({params}: PagePropsLocal) {
                 <div className="card-list">
                   {getVisibleItems(list, filtered, matchDisplayMode).map((item, idx) => {
                     const matched = filtered.includes(item);
-                    const inDeck = deckIds.has(`${type}:${item.name}`);
+                    const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
                     return (
                       <EntityCard
-                        key={`${type}-${item.name}-${idx}`}
+                        key={`${item.entityType}-${item.name}-${idx}`}
                         item={item}
-                        type={type}
+                        type={item.entityType}
                         highlight={inDeck}
                         deck={deck}
                         likes={likes}
@@ -185,16 +201,25 @@ function formatSectionSubtext(filteredCount: number, totalCount: number): string
 /**
  * Load entities for a given type with mounted-safety and status flags.
  */
-function useEntityData(type: EntityType) {
-  const [items, setItems] = useState<ScrapedEntity[]>([]);
+function useEntityData(type: EntityType | "all") {
+  const [items, setItems] = useState<DisplayEntity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    loadEntities(type)
-      .then((data) => {
+    const loader = async (): Promise<DisplayEntity[]> => {
+      if (type === "all") {
+        const entries = await Promise.all(ENTITY_TYPES.map(async (entityType) => [entityType, await loadEntities(entityType)] as const));
+        return entries.flatMap(([entityType, data]) => data.map((item) => ({...item, entityType})));
+      }
+      const data = await loadEntities(type);
+      return data.map((item) => ({...item, entityType: type}));
+    };
+
+    loader()
+      .then((data: DisplayEntity[]) => {
         if (mounted) {
           setItems(data);
           setError(null);
@@ -210,6 +235,10 @@ function useEntityData(type: EntityType) {
   }, [type]);
 
   return {items, loading, error};
+}
+
+function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 /**

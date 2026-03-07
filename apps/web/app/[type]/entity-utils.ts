@@ -3,7 +3,7 @@ import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type MatchDisplayMode = "fade-unmatched" | "show-matches-only";
 
-export const VALID_TYPES: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
+export const VALID_TYPES: (EntityType | "all")[] = ["all", "gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
 
 export const DEFAULT_LIMITS: DeckLimits = {
   gifts: 20,
@@ -17,29 +17,28 @@ export const DEFAULT_LIMITS: DeckLimits = {
  * Resolve the requested entity type from dynamic route params.
  *
  * @param {Promise<Record<string, string>> | Record<string, string> | undefined} params - Route params, possibly a promise.
- * @returns {EntityType} Validated entity type, defaulting to "gifts".
+ * @returns {EntityType | "all"} Validated entity type, defaulting to "gifts".
  */
 export function resolveType(
   params?: Promise<Record<string, string>> | Record<string, string>,
-): EntityType {
+): EntityType | "all" {
   const rawParams = ((params as any)?.then ? undefined : params) || (params as any) || {};
   const requested = rawParams.type;
   const isValid = typeof requested === "string" && (VALID_TYPES as readonly string[]).includes(requested);
-  return isValid ? (requested as EntityType) : "gifts";
+  return isValid ? (requested as EntityType | "all") : "gifts";
 }
 
 /**
- * Group scraped entities by their category, falling back to the capitalized type name.
+ * Group entities by a resolved section key while preserving input order.
  *
- * @param {ScrapedEntity[]} list - Entities to group.
- * @param {EntityType} type - Entity type used for fallback category names.
- * @returns {[string, ScrapedEntity[]][]} Tuple of category and entities.
+ * @param {T[]} list - Entities to group.
+ * @param {(item: T) => string} getKey - Key resolver used to bucket items.
+ * @returns {[string, T[]][]} Tuple of category and entities.
  */
-export function groupByCategory(list: ScrapedEntity[], type: EntityType): [string, ScrapedEntity[]][] {
-  const map = new Map<string, ScrapedEntity[]>();
+export function groupByCategory<T extends ScrapedEntity>(list: T[], getKey: (item: T) => string): [string, T[]][] {
+  const map = new Map<string, T[]>();
   for (const item of list) {
-    const fallback = type.charAt(0).toUpperCase() + type.slice(1);
-    const key = (item as any).category?.trim?.() || fallback;
+    const key = getKey(item);
     if (!map.has(key)) map.set(key, []);
     map.get(key)!.push(item);
   }
@@ -66,15 +65,15 @@ export function entityIds(item: ScrapedEntity): string[] {
 /**
  * Resolve which items should be rendered for the current match display mode.
  *
- * @param {ScrapedEntity[]} allItems - Full section list.
- * @param {ScrapedEntity[]} matchedItems - Filtered matches for that section.
+ * @param {T[]} allItems - Full section list.
+ * @param {T[]} matchedItems - Filtered matches for that section.
  * @param {MatchDisplayMode} mode - Rendering mode for unmatched entries.
- * @returns {ScrapedEntity[]} Items that should be rendered in the section.
+ * @returns {T[]} Items that should be rendered in the section.
  */
-export function getVisibleItems(
-  allItems: ScrapedEntity[],
-  matchedItems: ScrapedEntity[],
+export function getVisibleItems<T extends ScrapedEntity>(
+  allItems: T[],
+  matchedItems: T[],
   mode: MatchDisplayMode,
-): ScrapedEntity[] {
+): T[] {
   return mode === "show-matches-only" ? matchedItems : allItems;
 }

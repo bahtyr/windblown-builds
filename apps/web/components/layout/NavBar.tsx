@@ -4,7 +4,8 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {EntityType} from "../../lib/types";
 
-const tabs: { type: EntityType; label: string }[] = [
+const tabs: { type: EntityType | "all"; label: string }[] = [
+  {type: "all", label: "All"},
   {type: "gifts", label: "Gifts"},
   {type: "weapons", label: "Weapons"},
   {type: "trinkets", label: "Trinkets"},

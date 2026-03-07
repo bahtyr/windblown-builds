@@ -10,6 +10,8 @@ const FILES: Record<EntityType, string> = {
   effects: "/effects.json",
 };
 
+export const ENTITY_TYPES = Object.keys(FILES) as EntityType[];
+
 export async function loadEntities(type: EntityType): Promise<ScrapedEntity[]> {
   const path = FILES[type];
   if (!path) return [];
