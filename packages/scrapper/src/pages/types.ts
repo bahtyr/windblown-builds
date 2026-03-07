@@ -25,7 +25,6 @@ export interface ScrapedEntity {
   image: string;
   name: string;
   nameColor?: string;
-  description: string;
   richDescription: RichDescriptionNode[];
 }
 
@@ -46,27 +45,19 @@ export interface Boost extends ScrapedEntity {
 }
 
 export interface Hex extends ScrapedEntity {
-  unlockCost: string;
-  unlockRequirement: string;
 }
 
 export interface Magifish extends ScrapedEntity {
-  unlockCost: string;
-  unlockRequirement: string;
 }
 
 export interface Trinket extends ScrapedEntity {
   baseDamage: string;
   damageType: string;
   cooldown: string;
-  unlockCost: string;
-  unlockRequirement: string;
 }
 
 export interface Weapon extends ScrapedEntity {
   baseDamage: string;
   damageType: string;
   alterattackBonus: string;
-  unlockCost: string;
-  unlockRequirement: string;
 }

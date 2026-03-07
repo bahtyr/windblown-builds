@@ -2,7 +2,6 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Health_Boost_Icon.png/48px-Health_Boost_Icon.png?476f9a",
     "name": "Health",
-    "description": "Current and Max HP +25/+50/+75.",
     "richDescription": [
       {
         "key": "text",
@@ -20,7 +19,6 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Damage_Boost_Icon.png/48px-Damage_Boost_Icon.png?ec5d6a",
     "name": "Damage",
-    "description": "All Damage +5%/+10%/+15%.",
     "richDescription": [
       {
         "key": "text",
@@ -69,20 +67,16 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Criticals_Boost_Icon.png/48px-Criticals_Boost_Icon.png?3b8f10",
     "name": "Criticals",
-    "description": "All CriticalsCriticals Hit TypeHits that deal +50% damage. damage +10%/+20%/+30%.",
     "richDescription": [
       {
         "key": "text",
         "text": "All "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Criticals",
-        "href": "https://windblown.wiki.gg/wiki/Criticals",
-        "id": "Criticals",
-        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
-        "color": "#ffdd00",
-        "bold": true
+        "bold": true,
+        "color": "#ffdd00"
       },
       {
         "key": "text",
@@ -126,15 +120,12 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Trinket_Refill_Boost_Icon.png/48px-Trinket_Refill_Boost_Icon.png?c57ca3",
     "name": "Trinket Refill",
-    "description": "Trinket RefillTrinket Refill MechanicMax refill speed increase: 60%. 5%/10%/25% faster.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Trinket Refill",
-        "href": "https://windblown.wiki.gg/wiki/Trinket_Refill",
-        "id": "Trinket_Refill",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -174,7 +165,6 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Loot_Boost_Icon.png/48px-Loot_Boost_Icon.png?4779fc",
     "name": "Loot",
-    "description": "Shells looted by the team +10%/+20%/+30%.",
     "richDescription": [
       {
         "key": "text",
@@ -219,15 +209,12 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Attack_Speed_Boost_Icon.png/48px-Attack_Speed_Boost_Icon.png?9f2bfb",
     "name": "Attack Speed",
-    "description": "Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%). +5%/+10%/+15%.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Attack Speed",
-        "href": "https://windblown.wiki.gg/wiki/Attack_Speed",
-        "id": "Attack_Speed",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",

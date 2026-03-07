@@ -4,7 +4,6 @@
     "name": "Barrier",
     "nameColor": "#00beff",
     "category": "Buffs",
-    "description": "When taking damage, Barrier is consumed before HP.",
     "richDescription": [
       {
         "key": "text",
@@ -26,20 +25,16 @@
     "name": "Bleed Infusion",
     "nameColor": "#e70000",
     "category": "Buffs",
-    "description": "Hits apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. for the duration of the Infusion.",
     "richDescription": [
       {
         "key": "text",
         "text": "Hits apply 1 "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Bleed",
-        "href": "https://windblown.wiki.gg/wiki/Bleed",
-        "id": "Bleed",
-        "image": "https://windblown.wiki.gg/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
-        "color": "#e70000",
-        "bold": true
+        "bold": true,
+        "color": "#e70000"
       },
       {
         "key": "text",
@@ -56,7 +51,6 @@
     "name": "Brutality",
     "nameColor": "#ff8689",
     "category": "Buffs",
-    "description": "Gives a damage bonus for the duration.",
     "richDescription": [
       {
         "key": "text",
@@ -92,20 +86,16 @@
     "name": "Burn Infusion",
     "nameColor": "#ff5b00",
     "category": "Buffs",
-    "description": "Hits apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. for the duration of the infusion.",
     "richDescription": [
       {
         "key": "text",
         "text": "Hits apply 1 "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Burn",
-        "href": "https://windblown.wiki.gg/wiki/Burn",
-        "id": "Burn",
-        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
-        "color": "#ff5b00",
-        "bold": true
+        "bold": true,
+        "color": "#ff5b00"
       },
       {
         "key": "text",
@@ -122,7 +112,6 @@
     "name": "Lifesteal",
     "nameColor": "#00ff22",
     "category": "Buffs",
-    "description": "You heal for a portion of the damage dealt.",
     "richDescription": [
       {
         "key": "text",
@@ -148,7 +137,6 @@
     "name": "Rush",
     "nameColor": "#ffa56d",
     "category": "Buffs",
-    "description": "Your next Dash deals damage and stuns for 2s.",
     "richDescription": [
       {
         "key": "text",
@@ -188,7 +176,6 @@
     "name": "Thick Smoke",
     "nameColor": "Thick Smoke",
     "category": "Buffs",
-    "description": "",
     "richDescription": [],
     "advancedDescription": "",
     "richAdvancedDescription": [],
@@ -199,13 +186,10 @@
         "text": "When this buff is active, you "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Dodge",
-        "href": "https://windblown.wiki.gg/wiki/Dodge",
-        "id": "Dodge",
-        "image": "https://windblown.wiki.gg/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -218,7 +202,6 @@
     "name": "Bleed",
     "nameColor": "#e70000",
     "category": "Debuffs",
-    "description": "Hits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15.",
     "richDescription": [
       {
         "key": "text",
@@ -254,7 +237,6 @@
     "name": "Burn",
     "nameColor": "#ff5b00",
     "category": "Debuffs",
-    "description": "Deals its damage every 0.5s for 4s. Max stacks: 15.",
     "richDescription": [
       {
         "key": "text",
@@ -303,20 +285,23 @@
     "name": "Curse",
     "nameColor": "#afa2ff",
     "category": "Debuffs",
-    "description": "Each stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. that multiplies the bonus by 2 for 4s.",
     "richDescription": [
       {
         "key": "text",
         "text": "Each stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Final Curse",
+        "bold": true,
+        "color": "#afa2ff"
+      },
+      {
+        "key": "entity",
+        "text": "",
         "href": "https://windblown.wiki.gg/wiki/Final_Curse",
         "id": "Final_Curse",
-        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
-        "color": "#afa2ff",
-        "bold": true
+        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678"
       },
       {
         "key": "text",
@@ -337,13 +322,17 @@
         "text": "Lasts for 4s. Every new curse application resets the timer of the entire stack, except when "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Final Curse",
+        "bold": true,
+        "color": "#afa2ff"
+      },
+      {
+        "key": "entity",
+        "text": "",
         "href": "https://windblown.wiki.gg/wiki/Final_Curse",
         "id": "Final_Curse",
-        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
-        "color": "#afa2ff",
-        "bold": true
+        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678"
       },
       {
         "key": "text",
@@ -356,7 +345,6 @@
     "name": "Freeze",
     "nameColor": "#00fff2",
     "category": "Debuffs",
-    "description": "Incapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results..",
     "richDescription": [
       {
         "key": "text",
@@ -386,12 +374,10 @@
         "bold": true
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -408,7 +394,6 @@
     "name": "Goo",
     "nameColor": "#ff45ee",
     "category": "Debuffs",
-    "description": "Targets are unable to move for the duration (degressive).",
     "richDescription": [
       {
         "key": "text",
@@ -439,7 +424,6 @@
     "name": "Mark",
     "nameColor": "#d3ff00",
     "category": "Debuffs",
-    "description": "Trigger a Mark on a target by hitting it with a Weapon.",
     "richDescription": [
       {
         "key": "text",
@@ -465,7 +449,6 @@
     "name": "Provocation",
     "nameColor": "Provocation",
     "category": "Debuffs",
-    "description": "",
     "richDescription": [],
     "advancedDescription": "",
     "richAdvancedDescription": [],
@@ -482,7 +465,6 @@
     "name": "Slow",
     "nameColor": "#adadad",
     "category": "Debuffs",
-    "description": "All movements are slower.",
     "richDescription": [
       {
         "key": "text",
@@ -508,7 +490,6 @@
     "name": "Alterattack Bonus",
     "nameColor": "#ffffff",
     "category": "Mechanics",
-    "description": "Damage bonus of the Alterattack. The value is shown near the signal when triggered. Bonus increases with the amount of hits landed.",
     "richDescription": [
       {
         "key": "text",
@@ -525,7 +506,6 @@
     "name": "Auto Scaling",
     "nameColor": "#ffffff",
     "category": "Mechanics",
-    "description": "Values with this scale automatically with the amount of Bosses killed. Bosses killed: x.",
     "richDescription": [
       {
         "key": "text",
@@ -570,7 +550,6 @@
     "name": "Parry",
     "nameColor": "#008aff",
     "category": "Mechanics",
-    "description": "Release your guard just before being hit.",
     "richDescription": [
       {
         "key": "text",
@@ -601,7 +580,6 @@
     "name": "Recovery",
     "nameColor": "#00ff22",
     "category": "Mechanics",
-    "description": "For a short time after taking damage, you may recover up to 25% of the lost HP by dealing weapon damage.",
     "richDescription": [
       {
         "key": "text",
@@ -610,7 +588,7 @@
     ],
     "advancedDescription": "",
     "richAdvancedDescription": [],
-    "notes": "Changed to 100% of lost HP and Weapons and Trinkets damage when Strong Recovery Strong Recovery General GiftYou can Recovery 100% of lost HP for 50% longer, and Trinkets can trigger this effect. is equipped.",
+    "notes": "Changed to 100% of lost HP and Weapons and Trinkets damage when Strong Recovery Strong RecoveryYou can Recovery 100% of lost HP for 50% longer, and Trinkets can trigger this effect. is equipped.",
     "richNotes": [
       {
         "key": "text",
@@ -632,14 +610,14 @@
       },
       {
         "key": "text",
-        "text": " damage when "
+        "text": " damage when Strong Recovery"
       },
       {
         "key": "entity",
         "text": "Recovery",
-        "href": "https://windblown.wiki.gg/wiki/Strong_Recovery",
-        "id": "Strong_Recovery",
-        "image": "https://windblown.wiki.gg/images/thumb/Strong_Recovery_Icon.png/20px-Strong_Recovery_Icon.png?7822fa",
+        "href": "https://windblown.wiki.gg/wiki/Recovery",
+        "id": "Recovery",
+        "image": "https://windblown.wiki.gg/images/thumb/Strong_Recovery_Icon.png/55px-Strong_Recovery_Icon.png?7822fa",
         "color": "#00ff22",
         "bold": true
       },
@@ -654,7 +632,6 @@
     "name": "Backstabs",
     "nameColor": "#ff0078",
     "category": "Hit Types",
-    "description": "Hits against the back of enemies. Deal increased damage.",
     "richDescription": [
       {
         "key": "text",
@@ -676,7 +653,6 @@
     "name": "Corrosive",
     "nameColor": "#8cbc00",
     "category": "Hit Types",
-    "description": "Special damage type shared by several effects.",
     "richDescription": [
       {
         "key": "text",
@@ -693,7 +669,6 @@
     "name": "Criticals",
     "nameColor": "#ffdd00",
     "category": "Hit Types",
-    "description": "Hits that deal +50% damage.",
     "richDescription": [
       {
         "key": "text",
@@ -724,7 +699,6 @@
     "name": "Overwhelm",
     "nameColor": "#ff8200",
     "category": "Hit Types",
-    "description": "Hits that Overwhelm deal +125% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results..",
     "richDescription": [
       {
         "key": "text",
@@ -736,12 +710,10 @@
         "bold": true
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -758,7 +730,6 @@
     "name": "Alterattack",
     "nameColor": "#ef917e",
     "category": "Special Attacks",
-    "description": "Use one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed.",
     "richDescription": [
       {
         "key": "text",
@@ -803,7 +774,6 @@
     "name": "Blast",
     "nameColor": "#ffdb96",
     "category": "Special Attacks",
-    "description": "A burst of damage against a target and the enemies behind it.",
     "richDescription": [
       {
         "key": "text",
@@ -825,20 +795,16 @@
     "name": "Corrosive Pool",
     "nameColor": "#8cbc00",
     "category": "Special Attacks",
-    "description": "Area that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects. damage every 0.5s.",
     "richDescription": [
       {
         "key": "text",
         "text": "Area that deals "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Corrosive",
-        "href": "https://windblown.wiki.gg/wiki/Corrosive",
-        "id": "Corrosive",
-        "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Icon.png/20px-Corrosive_Icon.png?328767",
-        "color": "#8cbc00",
-        "bold": true
+        "bold": true,
+        "color": "#8cbc00"
       },
       {
         "key": "text",
@@ -864,7 +830,6 @@
     "name": "Crystallize",
     "nameColor": "#0089ff",
     "category": "Special Attacks",
-    "description": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment..",
     "richDescription": [
       {
         "key": "text",
@@ -880,13 +845,10 @@
         "text": "Doing so will occasionally create "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Memonites",
-        "href": "https://windblown.wiki.gg/wiki/Memonites",
-        "id": "Memonites",
-        "image": "https://windblown.wiki.gg/images/thumb/Memonite_Dust_Icon.png/20px-Memonite_Dust_Icon.png?6b0ee2",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -908,7 +870,6 @@
     "name": "Dodge",
     "nameColor": "#ffffff",
     "category": "Special Attacks",
-    "description": "Dodging an attack at the last moment. Reflects part of the damage towards the attacking foe.",
     "richDescription": [
       {
         "key": "text",
@@ -938,26 +899,20 @@
         "text": "During one second after a "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Dodge",
-        "href": "https://windblown.wiki.gg/wiki/Dodge",
-        "id": "Dodge",
-        "image": "https://windblown.wiki.gg/images/thumb/Perfect_dodge_Icon.png/20px-Perfect_dodge_Icon.png?5680c9",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
         "text": ", the next damage instance is a "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Criticals",
-        "href": "https://windblown.wiki.gg/wiki/Criticals",
-        "id": "Criticals",
-        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
-        "color": "#ffdd00",
-        "bold": true
+        "bold": true,
+        "color": "#ffdd00"
       },
       {
         "key": "text",
@@ -970,7 +925,6 @@
     "name": "Echo",
     "nameColor": "#94a9e9",
     "category": "Special Attacks",
-    "description": "Replicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.",
     "richDescription": [
       {
         "key": "text",
@@ -996,7 +950,6 @@
     "name": "Opportunity",
     "nameColor": "#ffffff",
     "category": "Special Attacks",
-    "description": "A short time window, during which you can use [Crystallize keybind] to launch a special attack.",
     "richDescription": [
       {
         "key": "text",
@@ -1013,7 +966,6 @@
     "name": "Scythe",
     "nameColor": "#5f9fff",
     "category": "Special Attacks",
-    "description": "Blade that rotates around you and deals damage every 0.5s. Max 8 at the same time.",
     "richDescription": [
       {
         "key": "text",
@@ -1040,7 +992,7 @@
     ],
     "advancedDescription": "",
     "richAdvancedDescription": [],
-    "notes": "Max 20 at the same time, when Countless Scythes Countless Scythes Scythe GiftYou can have 12 more Scythe at the same time. is equipped.",
+    "notes": "Max 20 at the same time, when Countless Scythes Countless ScythesYou can have 12 more Scythe at the same time. is equipped.",
     "richNotes": [
       {
         "key": "text",
@@ -1049,14 +1001,14 @@
       },
       {
         "key": "text",
-        "text": ", when "
+        "text": ", when Countless Scythes"
       },
       {
         "key": "entity",
         "text": "Scythe",
-        "href": "https://windblown.wiki.gg/wiki/Countless_Scythes",
-        "id": "Countless_Scythes",
-        "image": "https://windblown.wiki.gg/images/thumb/Countless_Scythes_Icon.png/20px-Countless_Scythes_Icon.png?611a62",
+        "href": "https://windblown.wiki.gg/wiki/Scythe",
+        "id": "Scythe",
+        "image": "https://windblown.wiki.gg/images/thumb/Countless_Scythes_Icon.png/55px-Countless_Scythes_Icon.png?611a62",
         "color": "#5f9fff",
         "bold": true
       },

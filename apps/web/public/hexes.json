@@ -2,16 +2,12 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Affliction_Blast_Hex_Icon.png/48px-Affliction_Blast_Hex_Icon.png?83c144",
     "name": "Affliction Blast Hex",
-    "description": "BlastBlast Special AttackA burst of damage against a target and the enemies behind it. add 1 bonus stack when they apply Bleed, Burn or Curse, but -75% to their Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results..",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Blast",
-        "href": "https://windblown.wiki.gg/wiki/Blast",
-        "id": "Blast",
-        "image": "https://windblown.wiki.gg/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
-        "color": "#ffdb96",
-        "bold": true
+        "bold": true,
+        "color": "#ffdb96"
       },
       {
         "key": "text",
@@ -38,55 +34,42 @@
         "text": " to their "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Affliction_Hex_Icon.png/48px-Affliction_Hex_Icon.png?2d5b25",
     "name": "Affliction Hex",
-    "description": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. and BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +100% but all other Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Bleed",
-        "href": "https://windblown.wiki.gg/wiki/Bleed",
-        "id": "Bleed",
-        "image": "https://windblown.wiki.gg/images/thumb/Bleed_Icon.png/20px-Bleed_Icon.png?896598",
-        "color": "#e70000",
-        "bold": true
+        "bold": true,
+        "color": "#e70000"
       },
       {
         "key": "text",
         "text": " and "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Burn",
-        "href": "https://windblown.wiki.gg/wiki/Burn",
-        "id": "Burn",
-        "image": "https://windblown.wiki.gg/images/thumb/Burn_Icon.png/20px-Burn_Icon.png?928e17",
-        "color": "#ff5b00",
-        "bold": true
+        "bold": true,
+        "color": "#ff5b00"
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -99,12 +82,10 @@
         "text": " but all other "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -116,23 +97,17 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Brutality_Hex_Icon.png/48px-Brutality_Hex_Icon.png?cb8087",
     "name": "Brutality Hex",
-    "description": "BrutalityBrutality BuffGives a damage bonus for the duration. bonus x1.5 but Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50% if BrutalityBrutality BuffGives a damage bonus for the duration. is not active.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Brutality",
-        "href": "https://windblown.wiki.gg/wiki/Brutality",
-        "id": "Brutality",
-        "image": "https://windblown.wiki.gg/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
-        "color": "#ff8689",
-        "bold": true
+        "bold": true,
+        "color": "#ff8689"
       },
       {
         "key": "text",
@@ -149,12 +124,10 @@
         "text": " but "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -167,43 +140,32 @@
         "text": " if "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Brutality",
-        "href": "https://windblown.wiki.gg/wiki/Brutality",
-        "id": "Brutality",
-        "image": "https://windblown.wiki.gg/images/thumb/Brutality_Icon.png/20px-Brutality_Icon.png?d5fb3d",
-        "color": "#ff8689",
-        "bold": true
+        "bold": true,
+        "color": "#ff8689"
       },
       {
         "key": "text",
         "text": " is not active."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Critical_Hex_Icon.png/48px-Critical_Hex_Icon.png?f7bf5c",
     "name": "Critical Hex",
-    "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50%, but all other Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Criticals",
-        "href": "https://windblown.wiki.gg/wiki/Criticals",
-        "id": "Criticals",
-        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
-        "color": "#ffdd00",
-        "bold": true
+        "bold": true,
+        "color": "#ffdd00"
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -216,12 +178,10 @@
         "text": ", but all other "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -233,23 +193,24 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Curse_Hex_Icon.png/48px-Curse_Hex_Icon.png?dc5d22",
     "name": "Curse Hex",
-    "description": "Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. total bonus multiplier +1 but duration divided by 2 for the team.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Final Curse",
+        "bold": true,
+        "color": "#afa2ff"
+      },
+      {
+        "key": "entity",
+        "text": "",
         "href": "https://windblown.wiki.gg/wiki/Final_Curse",
         "id": "Final_Curse",
-        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678",
-        "color": "#afa2ff",
-        "bold": true
+        "image": "https://windblown.wiki.gg/images/thumb/Final_Curse_Icon.png/20px-Final_Curse_Icon.png?a12678"
       },
       {
         "key": "text",
@@ -275,23 +236,17 @@
         "key": "text",
         "text": " for the team."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Echo_Hex_Icon.png/48px-Echo_Hex_Icon.png?851b52",
     "name": "Echo Hex",
-    "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect. deals +100% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results., but replication delay is increased by 1s.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Echo",
-        "href": "https://windblown.wiki.gg/wiki/Echo",
-        "id": "Echo",
-        "image": "https://windblown.wiki.gg/images/thumb/Echo_Icon.png/20px-Echo_Icon.png?59222f",
-        "color": "#94a9e9",
-        "bold": true
+        "bold": true,
+        "color": "#94a9e9"
       },
       {
         "key": "text",
@@ -304,12 +259,10 @@
         "color": "#00ff22"
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -325,23 +278,17 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Mark_Hex_Icon.png/48px-Mark_Hex_Icon.png?5bef46",
     "name": "Mark Hex",
-    "description": "MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. deal +100% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. but your Weapons can only trigger them with CriticalsCriticals Hit TypeHits that deal +50% damage..",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Mark",
-        "href": "https://windblown.wiki.gg/wiki/Mark",
-        "id": "Mark",
-        "image": "https://windblown.wiki.gg/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
-        "color": "#d3ff00",
-        "bold": true
+        "bold": true,
+        "color": "#d3ff00"
       },
       {
         "key": "text",
@@ -354,50 +301,40 @@
         "color": "#00ff22"
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
         "text": " but your Weapons can only trigger them with "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Criticals",
-        "href": "https://windblown.wiki.gg/wiki/Criticals",
-        "id": "Criticals",
-        "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
-        "color": "#ffdd00",
-        "bold": true
+        "bold": true,
+        "color": "#ffdd00"
       },
       {
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Melee_Hex_Icon.png/48px-Melee_Hex_Icon.png?14475c",
     "name": "Melee Hex",
-    "description": "Melee Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but  Ranged Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
         "text": " Melee Weapons "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -410,12 +347,10 @@
         "text": " but  Ranged Weapons "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -427,14 +362,11 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Overwhelm_Hex_Icon.png/48px-Overwhelm_Hex_Icon.png?8e254f",
     "name": "Overwhelm Hex",
-    "description": "Hits have a 25% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results.., but all other Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
@@ -451,12 +383,18 @@
         "text": " chance to "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Overwhelm",
-        "href": "https://windblown.wiki.gg/wiki/Overwhelm",
-        "id": "Overwhelm",
+        "bold": true,
+        "color": "#ff8200"
+      },
+      {
+        "key": "entity",
+        "text": "Total Damage",
+        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
+        "id": "Total_Damage",
         "image": "https://windblown.wiki.gg/images/thumb/Overwhelm_Icon.png/20px-Overwhelm_Icon.png?ef031f",
-        "color": "#ff8200",
+        "color": "#ffffff",
         "bold": true
       },
       {
@@ -464,12 +402,10 @@
         "text": ", but all other "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -481,20 +417,23 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Pool_Hex_Icon.png/48px-Pool_Hex_Icon.png?92ead2",
     "name": "Pool Hex",
-    "description": "Corrosive PoolCorrosive Pool Special AttackArea that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects. damage every 0.5s. hit frequency +100% but size -50%.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Corrosive Pool",
-        "href": "https://windblown.wiki.gg/wiki/Corrosive_Pool",
-        "id": "Corrosive_Pool",
+        "bold": true,
+        "color": "#8cbc00"
+      },
+      {
+        "key": "entity",
+        "text": "Corrosive",
+        "href": "https://windblown.wiki.gg/wiki/Corrosive",
+        "id": "Corrosive",
         "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
         "color": "#8cbc00",
         "bold": true
@@ -523,31 +462,23 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Power_Blast_Hex_Icon.png/48px-Power_Blast_Hex_Icon.png?d4fe6b",
     "name": "Power Blast Hex",
-    "description": "BlastBlast Special AttackA burst of damage against a target and the enemies behind it. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +75% but they can no longer apply Bleed, Burn or Curse.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Blast",
-        "href": "https://windblown.wiki.gg/wiki/Blast",
-        "id": "Blast",
-        "image": "https://windblown.wiki.gg/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
-        "color": "#ffdb96",
-        "bold": true
+        "bold": true,
+        "color": "#ffdb96"
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -559,65 +490,51 @@
         "key": "text",
         "text": " but they can no longer apply Bleed, Burn or Curse."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Random_Chrysalis_Hex_Icon.png/48px-Random_Chrysalis_Hex_Icon.png?ef7f93",
     "name": "Random Chrysalis Hex",
-    "description": "Get a random negative effect. After 25 enemy kills, it transforms into a random positive effect.",
     "richDescription": [
       {
         "key": "text",
         "text": "Get a random negative effect. After 25 enemy kills, it transforms into a random positive effect."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Random_Eroding_Hex_Icon.png/48px-Random_Eroding_Hex_Icon.png?fe18d6",
     "name": "Random Eroding Hex",
-    "description": "Get a random positive effect. Every kill reduces the value of the effect.",
     "richDescription": [
       {
         "key": "text",
         "text": "Get a random positive effect. Every kill reduces the value of the effect."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Random_Trade_Hex_Icon.png/48px-Random_Trade_Hex_Icon.png?9e6ed0",
     "name": "Random Trade Hex",
-    "description": "Get a random positive effect in exchange of a random negative effect.",
     "richDescription": [
       {
         "key": "text",
         "text": "Get a random positive effect in exchange of a random negative effect."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Ranged_Hex_Icon.png/48px-Ranged_Hex_Icon.png?5d6fa4",
     "name": "Ranged Hex",
-    "description": "Ranged Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but  Melee Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
         "text": " Ranged Weapons "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -630,12 +547,10 @@
         "text": " but  Melee Weapons "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -647,31 +562,23 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Rush_Hex_Icon.png/48px-Rush_Hex_Icon.png?6caef9",
     "name": "Rush Hex",
-    "description": "RushRush BuffYour next Dash deals damage and stuns for 2s. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +100% but it no longer stuns.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Rush",
-        "href": "https://windblown.wiki.gg/wiki/Rush",
-        "id": "Rush",
-        "image": "https://windblown.wiki.gg/images/thumb/Rush_Icon.png/20px-Rush_Icon.png?505fd2",
-        "color": "#ffa56d",
-        "bold": true
+        "bold": true,
+        "color": "#ffa56d"
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -683,26 +590,21 @@
         "key": "text",
         "text": " but it no longer stuns."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Simple_Hex_Icon.png/48px-Simple_Hex_Icon.png?bbeca6",
     "name": "Simple Hex",
-    "description": "Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +100% but you can no longer use AlterattackAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed..",
     "richDescription": [
       {
         "key": "text",
         "text": "Weapons "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -715,34 +617,26 @@
         "text": " but you can no longer use "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Alterattack",
-        "href": "https://windblown.wiki.gg/wiki/Alterattack",
-        "id": "Alterattack",
-        "image": "https://windblown.wiki.gg/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
-        "color": "#ef917e",
-        "bold": true
+        "bold": true,
+        "color": "#ef917e"
       },
       {
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Speed_Hex_Icon.png/48px-Speed_Hex_Icon.png?de9ac5",
     "name": "Speed Hex",
-    "description": "Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%). +50% but Weapon and Trinket Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
-        "key": "entity",
+        "key": "text",
         "text": "Attack Speed",
-        "href": "https://windblown.wiki.gg/wiki/Attack_Speed",
-        "id": "Attack_Speed",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -755,12 +649,10 @@
         "text": " but Weapon and Trinket "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -772,26 +664,21 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Trinket_Hex_Icon.png/48px-Trinket_Hex_Icon.png?ac2a09",
     "name": "Trinket Hex",
-    "description": "Trinket Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but Weapon Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
         "text": "Trinket "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -804,12 +691,10 @@
         "text": " but Weapon "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -821,26 +706,21 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Weapon_Hex_Icon.png/48px-Weapon_Hex_Icon.png?9b4bf1",
     "name": "Weapon Hex",
-    "description": "Weapon Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but Trinket Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
         "text": "Weapon "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -853,12 +733,10 @@
         "text": " but Trinket "
       },
       {
-        "key": "entity",
+        "key": "text",
         "text": "Total Damage",
-        "href": "https://windblown.wiki.gg/wiki/Total_Damage",
-        "id": "Total_Damage",
-        "color": "#ffffff",
-        "bold": true
+        "bold": true,
+        "color": "#ffffff"
       },
       {
         "key": "text",
@@ -870,8 +748,6 @@
         "key": "text",
         "text": "."
       }
-    ],
-    "unlockCost": "-",
-    "unlockRequirement": "Unlocked by default"
+    ]
   }
 ]

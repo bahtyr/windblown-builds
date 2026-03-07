@@ -35,10 +35,7 @@ function parseHexRow($: CheerioAPI, row: Element): Hex | null {
   const name = nameCell.text().trim();
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
-  const description = descriptionCell.text().trim();
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
-  const unlockCost = cells.eq(3).text().trim();
-  const unlockRequirement = cells.eq(4).text().trim();
 
   if (!image || !name) {
     return null;
@@ -48,9 +45,6 @@ function parseHexRow($: CheerioAPI, row: Element): Hex | null {
     image,
     name,
     ...(nameColor ? {nameColor} : {}),
-    description,
     richDescription,
-    unlockCost,
-    unlockRequirement,
   };
 }

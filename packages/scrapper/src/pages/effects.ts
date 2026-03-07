@@ -39,7 +39,6 @@ function parseEffectRow($: CheerioAPI, row: Element, category: string): Effect |
   const name = nameCell.text().trim();
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
-  const description = descriptionCell.text().trim();
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
   const advancedCell = cells.eq(3);
   const advancedDescription = advancedCell.text().trim();
@@ -57,7 +56,6 @@ function parseEffectRow($: CheerioAPI, row: Element, category: string): Effect |
     name,
     ...(nameColor ? {nameColor} : {}),
     category,
-    description,
     richDescription,
     advancedDescription,
     richAdvancedDescription,

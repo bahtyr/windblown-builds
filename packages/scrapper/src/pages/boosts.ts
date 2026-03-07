@@ -41,7 +41,6 @@ function parseBoostRow($: CheerioAPI, row: Element): Boost | null {
   const name = nameCell.text().trim();
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
-  const description = descriptionCell.text().trim();
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
   const healthBonus = cells.eq(3).text().trim();
 
@@ -53,7 +52,6 @@ function parseBoostRow($: CheerioAPI, row: Element): Boost | null {
     image,
     name,
     ...(nameColor ? {nameColor} : {}),
-    description,
     richDescription,
     ...(healthBonus ? {healthBonus} : {}),
   };

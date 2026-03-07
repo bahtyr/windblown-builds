@@ -77,7 +77,6 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
   const name = nameCell.text().trim();
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
-  const description = descriptionCell.text().trim();
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
 
   if (!image || !name) {
@@ -89,7 +88,6 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
     name,
     ...(nameColor ? {nameColor} : {}),
     category: section.replace(/\s+Gifts$/, "").trim(),
-    description,
     richDescription,
   };
 }
