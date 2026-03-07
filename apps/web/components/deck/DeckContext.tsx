@@ -221,12 +221,13 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         }
       },
       deleteDeck: (deckName: string) => {
-        setSaved((prev) => prev.filter((d) => d.name !== deckName));
-        if (selectedSaved === deckName) {
-          setSelectedSaved(null);
-          setItems([]);
-          setNameState("Untitled Deck");
-        }
+        setSaved((prev) => {
+          const {saved: nextSaved, firstSaved} = selectFirstSavedAfterDelete(prev, deckName);
+          setSelectedSaved(firstSaved.name);
+          setItems(firstSaved.items);
+          setNameState(firstSaved.name);
+          return nextSaved;
+        });
       },
       resetDeck: () => setItems([]),
     }),
@@ -305,4 +306,23 @@ function reorderWithinType(list: DeckItem[], type: EntityType, from: number, to:
   const [item] = next.splice(globalFrom, 1);
   next.splice(globalTo, 0, item);
   return next;
+}
+
+/**
+ * Remove a deck and pick the first remaining saved deck.
+ *
+ * @param {{name: string; items: DeckItem[]}[]} list - Current saved decks.
+ * @param {string} deckName - Deck being removed.
+ * @returns {{saved: {name: string; items: DeckItem[]}[]; firstSaved: {name: string; items: DeckItem[]}}} Remaining decks and first selectable deck.
+ */
+export function selectFirstSavedAfterDelete(
+  list: { name: string; items: DeckItem[] }[],
+  deckName: string,
+): { saved: { name: string; items: DeckItem[] }[]; firstSaved: { name: string; items: DeckItem[] } } {
+  const filtered = list.filter((d) => d.name !== deckName);
+  if (filtered.length > 0) {
+    return {saved: filtered, firstSaved: filtered[0]};
+  }
+  const created = {name: suggestName(filtered), items: [] as DeckItem[]};
+  return {saved: [created], firstSaved: created};
 }
