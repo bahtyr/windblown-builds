@@ -26,7 +26,7 @@
     "name": "Bleed Infusion",
     "nameColor": "#e70000",
     "category": "Buffs",
-    "description": "Hits apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. for the duration of the Infusion.",
+    "description": "Hits apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. for the duration of the Infusion.",
     "richDescription": [
       {
         "key": "text",
@@ -92,7 +92,7 @@
     "name": "Burn Infusion",
     "nameColor": "#ff5b00",
     "category": "Buffs",
-    "description": "Hits apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. for the duration of the infusion.",
+    "description": "Hits apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. for the duration of the infusion.",
     "richDescription": [
       {
         "key": "text",
@@ -192,7 +192,7 @@
     "richDescription": [],
     "advancedDescription": "",
     "richAdvancedDescription": [],
-    "notes": "When this buff is active, you DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  almost any incoming attack.",
+    "notes": "When this buff is active, you DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe. almost any incoming attack.",
     "richNotes": [
       {
         "key": "text",
@@ -303,7 +303,7 @@
     "name": "Curse",
     "nameColor": "#afa2ff",
     "category": "Debuffs",
-    "description": "Each stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  that multiplies the bonus by 2 for 4s.",
+    "description": "Each stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. that multiplies the bonus by 2 for 4s.",
     "richDescription": [
       {
         "key": "text",
@@ -330,7 +330,7 @@
         "text": "In this state, stronger Curses replace the bonuses of weaker ones."
       }
     ],
-    "notes": "Lasts for 4s. Every new curse application resets the timer of the entire stack, except when Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  is reached.",
+    "notes": "Lasts for 4s. Every new curse application resets the timer of the entire stack, except when Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. is reached.",
     "richNotes": [
       {
         "key": "text",
@@ -356,11 +356,11 @@
     "name": "Freeze",
     "nameColor": "#00fff2",
     "category": "Debuffs",
-    "description": "Incapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
+    "description": "Incapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results..",
     "richDescription": [
       {
         "key": "text",
-        "text": "Incapacitates a target for the duration (degressive).The player that launched the effect can "
+        "text": "Incapacitates a target for the duration (degressive).\nThe player that launched the effect can "
       },
       {
         "key": "text",
@@ -378,7 +378,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -534,7 +534,7 @@
     "richNotes": [
       {
         "key": "text",
-        "text": "Value is auto-scaled by 40%/Boss killed.A first 40% is given when playing in "
+        "text": "Value is auto-scaled by 40%/Boss killed.\nA first 40% is given when playing in "
       },
       {
         "key": "text",
@@ -592,7 +592,7 @@
     ],
     "advancedDescription": "",
     "richAdvancedDescription": [],
-    "notes": "Changed to 100% of lost HP and Weapons and Trinkets damage when Strong Recovery Strong Recovery General GiftYou can RecoverRecovery MechanicFor a short time after taking damage, you may recover up to 25% of the lost HP by dealing weapon damage.  100% of lost HP for 50% longer, and Trinkets can trigger this effect. is equipped.",
+    "notes": "Changed to 100% of lost HP and Weapons and Trinkets damage when Strong Recovery Strong Recovery General GiftYou can Recovery 100% of lost HP for 50% longer, and Trinkets can trigger this effect. is equipped.",
     "richNotes": [
       {
         "key": "text",
@@ -618,7 +618,7 @@
       },
       {
         "key": "entity",
-        "text": "Recover",
+        "text": "Recovery",
         "href": "https://windblown.wiki.gg/wiki/Strong_Recovery",
         "id": "Strong_Recovery",
         "image": "https://windblown.wiki.gg/images/thumb/Strong_Recovery_Icon.png/20px-Strong_Recovery_Icon.png?7822fa",
@@ -706,7 +706,7 @@
     "name": "Overwhelm",
     "nameColor": "#ff8200",
     "category": "Hit Types",
-    "description": "Hits that Overwhelm deal +125% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
+    "description": "Hits that Overwhelm deal +125% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results..",
     "richDescription": [
       {
         "key": "text",
@@ -719,7 +719,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -744,7 +744,7 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Use one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed."
+        "text": "Use one weapon until the  signal appears.\nThen, use your other to launch its Alterattack.\nBonus damage increases with the amount of hits landed."
       }
     ],
     "advancedDescription": "",
@@ -753,7 +753,12 @@
     "richNotes": [
       {
         "key": "text",
-        "text": "Main article:Alterattack"
+        "text": "Main article:",
+        "italic": true
+      },
+      {
+        "key": "text",
+        "text": "Alterattack"
       }
     ]
   },
@@ -784,7 +789,7 @@
     "name": "Corrosive Pool",
     "nameColor": "#8cbc00",
     "category": "Special Attacks",
-    "description": "Area that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage every 0.5s.",
+    "description": "Area that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects. damage every 0.5s.",
     "richDescription": [
       {
         "key": "text",
@@ -823,11 +828,11 @@
     "name": "Crystallize",
     "nameColor": "#0089ff",
     "category": "Special Attacks",
-    "description": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment. .",
+    "description": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create MemonitesMemonites OtherMaterials used to re-craft ancestral equipment..",
     "richDescription": [
       {
         "key": "text",
-        "text": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.Doing so will occasionally create "
+        "text": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.\nDoing so will occasionally create "
       },
       {
         "key": "entity",
@@ -881,7 +886,7 @@
     ],
     "advancedDescription": "",
     "richAdvancedDescription": [],
-    "notes": "During one second after a DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe. , the next damage instance is a criticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "notes": "During one second after a DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe., the next damage instance is a CriticalsCriticals Hit TypeHits that deal +50% damage..",
     "richNotes": [
       {
         "key": "text",
@@ -902,7 +907,7 @@
       },
       {
         "key": "entity",
-        "text": "critical",
+        "text": "Criticals",
         "href": "https://windblown.wiki.gg/wiki/Criticals",
         "id": "Criticals",
         "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
@@ -990,7 +995,7 @@
     ],
     "advancedDescription": "",
     "richAdvancedDescription": [],
-    "notes": "Max 20 at the same time, when Countless Scythes Countless Scythes Scythe GiftYou can have 12 more ScythesScythe Special AttackBlade that rotates around you and deals damage every 0.5s. Max 8 at the same time.  at the same time. is equipped.",
+    "notes": "Max 20 at the same time, when Countless Scythes Countless Scythes Scythe GiftYou can have 12 more Scythe at the same time. is equipped.",
     "richNotes": [
       {
         "key": "text",
@@ -1003,7 +1008,7 @@
       },
       {
         "key": "entity",
-        "text": "Scythes",
+        "text": "Scythe",
         "href": "https://windblown.wiki.gg/wiki/Countless_Scythes",
         "id": "Countless_Scythes",
         "image": "https://windblown.wiki.gg/images/thumb/Countless_Scythes_Icon.png/20px-Countless_Scythes_Icon.png?611a62",

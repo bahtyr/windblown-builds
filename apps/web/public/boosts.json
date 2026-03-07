@@ -69,7 +69,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Criticals_Boost_Icon.png/48px-Criticals_Boost_Icon.png?3b8f10",
     "name": "Criticals",
-    "description": "All CriticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. damage +10%/+20%/+30%.",
+    "description": "All CriticalsCriticals Hit TypeHits that deal +50% damage. damage +10%/+20%/+30%.",
     "richDescription": [
       {
         "key": "text",
@@ -77,7 +77,7 @@
       },
       {
         "key": "entity",
-        "text": "Critical",
+        "text": "Criticals",
         "href": "https://windblown.wiki.gg/wiki/Criticals",
         "id": "Criticals",
         "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
@@ -126,11 +126,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Trinket_Refill_Boost_Icon.png/48px-Trinket_Refill_Boost_Icon.png?c57ca3",
     "name": "Trinket Refill",
-    "description": "Trinket refillTrinket Refill MechanicMax refill speed increase: 60%.  5%/10%/25% faster.",
+    "description": "Trinket RefillTrinket Refill MechanicMax refill speed increase: 60%. 5%/10%/25% faster.",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Trinket refill",
+        "text": "Trinket Refill",
         "href": "https://windblown.wiki.gg/wiki/Trinket_Refill",
         "id": "Trinket_Refill",
         "color": "#ffffff",
@@ -219,11 +219,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Attack_Speed_Boost_Icon.png/48px-Attack_Speed_Boost_Icon.png?9f2bfb",
     "name": "Attack Speed",
-    "description": "Attack speedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%).  +5%/+10%/+15%.",
+    "description": "Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%). +5%/+10%/+15%.",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Attack speed",
+        "text": "Attack Speed",
         "href": "https://windblown.wiki.gg/wiki/Attack_Speed",
         "id": "Attack_Speed",
         "color": "#ffffff",

@@ -18,7 +18,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Bleed_Aura_Icon.png/48px-Bleed_Aura_Icon.png?8fdbf8",
     "name": "Bleed Aura",
-    "description": "Applies 5 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. to nearby foes, then gives Bleed InfusionBleed Infusion BuffHits apply 1 Bleed for the duration of the Infusion.  to nearby leapers.",
+    "description": "Applies 5 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. to nearby foes, then gives Bleed InfusionBleed Infusion BuffHits apply 1 BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. for the duration of the Infusion. to nearby leapers.",
     "richDescription": [
       {
         "key": "text",
@@ -52,7 +52,7 @@
       }
     ],
     "baseDamage": "1",
-    "damageType": "Bleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. DMG",
+    "damageType": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. DMG",
     "cooldown": "30s",
     "unlockCost": "-",
     "unlockRequirement": "Unlocked by default"
@@ -76,7 +76,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Burn_Aura_Icon.png/48px-Burn_Aura_Icon.png?a8438f",
     "name": "Burn Aura",
-    "description": "Applies 5 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. to nearby foes, then gives Burn InfusionBurn Infusion BuffHits apply 1 Burn for the duration of the infusion.  to nearby leapers.",
+    "description": "Applies 5 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. to nearby foes, then gives Burn InfusionBurn Infusion BuffHits apply 1 BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. for the duration of the infusion. to nearby leapers.",
     "richDescription": [
       {
         "key": "text",
@@ -110,19 +110,19 @@
       }
     ],
     "baseDamage": "2",
-    "damageType": "Burn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. DMG",
+    "damageType": "BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. DMG",
     "cooldown": "30s",
-    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "5",
     "unlockRequirement": "Drops from Rusher (Common)"
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Chrono_Catch_Icon.png/43px-Chrono_Catch_Icon.png?b05f13",
     "name": "Chrono Catch",
-    "description": "SlowsSlow DebuffAll movements are slower.  enemies and their projectiles.",
+    "description": "SlowSlow DebuffAll movements are slower. enemies and their projectiles.",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Slows",
+        "text": "Slow",
         "href": "https://windblown.wiki.gg/wiki/Slow",
         "id": "Slow",
         "image": "https://windblown.wiki.gg/images/thumb/Slow_Icon.png/20px-Slow_Icon.png?4da93a",
@@ -137,13 +137,13 @@
     "baseDamage": "20",
     "damageType": "DMG",
     "cooldown": "42s",
-    "unlockCost": "30 Memonite Shard Currency ItemMaterial used to unlock new gear. + 1 Obsidian Memonite Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "30  + 1",
     "unlockRequirement": "Drops from The Memoreaper (1st kill)"
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Curse_Trap_Icon.png/46px-Curse_Trap_Icon.png?a3b33f",
     "name": "Curse Trap",
-    "description": "Create a zone that applies Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  every 0.5s",
+    "description": "Create a zone that applies Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. every 0.5s",
     "richDescription": [
       {
         "key": "text",
@@ -164,9 +164,9 @@
       }
     ],
     "baseDamage": "3",
-    "damageType": "Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. %",
+    "damageType": "CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. that multiplies the bonus by 2 for 4s. %",
     "cooldown": "25s",
-    "unlockCost": "8 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "8",
     "unlockRequirement": "Drops from Pirate Exploder (Common)"
   },
   {
@@ -182,7 +182,7 @@
     "baseDamage": "117",
     "damageType": "DPS",
     "cooldown": "35s",
-    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "5",
     "unlockRequirement": "Drops from Gundog (Always)"
   },
   {
@@ -212,7 +212,7 @@
     "baseDamage": "150",
     "damageType": "DMG",
     "cooldown": "35s",
-    "unlockCost": "2 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "2",
     "unlockRequirement": "Drops from Worker Nailgun (Common)"
   },
   {
@@ -242,7 +242,7 @@
     "baseDamage": "80",
     "damageType": "DMG",
     "cooldown": "12s",
-    "unlockCost": "10 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "10",
     "unlockRequirement": "Drops from the Broken Banger (second kill)"
   },
   {
@@ -261,19 +261,24 @@
       },
       {
         "key": "text",
-        "text": "MY EYES!"
+        "text": "\n"
+      },
+      {
+        "key": "text",
+        "text": "MY EYES!",
+        "italic": true
       }
     ],
     "baseDamage": "5",
     "damageType": "DMG",
     "cooldown": "15s",
-    "unlockCost": "20 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "20",
     "unlockRequirement": "Drops from Pirate Exploder"
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Frost_Nova_Icon.png/48px-Frost_Nova_Icon.png?501f08",
     "name": "Frost Nova",
-    "description": "FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% total damage.  enemies around you.",
+    "description": "FreezeFreeze DebuffIncapacitates a target for the duration (degressive).The player that launched the effect can shatter it to deal +50% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results.. enemies around you.",
     "richDescription": [
       {
         "key": "entity",
@@ -292,13 +297,13 @@
     "baseDamage": "50",
     "damageType": "DMG",
     "cooldown": "30s",
-    "unlockCost": "1 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "1",
     "unlockRequirement": "Drops from Bomber (Common)"
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Fury_Icon.png/48px-Fury_Icon.png?7583b5",
     "name": "Fury",
-    "description": "For 8s: Gain a damage bonus, Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%).  +50% and damage taken +30%.",
+    "description": "For 8s: Gain a damage bonus, Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%). +50% and damage taken +30%.",
     "richDescription": [
       {
         "key": "text",
@@ -356,13 +361,13 @@
     "baseDamage": "70",
     "damageType": "%",
     "cooldown": "30s",
-    "unlockCost": "20 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "20",
     "unlockRequirement": "Found in the starting secret area of Golem Gardens"
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Goo_Bomb_Icon.png/39px-Goo_Bomb_Icon.png?25b273",
     "name": "Goo Bomb",
-    "description": "Inflicts GooGoo DebuffTargets are unable to move for the duration (degressive).  and deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects.  damage for 4s.",
+    "description": "Inflicts GooGoo DebuffTargets are unable to move for the duration (degressive). and deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects. damage for 4s.",
     "richDescription": [
       {
         "key": "text",
@@ -459,7 +464,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Leafade_Icon.png/48px-Leafade_Icon.png?58ac11",
     "name": "Leafade",
-    "description": "Become temporarily undetectable, and your next hit activates BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. for 1s.",
+    "description": "Become temporarily undetectable, and your next hit activates BrutalityBrutality BuffGives a damage bonus for the duration. for 1s.",
     "richDescription": [
       {
         "key": "text",
@@ -480,15 +485,15 @@
       }
     ],
     "baseDamage": "100",
-    "damageType": "Brutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. %",
+    "damageType": "BrutalityBrutality BuffGives a damage bonus for the duration. %",
     "cooldown": "12s",
-    "unlockCost": "12 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "12",
     "unlockRequirement": "Drops from Pirate Shield (Common)"
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Mark_Zone_Icon.png/48px-Mark_Zone_Icon.png?dfc7e2",
     "name": "Mark Zone",
-    "description": "Triggers nearby MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon. , then strikes and MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  nearby enemies.",
+    "description": "Triggers nearby MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon., then strikes and MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. nearby enemies.",
     "richDescription": [
       {
         "key": "text",
@@ -496,7 +501,7 @@
       },
       {
         "key": "entity",
-        "text": "Marks",
+        "text": "Mark",
         "href": "https://windblown.wiki.gg/wiki/Mark",
         "id": "Mark",
         "image": "https://windblown.wiki.gg/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
@@ -509,7 +514,7 @@
       },
       {
         "key": "entity",
-        "text": "Marks",
+        "text": "Mark",
         "href": "https://windblown.wiki.gg/wiki/Mark",
         "id": "Mark",
         "image": "https://windblown.wiki.gg/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
@@ -522,7 +527,7 @@
       }
     ],
     "baseDamage": "100",
-    "damageType": "Mark DebuffTrigger a Mark on a target by hitting it with a Weapon.  DMG",
+    "damageType": "MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. DMG",
     "cooldown": "25s",
     "unlockCost": "-",
     "unlockRequirement": "Unlocked by default"
@@ -530,7 +535,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Smokey_Dokey_Icon.png/48px-Smokey_Dokey_Icon.png?bd77ad",
     "name": "Smokey Dokey",
-    "description": "Releases a thick smoke around you, allowing you to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe.  enemy hits.",
+    "description": "Releases a thick smoke around you, allowing you to automatically DodgeDodge Special AttackDodging an attack at the last moment. Reflects part of the damage towards the attacking foe. enemy hits.",
     "richDescription": [
       {
         "key": "text",
@@ -563,7 +568,7 @@
     "baseDamage": "20",
     "damageType": "DMG",
     "cooldown": "51s",
-    "unlockCost": "15 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "15",
     "unlockRequirement": "Drops from The Broken Banger (1st kill)"
   },
   {
@@ -600,7 +605,7 @@
     "baseDamage": "20",
     "damageType": "DMG",
     "cooldown": "20s",
-    "unlockCost": "2 Memonite Fragment Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "2",
     "unlockRequirement": "Drops from Raptor Ranged variant"
   }
 ]

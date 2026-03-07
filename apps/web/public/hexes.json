@@ -2,11 +2,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Affliction_Blast_Hex_Icon.png/48px-Affliction_Blast_Hex_Icon.png?83c144",
     "name": "Affliction Blast Hex",
-    "description": "BlastsBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. add 1 bonus stack when they apply Bleed, Burn or Curse, but -75% to their total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses..",
+    "description": "BlastBlast Special AttackA burst of damage against a target and the enemies behind it. add 1 bonus stack when they apply Bleed, Burn or Curse, but -75% to their Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results..",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Blasts",
+        "text": "Blast",
         "href": "https://windblown.wiki.gg/wiki/Blast",
         "id": "Blast",
         "image": "https://windblown.wiki.gg/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
@@ -39,7 +39,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -56,7 +56,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Affliction_Hex_Icon.png/48px-Affliction_Hex_Icon.png?2d5b25",
     "name": "Affliction Hex",
-    "description": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. At max stacks, applying a stronger Bleed will always replace a weaker one. and BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. At max stacks, applying a stronger Burn will always replace a weaker one. total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +100% but all other total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. and BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +100% but all other Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "entity",
@@ -82,7 +82,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -100,7 +100,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -123,7 +123,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Brutality_Hex_Icon.png/48px-Brutality_Hex_Icon.png?cb8087",
     "name": "Brutality Hex",
-    "description": "BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. bonus x1.5 but total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50% if BrutalityBrutality BuffGives a damage bonus for the duration. If several effects are applied, Brutality takes the maximum bonus and duration among them. is not active.",
+    "description": "BrutalityBrutality BuffGives a damage bonus for the duration. bonus x1.5 but Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50% if BrutalityBrutality BuffGives a damage bonus for the duration. is not active.",
     "richDescription": [
       {
         "key": "entity",
@@ -150,7 +150,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -186,11 +186,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Critical_Hex_Icon.png/48px-Critical_Hex_Icon.png?f7bf5c",
     "name": "Critical Hex",
-    "description": "CriticalCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals. total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50%, but all other total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "CriticalsCriticals Hit TypeHits that deal +50% damage. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50%, but all other Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Critical",
+        "text": "Criticals",
         "href": "https://windblown.wiki.gg/wiki/Criticals",
         "id": "Criticals",
         "image": "https://windblown.wiki.gg/images/thumb/Criticals_Icon.png/20px-Criticals_Icon.png?c53df9",
@@ -199,7 +199,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -217,7 +217,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -240,7 +240,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Curse_Hex_Icon.png/48px-Curse_Hex_Icon.png?dc5d22",
     "name": "Curse Hex",
-    "description": "Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones.  total bonus multiplier +1 but duration divided by 2 for the team.",
+    "description": "Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. total bonus multiplier +1 but duration divided by 2 for the team.",
     "richDescription": [
       {
         "key": "entity",
@@ -282,7 +282,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Echo_Hex_Icon.png/48px-Echo_Hex_Icon.png?851b52",
     "name": "Echo Hex",
-    "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect.  deals +100% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses., but replication delay is increased by 1s.",
+    "description": "EchoEcho Special AttackReplicate a percentage of the damage dealt after 0.5s. Reapplying Echo resets the effect. deals +100% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results., but replication delay is increased by 1s.",
     "richDescription": [
       {
         "key": "entity",
@@ -305,7 +305,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -332,11 +332,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Mark_Hex_Icon.png/48px-Mark_Hex_Icon.png?5bef46",
     "name": "Mark Hex",
-    "description": "MarksMark DebuffTrigger a Mark on a target by hitting it with a Weapon.  deal +100% total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. but your Weapons can only trigger them with CriticalsCriticals Hit TypeHits that deal +50% damage. Most charged attacks and Alterattacks deal Criticals..",
+    "description": "MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. deal +100% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. but your Weapons can only trigger them with CriticalsCriticals Hit TypeHits that deal +50% damage..",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Marks",
+        "text": "Mark",
         "href": "https://windblown.wiki.gg/wiki/Mark",
         "id": "Mark",
         "image": "https://windblown.wiki.gg/images/thumb/Mark_Icon.png/20px-Mark_Icon.png?b0bc3d",
@@ -355,7 +355,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -385,7 +385,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Melee_Hex_Icon.png/48px-Melee_Hex_Icon.png?14475c",
     "name": "Melee Hex",
-    "description": "Melee Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50% but  Ranged Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "Melee Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but  Ranged Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
@@ -393,7 +393,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -411,7 +411,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -434,7 +434,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Overwhelm_Hex_Icon.png/48px-Overwhelm_Hex_Icon.png?8e254f",
     "name": "Overwhelm Hex",
-    "description": "Hits have a 25% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% total damage. , but all other total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "Hits have a 25% chance to OverwhelmOverwhelm Hit TypeHits that Overwhelm deal +125% Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results.., but all other Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
@@ -465,7 +465,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -488,11 +488,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Pool_Hex_Icon.png/48px-Pool_Hex_Icon.png?92ead2",
     "name": "Pool Hex",
-    "description": "Corrosive PoolsCorrosive Pool Special AttackArea that deals Corrosive damage every 0.5s.  hit frequency +100% but size -50%.",
+    "description": "Corrosive PoolCorrosive Pool Special AttackArea that deals CorrosiveCorrosive Hit TypeSpecial damage type shared by several effects. damage every 0.5s. hit frequency +100% but size -50%.",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Corrosive Pools",
+        "text": "Corrosive Pool",
         "href": "https://windblown.wiki.gg/wiki/Corrosive_Pool",
         "id": "Corrosive_Pool",
         "image": "https://windblown.wiki.gg/images/thumb/Corrosive_Pool_Icon.png/20px-Corrosive_Pool_Icon.png?4cc1e9",
@@ -530,11 +530,11 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Power_Blast_Hex_Icon.png/48px-Power_Blast_Hex_Icon.png?d4fe6b",
     "name": "Power Blast Hex",
-    "description": "BlastsBlast Special AttackA burst of damage against a target and the enemies behind it. If several are launched at the same time, they merge. total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +75% but they can no longer apply Bleed, Burn or Curse.",
+    "description": "BlastBlast Special AttackA burst of damage against a target and the enemies behind it. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +75% but they can no longer apply Bleed, Burn or Curse.",
     "richDescription": [
       {
         "key": "entity",
-        "text": "Blasts",
+        "text": "Blast",
         "href": "https://windblown.wiki.gg/wiki/Blast",
         "id": "Blast",
         "image": "https://windblown.wiki.gg/images/thumb/Blast_Icon.png/20px-Blast_Icon.png?97a67d",
@@ -543,7 +543,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -605,7 +605,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Ranged_Hex_Icon.png/48px-Ranged_Hex_Icon.png?5d6fa4",
     "name": "Ranged Hex",
-    "description": "Ranged Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50% but  Melee Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "Ranged Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but  Melee Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
@@ -613,7 +613,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -631,7 +631,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -654,7 +654,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Rush_Hex_Icon.png/48px-Rush_Hex_Icon.png?6caef9",
     "name": "Rush Hex",
-    "description": "RushRush BuffYour next Dash deals damage and stuns for 2s.  total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +100% but it no longer stuns.",
+    "description": "RushRush BuffYour next Dash deals damage and stuns for 2s. Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +100% but it no longer stuns.",
     "richDescription": [
       {
         "key": "entity",
@@ -667,7 +667,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -690,7 +690,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Simple_Hex_Icon.png/48px-Simple_Hex_Icon.png?bbeca6",
     "name": "Simple Hex",
-    "description": "Weapons total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +100% but you can no longer use AlterattacksAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed. .",
+    "description": "Weapons Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +100% but you can no longer use AlterattackAlterattack Special AttackUse one weapon until the  signal appears.Then, use your other to launch its Alterattack.Bonus damage increases with the amount of hits landed..",
     "richDescription": [
       {
         "key": "text",
@@ -698,7 +698,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -716,7 +716,7 @@
       },
       {
         "key": "entity",
-        "text": "Alterattacks",
+        "text": "Alterattack",
         "href": "https://windblown.wiki.gg/wiki/Alterattack",
         "id": "Alterattack",
         "image": "https://windblown.wiki.gg/images/thumb/Alterattack_Icon.png/20px-Alterattack_Icon.png?b0f277",
@@ -734,7 +734,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Speed_Hex_Icon.png/48px-Speed_Hex_Icon.png?de9ac5",
     "name": "Speed Hex",
-    "description": "Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%).  +50% but Weapon and Trinket total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "Attack SpeedAttack Speed MechanicDetermines the speed of Weapons and the hit frequency of most Trinkets and Effects. No limits except for Weapons (they ignore all bonuses above 100%). +50% but Weapon and Trinket Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "entity",
@@ -756,7 +756,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -779,7 +779,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Trinket_Hex_Icon.png/48px-Trinket_Hex_Icon.png?ac2a09",
     "name": "Trinket Hex",
-    "description": "Trinket total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50% but Weapon total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "Trinket Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but Weapon Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
@@ -787,7 +787,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -805,7 +805,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -828,7 +828,7 @@
   {
     "image": "https://windblown.wiki.gg/images/thumb/Weapon_Hex_Icon.png/48px-Weapon_Hex_Icon.png?9b4bf1",
     "name": "Weapon Hex",
-    "description": "Weapon total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. +50% but Trinket total damageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. Calculation: Base x Sum of bonuses x Sum of Total bonuses. -50%.",
+    "description": "Weapon Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. +50% but Trinket Total DamageTotal Damage MechanicDamage bonuses that are applied last and can lead to explosive results. -50%.",
     "richDescription": [
       {
         "key": "text",
@@ -836,7 +836,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",
@@ -854,7 +854,7 @@
       },
       {
         "key": "entity",
-        "text": "total damage",
+        "text": "Total Damage",
         "href": "https://windblown.wiki.gg/wiki/Total_Damage",
         "id": "Total_Damage",
         "color": "#ffffff",

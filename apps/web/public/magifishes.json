@@ -9,7 +9,7 @@
         "text": "Dash on it to perform jump attacks."
       }
     ],
-    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "5",
     "unlockRequirement": "Drops from The Headbanger (Body 2nd kill)"
   },
   {
@@ -19,10 +19,10 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Swallows enemies in its path and explodes.Hit it to strengthen the explosion."
+        "text": "Swallows enemies in its path and explodes.\nHit it to strengthen the explosion."
       }
     ],
-    "unlockCost": "5 Memonite Dust Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "5",
     "unlockRequirement": "Drops from The Pirate Captain (2nd kill)"
   },
   {
@@ -35,7 +35,7 @@
         "text": "Protects all leapers inside its bubble."
       }
     ],
-    "unlockCost": "2 Memonite Shard Currency ItemMaterial used to unlock new gear.",
+    "unlockCost": "2",
     "unlockRequirement": "Drops from The Head (1st kill)"
   }
 ]
