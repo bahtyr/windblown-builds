@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {EntityType, ScrapedEntity} from "../../lib/types";
-import {DEFAULT_LIMITS, entityIds, groupByCategory, resolveType, VALID_TYPES} from "./entity-utils";
+import {DEFAULT_LIMITS, entityIds, getVisibleItems, groupByCategory, resolveType, VALID_TYPES} from "./entity-utils";
 
 const baseEntity: ScrapedEntity = {
   image: "img",
@@ -82,5 +82,19 @@ describe("DEFAULT_LIMITS", () => {
     expect(DEFAULT_LIMITS.trinkets).toBe(2);
     expect(DEFAULT_LIMITS.hexes).toBe(3);
     expect(DEFAULT_LIMITS.magifishes).toBe(1);
+  });
+});
+
+describe("getVisibleItems", () => {
+  it("returns all items when mode is fade-unmatched", () => {
+    const all = [{...baseEntity, name: "One"}, {...baseEntity, name: "Two"}];
+    const matched = [all[1]];
+    expect(getVisibleItems(all, matched, "fade-unmatched")).toEqual(all);
+  });
+
+  it("returns only matches when mode is show-matches-only", () => {
+    const all = [{...baseEntity, name: "One"}, {...baseEntity, name: "Two"}];
+    const matched = [all[1]];
+    expect(getVisibleItems(all, matched, "show-matches-only")).toEqual(matched);
   });
 });

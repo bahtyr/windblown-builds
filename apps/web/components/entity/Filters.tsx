@@ -2,6 +2,7 @@
 
 import {useMemo} from "react";
 import {ScrapedEntity} from "../../lib/types";
+import {MatchDisplayMode} from "../../app/[type]/entity-utils";
 
 type Props = {
   items: ScrapedEntity[];
@@ -13,6 +14,8 @@ type Props = {
   onLikedChange: (v: boolean) => void;
   deckOnly: boolean;
   onDeckChange: (v: boolean) => void;
+  matchDisplayMode: MatchDisplayMode;
+  onMatchDisplayModeChange: (mode: MatchDisplayMode) => void;
 };
 
 export default function Filters({
@@ -25,6 +28,8 @@ export default function Filters({
   onLikedChange,
   deckOnly,
   onDeckChange,
+  matchDisplayMode,
+  onMatchDisplayModeChange,
 }: Props) {
   const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
 
@@ -58,13 +63,6 @@ export default function Filters({
       >
         In deck only
       </button>
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Search name/category/text…"
-        value={search}
-        onChange={(e) => onSearch(e.target.value)}
-      />
       <select id="entitySelect" value={selectedEntity} onChange={(e) => onEntityChange(e.target.value)}>
         <option value="">Entities</option>
         {entityOptions.map((opt) => (
@@ -73,7 +71,24 @@ export default function Filters({
           </option>
         ))}
       </select>
-
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search name/category/text…"
+        value={search}
+        onChange={(e) => onSearch(e.target.value)}
+      />
+      <button
+        type="button"
+        className={`pill-toggle ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
+        onClick={() =>
+          onMatchDisplayModeChange(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
+        }
+        aria-pressed={matchDisplayMode === "show-matches-only"}
+      >
+        {/*{matchDisplayMode === "fade-unmatched" ? "Hide unmatched result" : "Unmatched: Hidden"}*/}
+        {matchDisplayMode === "fade-unmatched" ? "Fade matching results" : "Show only matching results"}
+      </button>
     </>
   );
 }

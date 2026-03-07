@@ -7,7 +7,7 @@ import Filters from "../../components/entity/Filters";
 import {useLikes} from "../../components/like/LikeContext";
 import {loadEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
-import {DEFAULT_LIMITS, entityIds, groupByCategory, resolveType} from "./entity-utils";
+import {DEFAULT_LIMITS, entityIds, getVisibleItems, groupByCategory, MatchDisplayMode, resolveType} from "./entity-utils";
 
 type PagePropsLocal = {
   params?: Promise<Record<string, string>>;
@@ -17,6 +17,7 @@ type MatchNav = { above: number; below: number };
 
 const NAV_REFRESH_DELAY = 80;
 const NAV_AFTER_SCROLL_DELAY = 200;
+const MATCH_DISPLAY_MODE_STORAGE_KEY = "entityMatchDisplayMode";
 
 /**
  * Client page for browsing entities of a given type with filtering and deck helpers.
@@ -32,9 +33,21 @@ export default function EntityPage({params}: PagePropsLocal) {
   const [selectedEntity, setSelectedEntity] = useState("");
   const [likedOnly, setLikedOnly] = useState(false);
   const [deckOnly, setDeckOnly] = useState(false);
+  const [matchDisplayMode, setMatchDisplayMode] = useState<MatchDisplayMode>("fade-unmatched");
 
   const deck = useDeck();
   const likes = useLikes();
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(MATCH_DISPLAY_MODE_STORAGE_KEY);
+    if (stored === "fade-unmatched" || stored === "show-matches-only") {
+      setMatchDisplayMode(stored);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(MATCH_DISPLAY_MODE_STORAGE_KEY, matchDisplayMode);
+  }, [matchDisplayMode]);
 
   // normalize deck to a Set for fast lookup during renders
   const deckIds = useMemo(() => new Set(deck.items.map((item) => item.id)), [deck.items]);
@@ -87,6 +100,8 @@ export default function EntityPage({params}: PagePropsLocal) {
             onLikedChange={setLikedOnly}
             deckOnly={deckOnly}
             onDeckChange={setDeckOnly}
+            matchDisplayMode={matchDisplayMode}
+            onMatchDisplayModeChange={setMatchDisplayMode}
           />
 
           <div className="scroll-hints">
@@ -125,34 +140,36 @@ export default function EntityPage({params}: PagePropsLocal) {
 
       {!loading && !error && (
         <section className="sections body-wrapper">
-          {sections.map(({category, list, filtered}) => (
-            <div className="section" key={category}>
-              <div className="section-header">
-                <h2 className={"section-heading " + (filtered.length === 0 ? "is-faded" : "")}>{category}</h2>
-                <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
+          {sections
+            .filter(({filtered}) => matchDisplayMode !== "show-matches-only" || filtered.length > 0)
+            .map(({category, list, filtered}) => (
+              <div className="section" key={category}>
+                <div className="section-header">
+                  <h2 className={"section-heading " + (filtered.length === 0 ? "is-faded" : "")}>{category}</h2>
+                  <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
+                </div>
+                <div className="card-list">
+                  {getVisibleItems(list, filtered, matchDisplayMode).map((item, idx) => {
+                    const matched = filtered.includes(item);
+                    const inDeck = deckIds.has(`${type}:${item.name}`);
+                    return (
+                      <EntityCard
+                        key={`${type}-${item.name}-${idx}`}
+                        item={item}
+                        type={type}
+                        highlight={inDeck}
+                        deck={deck}
+                        likes={likes}
+                        limits={DEFAULT_LIMITS}
+                        fade={matchDisplayMode === "fade-unmatched" && !matched}
+                        inDeck={inDeck}
+                        onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
+                      />
+                    );
+                  })}
+                </div>
               </div>
-              <div className="card-list">
-                {list.map((item, idx) => {
-                  const matched = filtered.includes(item);
-                  const inDeck = deckIds.has(`${type}:${item.name}`);
-                  return (
-                    <EntityCard
-                      key={`${type}-${item.name}-${idx}`}
-                      item={item}
-                      type={type}
-                      highlight={inDeck}
-                      deck={deck}
-                      likes={likes}
-                      limits={DEFAULT_LIMITS}
-                      fade={!matched}
-                      inDeck={inDeck}
-                      onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+            ))}
         </section>
       )}
     </div>

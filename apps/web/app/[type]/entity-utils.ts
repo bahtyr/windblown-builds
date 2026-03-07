@@ -1,6 +1,8 @@
 import {DeckLimits} from "../../components/deck/DeckContext";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
+export type MatchDisplayMode = "fade-unmatched" | "show-matches-only";
+
 export const VALID_TYPES: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
 
 export const DEFAULT_LIMITS: DeckLimits = {
@@ -59,4 +61,20 @@ export function entityIds(item: ScrapedEntity): string[] {
     if (norm) ids.push(norm);
   }
   return ids;
+}
+
+/**
+ * Resolve which items should be rendered for the current match display mode.
+ *
+ * @param {ScrapedEntity[]} allItems - Full section list.
+ * @param {ScrapedEntity[]} matchedItems - Filtered matches for that section.
+ * @param {MatchDisplayMode} mode - Rendering mode for unmatched entries.
+ * @returns {ScrapedEntity[]} Items that should be rendered in the section.
+ */
+export function getVisibleItems(
+  allItems: ScrapedEntity[],
+  matchedItems: ScrapedEntity[],
+  mode: MatchDisplayMode,
+): ScrapedEntity[] {
+  return mode === "show-matches-only" ? matchedItems : allItems;
 }
