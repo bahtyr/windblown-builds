@@ -151,7 +151,7 @@ export default function EntityPage({params}: PagePropsLocal) {
         </div>
       </div>
 
-      {loading && <div className="status">Loading...</div>}
+      {loading && <div className="status"></div>}
       {error && <div className="status error">{error}</div>}
 
       {!loading && !error && (
