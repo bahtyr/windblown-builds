@@ -14,8 +14,10 @@ export default function RootLayout({children}: { children: ReactNode }) {
     <DeckProvider>
       <LikeProvider>
         <NavBar/>
-        <DeckPanel/>
-        <main>{children}</main>
+        <div className="app-shell">
+          <main className="app-main">{children}</main>
+          <DeckPanel/>
+        </div>
       </LikeProvider>
     </DeckProvider>
     </body>

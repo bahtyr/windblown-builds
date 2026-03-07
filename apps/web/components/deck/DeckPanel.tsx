@@ -37,7 +37,7 @@ export default function DeckPanel() {
   };
 
   return (
-    <div className={`deck-drawer ${open ? "open" : "collapsed"}`}>
+    <aside className={`deck-drawer ${open ? "open" : "collapsed"}`}>
       <div className="deck-toggle-row">
         <button className={`deck-toggle ${open ? "active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
           {open ? "Hide deck builder" : "Deck builder"}
@@ -45,7 +45,7 @@ export default function DeckPanel() {
         </button>
       </div>
       {open && (
-        <div className="body-wrapper deck-shell">
+        <div className="deck-shell">
           <div className="deck" id="deck">
             <div className="deck-panel" id="deckPanel">
               <div className="deck-side deck-entities-list">
@@ -56,7 +56,7 @@ export default function DeckPanel() {
                       {d.name}
                     </button>
                     <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
-                      Ã— 
+                      x
                     </button>
                   </div>
                 ))}
@@ -113,7 +113,7 @@ export default function DeckPanel() {
           </div>
         </div>
       )}
-    </div>
+    </aside>
   );
 }
 
@@ -153,7 +153,7 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
       {item.image && <img src={item.image} alt="" className="deck-chip-img"/>}
       <div className="deck-chip-name">{item.name}</div>
       <button className="deck-chip-remove" onClick={onRemove} aria-label="Remove">
-        Ã— 
+        x
       </button>
     </div>
   );
