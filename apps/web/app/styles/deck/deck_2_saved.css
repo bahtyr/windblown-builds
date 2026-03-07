@@ -37,7 +37,7 @@
     opacity: 1;
 }
 
-/* ---------- Saved deck class ---------- */
+/* ---------- Helpers ---------- */
 
 .link {
     padding: 0;
@@ -47,8 +47,6 @@
     cursor: pointer;
     text-align: left;
 }
-
-/* ---------- btn ---------- */
 
 .icon-btn.small {
     width: 24px;
