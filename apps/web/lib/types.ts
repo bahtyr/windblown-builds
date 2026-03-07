@@ -1,4 +1,4 @@
-export type EntityType = "gifts" | "boosts" | "hexes" | "magifishes" | "trinkets" | "weapons" | "effects";
+export type EntityType = "gifts" | "weapons" | "trinkets" | "magifishes" | "hexes" | "boosts" | "effects";
 
 export interface RichTextBaseNode {
   key: "text" | "entity";

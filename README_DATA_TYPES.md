@@ -7,7 +7,7 @@ Source: `apps/web/lib/types.ts`
 
 ### `EntityType`
 ```ts
-"gifts" | "boosts" | "hexes" | "magifishes" | "trinkets" | "weapons" | "effects"
+"gifts" | "weapons" | "trinkets" | "magifishes" | "hexes" | "boosts" | "effects"
 ```
 
 ### `RichTextBaseNode`
@@ -330,4 +330,3 @@ Sources:
   scrape: () => Promise<T[]>;
 }
 ```
-

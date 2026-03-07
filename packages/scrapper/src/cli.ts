@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import {writeFile} from "fs/promises";
 import {scrapeGifts} from "./pages/gifts.js";
-import {scrapeBoosts} from "./pages/boosts.js";
-import {scrapeHexes} from "./pages/hexes.js";
-import {scrapeMagifishes} from "./pages/magifishes.js";
-import {scrapeTrinkets} from "./pages/trinkets.js";
 import {scrapeWeapons} from "./pages/weapons.js";
+import {scrapeTrinkets} from "./pages/trinkets.js";
+import {scrapeMagifishes} from "./pages/magifishes.js";
+import {scrapeHexes} from "./pages/hexes.js";
 import {scrapeEffects} from "./pages/effects.js";
+import {scrapeBoosts} from "./pages/boosts.js";
 
 const OUTPUT_DIR = "../../apps/web/public";
 
@@ -19,11 +19,11 @@ async function main(): Promise<void> {
   try {
     const tasks: ScrapeTask<unknown>[] = [
       {name: "gifts", scrape: scrapeGifts},
-      {name: "boosts", scrape: scrapeBoosts},
-      {name: "hexes", scrape: scrapeHexes},
-      {name: "magifishes", scrape: scrapeMagifishes},
-      {name: "trinkets", scrape: scrapeTrinkets},
       {name: "weapons", scrape: scrapeWeapons},
+      {name: "trinkets", scrape: scrapeTrinkets},
+      {name: "magifishes", scrape: scrapeMagifishes},
+      {name: "hexes", scrape: scrapeHexes},
+      {name: "boosts", scrape: scrapeBoosts},
       {name: "effects", scrape: scrapeEffects},
     ];
 

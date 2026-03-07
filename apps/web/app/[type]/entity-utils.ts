@@ -3,7 +3,7 @@ import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type MatchDisplayMode = "fade-unmatched" | "show-matches-only";
 
-export const VALID_TYPES: (EntityType | "all")[] = ["all", "gifts", "weapons", "trinkets", "hexes", "magifishes", "effects"];
+export const VALID_TYPES: (EntityType | "all")[] = ["all", "gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts", "effects"];
 
 export const DEFAULT_LIMITS: DeckLimits = {
   gifts: 20,

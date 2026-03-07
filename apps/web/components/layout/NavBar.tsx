@@ -9,8 +9,9 @@ const tabs: { type: EntityType | "all"; label: string }[] = [
   {type: "gifts", label: "Gifts"},
   {type: "weapons", label: "Weapons"},
   {type: "trinkets", label: "Trinkets"},
-  {type: "hexes", label: "Hexes"},
   {type: "magifishes", label: "Magifish"},
+  {type: "hexes", label: "Hexes"},
+  {type: "boosts", label: "Boosts"},
   {type: "effects", label: "Effects"},
 ] as const;
 

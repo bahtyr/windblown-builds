@@ -266,14 +266,14 @@ function parseDeckParam(raw: string): DeckItem[] {
   for (const part of parts) {
     const [type, nameEncoded] = part.split("|");
     if (!type || !nameEncoded) continue;
-    if (!["gifts", "hexes", "magifishes", "trinkets", "weapons", "boosts"].includes(type)) continue;
+    if (!["gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts"].includes(type)) continue;
     const name = decodeURIComponent(nameEncoded);
     items.push({type: type as EntityType, name, id: deckId(type as EntityType, name)});
   }
   return items;
 }
 
-const TYPE_ORDER: EntityType[] = ["gifts", "weapons", "trinkets", "hexes", "magifishes", "boosts", "effects"];
+const TYPE_ORDER: EntityType[] = ["gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts", "effects"];
 
 function insertByType(list: DeckItem[], item: DeckItem): DeckItem[] {
   const order = TYPE_ORDER.indexOf(item.type);

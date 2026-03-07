@@ -2,11 +2,11 @@ import {EntityType, ScrapedEntity} from "./types";
 
 const FILES: Record<EntityType, string> = {
   gifts: "/gifts.json",
-  boosts: "/boosts.json",
-  hexes: "/hexes.json",
-  magifishes: "/magifishes.json",
-  trinkets: "/trinkets.json",
   weapons: "/weapons.json",
+  trinkets: "/trinkets.json",
+  magifishes: "/magifishes.json",
+  hexes: "/hexes.json",
+  boosts: "/boosts.json",
   effects: "/effects.json",
 };
 
