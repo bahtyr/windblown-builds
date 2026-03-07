@@ -35,8 +35,8 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
 
   return (
     <article
-      className={`card ${highlight || presentInDeck ? "highlight" : ""} ${presentInDeck ? "in-deck" : ""} ${
-        fade ? "faded" : ""
+      className={`card ${highlight || presentInDeck ? "is-highlighted" : ""} ${presentInDeck ? "is-in-deck" : ""} ${
+        fade ? "is-faded" : ""
       }`}
     >
       <div className="card-head">
@@ -48,7 +48,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
         </div>
         <div className="card-icons">
           <button
-            className={`icon-btn like ${liked ? "liked" : ""}`}
+            className={`icon-btn like ${liked ? "is-liked" : ""}`}
             aria-label={liked ? "Unheart" : "Heart"}
             onClick={(e) => {
               e.stopPropagation();

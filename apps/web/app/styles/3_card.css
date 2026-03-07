@@ -43,7 +43,7 @@
     pointer-events: none;
 }
 
-.card:has( .liked)::before {
+.card:has( .is-liked)::before {
     /*background: radial-gradient(*/
     /*        120% 120% at 50% 0%,*/
     /*        rgba(255,111,168,0.14),*/
@@ -53,13 +53,13 @@
     /*transition: opacity 0.25s ease;*/
 }
 
-.card:has( .liked) {
+.card:has( .is-liked) {
     --color-like-rgb: 255, 111, 168;
     border-color: rgba(var(--color-like-rgb), 0.35);
     /*border-style: double;*/
 }
 
-.card:has( .liked):hover {
+.card:has( .is-liked):hover {
     --color-like-rgb: 255, 111, 168;
     border-color: rgba(var(--color-like-rgb), 0.45);
 }
@@ -73,22 +73,22 @@
     opacity: 1;
 }
 
-.card.highlight {
+.card.is-highlighted {
     /*extra???*/
     /*box-shadow: 0 0 0 2px var(--accent);*/
 }
 
-.card.in-deck {
+.card.is-in-deck {
     box-shadow: 0 0 0 1px var(--color-text-link);
     /*border-width: 2px;*/
 }
 
-.card.in-deck:has( .liked) {
+.card.is-in-deck:has( .is-liked) {
     --color-like-rgb: 255, 111, 168;
     box-shadow: 0 0 0 1px rgba(var(--color-like-rgb), 0.70);
 }
 
-.faded {
+.is-faded {
     opacity: var(--fade);
 }
 
@@ -144,7 +144,7 @@
 }
 
 .card:hover .icon-btn,
-.card.in-deck .icon-btn {
+.card.is-in-deck .icon-btn {
     visibility: visible;
 }
 
@@ -152,6 +152,6 @@
     background: var(--color-surface-hover);
 }
 
-.icon-btn.like.liked {
+.icon-btn.like.is-liked {
     color: var(--like);
 }

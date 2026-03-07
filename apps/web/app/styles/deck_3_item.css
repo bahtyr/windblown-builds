@@ -15,11 +15,11 @@
 
 /* Effects */
 
-.deck-item.highlight {
+.deck-item.is-highlighted {
     box-shadow: 0 0 0 2px var(--accent);
 }
 
-.deck-item.dragging {
+.deck-item.is-dragging {
     cursor: grabbing;
     opacity: .7;
     box-shadow: 0 0 0 2px var(--accent-soft);

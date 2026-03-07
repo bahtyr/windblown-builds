@@ -46,7 +46,7 @@
     transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
-.deck-toggle.active {
+.deck-toggle.is-active {
     border-color: var(--accent);
     background: var(--surface-active);
 }

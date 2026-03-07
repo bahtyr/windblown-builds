@@ -25,7 +25,7 @@ export default function NavBar() {
             return (
               <Link
                 key={tab.type}
-                className={`tab ${active ? "active" : ""}`}
+                className={`tab ${active ? "is-active" : ""}`}
                 href={`/${tab.type}`}>
                 {tab.label}
               </Link>

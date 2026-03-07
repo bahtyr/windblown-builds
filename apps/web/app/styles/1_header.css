@@ -37,6 +37,6 @@ header, .header {
     text-decoration: none;
 }
 
-.tab.active {
+.tab.is-active {
     color: var(--text);
 }

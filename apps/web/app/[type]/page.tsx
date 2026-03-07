@@ -128,7 +128,7 @@ export default function EntityPage({params}: PagePropsLocal) {
           {sections.map(({category, list, filtered}) => (
             <div className="section" key={category}>
               <div className="section-header">
-                <h2 className={"section-heading " + (filtered.length === 0 ? "faded" : "")}>{category}</h2>
+                <h2 className={"section-heading " + (filtered.length === 0 ? "is-faded" : "")}>{category}</h2>
                 <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
               </div>
               <div className="card-list">
@@ -205,7 +205,7 @@ function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
   // snapshot DOM cards that remain visible (not faded) to drive counts and scroll
   const collectMatches = useCallback(
     () =>
-      Array.from(document.querySelectorAll<HTMLElement>(".card:not(.faded)")).map((el) => ({
+      Array.from(document.querySelectorAll<HTMLElement>(".card:not(.is-faded)")).map((el) => ({
         el,
         rect: el.getBoundingClientRect(),
       })),

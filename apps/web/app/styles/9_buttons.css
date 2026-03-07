@@ -41,7 +41,7 @@ input::placeholder {
     transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
-.pill-toggle.active {
+.pill-toggle.is-active {
     border-color: var(--accent);
     background: var(--color-surface-selected);
     color: var(--color-text-strong);

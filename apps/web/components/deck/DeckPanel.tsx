@@ -37,9 +37,9 @@ export default function DeckPanel() {
   };
 
   return (
-    <aside className={`deck-drawer ${open ? "open" : "collapsed"}`}>
+    <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
       <div className="deck-toggle-row">
-        <button className={`deck-toggle ${open ? "active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
+        <button className={`deck-toggle ${open ? "is-active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
           {open ? "Hide deck builder" : "Deck builder"}
           {total > 0 && <span className="badge">{total}</span>}
         </button>
@@ -51,7 +51,7 @@ export default function DeckPanel() {
               <div className="deck-saved">
                 <div className="deck-saved-list">Deck</div>
                 {deck.saved.map((d) => (
-                  <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "active" : ""}`}>
+                  <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "is-active" : ""}`}>
                     <button className="link" onClick={() => deck.loadDeck(d.name)}>
                       {d.name}
                     </button>
@@ -129,7 +129,7 @@ type DragProps = {
 function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragProps) {
   return (
     <div
-      className={`deck-item ${highlight ? "highlight" : ""}`}
+      className={`deck-item ${highlight ? "is-highlighted" : ""}`}
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData("text/plain", `${index}`);

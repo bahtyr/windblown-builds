@@ -71,6 +71,6 @@
     color: var(--muted);
 }
 
-.deck-drawer.collapsed .deck-panel {
+.deck-drawer.is-collapsed .deck-panel {
     display: none;
 }

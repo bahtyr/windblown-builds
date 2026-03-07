@@ -44,7 +44,7 @@ export default function Filters({
       </button>
       <button
         type="button"
-        className={`pill-toggle ${likedOnly ? "active" : ""}`}
+        className={`pill-toggle ${likedOnly ? "is-active" : ""}`}
         onClick={() => onLikedChange(!likedOnly)}
         aria-pressed={likedOnly}
       >
@@ -52,7 +52,7 @@ export default function Filters({
       </button>
       <button
         type="button"
-        className={`pill-toggle ${deckOnly ? "active" : ""}`}
+        className={`pill-toggle ${deckOnly ? "is-active" : ""}`}
         onClick={() => onDeckChange(!deckOnly)}
         aria-pressed={deckOnly}
       >

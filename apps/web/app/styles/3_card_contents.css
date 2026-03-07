@@ -70,7 +70,7 @@
     transition: opacity var(--transition-fast);
 }
 
-.like.liked {
+.like.is-liked {
     color: var(--like);
     opacity: 1;
     visibility: visible;

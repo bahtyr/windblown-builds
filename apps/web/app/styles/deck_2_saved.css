@@ -29,7 +29,7 @@
 
 /* effects */
 
-.deck-saved-item.active .link {
+.deck-saved-item.is-active .link {
     color: var(--accent);
 }
 
