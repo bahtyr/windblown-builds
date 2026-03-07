@@ -3,8 +3,8 @@ header, .header {
     top: 0;
     z-index: var(--z-header);
     background: var(--color-overlay-header);
-    /*border-bottom: 1px solid var(--border);*/
-    /*box-shadow: var(--shadow-sm);*/
+    background: hsla(214, 45%, 7%, 0.94);
+    border: 1px solid var(--border);
     /*padding done through body-wrapper*/
 }
 
@@ -32,6 +32,7 @@ header, .header {
 }
 
 .tab {
+    font-size: var(--font-size-md);
     padding: var(--space-4) var(--space-6);
     color: var(--muted);
     text-decoration: none;

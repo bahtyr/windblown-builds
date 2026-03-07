@@ -5,11 +5,9 @@
     top: var(--filters-offset);
     z-index: var(--z-filters);
     /*padding-top: 8px;*/
-    border: 1px solid var(--border);
-    /*border-radius: var(--radius-xl);*/
-    background: var(--color-overlay-header);
-    /*background: var(--color-surface-muted);*/
-    /*box-shadow: var(--shadow);*/
+    /*border: 1px solid var(--border);*/
+    /*background: var(--color-overlay-header);*/
+    /*margin-top: var(--space-6);*/
 }
 
 .filters-body {
@@ -17,7 +15,11 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-5);
-    padding: var(--space-6) var(--space-7);
+    padding: var(--space-6) var(--space-10);
+
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    background: var(--color-overlay-header);
 }
 
 .filters-body label {

@@ -95,9 +95,11 @@
     --breakpoint-lg: 1024px;
     --breakpoint-xl: 1280px;
 
-    --max-width: 2400px;
+    --max-width: 2000px;
     --header-height: 64px;
-    --filters-offset: var(--header-height);
+    /*--filters-offset: var(--header-height);*/
+    --filters-offset: calc(var(--header-height) + var(--space-6));
+    /*--filters-offset: 0;*/
     --fade: .3;
 
     --bg: var(--color-bg);

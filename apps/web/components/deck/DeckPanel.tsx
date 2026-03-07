@@ -69,7 +69,7 @@ export default function DeckPanel({open}: Props) {
                 Delete
               </button>
               <button className="btn ghost deck-share-button" id="copyDeckLink" type="button" onClick={handleCopy}>
-                Copy share link
+                🔗 Copy share link
               </button>
               {/* update the share button color/text when {status} - only briefly then reset */}
             </div>

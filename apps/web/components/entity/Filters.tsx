@@ -53,7 +53,7 @@ export default function Filters({
         onClick={() => onLikedChange(!likedOnly)}
         aria-pressed={likedOnly}
       >
-        Liked only
+        ❤️ Liked
       </button>
       <button
         type="button"
@@ -61,7 +61,7 @@ export default function Filters({
         onClick={() => onDeckChange(!deckOnly)}
         aria-pressed={deckOnly}
       >
-        In deck only
+        🧩 In deck
       </button>
       <select id="entitySelect" value={selectedEntity} onChange={(e) => onEntityChange(e.target.value)}>
         <option value="">Entities</option>
