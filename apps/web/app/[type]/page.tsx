@@ -79,10 +79,9 @@ export default function EntityPage({params}: PagePropsLocal) {
     () =>
       groupByCategory(items, (item) => {
         const fallback = capitalize(item.entityType);
-        const category = item.category?.trim() ?? fallback;
-        return type === "all" ? `${category} (${item.entityType})` : category;
+        return item.category?.trim() ?? fallback;
       }),
-    [items, type],
+    [items],
   );
   const sections = useMemo(
     () =>
