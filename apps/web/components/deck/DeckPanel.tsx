@@ -38,77 +38,73 @@ export default function DeckPanel() {
 
   return (
     <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
-      <div className="deck-toggle-row">
+      <div className="deck-toggle-container">
         <button className={`deck-toggle ${open ? "is-active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
           {open ? "Hide deck builder" : "Deck builder"}
           {total > 0 && <span className="badge">{total}</span>}
         </button>
       </div>
       {open && (
-        <div className="deck-shell">
-          <div className="deck" id="deck">
-            <div className="deck-panel" id="deckPanel">
-              <div className="deck-saved">
-                <div className="deck-saved-list">Deck</div>
-                {deck.saved.map((d) => (
-                  <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "is-active" : ""}`}>
-                    <button className="link" onClick={() => deck.loadDeck(d.name)}>
-                      {d.name}
-                    </button>
-                    <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
-                      x
-                    </button>
-                  </div>
-                ))}
+        <div className="deck">
+          <div className="deck-saved">
+            <div className="deck-saved-list">Deck</div>
+            {deck.saved.map((d) => (
+              <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "is-active" : ""}`}>
+                <button className="link" onClick={() => deck.loadDeck(d.name)}>
+                  {d.name}
+                </button>
+                <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
+                  x
+                </button>
               </div>
-              <div className="deck-main">
-                <div className="deck-actions">
-                  <input
-                    className="deck-name-input"
-                    value={deck.name}
-                    onChange={(e) => deck.setName(e.target.value)}
-                    placeholder="Deck name"
-                  />
-                  <button className="btn" type="button" onClick={() => deck.createDeck()}>
-                    New deck
-                  </button>
-                  <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
-                    Reset deck
-                  </button>
-                  <button className="btn" id="copyDeckLink" type="button" onClick={handleCopy}>
-                    Copy share link
-                  </button>
-                  <div className="deck-status" id="deckStatus">
-                    {status}
-                  </div>
-                </div>
-                <div className="deck-content" id="deckSlots">
-                  {rows(deck.items).map((groups, rowIdx) => (
-                    <div className="deck-groups" key={rowIdx}>
-                      {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
-                        list.length > 0 && (
-                          <div className="deck-group" key={type}>
-                            <div className="deck-items">
-                              {list.map((item, idx) => (
-                                <DeckDraggable
-                                  key={item.id}
-                                  item={item}
-                                  index={idx}
-                                  type={type}
-                                  onDrop={(from, to) => deck.moveWithinType(type, from, to)}
-                                  onRemove={() => deck.remove(item.id)}
-                                  highlight={type === "gifts" && idx < 8}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        )
-                      ))}
-                    </div>
+            ))}
+          </div>
+          <div className="deck-manager">
+            <div className="deck-actions">
+              <input
+                className="deck-name-input"
+                value={deck.name}
+                onChange={(e) => deck.setName(e.target.value)}
+                placeholder="Deck name"
+              />
+              <button className="btn" type="button" onClick={() => deck.createDeck()}>
+                New deck
+              </button>
+              <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
+                Reset deck
+              </button>
+              <button className="btn" id="copyDeckLink" type="button" onClick={handleCopy}>
+                Copy share link
+              </button>
+              <div className="deck-status" id="deckStatus">
+                {status}
+              </div>
+            </div>
+            <div className="deck-content">
+              {rows(deck.items).map((groups, rowIdx) => (
+                <div className="deck-groups" key={rowIdx}>
+                  {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
+                    list.length > 0 && (
+                      <div className="deck-group" key={type}>
+                        <div className="deck-items">
+                          {list.map((item, idx) => (
+                            <DeckDraggable
+                              key={item.id}
+                              item={item}
+                              index={idx}
+                              type={type}
+                              onDrop={(from, to) => deck.moveWithinType(type, from, to)}
+                              onRemove={() => deck.remove(item.id)}
+                              highlight={type === "gifts" && idx < 8}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )
                   ))}
-                  {deck.items.length === 0 && <div className="muted">No items yet</div>}
                 </div>
-              </div>
+              ))}
+              {deck.items.length === 0 && <div className="muted">No items yet</div>}
             </div>
           </div>
         </div>
