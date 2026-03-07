@@ -30,4 +30,10 @@ export interface ScrapedEntity {
   description: string;
   richDescription: RichDescriptionNode[];
   category?: string;
+  baseDamage?: string;
+  damageType?: string;
+  cooldown?: string;
+  alterattackBonus?: string;
+  unlockCost?: string;
+  unlockRequirement?: string;
 }

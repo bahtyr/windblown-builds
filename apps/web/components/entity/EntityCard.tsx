@@ -18,9 +18,15 @@ type Props = {
   onEntityFilter?: (id: string) => void;
 };
 
+type StatRow = {
+  label: string;
+  value: string;
+};
+
 export default function EntityCard({item, type, highlight, deck, likes, limits, fade, inDeck, onEntityFilter}: Props) {
   const presentInDeck = inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`);
   const liked = likes.ids.has(`${type}:${item.name}`);
+  const stats = getEntityStats(item, type);
 
   const handleAdd = () => {
     const res = deck.add(makeDeckItem(type, item), limits);
@@ -83,10 +89,44 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
           )}
         </div>
       </div>
+      {stats.length > 0 && (
+        <div className="card-stats">
+          {stats.map((stat) => (
+            <div className="card-stat" key={stat.label}>
+              <span className="card-stat-value">{stat.value}</span>
+              <span className="card-stat-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
       <RichText
         parts={item.richDescription}
         onEntityFilter={onEntityFilter}
       />
     </article>
   );
+}
+
+function getEntityStats(item: ScrapedEntity, type: EntityType): StatRow[] {
+  if (type === "weapons") {
+    return [
+      asStat("DMG", item.baseDamage),
+      asStat("Alter Attack DMG", item.alterattackBonus),
+    ].filter((stat): stat is StatRow => stat !== null);
+  }
+
+  if (type === "trinkets") {
+    return [
+      asStat("DMG", item.baseDamage),
+      asStat("Cooldown", item.cooldown),
+    ].filter((stat): stat is StatRow => stat !== null);
+  }
+
+  return [];
+}
+
+function asStat(label: string, value: string | undefined): StatRow | null {
+  const clean = value?.trim();
+  if (!clean) return null;
+  return {label, value: clean};
 }
