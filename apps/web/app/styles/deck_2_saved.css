@@ -1,19 +1,19 @@
-/* ---------- Deck title ---------- */
+/* ---------- Saved decks ---------- */
 
-.deck-saved-list {
-    margin-bottom: var(--space-3);
-    font-weight: var(--font-weight-semibold);
-}
-
-/* ---------- Deck saved decks list ---------- */
-
-.deck-entities-list {
+.deck-saved {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
     max-height: 240px;
     overflow: auto;
 }
+
+.deck-saved-list {
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Saved decks names ---------- */
 
 .deck-saved-item {
     display: flex;
@@ -26,6 +26,8 @@
 .deck-saved-item .link {
     color: var(--text);
 }
+
+/* effects */
 
 .deck-saved-item.active .link {
     color: var(--accent);

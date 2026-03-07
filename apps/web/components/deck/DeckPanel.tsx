@@ -48,7 +48,7 @@ export default function DeckPanel() {
         <div className="deck-shell">
           <div className="deck" id="deck">
             <div className="deck-panel" id="deckPanel">
-              <div className="deck-entities-list">
+              <div className="deck-saved">
                 <div className="deck-saved-list">Deck</div>
                 {deck.saved.map((d) => (
                   <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "active" : ""}`}>
@@ -64,7 +64,7 @@ export default function DeckPanel() {
               <div className="deck-main">
                 <div className="deck-actions">
                   <input
-                    className="deck-name"
+                    className="deck-name-input"
                     value={deck.name}
                     onChange={(e) => deck.setName(e.target.value)}
                     placeholder="Deck name"
@@ -82,7 +82,7 @@ export default function DeckPanel() {
                     {status}
                   </div>
                 </div>
-                <div className="deck-slots" id="deckSlots">
+                <div className="deck-content" id="deckSlots">
                   {rows(deck.items).map((groups, rowIdx) => (
                     <div className="deck-groups" key={rowIdx}>
                       {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (

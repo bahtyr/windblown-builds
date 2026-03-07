@@ -63,3 +63,14 @@
 .has-accent-ring {
     box-shadow: 0 0 0 2px var(--accent);
 }
+
+/* ------------------------- TEMP -------------------------- */
+/* ---------- Helpers ---------- */
+
+.deck-status {
+    color: var(--muted);
+}
+
+.deck-drawer.collapsed .deck-panel {
+    display: none;
+}

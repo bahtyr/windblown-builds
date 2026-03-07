@@ -8,9 +8,9 @@
 @import "styles/3_card.css";
 @import "styles/3_card_contents.css";
 @import "styles/deck_1.css";
-@import "styles/deck_2.css";
-@import "styles/deck_3.css";
-@import "styles/deck_item.css";
+@import "styles/deck_2_saved.css";
+@import "styles/deck_3_actions_content.css";
+@import "styles/deck_3_item.css";
 @import "styles/overrides.css";
 @import "styles/utilities.css";
 

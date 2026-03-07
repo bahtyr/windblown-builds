@@ -1,10 +1,10 @@
-/* ---------- Deck main content ---------- */
-
 .deck-main {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
 }
+
+/* ---------- Deck actions ---------- */
 
 .deck-actions {
     display: flex;
@@ -13,7 +13,7 @@
     gap: var(--space-4);
 }
 
-.deck-name {
+.deck-name-input {
     min-width: 160px;
     padding: var(--space-4);
     border: 1px solid var(--border);
@@ -22,7 +22,9 @@
     color: var(--text);
 }
 
-.deck-slots {
+/* ---------- Deck content ---------- */
+
+.deck-content {
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
@@ -38,11 +40,6 @@
     gap: var(--space-5);
 }
 
-/* ---------- Deck groups ---------- */
-.deck-status {
-    color: var(--muted);
-}
-
 .deck-group {
     display: inline-flex;
 }
@@ -52,8 +49,4 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-3);
-}
-
-.deck-drawer.collapsed .deck-panel {
-    display: none;
 }
