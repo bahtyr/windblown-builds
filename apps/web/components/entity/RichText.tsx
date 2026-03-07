@@ -9,7 +9,7 @@ type Props = {
 
 export default function RichText({parts, onEntityFilter}: Props) {
   return (
-    <div className="rich">
+    <div className="rich-description">
       {parts.map((p, i) => {
         if (p.key === "text") {
           return (
@@ -21,7 +21,7 @@ export default function RichText({parts, onEntityFilter}: Props) {
         return (
           <span
             key={i}
-            className="entity"
+            className="rich-description-entity"
             style={{fontWeight: p.bold ? "bold" : undefined, color: p.color}}
             title={p.href}
             onClick={(e) => {

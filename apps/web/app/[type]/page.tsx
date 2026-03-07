@@ -131,7 +131,7 @@ export default function EntityPage({params}: PagePropsLocal) {
                 <h2 className={"section-heading " + (filtered.length === 0 ? "faded" : "")}>{category}</h2>
                 <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
               </div>
-              <div className="cards">
+              <div className="card-list">
                 {list.map((item, idx) => {
                   const matched = filtered.includes(item);
                   const inDeck = deckIds.has(`${type}:${item.name}`);

@@ -6,17 +6,17 @@
     border-radius: var(--radius-sm);
 }
 
-.rich {
+.rich-description {
     gap: 0 var(--space-2);
     color: var(--muted);
 }
 
-.rich span[style*="color"] {
+.rich-description span[style*="color"] {
     opacity: 0.8; /* reduce very bright colors */
 }
 
 
-.entity {
+.rich-description-entity {
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
@@ -33,18 +33,18 @@
     top: -2px; /* is better than negative margin, this doesn't affect surrounding elements */
 }
 
-.entity, .entity span {
+.rich-description-entity, .rich-description-entity span {
     cursor: pointer;
 }
 
-.entity:hover {
+.rich-description-entity:hover {
     border-color: var(--color-accent-hover);
     /* there isn't much space in between lines, on click due to translateY it can be overlapped by another entity border*/
     /* this ensure the border highlight is always visible */
     z-index: 1;
 }
 
-.entity img {
+.rich-description-entity img {
     width: 12px;
     height: 12px;
     object-fit: contain;

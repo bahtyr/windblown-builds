@@ -3,11 +3,11 @@
 
 a:active,
 button:active:not([disabled]),
-.entity:active {
+.rich-description-entity:active {
     transform: translateY(1px);
 }
 
-.entity:hover {
+.rich-description-entity:hover {
     /*border-color: #3b82f6;*/
 }
 
