@@ -79,13 +79,13 @@
 }
 
 .card.is-in-deck {
-    box-shadow: 0 0 0 1px var(--color-text-link);
+    /*box-shadow: 0 0 0 1px var(--color-text-link);*/
     /*border-width: 2px;*/
 }
 
 .card.is-in-deck:has( .is-liked) {
-    --color-like-rgb: 255, 111, 168;
-    box-shadow: 0 0 0 1px rgba(var(--color-like-rgb), 0.70);
+    /*--color-like-rgb: 255, 111, 168;*/
+    /*box-shadow: 0 0 0 1px rgba(var(--color-like-rgb), 0.70);*/
 }
 
 .is-faded {
