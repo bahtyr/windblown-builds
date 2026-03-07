@@ -2,6 +2,15 @@ import {DeckLimits} from "../../components/deck/DeckContext";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type MatchDisplayMode = "fade-unmatched" | "show-matches-only";
+export type PersistedFilters = {
+  search: string;
+  selectedEntity: string;
+  likedOnly: boolean;
+  deckOnly: boolean;
+  matchDisplayMode: MatchDisplayMode;
+};
+
+export const FILTERS_STORAGE_KEY = "entityFilters.v1";
 
 export const VALID_TYPES: (EntityType | "all")[] = ["all", "gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts", "effects"];
 
@@ -76,4 +85,28 @@ export function getVisibleItems<T extends ScrapedEntity>(
   mode: MatchDisplayMode,
 ): T[] {
   return mode === "show-matches-only" ? matchedItems : allItems;
+}
+
+/**
+ * Parse persisted filter JSON while validating known keys and value types.
+ *
+ * @param {string | null} raw - Serialized persisted filter payload.
+ * @returns {Partial<PersistedFilters>} Valid filter fields found in storage.
+ */
+export function parsePersistedFilters(raw: string | null): Partial<PersistedFilters> {
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    const next: Partial<PersistedFilters> = {};
+    if (typeof parsed.search === "string") next.search = parsed.search;
+    if (typeof parsed.selectedEntity === "string") next.selectedEntity = parsed.selectedEntity;
+    if (typeof parsed.likedOnly === "boolean") next.likedOnly = parsed.likedOnly;
+    if (typeof parsed.deckOnly === "boolean") next.deckOnly = parsed.deckOnly;
+    if (parsed.matchDisplayMode === "fade-unmatched" || parsed.matchDisplayMode === "show-matches-only") {
+      next.matchDisplayMode = parsed.matchDisplayMode;
+    }
+    return next;
+  } catch {
+    return {};
+  }
 }

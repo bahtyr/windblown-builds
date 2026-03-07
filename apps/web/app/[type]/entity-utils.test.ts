@@ -1,6 +1,14 @@
 import {describe, expect, it} from "vitest";
 import {ScrapedEntity} from "../../lib/types";
-import {DEFAULT_LIMITS, entityIds, getVisibleItems, groupByCategory, resolveType, VALID_TYPES} from "./entity-utils";
+import {
+  DEFAULT_LIMITS,
+  entityIds,
+  getVisibleItems,
+  groupByCategory,
+  parsePersistedFilters,
+  resolveType,
+  VALID_TYPES,
+} from "./entity-utils";
 
 const baseEntity: ScrapedEntity = {
   image: "img",
@@ -106,5 +114,29 @@ describe("getVisibleItems", () => {
     const all = [{...baseEntity, name: "One"}, {...baseEntity, name: "Two"}];
     const matched = [all[1]];
     expect(getVisibleItems(all, matched, "show-matches-only")).toEqual(matched);
+  });
+});
+
+describe("parsePersistedFilters", () => {
+  it("returns valid persisted filter fields", () => {
+    const raw = JSON.stringify({
+      search: "alpha",
+      selectedEntity: "gifts:Echo",
+      likedOnly: true,
+      deckOnly: false,
+      matchDisplayMode: "show-matches-only",
+    });
+    expect(parsePersistedFilters(raw)).toEqual({
+      search: "alpha",
+      selectedEntity: "gifts:Echo",
+      likedOnly: true,
+      deckOnly: false,
+      matchDisplayMode: "show-matches-only",
+    });
+  });
+
+  it("ignores invalid payloads and unknown values", () => {
+    expect(parsePersistedFilters("{")).toEqual({});
+    expect(parsePersistedFilters(JSON.stringify({matchDisplayMode: "invalid", likedOnly: "true"}))).toEqual({});
   });
 });

@@ -10,9 +10,11 @@ import {EntityType, ScrapedEntity} from "../../lib/types";
 import {
   DEFAULT_LIMITS,
   entityIds,
+  FILTERS_STORAGE_KEY,
   getVisibleItems,
   groupByCategory,
   MatchDisplayMode,
+  parsePersistedFilters,
   resolveType,
 } from "./entity-utils";
 
@@ -42,20 +44,37 @@ export default function EntityPage({params}: PagePropsLocal) {
   const [likedOnly, setLikedOnly] = useState(false);
   const [deckOnly, setDeckOnly] = useState(false);
   const [matchDisplayMode, setMatchDisplayMode] = useState<MatchDisplayMode>("fade-unmatched");
+  const [filtersHydrated, setFiltersHydrated] = useState(false);
 
   const deck = useDeck();
   const likes = useLikes();
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(MATCH_DISPLAY_MODE_STORAGE_KEY);
-    if (stored === "fade-unmatched" || stored === "show-matches-only") {
-      setMatchDisplayMode(stored);
+    const persisted = parsePersistedFilters(window.localStorage.getItem(FILTERS_STORAGE_KEY));
+    if (persisted.search !== undefined) setSearch(persisted.search);
+    if (persisted.selectedEntity !== undefined) setSelectedEntity(persisted.selectedEntity);
+    if (persisted.likedOnly !== undefined) setLikedOnly(persisted.likedOnly);
+    if (persisted.deckOnly !== undefined) setDeckOnly(persisted.deckOnly);
+
+    if (persisted.matchDisplayMode !== undefined) {
+      setMatchDisplayMode(persisted.matchDisplayMode);
+    } else {
+      const legacy = window.localStorage.getItem(MATCH_DISPLAY_MODE_STORAGE_KEY);
+      if (legacy === "fade-unmatched" || legacy === "show-matches-only") {
+        setMatchDisplayMode(legacy);
+      }
     }
+    setFiltersHydrated(true);
   }, []);
 
   useEffect(() => {
+    if (!filtersHydrated) return;
+    window.localStorage.setItem(
+      FILTERS_STORAGE_KEY,
+      JSON.stringify({search, selectedEntity, likedOnly, deckOnly, matchDisplayMode}),
+    );
     window.localStorage.setItem(MATCH_DISPLAY_MODE_STORAGE_KEY, matchDisplayMode);
-  }, [matchDisplayMode]);
+  }, [deckOnly, filtersHydrated, likedOnly, matchDisplayMode, search, selectedEntity]);
 
   // normalize deck to a Set for fast lookup during renders
   const deckIds = useMemo(() => new Set(deck.items.map((item) => item.id)), [deck.items]);
