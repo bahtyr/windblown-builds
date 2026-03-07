@@ -19,7 +19,12 @@
       },
       {
         "key": "text",
-        "text": ".\n"
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -342,7 +347,12 @@
       },
       {
         "key": "text",
-        "text": " foes.\n"
+        "text": " foes."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -380,7 +390,25 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Perfect for fish!\nGood for adventure?\nThe "
+        "text": "Perfect for fish!"
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Good for adventure?"
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "The "
       },
       {
         "key": "text",
@@ -414,7 +442,12 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "So, are they biting?\n"
+        "text": "So, are they biting?"
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -577,7 +610,16 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "The weapon of a relentless and deadly Sentinel.\nThe last hit deals "
+        "text": "The weapon of a relentless and deadly Sentinel."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "The last hit deals "
       },
       {
         "key": "entity",
@@ -653,7 +695,12 @@
       },
       {
         "key": "text",
-        "text": ".\n"
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -691,7 +738,12 @@
       },
       {
         "key": "text",
-        "text": " (3%).\n"
+        "text": " (3%)."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -784,7 +836,12 @@
       },
       {
         "key": "text",
-        "text": " after the 3rd strike.\n"
+        "text": " after the 3rd strike."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -809,7 +866,16 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Fly me to the moon ♫\nFires mid-range lasers."
+        "text": "Fly me to the moon ♫"
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Fires mid-range lasers."
       }
     ],
     "baseDamage": "105",
@@ -873,7 +939,12 @@
       },
       {
         "key": "text",
-        "text": ".\n"
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",
@@ -1041,7 +1112,12 @@
       },
       {
         "key": "text",
-        "text": ".\n"
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",

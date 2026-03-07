@@ -15,6 +15,12 @@
     opacity: 0.8; /* reduce very bright colors */
 }
 
+.rich-description br {
+    /* Adds more space below the break */
+    display: block;
+    content: "";
+    margin-bottom: var(--font-size-3xs);
+}
 
 .rich-description-entity {
     display: inline-flex;

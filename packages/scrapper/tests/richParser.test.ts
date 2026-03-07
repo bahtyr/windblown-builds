@@ -108,7 +108,11 @@ describe("rich text parser", () => {
         "key": "text",
         "text": "stuns nearby enemies",
       },
-      // the source html has newline in between these
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true,
+      },
       {
         "key": "text",
         "text": "MY EYES!",

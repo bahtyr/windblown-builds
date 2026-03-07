@@ -5,6 +5,8 @@ import {
   getColor,
   hasBoldStyle,
   isBold,
+  isItalic,
+  isLineBreak,
   isTextNode,
   isTooltip,
   isTooltipText,
@@ -36,7 +38,7 @@ export function parseRichDescription(html: string): RichDescriptionNode[] {
 
   root("body")
     .contents()
-    .each((_, node) => parseNode(root, node, tokens, false, undefined));
+    .each((_, node) => parseNode(root, node, tokens, false, false, undefined));
 
   return mergeNeighborTextTokens(tokens);
 }
@@ -54,6 +56,7 @@ export function parseRichDescription(html: string): RichDescriptionNode[] {
  * @param node DOM node to parse.
  * @param tokens Accumulator array for parsed tokens.
  * @param boldContext Whether surrounding context should mark text as bold.
+ * @param italicContext Whether surrounding context should mark text as italic.
  * @param colorContext Whether surrounding context should color text.
  * @returns Nothing; results are appended to `tokens`.
  */
@@ -62,6 +65,7 @@ function parseNode(
   node: Node,
   tokens: RichDescriptionNode[],
   boldContext: boolean,
+  italicContext: boolean,
   colorContext: string | undefined,
 ): void {
   if (isTextNode(node)) {
@@ -71,6 +75,7 @@ function parseNode(
         key: "text",
         text,
         ...(boldContext ? {bold: true} : {}),
+        ...(italicContext ? {italic: true} : {}),
         ...(colorContext ? {color: colorContext} : {}),
       };
       tokens.push(token);
@@ -89,8 +94,15 @@ function parseNode(
   const style = wrapped.attr("style");
   const elementColor = getColor(style);
   const elementBold = hasBoldStyle(style);
+  const elementItalic = style?.toLowerCase().includes("font-style: italic") ?? false;
   const nextColorContext = elementColor ?? colorContext;
   const nextBoldContext = boldContext || elementBold || tag === "strong";
+  const nextItalicContext = italicContext || elementItalic || tag === "em";
+
+  if (isLineBreak(tag)) {
+    tokens.push({key: "text", text: "", newLine: true});
+    return;
+  }
 
   // Tooltip containers are parsed into a single entity token.
   if (isTooltip(tag, wrapped)) {
@@ -109,12 +121,17 @@ function parseNode(
   if (isBold(tag)) {
     // Bold wrappers may represent numeric values that should be emitted as text.
     if (!parseNumberMaybe(wrapped, tokens, nextColorContext)) {
-      wrapped.contents().each((_, child) => parseNode($, child, tokens, true, nextColorContext));
+      wrapped.contents().each((_, child) => parseNode($, child, tokens, true, italicContext, nextColorContext));
     }
     return;
   }
 
-  wrapped.contents().each((_, child) => parseNode($, child, tokens, nextBoldContext, nextColorContext));
+  if (isItalic(tag)) {
+    wrapped.contents().each((_, child) => parseNode($, child, tokens, boldContext, true, nextColorContext));
+    return;
+  }
+
+  wrapped.contents().each((_, child) => parseNode($, child, tokens, nextBoldContext, nextItalicContext, nextColorContext));
 }
 
 /**

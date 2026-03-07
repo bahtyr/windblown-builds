@@ -22,6 +22,14 @@ export function isBold(tagName: string): boolean {
   return tagName === "b";
 }
 
+export function isItalic(tagName: string): boolean {
+  return tagName === "i" || tagName === "em";
+}
+
+export function isLineBreak(tagName: string): boolean {
+  return tagName === "br";
+}
+
 // Token helpers
 
 export function normalizeWhitespace(raw: string): string {
@@ -105,7 +113,9 @@ export function mergeNeighborTextTokens(tokens: RichDescriptionNode[]): RichDesc
       previous &&
       previous.key === "text" &&
       token.key === "text" &&
+      (previous.newLine ?? false) === (token.newLine ?? false) &&
       (previous.bold ?? false) === (token.bold ?? false) &&
+      (previous.italic ?? false) === (token.italic ?? false) &&
       (previous.color ?? "") === (token.color ?? "")
     ) {
       previous.text += token.text;

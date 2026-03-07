@@ -360,7 +360,16 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Incapacitates a target for the duration (degressive).\nThe player that launched the effect can "
+        "text": "Incapacitates a target for the duration (degressive)."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "The player that launched the effect can "
       },
       {
         "key": "text",
@@ -534,7 +543,16 @@
     "richNotes": [
       {
         "key": "text",
-        "text": "Value is auto-scaled by 40%/Boss killed.\nA first 40% is given when playing in "
+        "text": "Value is auto-scaled by 40%/Boss killed."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "A first 40% is given when playing in "
       },
       {
         "key": "text",
@@ -744,7 +762,25 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Use one weapon until the  signal appears.\nThen, use your other to launch its Alterattack.\nBonus damage increases with the amount of hits landed."
+        "text": "Use one weapon until the  signal appears."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Then, use your other to launch its Alterattack."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Bonus damage increases with the amount of hits landed."
       }
     ],
     "advancedDescription": "",
@@ -832,7 +868,16 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence.\nDoing so will occasionally create "
+        "text": "Weaken a strong target until the  signal appears. Then, press [Crystallize keybind] to execute them and collect their vital essence."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Doing so will occasionally create "
       },
       {
         "key": "entity",

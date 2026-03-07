@@ -19,7 +19,16 @@
     "richDescription": [
       {
         "key": "text",
-        "text": "Swallows enemies in its path and explodes.\nHit it to strengthen the explosion."
+        "text": "Swallows enemies in its path and explodes."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Hit it to strengthen the explosion."
       }
     ],
     "unlockCost": "5",

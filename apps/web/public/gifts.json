@@ -195,7 +195,16 @@
       },
       {
         "key": "text",
-        "text": ".\nGain "
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Gain "
       },
       {
         "key": "text",
@@ -455,7 +464,16 @@
       },
       {
         "key": "text",
-        "text": ".\nGain a "
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Gain a "
       },
       {
         "key": "text",
@@ -606,7 +624,25 @@
       },
       {
         "key": "text",
-        "text": " for every 100  Shells you have.\nReduced to +2% after 200%.\n(Currently: x%)."
+        "text": " for every 100  Shells you have."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Reduced to +2% after 200%."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "(Currently: x%)."
       }
     ]
   },
@@ -2596,7 +2632,25 @@
       },
       {
         "key": "text",
-        "text": ".\nReduced to +1% after 200%.\n(Currently: x%)."
+        "text": "."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "Reduced to +1% after 200%."
+      },
+      {
+        "key": "text",
+        "text": "",
+        "newLine": true
+      },
+      {
+        "key": "text",
+        "text": "(Currently: x%)."
       }
     ]
   },

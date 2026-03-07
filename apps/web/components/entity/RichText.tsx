@@ -12,8 +12,18 @@ export default function RichText({parts, onEntityFilter}: Props) {
     <div className="rich-description">
       {parts.map((p, i) => {
         if (p.key === "text") {
+          if (p.newLine) {
+            return <br key={i}></br>;
+          }
           return (
-            <span key={i} style={{fontWeight: p.bold ? "bold" : undefined, color: p.color}}>
+            <span
+              key={i}
+              style={{
+                fontWeight: p.bold ? "bold" : undefined,
+                fontStyle: p.italic ? "italic" : undefined,
+                color: p.color,
+              }}
+            >
               {p.text}
             </span>
           );
@@ -22,7 +32,11 @@ export default function RichText({parts, onEntityFilter}: Props) {
           <span
             key={i}
             className="rich-description-entity"
-            style={{fontWeight: p.bold ? "bold" : undefined, color: p.color}}
+            style={{
+              fontWeight: p.bold ? "bold" : undefined,
+              fontStyle: p.italic ? "italic" : undefined,
+              color: p.color,
+            }}
             title={p.href}
             onClick={(e) => {
               e.stopPropagation();

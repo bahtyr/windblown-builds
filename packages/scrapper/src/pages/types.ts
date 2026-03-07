@@ -1,6 +1,8 @@
 export interface RichTextBaseNode {
   key: "text" | "entity";
+  newLine?: boolean;
   bold?: boolean;
+  italic?: boolean;
   color?: string;
 }
 

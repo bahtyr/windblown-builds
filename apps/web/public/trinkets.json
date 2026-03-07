@@ -261,7 +261,8 @@
       },
       {
         "key": "text",
-        "text": "\n"
+        "text": "",
+        "newLine": true
       },
       {
         "key": "text",

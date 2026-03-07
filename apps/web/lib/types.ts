@@ -2,7 +2,9 @@ export type EntityType = "gifts" | "boosts" | "hexes" | "magifishes" | "trinkets
 
 export interface RichTextBaseNode {
   key: "text" | "entity";
+  newLine?: boolean;
   bold?: boolean;
+  italic?: boolean;
   color?: string;
 }
 
