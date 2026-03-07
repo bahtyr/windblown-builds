@@ -47,14 +47,14 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
     >
       <div className="card-head">
         <div className="card-title-wrap">
-          {item.image && <img className="card-thumb" src={item.image} alt=""/>}
+          {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
           <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
             {item.name}
           </div>
         </div>
-        <div className="card-icons">
+        <div className="card-actions">
           <button
-            className={`icon-btn like ${liked ? "is-liked" : ""}`}
+            className={`card-action-btn like ${liked ? "is-liked" : ""}`}
             aria-label={liked ? "Unheart" : "Heart"}
             onClick={(e) => {
               e.stopPropagation();
@@ -65,7 +65,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
           </button>
           {type !== "effects" && !presentInDeck && (
             <button
-              className="icon-btn"
+              className="card-action-btn"
               aria-label="Add to deck"
               onClick={(e) => {
                 e.stopPropagation();
@@ -77,7 +77,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
           )}
           {type !== "effects" && presentInDeck && (
             <button
-              className="icon-btn"
+              className="card-action-btn"
               aria-label="Remove from deck"
               onClick={(e) => {
                 e.stopPropagation();

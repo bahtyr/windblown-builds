@@ -10,6 +10,10 @@
 
 /* ---------- Card shell ---------- */
 .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+
     position: relative;
     padding: var(--space-5);
     border: 1px solid var(--border);
@@ -98,7 +102,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    margin-bottom: var(--space-4);
+    /*margin-bottom: var(--space-4);*/
 }
 
 .card-title-wrap {
@@ -112,7 +116,7 @@
     font-weight: var(--font-weight-bold);
 }
 
-.card-thumb {
+.card-thumb-image {
     width: 36px;
     height: 36px;
     border-radius: var(--radius-md);
@@ -121,12 +125,14 @@
     /*border: 1px solid var(--border);*/
 }
 
-.card-icons {
+/* ---------- Card Actions ---------- */
+
+.card-actions {
     display: flex;
     gap: var(--space-3);
 }
 
-.icon-btn {
+.card-action-btn {
     display: grid;
     place-items: center;
     width: 32px;
@@ -139,19 +145,19 @@
     transition: background var(--transition-fast), color var(--transition-fast);
 }
 
-.card .icon-btn {
+.card .card-action-btn {
     visibility: hidden;
 }
 
-.card:hover .icon-btn,
-.card.is-in-deck .icon-btn {
+.card:hover .card-action-btn,
+.card.is-in-deck .card-action-btn {
     visibility: visible;
 }
 
-.icon-btn:hover {
+.card-action-btn:hover {
     background: var(--color-surface-hover);
 }
 
-.icon-btn.like.is-liked {
+.card-action-btn.like.is-liked {
     color: var(--like);
 }
