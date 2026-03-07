@@ -23,7 +23,7 @@
 
 .deck {
     width: min(44vw, 760px);
-    height: calc(100vh - var(--header-height) - var(--space-20));
+    height: calc(100vh - var(--header-height) - 100px);
     overflow: auto;
     /*display: grid;*/
     /*grid-template-columns: 220px minmax(0, 1fr);*/

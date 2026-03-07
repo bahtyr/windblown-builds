@@ -66,7 +66,7 @@ table {
 }
 
 /* allow click through */
-svg * {
+img, svg * {
     pointer-events: none;
 }
 

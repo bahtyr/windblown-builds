@@ -1,56 +1,38 @@
+.deck-new-button {
+    width: 100%;
+}
+
 /* ---------- Saved decks ---------- */
 
-.deck-saved {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    max-height: 240px;
-    overflow: auto;
-}
-
 .deck-saved-list {
-    margin-bottom: var(--space-3);
-    font-weight: var(--font-weight-semibold);
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    gap: var(--space-3);
+    max-height: 140px;
+    overflow: auto;
+    /*padding: var(--space-4);*/
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-6);
 }
 
-/* ---------- Saved decks names ---------- */
+/* --- Saved deck item--- */
 
 .deck-saved-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-3);
-    padding: var(--space-1) 0;
+    padding-right: var(--space-8);
+    padding-bottom: var(--space-3);
 }
 
-.deck-saved-item .link {
+.deck-saved-item {
     color: var(--text);
-}
-
-/* effects */
-
-.deck-saved-item.is-active .link {
-    color: var(--accent);
-}
-
-.deck-saved-item:hover .icon-btn.small {
-    opacity: 1;
-}
-
-/* ---------- Helpers ---------- */
-
-.link {
-    padding: 0;
     border: none;
     background: none;
-    color: var(--color-text-link);
     cursor: pointer;
     text-align: left;
 }
 
-.icon-btn.small {
-    width: 24px;
-    height: 24px;
-    opacity: 0;
-    transition: opacity var(--transition-fast);
+.deck-saved-item.is-active {
+    color: var(--accent);
 }

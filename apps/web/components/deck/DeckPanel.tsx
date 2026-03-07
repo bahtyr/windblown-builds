@@ -41,22 +41,19 @@ export default function DeckPanel() {
       <div className="deck-toggle-container">
         <button className={`deck-toggle ${open ? "is-active" : ""}`} type="button" onClick={() => setOpen((v) => !v)}>
           {open ? "Hide deck builder" : "Deck builder"}
-          {total > 0 && <span className="badge">{total}</span>}
         </button>
       </div>
       {open && (
         <div className="deck">
-          <div className="deck-saved">
-            <div className="deck-saved-list">Deck</div>
+          <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>Start a new deck
+          </button>
+          <div className="deck-saved-list">
             {deck.saved.map((d) => (
-              <div key={d.name} className={`deck-saved-item ${deck.selectedSaved === d.name ? "is-active" : ""}`}>
-                <button className="link" onClick={() => deck.loadDeck(d.name)}>
-                  {d.name}
-                </button>
-                <button className="icon-btn small" aria-label="Delete deck" onClick={() => deck.deleteDeck(d.name)}>
-                  x
-                </button>
-              </div>
+              <button key={d.name}
+                      className={`link deck-saved-item ${deck.selectedSaved === d.name ? "is-active" : ""}`}
+                      onClick={() => deck.loadDeck(d.name)}>
+                {d.name}
+              </button>
             ))}
           </div>
           <div className="deck-manager">
@@ -67,20 +64,19 @@ export default function DeckPanel() {
                 onChange={(e) => deck.setName(e.target.value)}
                 placeholder="Deck name"
               />
-              <button className="btn" type="button" onClick={() => deck.createDeck()}>
-                New deck
-              </button>
               <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
-                Reset deck
+                Reset
               </button>
-              <button className="btn" id="copyDeckLink" type="button" onClick={handleCopy}>
+              <button className="btn ghost" type="button" onClick={() => deck.deleteDeck(deck.name)}>
+                Delete
+              </button>
+              <button className="btn ghost deck-share-button" id="copyDeckLink" type="button" onClick={handleCopy}>
                 Copy share link
               </button>
-              <div className="deck-status" id="deckStatus">
-                {status}
-              </div>
+              {/* update the share button color/text when {status} - only briefly then reset */}
             </div>
             <div className="deck-content">
+              {deck.items.length === 0 && <div className="muted">No items yet</div>}
               {rows(deck.items).map((groups, rowIdx) => (
                 <div className="deck-groups" key={rowIdx}>
                   {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
@@ -104,7 +100,6 @@ export default function DeckPanel() {
                   ))}
                 </div>
               ))}
-              {deck.items.length === 0 && <div className="muted">No items yet</div>}
             </div>
           </div>
         </div>

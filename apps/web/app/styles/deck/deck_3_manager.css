@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
 }
 
 /* ---------- Deck actions ---------- */
@@ -22,6 +25,10 @@
     color: var(--text);
 }
 
+.deck-share-button {
+    flex: 1;
+}
+
 /* ---------- Deck content ---------- */
 
 .deck-content {
@@ -29,9 +36,6 @@
     flex-direction: column;
     gap: var(--space-5);
     padding: var(--space-4);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius-xl);
-
 }
 
 .deck-groups {
