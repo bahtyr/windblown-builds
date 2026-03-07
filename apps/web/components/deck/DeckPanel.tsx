@@ -129,7 +129,7 @@ type DragProps = {
 function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragProps) {
   return (
     <div
-      className={`deck-chip ${highlight ? "highlight" : ""}`}
+      className={`deck-item ${highlight ? "highlight" : ""}`}
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData("text/plain", `${index}`);
@@ -150,9 +150,9 @@ function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragPro
       onDragEnd={(e) => e.currentTarget.classList.remove("dragging")}
       title={`${type} - ${item.name}`}
     >
-      {item.image && <img src={item.image} alt="" className="deck-chip-img"/>}
+      {item.image && <img src={item.image} alt="" className="deck-item-img"/>}
       <div className="deck-chip-name">{item.name}</div>
-      <button className="deck-chip-remove" onClick={onRemove} aria-label="Remove">
+      <button className="deck-item-remove" onClick={onRemove} aria-label="Remove">
         x
       </button>
     </div>

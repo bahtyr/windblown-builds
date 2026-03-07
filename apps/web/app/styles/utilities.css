@@ -1,3 +1,9 @@
+/* ---------- Empty deck text color ---------- */
+
+.muted {
+    color: var(--muted);
+}
+
 /* ---------- Status text when something is loading ---------- */
 
 .status {

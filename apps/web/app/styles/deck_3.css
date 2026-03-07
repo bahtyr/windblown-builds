@@ -57,10 +57,3 @@
 .deck-drawer.collapsed .deck-panel {
     display: none;
 }
-
-/* ---------- Empty deck text color ---------- */
-
-.muted {
-    color: var(--muted);
-}
-
