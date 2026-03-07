@@ -1,7 +1,7 @@
 .app-shell {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-8);
+    /*gap: var(--space-8);*/
 }
 
 .app-main {
@@ -11,10 +11,11 @@
 
 .deck-drawer {
     position: sticky;
-    top: calc(var(--header-height) + var(--space-8));
+    top: calc(var(--header-height));
     z-index: var(--z-deck);
     width: auto;
     flex: 0 0 auto;
+    /*margin-right: var(--space-8);*/
 }
 
 /* ---------- Deck layout ---------- */
@@ -22,16 +23,17 @@
 /* combine deck and layout */
 
 .deck {
-    width: min(44vw, 760px);
-    height: calc(100vh - var(--header-height) - 100px);
+    width: min(44vw, 660px);
+    height: calc(100vh - var(--header-height));
     overflow: auto;
     /*display: grid;*/
     /*grid-template-columns: 220px minmax(0, 1fr);*/
     /*gap: var(--space-6);*/
     padding: var(--space-6);
     border: 1px solid var(--border);
-    border-radius: var(--radius-2xl);
+    /*border-radius: var(--radius-2xl);*/
     background: var(--surface);
+    background: var(--color-overlay-header);
     box-shadow: var(--shadow);
 }
 

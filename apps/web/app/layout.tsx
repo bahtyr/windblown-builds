@@ -17,8 +17,8 @@ export default function RootLayout({children}: { children: ReactNode }) {
       <LikeProvider>
         <NavBar deckOpen={deckOpen} onToggleDeck={() => setDeckOpen((v) => !v)}/>
         <div className="app-shell">
-          <main className="app-main">{children}</main>
           <DeckPanel open={deckOpen}/>
+          <main className="app-main">{children}</main>
         </div>
       </LikeProvider>
     </DeckProvider>
