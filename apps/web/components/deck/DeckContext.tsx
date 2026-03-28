@@ -13,7 +13,11 @@ export type DeckItem = {
 
 export type DeckLimits = Partial<Record<Exclude<EntityType, "effects">, number>>;
 
-type SavedDeck = { name: string; items: DeckItem[] };
+export type SavedDeck = {
+  name: string;
+  items: DeckItem[];
+  createdAt: string;
+};
 
 type DeckContextType = {
   items: DeckItem[];
@@ -28,6 +32,7 @@ type DeckContextType = {
   createDeck: () => void;
   loadDeck: (name: string) => void;
   deleteDeck: (name: string) => void;
+  duplicateDeck: (name: string) => string | null;
   resetDeck: () => void;
 };
 
@@ -58,7 +63,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     const savedDecks = localStorage.getItem(STORAGE_SAVED);
     if (savedDecks) {
       try {
-        const parsed = JSON.parse(savedDecks) as SavedDeck[];
+        const parsed = normalizeSavedDecks(JSON.parse(savedDecks) as Array<SavedDeck | { name: string; items: DeckItem[] }>);
         setSaved(parsed);
         setSelectedSaved(parsed[0]?.name ?? null);
       } catch {
@@ -121,25 +126,26 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   useEffect(() => {
     if (!hydrated || !selectedSaved) return;
     setSaved((prev) => {
-      return upsertSaved(prev, selectedSaved, items);
+      return upsertSaved(prev, selectedSaved, items, prev.find((deck) => deck.name === selectedSaved)?.createdAt);
     });
   }, [hydrated, items, selectedSaved]);
 
-  const upsertSaved = (list: SavedDeck[], deckName: string, deckItems: DeckItem[]): SavedDeck[] => {
+  const upsertSaved = (list: SavedDeck[], deckName: string, deckItems: DeckItem[], createdAt?: string): SavedDeck[] => {
     const idx = list.findIndex((d) => d.name === deckName);
-    if (idx === -1) return [...list, {name: deckName, items: deckItems}];
+    const nextDeck = {name: deckName, items: deckItems, createdAt: createdAt ?? list[idx]?.createdAt ?? createTimestamp()};
+    if (idx === -1) return [...list, nextDeck];
     const next = [...list];
-    next[idx] = {name: deckName, items: deckItems};
+    next[idx] = nextDeck;
     return next;
   };
 
-  const renameSaved = (list: SavedDeck[], from: string, to: string, deckItems: DeckItem[]): SavedDeck[] => {
+  const renameSaved = (list: SavedDeck[], from: string, to: string, deckItems: DeckItem[], createdAt?: string): SavedDeck[] => {
     const targetIdx = list.findIndex((d) => d.name === from);
     const fallbackIdx = targetIdx === -1 ? list.findIndex((d) => d.name === to) : targetIdx;
     const idx = fallbackIdx === -1 ? list.length : fallbackIdx;
     const filtered = list.filter((d) => d.name !== from && d.name !== to);
     const next = [...filtered];
-    next.splice(idx, 0, {name: to, items: deckItems});
+    next.splice(idx, 0, {name: to, items: deckItems, createdAt: createdAt ?? list[targetIdx]?.createdAt ?? createTimestamp()});
     return next;
   };
 
@@ -150,7 +156,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       const targetName = customName ?? selectedSaved ?? baseName;
       setNameState(targetName);
       setSelectedSaved((prev) => prev ?? targetName);
-      setSaved((prev) => upsertSaved(prev, targetName, items));
+      setSaved((prev) => upsertSaved(prev, targetName, items, prev.find((deck) => deck.name === targetName)?.createdAt));
       return targetName;
     },
     [hydrated, name, saved, selectedSaved, items],
@@ -191,7 +197,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setSaved((prev) => {
           const source = prev.find((d) => d.name === sourceName);
           const payload = source ? source.items : items;
-          return renameSaved(prev, sourceName, targetName, payload);
+          return renameSaved(prev, sourceName, targetName, payload, source?.createdAt);
         });
       },
       createDeck: () => {
@@ -200,7 +206,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setNameState(newName);
         setSelectedSaved(newName);
         setSaved((prev) => {
-          return renameSaved(prev, newName, newName, []);
+          return renameSaved(prev, newName, newName, [], createTimestamp());
         });
       },
       saveDeck: (asNew?: boolean) => {
@@ -209,7 +215,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setNameState(targetName);
         setSelectedSaved(targetName);
         setSaved((prev) => {
-          return renameSaved(prev, targetName, targetName, items);
+          return renameSaved(prev, targetName, targetName, items, prev.find((deck) => deck.name === targetName)?.createdAt);
         });
       },
       loadDeck: (deckName: string) => {
@@ -228,6 +234,13 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setNameState(firstSaved.name);
           return nextSaved;
         });
+      },
+      duplicateDeck: (deckName: string) => {
+        const source = saved.find((d) => d.name === deckName);
+        if (!source) return null;
+        const copyName = suggestDuplicateName(saved, deckName);
+        setSaved((prev) => [...prev, {name: copyName, items: [...source.items], createdAt: createTimestamp()}]);
+        return copyName;
       },
       resetDeck: () => setItems([]),
     }),
@@ -316,13 +329,48 @@ function reorderWithinType(list: DeckItem[], type: EntityType, from: number, to:
  * @returns {{saved: {name: string; items: DeckItem[]}[]; firstSaved: {name: string; items: DeckItem[]}}} Remaining decks and first selectable deck.
  */
 export function selectFirstSavedAfterDelete(
-  list: { name: string; items: DeckItem[] }[],
+  list: { name: string; items: DeckItem[]; createdAt?: string }[],
   deckName: string,
-): { saved: { name: string; items: DeckItem[] }[]; firstSaved: { name: string; items: DeckItem[] } } {
-  const filtered = list.filter((d) => d.name !== deckName);
-  if (filtered.length > 0) {
-    return {saved: filtered, firstSaved: filtered[0]};
+): { saved: { name: string; items: DeckItem[]; createdAt: string }[]; firstSaved: { name: string; items: DeckItem[]; createdAt: string } } {
+  const normalizedFiltered = normalizeSavedDecks(list.filter((d) => d.name !== deckName));
+  if (normalizedFiltered.length > 0) {
+    return {saved: normalizedFiltered, firstSaved: normalizedFiltered[0]};
   }
-  const created = {name: suggestName(filtered), items: [] as DeckItem[]};
+  const created = {name: suggestName(normalizedFiltered), items: [] as DeckItem[], createdAt: createTimestamp()};
   return {saved: [created], firstSaved: created};
+}
+
+/**
+ * Normalize persisted decks so older saved payloads gain creation timestamps.
+ *
+ * @param {Array<SavedDeck | { name: string; items: DeckItem[] }>} list - Raw saved decks from storage.
+ * @returns {SavedDeck[]} Normalized saved deck list.
+ */
+export function normalizeSavedDecks(list: Array<SavedDeck | { name: string; items: DeckItem[] }>): SavedDeck[] {
+  return list.map((deck) => ({
+    name: deck.name,
+    items: deck.items,
+    createdAt: "createdAt" in deck && typeof deck.createdAt === "string" ? deck.createdAt : createTimestamp(),
+  }));
+}
+
+/**
+ * Build a unique copy name for a duplicated deck.
+ *
+ * @param {SavedDeck[]} existing - Existing saved decks.
+ * @param {string} deckName - Original deck name.
+ * @returns {string} Unique duplicate name.
+ */
+export function suggestDuplicateName(existing: SavedDeck[], deckName: string): string {
+  const base = `${deckName} Copy`;
+  if (!existing.some((deck) => deck.name === base)) return base;
+  let i = 2;
+  while (existing.some((deck) => deck.name === `${base} ${i}`)) {
+    i += 1;
+  }
+  return `${base} ${i}`;
+}
+
+function createTimestamp(): string {
+  return new Date().toISOString();
 }

@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {selectFirstSavedAfterDelete} from "../components/deck/DeckContext";
+import {normalizeSavedDecks, selectFirstSavedAfterDelete, suggestDuplicateName} from "../components/deck/DeckContext";
 
 describe("selectFirstSavedAfterDelete", () => {
   it("selects the first remaining deck after deletion", () => {
@@ -16,13 +16,37 @@ describe("selectFirstSavedAfterDelete", () => {
     const one = {name: "Deck 1", items: [{id: "gifts:One", type: "gifts" as const, name: "One"}]};
     const state = selectFirstSavedAfterDelete([one], "Deck 1");
 
-    expect(state.saved).toEqual([{name: "Deck 1", items: []}]);
-    expect(state.firstSaved).toEqual({name: "Deck 1", items: []});
+    expect(state.saved).toHaveLength(1);
+    expect(state.saved[0]).toMatchObject({name: "Deck 1", items: []});
+    expect(state.saved[0].createdAt).toEqual(expect.any(String));
+    expect(state.firstSaved).toMatchObject({name: "Deck 1", items: []});
+    expect(state.firstSaved.createdAt).toEqual(expect.any(String));
   });
 
   it("creates a new empty deck when deleting from an empty list", () => {
     const state = selectFirstSavedAfterDelete([], "Deck 1");
-    expect(state.saved).toEqual([{name: "Deck 1", items: []}]);
-    expect(state.firstSaved).toEqual({name: "Deck 1", items: []});
+    expect(state.saved).toHaveLength(1);
+    expect(state.saved[0]).toMatchObject({name: "Deck 1", items: []});
+    expect(state.saved[0].createdAt).toEqual(expect.any(String));
+    expect(state.firstSaved).toMatchObject({name: "Deck 1", items: []});
+    expect(state.firstSaved.createdAt).toEqual(expect.any(String));
+  });
+});
+
+describe("normalizeSavedDecks", () => {
+  it("adds createdAt to legacy saved decks", () => {
+    const normalized = normalizeSavedDecks([{name: "Deck 1", items: []}]);
+    expect(normalized[0]).toMatchObject({name: "Deck 1", items: []});
+    expect(normalized[0].createdAt).toEqual(expect.any(String));
+  });
+});
+
+describe("suggestDuplicateName", () => {
+  it("creates an incremented copy name when needed", () => {
+    const decks = normalizeSavedDecks([
+      {name: "Deck 1", items: []},
+      {name: "Deck 1 Copy", items: []},
+    ]);
+    expect(suggestDuplicateName(decks, "Deck 1")).toBe("Deck 1 Copy 2");
   });
 });

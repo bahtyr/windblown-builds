@@ -4,6 +4,7 @@
 import {useEffect, useState} from "react";
 import {DeckItem, useDeck} from "./DeckContext";
 import {EntityType} from "../../lib/types";
+import {buildDeckShareUrl} from "./deck-share";
 
 type Props = {
   open: boolean;
@@ -17,17 +18,7 @@ export default function DeckPanel({open}: Props) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const params = new URLSearchParams();
-    if (deck.name.trim()) params.set("name", deck.name.trim());
-    if (deck.items.length) {
-      params.set(
-        "deck",
-        deck.items
-          .map((i) => `${i.type}|${encodeURIComponent(i.name)}`)
-          .join(","),
-      );
-    }
-    setShareLink(`${window.location.origin}/browse?${params.toString()}`);
+    setShareLink(buildDeckShareUrl(window.location.origin, {name: deck.name, items: deck.items}));
   }, [deck.items, deck.name]);
 
   const handleCopy = async () => {
