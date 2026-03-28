@@ -73,7 +73,7 @@ export default function DecksLibrary() {
                       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
                       <div className="deck-row-item-copy">
                         <span className="deck-row-item-name">{item.name}</span>
-                        <span className="deck-row-item-type">{item.type}</span>
+                        <span className="deck-row-item-type">{formatItemTypeLabel(item.type)}</span>
                       </div>
                     </div>
                   ))
@@ -111,4 +111,10 @@ export function formatRoughDate(value: string): string {
 
 function pluralize(value: number, unit: string): string {
   return `${value} ${unit}${value === 1 ? "" : "s"} ago`;
+}
+
+function formatItemTypeLabel(value: string): string {
+  if (value === "magifishes") return "magifish";
+  if (value.endsWith("s")) return value.slice(0, -1);
+  return value;
 }
