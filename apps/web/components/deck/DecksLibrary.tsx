@@ -15,7 +15,7 @@ export default function DecksLibrary() {
   const [status, setStatus] = useState<string>("");
 
   const rows = useMemo(
-    () => [...deck.saved].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
+    () => deck.saved.filter((savedDeck) => savedDeck.items.length > 0).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
     [deck.saved],
   );
 
@@ -52,23 +52,23 @@ export default function DecksLibrary() {
         </div>
 
         <div className="decks-grid">
-          {rows.map((savedDeck) => (
-            <article className="deck-row" key={savedDeck.name}>
-              <div className="deck-row-head">
-                <div>
-                  <h2 className="deck-row-title">{savedDeck.name}</h2>
-                  <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
+          {rows.length > 0 ? (
+            rows.map((savedDeck) => (
+              <article className="deck-row" key={savedDeck.name}>
+                <div className="deck-row-head">
+                  <div>
+                    <h2 className="deck-row-title">{savedDeck.name}</h2>
+                    <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
+                  </div>
+                  <div className="deck-row-actions">
+                    <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
+                    <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
+                    <button className="btn ghost deck-row-action" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>
+                  </div>
                 </div>
-                <div className="deck-row-actions">
-                  <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
-                  <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
-                  <button className="btn ghost deck-row-action" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>
-                </div>
-              </div>
 
-              <div className="deck-row-items">
-                {savedDeck.items.length > 0 ? (
-                  savedDeck.items.map((item) => (
+                <div className="deck-row-items">
+                  {savedDeck.items.map((item) => (
                     <div className="deck-row-item" key={item.id}>
                       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
                       <div className="deck-row-item-copy">
@@ -76,13 +76,13 @@ export default function DecksLibrary() {
                         <span className="deck-row-item-type">{formatItemTypeLabel(item.type)}</span>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="deck-row-empty">No items saved yet</div>
-                )}
-              </div>
-            </article>
-          ))}
+                  ))}
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="deck-row-empty">No saved builds yet.</div>
+          )}
         </div>
       </section>
     </div>
