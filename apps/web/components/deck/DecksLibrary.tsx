@@ -45,8 +45,8 @@ export default function DecksLibrary() {
       <section className="decks-page body-wrapper">
         <div className="decks-page-header">
           <div>
-            <h1 className="decks-page-title">Decks</h1>
-            <p className="decks-page-copy">Saved decks, read-only here. Creation flow stays in the builder for now.</p>
+            <h1 className="decks-page-title">Saved builds</h1>
+            <p className="decks-page-copy">Keep your favorite runs handy, revisit the item mix at a glance, and share a build when you want to send it to someone else.</p>
           </div>
           {status && <div className="decks-page-status">{status}</div>}
         </div>
@@ -57,12 +57,12 @@ export default function DecksLibrary() {
               <div className="deck-row-head">
                 <div>
                   <h2 className="deck-row-title">{savedDeck.name}</h2>
-                  <p className="deck-row-meta">Created {formatRoughDate(savedDeck.createdAt)}</p>
+                  <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
                 </div>
                 <div className="deck-row-actions">
-                  <button className="btn ghost" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>
-                  <button className="btn ghost" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
-                  <button className="btn ghost" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
+                  <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
+                  <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
+                  <button className="btn ghost deck-row-action" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>
                 </div>
               </div>
 
@@ -97,12 +97,12 @@ export default function DecksLibrary() {
  */
 export function formatRoughDate(value: string): string {
   const timestamp = Date.parse(value);
-  if (Number.isNaN(timestamp)) return "recently";
+  if (Number.isNaN(timestamp)) return "Recently";
 
   const diffMs = Date.now() - timestamp;
   const dayMs = 24 * 60 * 60 * 1000;
-  if (diffMs < dayMs) return "today";
-  if (diffMs < dayMs * 2) return "yesterday";
+  if (diffMs < dayMs) return "Today";
+  if (diffMs < dayMs * 2) return "Yesterday";
   if (diffMs < dayMs * 7) return pluralize(Math.floor(diffMs / dayMs), "day");
   if (diffMs < dayMs * 30) return pluralize(Math.floor(diffMs / (dayMs * 7)), "week");
   if (diffMs < dayMs * 365) return pluralize(Math.floor(diffMs / (dayMs * 30)), "month");
