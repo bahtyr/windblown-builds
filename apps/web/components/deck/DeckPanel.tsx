@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useEffect, useState} from "react";
 import {DeckItem, useDeck} from "./DeckContext";
 import {EntityType} from "../../lib/types";
-import {buildDeckShareUrl} from "./deck-share";
 
 type Props = {
   open: boolean;
@@ -12,28 +10,13 @@ type Props = {
 
 export default function DeckPanel({open}: Props) {
   const deck = useDeck();
-  const [status, setStatus] = useState<string>("");
-  const [shareLink, setShareLink] = useState("");
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    setShareLink(buildDeckShareUrl(window.location.origin, {name: deck.name, items: deck.items}));
-  }, [deck.items, deck.name]);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(shareLink);
-      setStatus("Link copied");
-    } catch {
-      setStatus("Copy failed");
-    }
-  };
 
   return (
     <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
       {open && (
         <div className="deck">
-          <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>Start a new deck
+          <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>
+            Start a new deck
           </button>
           <div className="deck-manager">
             <div className="deck-actions">
@@ -49,10 +32,9 @@ export default function DeckPanel({open}: Props) {
               <button className="btn ghost" type="button" onClick={() => deck.deleteDeck(deck.name)}>
                 Delete
               </button>
-              <button className="btn ghost deck-share-button" id="copyDeckLink" type="button" onClick={handleCopy}>
-                🔗 Copy share link
+              <button className="btn ghost" type="button" onClick={() => deck.saveDeck()}>
+                Save
               </button>
-              {/* update the share button color/text when {status} - only briefly then reset */}
             </div>
             <div className="deck-content">
               {deck.items.length === 0 && <div className="muted">No items yet</div>}
