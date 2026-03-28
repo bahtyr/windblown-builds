@@ -13,7 +13,6 @@ type Props = {
 export default function DeckPanel({open}: Props) {
   const deck = useDeck();
   const [status, setStatus] = useState<string>("");
-  const total = deck.items.length;
   const [shareLink, setShareLink] = useState("");
 
   useEffect(() => {
@@ -36,15 +35,6 @@ export default function DeckPanel({open}: Props) {
         <div className="deck">
           <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>Start a new deck
           </button>
-          <div className="deck-saved-list">
-            {deck.saved.map((d) => (
-              <button key={d.name}
-                      className={`link deck-saved-item ${deck.selectedSaved === d.name ? "is-active" : ""}`}
-                      onClick={() => deck.loadDeck(d.name)}>
-                {d.name}
-              </button>
-            ))}
-          </div>
           <div className="deck-manager">
             <div className="deck-actions">
               <input
