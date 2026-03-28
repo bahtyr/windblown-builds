@@ -76,6 +76,7 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
   const nameCell = cells.eq(1);
   const name = nameCell.text().trim();
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
+  const wikiHref = normalizeUrl(nameCell.find("a").first().attr("href")?.trim());
   const descriptionCell = cells.eq(2);
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
 
@@ -87,7 +88,21 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
     image,
     name,
     ...(nameColor ? {nameColor} : {}),
+    ...(buildGiftVideoUrl(wikiHref) ? {video: buildGiftVideoUrl(wikiHref)} : {}),
     category: section.replace(/\s+Gifts$/, "").trim(),
     richDescription,
   };
+}
+
+/**
+ * Convert a gift wiki URL into the corresponding `.webm` asset URL.
+ *
+ * @param {string | undefined} wikiHref - Gift wiki URL.
+ * @returns {string | undefined} Derived video URL when the wiki path is valid.
+ */
+export function buildGiftVideoUrl(wikiHref?: string): string | undefined {
+  if (!wikiHref) return undefined;
+  const match = wikiHref.match(/\/wiki\/([^/?#]+)/);
+  if (!match) return undefined;
+  return `https://windblown.wiki.gg/images/${match[1]}.webm`;
 }

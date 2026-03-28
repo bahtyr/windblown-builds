@@ -7,6 +7,21 @@
     padding: var(--space-8);
 }
 
+.deck-builder-title-group {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.deck-builder-title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+}
+
+.deck-builder-subtitle {
+    margin: 0;
+    color: var(--muted);
+}
+
 /* ---------- Deck actions ---------- */
 
 .deck-actions {
@@ -23,10 +38,6 @@
     border-radius: var(--radius-lg);
     background: var(--surface);
     color: var(--text);
-}
-
-.deck-share-button {
-    flex: 1;
 }
 
 /* ---------- Deck content ---------- */

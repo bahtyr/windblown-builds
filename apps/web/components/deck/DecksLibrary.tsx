@@ -3,6 +3,7 @@
 
 import {useMemo, useState} from "react";
 import {useDeck} from "./DeckContext";
+import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
 
 /**
@@ -12,6 +13,7 @@ import {buildDeckShareUrl} from "./deck-share";
  */
 export default function DecksLibrary() {
   const deck = useDeck();
+  const deckUi = useDeckUi();
   const [status, setStatus] = useState<string>("");
 
   const rows = useMemo(
@@ -40,6 +42,18 @@ export default function DecksLibrary() {
     setStatus(`Deleted ${deckName}`);
   };
 
+  const handleEdit = (deckName: string) => {
+    deck.loadDeck(deckName);
+    deckUi.openDeck();
+    setStatus(`Editing ${deckName}`);
+  };
+
+  const handleCreateNew = () => {
+    deck.createDeck();
+    deckUi.openDeck();
+    setStatus("Creating a new build");
+  };
+
   return (
     <div className="page page-decks">
       <section className="decks-page body-wrapper">
@@ -48,7 +62,10 @@ export default function DecksLibrary() {
             <h1 className="decks-page-title">Saved builds</h1>
             <p className="decks-page-copy">Keep your favorite runs handy, revisit the item mix at a glance, and share a build when you want to send it to someone else.</p>
           </div>
-          {status && <div className="decks-page-status">{status}</div>}
+          <div className="decks-page-header-actions">
+            <button className="btn" type="button" onClick={handleCreateNew}>Create new build</button>
+            {status && <div className="decks-page-status">{status}</div>}
+          </div>
         </div>
 
         <div className="decks-grid">
@@ -61,6 +78,7 @@ export default function DecksLibrary() {
                     <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
                   </div>
                   <div className="deck-row-actions">
+                    <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleEdit(savedDeck.name)}>Edit</button>
                     <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
                     <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
                     <button className="btn ghost deck-row-action" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>

@@ -10,15 +10,22 @@ type Props = {
 
 export default function DeckPanel({open}: Props) {
   const deck = useDeck();
+  const isEditing = deck.mode === "editing";
 
   return (
     <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
       {open && (
         <div className="deck">
           <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>
-            Start a new deck
+            Create new build
           </button>
           <div className="deck-manager">
+            <div className="deck-builder-title-group">
+              <h2 className="deck-builder-title">{isEditing ? "Editing build" : "Creating new build"}</h2>
+              <p className="deck-builder-subtitle">
+                {isEditing ? `Working on ${deck.editingDeckName}` : "Start from scratch, then save when you are ready."}
+              </p>
+            </div>
             <div className="deck-actions">
               <input
                 className="deck-name-input"
@@ -26,15 +33,17 @@ export default function DeckPanel({open}: Props) {
                 onChange={(e) => deck.setName(e.target.value)}
                 placeholder="Deck name"
               />
+              <button className="btn" type="button" onClick={() => deck.saveDeck()}>
+                {isEditing ? "Update build" : "Save build"}
+              </button>
               <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
                 Reset
               </button>
-              <button className="btn ghost" type="button" onClick={() => deck.deleteDeck(deck.name)}>
-                Delete
-              </button>
-              <button className="btn ghost" type="button" onClick={() => deck.saveDeck()}>
-                Save
-              </button>
+              {isEditing && (
+                <button className="btn ghost" type="button" onClick={() => deck.deleteDeck(deck.editingDeckName ?? deck.name)}>
+                  Delete
+                </button>
+              )}
             </div>
             <div className="deck-content">
               {deck.items.length === 0 && <div className="muted">No items yet</div>}

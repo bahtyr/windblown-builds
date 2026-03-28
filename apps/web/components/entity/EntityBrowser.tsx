@@ -31,6 +31,7 @@ const MATCH_DISPLAY_MODE_STORAGE_KEY = "entityMatchDisplayMode";
  */
 export default function EntityBrowser() {
   const {items, loading, error} = useEntityData();
+  const [selectedType, setSelectedType] = useState<EntityType | "all">("all");
 
   const [search, setSearch] = useState("");
   const [selectedEntity, setSelectedEntity] = useState("");
@@ -41,6 +42,10 @@ export default function EntityBrowser() {
 
   const deck = useDeck();
   const likes = useLikes();
+  const visibleItems = useMemo(
+    () => items.filter((item) => selectedType === "all" || item.entityType === selectedType),
+    [items, selectedType],
+  );
 
   useEffect(() => {
     const persisted = parsePersistedFilters(window.localStorage.getItem(FILTERS_STORAGE_KEY));
@@ -86,11 +91,11 @@ export default function EntityBrowser() {
 
   const grouped = useMemo(
     () =>
-      groupByCategory(items, (item) => {
+      groupByCategory(visibleItems, (item) => {
         const fallback = capitalize(item.entityType);
         return item.category?.trim() ?? fallback;
       }),
-    [items],
+    [visibleItems],
   );
   const sections = useMemo(
     () =>
@@ -101,7 +106,7 @@ export default function EntityBrowser() {
     [grouped, matchesFilters],
   );
 
-  const filteredCount = useMemo(() => items.filter(matchesFilters).length, [items, matchesFilters]);
+  const filteredCount = useMemo(() => visibleItems.filter(matchesFilters).length, [matchesFilters, visibleItems]);
   const matchNavDeps = useMemo(
     () => [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
@@ -113,7 +118,7 @@ export default function EntityBrowser() {
       <div className="filters">
         <div className="filters-body body-wrapper">
           <Filters
-            items={items}
+            items={visibleItems}
             search={search}
             onSearch={setSearch}
             selectedEntity={selectedEntity}
@@ -152,7 +157,7 @@ export default function EntityBrowser() {
           </div>
 
           <div className="count">
-            {filteredCount === items.length ? `${items.length} total` : `${filteredCount} of ${items.length} filtered`}
+            {filteredCount === visibleItems.length ? `${visibleItems.length} total` : `${filteredCount} of ${visibleItems.length} filtered`}
           </div>
         </div>
       </div>
@@ -161,38 +166,58 @@ export default function EntityBrowser() {
       {error && <div className="status error">{error}</div>}
 
       {!loading && !error && (
-        <section className="sections body-wrapper">
-          {sections
-            .filter(({filtered}) => matchDisplayMode !== "show-matches-only" || filtered.length > 0)
-            .map(({category, list, filtered}) => (
-              <div className="section" key={category}>
-                <div className="section-header">
-                  <h2 className={"section-heading " + (filtered.length === 0 ? "is-faded" : "")}>{category}</h2>
-                  <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
+        <div className="browse-layout body-wrapper">
+          <aside className="browse-sidebar">
+            <div className="browse-sidebar-title">Browse</div>
+            <nav className="browse-sidebar-nav">
+              <button className={`browse-sidebar-link ${selectedType === "all" ? "is-active" : ""}`} type="button" onClick={() => setSelectedType("all")}>
+                All
+              </button>
+              {ENTITY_TYPES.map((type) => (
+                <button
+                  key={type}
+                  className={`browse-sidebar-link ${selectedType === type ? "is-active" : ""}`}
+                  type="button"
+                  onClick={() => setSelectedType(type)}
+                >
+                  {capitalize(type)}
+                </button>
+              ))}
+            </nav>
+          </aside>
+          <section className="sections">
+            {sections
+              .filter(({filtered}) => matchDisplayMode !== "show-matches-only" || filtered.length > 0)
+              .map(({category, list, filtered}) => (
+                <div className="section" key={category}>
+                  <div className="section-header">
+                    <h2 className={"section-heading " + (filtered.length === 0 ? "is-faded" : "")}>{category}</h2>
+                    <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
+                  </div>
+                  <div className="card-list">
+                    {getVisibleItems(list, filtered, matchDisplayMode).map((item, idx) => {
+                      const matched = filtered.includes(item);
+                      const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
+                      return (
+                        <EntityCard
+                          key={`${item.entityType}-${item.name}-${idx}`}
+                          item={item}
+                          type={item.entityType}
+                          highlight={inDeck}
+                          deck={deck}
+                          likes={likes}
+                          limits={DEFAULT_LIMITS}
+                          fade={matchDisplayMode === "fade-unmatched" && !matched}
+                          inDeck={inDeck}
+                          onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className="card-list">
-                  {getVisibleItems(list, filtered, matchDisplayMode).map((item, idx) => {
-                    const matched = filtered.includes(item);
-                    const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
-                    return (
-                      <EntityCard
-                        key={`${item.entityType}-${item.name}-${idx}`}
-                        item={item}
-                        type={item.entityType}
-                        highlight={inDeck}
-                        deck={deck}
-                        likes={likes}
-                        limits={DEFAULT_LIMITS}
-                        fade={matchDisplayMode === "fade-unmatched" && !matched}
-                        inDeck={inDeck}
-                        onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-        </section>
+              ))}
+          </section>
+        </div>
       )}
     </div>
   );

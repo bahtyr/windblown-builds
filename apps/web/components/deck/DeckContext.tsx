@@ -1,6 +1,6 @@
 "use client";
 
-import {createContext, useContext, useEffect, useMemo, useState, useCallback} from "react";
+import {createContext, useContext, useEffect, useMemo, useState} from "react";
 import {loadEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
@@ -19,11 +19,14 @@ export type SavedDeck = {
   createdAt: string;
 };
 
+type DeckMode = "new" | "editing";
+
 type DeckContextType = {
   items: DeckItem[];
   name: string;
   saved: SavedDeck[];
-  selectedSaved: string | null;
+  editingDeckName: string | null;
+  mode: DeckMode;
   add: (item: DeckItem, limits: DeckLimits) => { ok: boolean; reason?: string };
   remove: (id: string) => void;
   moveWithinType: (type: EntityType, from: number, to: number) => void;
@@ -38,14 +41,15 @@ type DeckContextType = {
 
 const DeckContext = createContext<DeckContextType | null>(null);
 
-const STORAGE_KEY = "windblown.deck.v2";
-const STORAGE_SAVED = "windblown.deck.saved.v2";
+const STORAGE_KEY = "windblown.deck.v3";
+const STORAGE_SAVED = "windblown.deck.saved.v3";
+const DEFAULT_DECK_NAME = "Untitled deck";
 
 export function DeckProvider({children}: { children: React.ReactNode }) {
   const [items, setItems] = useState<DeckItem[]>([]);
-  const [name, setNameState] = useState<string>("Untitled Deck");
+  const [name, setNameState] = useState<string>(DEFAULT_DECK_NAME);
   const [saved, setSaved] = useState<SavedDeck[]>([]);
-  const [selectedSaved, setSelectedSaved] = useState<string | null>(null);
+  const [editingDeckName, setEditingDeckName] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -53,19 +57,20 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        const parsed = JSON.parse(stored) as { items: DeckItem[]; name?: string };
+        const parsed = JSON.parse(stored) as { items?: DeckItem[]; name?: string; editingDeckName?: string | null };
         setItems(parsed.items || []);
-        if (parsed.name) setNameState(parsed.name);
+        setNameState(normalizeDeckName(parsed.name));
+        setEditingDeckName(typeof parsed.editingDeckName === "string" ? parsed.editingDeckName : null);
       } catch {
         // ignore
       }
     }
+
     const savedDecks = localStorage.getItem(STORAGE_SAVED);
     if (savedDecks) {
       try {
         const parsed = normalizeSavedDecks(JSON.parse(savedDecks) as Array<SavedDeck | { name: string; items: DeckItem[] }>);
         setSaved(parsed);
-        setSelectedSaved(parsed[0]?.name ?? null);
       } catch {
         // ignore
       }
@@ -76,16 +81,23 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     const paramName = params.get("name");
     if (paramDeck) {
       const parsed = parseDeckParam(paramDeck);
-      if (parsed.length) setItems(parsed);
+      if (parsed.length) {
+        setItems(parsed);
+        setEditingDeckName(null);
+      }
     }
-    if (paramName) setNameState(paramName);
+    if (paramName) {
+      setNameState(normalizeDeckName(paramName));
+      setEditingDeckName(null);
+    }
+
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({items, name}));
-  }, [hydrated, items, name]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({items, name, editingDeckName}));
+  }, [editingDeckName, hydrated, items, name]);
 
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
@@ -94,83 +106,46 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    const missingTypes = Array.from(
-      new Set(items.filter((i) => !i.image).map((i) => i.type)),
-    );
+    const missingTypes = Array.from(new Set(items.filter((item) => !item.image).map((item) => item.type)));
     if (missingTypes.length === 0) return;
     let cancelled = false;
+
     (async () => {
       const fetched = new Map<EntityType, ScrapedEntity[]>();
-      for (const t of missingTypes) {
+      for (const type of missingTypes) {
         try {
-          fetched.set(t, await loadEntities(t));
+          fetched.set(type, await loadEntities(type));
         } catch {
           // ignore fetch errors; keep existing items
         }
       }
+
       if (cancelled) return;
       setItems((prev) =>
         prev.map((item) => {
           if (item.image) return item;
-          const match = fetched.get(item.type)?.find((e) => e.name === item.name);
-          if (match?.image) return {...item, image: match.image};
-          return item;
+          const match = fetched.get(item.type)?.find((entity) => entity.name === item.name);
+          return match?.image ? {...item, image: match.image} : item;
         }),
       );
     })();
+
     return () => {
       cancelled = true;
     };
   }, [hydrated, items]);
 
-  useEffect(() => {
-    if (!hydrated || !selectedSaved) return;
-    setSaved((prev) => {
-      return upsertSaved(prev, selectedSaved, items, prev.find((deck) => deck.name === selectedSaved)?.createdAt);
-    });
-  }, [hydrated, items, selectedSaved]);
-
-  const upsertSaved = (list: SavedDeck[], deckName: string, deckItems: DeckItem[], createdAt?: string): SavedDeck[] => {
-    const idx = list.findIndex((d) => d.name === deckName);
-    const nextDeck = {name: deckName, items: deckItems, createdAt: createdAt ?? list[idx]?.createdAt ?? createTimestamp()};
-    if (idx === -1) return [...list, nextDeck];
-    const next = [...list];
-    next[idx] = nextDeck;
-    return next;
-  };
-
-  const renameSaved = (list: SavedDeck[], from: string, to: string, deckItems: DeckItem[], createdAt?: string): SavedDeck[] => {
-    const targetIdx = list.findIndex((d) => d.name === from);
-    const fallbackIdx = targetIdx === -1 ? list.findIndex((d) => d.name === to) : targetIdx;
-    const idx = fallbackIdx === -1 ? list.length : fallbackIdx;
-    const filtered = list.filter((d) => d.name !== from && d.name !== to);
-    const next = [...filtered];
-    next.splice(idx, 0, {name: to, items: deckItems, createdAt: createdAt ?? list[targetIdx]?.createdAt ?? createTimestamp()});
-    return next;
-  };
-
-  const ensureActiveDeck = useCallback(
-    (customName?: string): string => {
-      if (!hydrated) return customName ?? name;
-      const baseName = name === "" ? suggestName(saved) : name;
-      const targetName = customName ?? selectedSaved ?? baseName;
-      setNameState(targetName);
-      setSelectedSaved((prev) => prev ?? targetName);
-      setSaved((prev) => upsertSaved(prev, targetName, items, prev.find((deck) => deck.name === targetName)?.createdAt));
-      return targetName;
-    },
-    [hydrated, name, saved, selectedSaved, items],
-  );
+  const mode: DeckMode = editingDeckName ? "editing" : "new";
 
   const api: DeckContextType = useMemo(
     () => ({
       items,
       name,
       saved,
-      selectedSaved,
+      editingDeckName,
+      mode,
       add: (item, limits) => {
-        ensureActiveDeck();
-        if (items.some((x) => x.id === item.id)) {
+        if (items.some((current) => current.id === item.id)) {
           return {ok: false, reason: "Duplicate not allowed"};
         }
         if (item.type === "effects") {
@@ -178,7 +153,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         }
         const limit = limits[item.type];
         if (limit !== undefined) {
-          const count = items.filter((x) => x.type === item.type).length;
+          const count = items.filter((current) => current.type === item.type).length;
           if (count >= limit) {
             return {ok: false, reason: `Limit reached for ${item.type}`};
           }
@@ -186,57 +161,45 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setItems((prev) => insertByType(prev, item));
         return {ok: true};
       },
-      remove: (id) => setItems((prev) => prev.filter((x) => x.id !== id)),
-      moveWithinType: (type, from, to) =>
-        setItems((prev) => reorderWithinType(prev, type, from, to)),
-      setName: (nextName: string) => {
-        const targetName = nextName === "" ? "Untitled Deck" : nextName;
-        const sourceName = selectedSaved ?? name;
+      remove: (id) => setItems((prev) => prev.filter((item) => item.id !== id)),
+      moveWithinType: (type, from, to) => setItems((prev) => reorderWithinType(prev, type, from, to)),
+      setName: (nextName) => setNameState(normalizeDeckName(nextName)),
+      saveDeck: (asNew) => {
+        const desiredName = normalizeDeckName(name);
+        if (mode === "editing" && !asNew && editingDeckName) {
+          setSaved((prev) => updateSavedDeck(prev, editingDeckName, desiredName, items));
+          setEditingDeckName(desiredName);
+          setNameState(desiredName);
+          return;
+        }
+
+        const targetName = ensureUniqueDeckName(saved, desiredName);
+        setSaved((prev) => [...prev, {name: targetName, items, createdAt: createTimestamp()}]);
+        setEditingDeckName(targetName);
         setNameState(targetName);
-        setSelectedSaved(targetName);
-        setSaved((prev) => {
-          const source = prev.find((d) => d.name === sourceName);
-          const payload = source ? source.items : items;
-          return renameSaved(prev, sourceName, targetName, payload, source?.createdAt);
-        });
       },
       createDeck: () => {
-        const newName = suggestName(saved);
         setItems([]);
-        setNameState(newName);
-        setSelectedSaved(newName);
-        setSaved((prev) => {
-          return renameSaved(prev, newName, newName, [], createTimestamp());
-        });
+        setNameState(DEFAULT_DECK_NAME);
+        setEditingDeckName(null);
       },
-      saveDeck: (asNew?: boolean) => {
-        const targetName = asNew ? suggestName(saved) : (name === "" ? "Untitled Deck" : name);
-        ensureActiveDeck(targetName);
-        setNameState(targetName);
-        setSelectedSaved(targetName);
-        setSaved((prev) => {
-          return renameSaved(prev, targetName, targetName, items, prev.find((deck) => deck.name === targetName)?.createdAt);
-        });
+      loadDeck: (deckName) => {
+        const match = saved.find((deck) => deck.name === deckName);
+        if (!match) return;
+        setItems(match.items);
+        setNameState(match.name);
+        setEditingDeckName(match.name);
       },
-      loadDeck: (deckName: string) => {
-        const match = saved.find((d) => d.name === deckName);
-        if (match) {
-          setItems(match.items);
-          setNameState(match.name);
-          setSelectedSaved(deckName);
+      deleteDeck: (deckName) => {
+        setSaved((prev) => prev.filter((deck) => deck.name !== deckName));
+        if (editingDeckName === deckName) {
+          setItems([]);
+          setNameState(DEFAULT_DECK_NAME);
+          setEditingDeckName(null);
         }
       },
-      deleteDeck: (deckName: string) => {
-        setSaved((prev) => {
-          const {saved: nextSaved, firstSaved} = selectFirstSavedAfterDelete(prev, deckName);
-          setSelectedSaved(firstSaved.name);
-          setItems(firstSaved.items);
-          setNameState(firstSaved.name);
-          return nextSaved;
-        });
-      },
-      duplicateDeck: (deckName: string) => {
-        const source = saved.find((d) => d.name === deckName);
+      duplicateDeck: (deckName) => {
+        const source = saved.find((deck) => deck.name === deckName);
         if (!source) return null;
         const copyName = suggestDuplicateName(saved, deckName);
         setSaved((prev) => [...prev, {name: copyName, items: [...source.items], createdAt: createTimestamp()}]);
@@ -244,7 +207,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       resetDeck: () => setItems([]),
     }),
-    [items, name, saved, selectedSaved, ensureActiveDeck],
+    [editingDeckName, items, mode, name, saved],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
@@ -262,15 +225,6 @@ export function deckId(type: EntityType, name: string): string {
 
 export function makeDeckItem(type: EntityType, entity: ScrapedEntity): DeckItem {
   return {type, name: entity.name, id: deckId(type, entity.name), image: entity.image};
-}
-
-function suggestName(existing: SavedDeck[]): string {
-  const base = "Deck";
-  let i = 1;
-  while (existing.some((d) => d.name === `${base} ${i}`)) {
-    i += 1;
-  }
-  return `${base} ${i}`;
 }
 
 function parseDeckParam(raw: string): DeckItem[] {
@@ -300,7 +254,7 @@ function insertByType(list: DeckItem[], item: DeckItem): DeckItem[] {
       break;
     }
     if (otherOrder === order) {
-      insertAt = i + 1; // keep after existing of same type
+      insertAt = i + 1;
     }
   }
   next.splice(insertAt, 0, item);
@@ -308,11 +262,9 @@ function insertByType(list: DeckItem[], item: DeckItem): DeckItem[] {
 }
 
 function reorderWithinType(list: DeckItem[], type: EntityType, from: number, to: number): DeckItem[] {
-  const sameType = list.filter((x) => x.type === type);
+  const sameType = list.filter((item) => item.type === type);
   if (from < 0 || from >= sameType.length || to < 0 || to >= sameType.length) return list;
-  const movingId = sameType[from].id;
-
-  const indices = list.map((x, idx) => (x.type === type ? idx : -1)).filter((idx) => idx !== -1);
+  const indices = list.map((item, idx) => (item.type === type ? idx : -1)).filter((idx) => idx !== -1);
   const globalFrom = indices[from];
   const globalTo = indices[to];
   const next = [...list];
@@ -324,19 +276,19 @@ function reorderWithinType(list: DeckItem[], type: EntityType, from: number, to:
 /**
  * Remove a deck and pick the first remaining saved deck.
  *
- * @param {{name: string; items: DeckItem[]}[]} list - Current saved decks.
+ * @param {{name: string; items: DeckItem[]; createdAt?: string}[]} list - Current saved decks.
  * @param {string} deckName - Deck being removed.
- * @returns {{saved: {name: string; items: DeckItem[]}[]; firstSaved: {name: string; items: DeckItem[]}}} Remaining decks and first selectable deck.
+ * @returns {{saved: {name: string; items: DeckItem[]; createdAt: string}[]; firstSaved: {name: string; items: DeckItem[]; createdAt: string}}} Remaining decks and first selectable deck.
  */
 export function selectFirstSavedAfterDelete(
   list: { name: string; items: DeckItem[]; createdAt?: string }[],
   deckName: string,
 ): { saved: { name: string; items: DeckItem[]; createdAt: string }[]; firstSaved: { name: string; items: DeckItem[]; createdAt: string } } {
-  const normalizedFiltered = normalizeSavedDecks(list.filter((d) => d.name !== deckName));
+  const normalizedFiltered = normalizeSavedDecks(list.filter((deck) => deck.name !== deckName));
   if (normalizedFiltered.length > 0) {
     return {saved: normalizedFiltered, firstSaved: normalizedFiltered[0]};
   }
-  const created = {name: suggestName(normalizedFiltered), items: [] as DeckItem[], createdAt: createTimestamp()};
+  const created = {name: DEFAULT_DECK_NAME, items: [] as DeckItem[], createdAt: createTimestamp()};
   return {saved: [created], firstSaved: created};
 }
 
@@ -348,7 +300,7 @@ export function selectFirstSavedAfterDelete(
  */
 export function normalizeSavedDecks(list: Array<SavedDeck | { name: string; items: DeckItem[] }>): SavedDeck[] {
   return list.map((deck) => ({
-    name: deck.name,
+    name: normalizeDeckName(deck.name),
     items: deck.items,
     createdAt: "createdAt" in deck && typeof deck.createdAt === "string" ? deck.createdAt : createTimestamp(),
   }));
@@ -362,13 +314,52 @@ export function normalizeSavedDecks(list: Array<SavedDeck | { name: string; item
  * @returns {string} Unique duplicate name.
  */
 export function suggestDuplicateName(existing: SavedDeck[], deckName: string): string {
-  const base = `${deckName} Copy`;
+  const normalizedName = normalizeDeckName(deckName);
+  const base = `${normalizedName} (copy)`;
   if (!existing.some((deck) => deck.name === base)) return base;
   let i = 2;
   while (existing.some((deck) => deck.name === `${base} ${i}`)) {
     i += 1;
   }
   return `${base} ${i}`;
+}
+
+function updateSavedDeck(list: SavedDeck[], sourceName: string, targetName: string, items: DeckItem[]): SavedDeck[] {
+  const next = [...list];
+  const idx = next.findIndex((deck) => deck.name === sourceName);
+  if (idx === -1) {
+    return [...list, {name: ensureUniqueDeckName(list, targetName), items, createdAt: createTimestamp()}];
+  }
+  next[idx] = {
+    ...next[idx],
+    name: targetName,
+    items,
+  };
+  return dedupeDeckNames(next, idx);
+}
+
+function dedupeDeckNames(list: SavedDeck[], preferredIdx: number): SavedDeck[] {
+  const next = [...list];
+  const preferred = next[preferredIdx];
+  const duplicates = next.filter((deck, idx) => idx !== preferredIdx && deck.name === preferred.name);
+  if (duplicates.length === 0) return next;
+  next[preferredIdx] = {...preferred, name: ensureUniqueDeckName(next.filter((_, idx) => idx !== preferredIdx), preferred.name)};
+  return next;
+}
+
+function ensureUniqueDeckName(existing: SavedDeck[], desiredName: string): string {
+  const normalizedDesiredName = normalizeDeckName(desiredName);
+  if (!existing.some((deck) => deck.name === normalizedDesiredName)) return normalizedDesiredName;
+  let i = 2;
+  while (existing.some((deck) => deck.name === `${normalizedDesiredName} ${i}`)) {
+    i += 1;
+  }
+  return `${normalizedDesiredName} ${i}`;
+}
+
+function normalizeDeckName(value?: string): string {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : DEFAULT_DECK_NAME;
 }
 
 function createTimestamp(): string {

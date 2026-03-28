@@ -23,7 +23,7 @@ export default function NavBar({deckOpen, onToggleDeck}: Props) {
           </Link>
         </nav>
         <button className={`deck-toggle ${deckOpen ? "is-active" : ""}`} type="button" onClick={onToggleDeck}>
-          {deckOpen ? "Hide deck builder" : "Deck builder"}
+          {deckOpen ? "Hide deck" : "Show deck"}
         </button>
       </div>
     </header>
