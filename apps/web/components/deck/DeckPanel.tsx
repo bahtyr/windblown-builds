@@ -27,7 +27,7 @@ export default function DeckPanel({open}: Props) {
           .join(","),
       );
     }
-    setShareLink(`${window.location.origin}/gifts?${params.toString()}`);
+    setShareLink(`${window.location.origin}/browse?${params.toString()}`);
   }, [deck.items, deck.name]);
 
   const handleCopy = async () => {

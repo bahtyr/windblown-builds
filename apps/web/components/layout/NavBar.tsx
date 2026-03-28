@@ -2,18 +2,6 @@
 
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import {EntityType} from "../../lib/types";
-
-const tabs: { type: EntityType | "all"; label: string }[] = [
-  {type: "all", label: "All"},
-  {type: "gifts", label: "Gifts"},
-  {type: "weapons", label: "Weapons"},
-  {type: "trinkets", label: "Trinkets"},
-  {type: "magifishes", label: "Magifish"},
-  {type: "hexes", label: "Hexes"},
-  {type: "boosts", label: "Boosts"},
-  {type: "effects", label: "Effects"},
-] as const;
 
 type Props = {
   deckOpen: boolean;
@@ -27,17 +15,9 @@ export default function NavBar({deckOpen, onToggleDeck}: Props) {
       <div className="header-body body-wrapper">
         <span className="logo-text">Windblown Browser</span>
         <nav className="tabs">
-          {tabs.map((tab) => {
-            const active = pathname?.startsWith(`/${tab.type}`);
-            return (
-              <Link
-                key={tab.type}
-                className={`tab ${active ? "is-active" : ""}`}
-                href={`/${tab.type}`}>
-                {tab.label}
-              </Link>
-            );
-          })}
+          <Link className={`tab ${pathname === "/browse" ? "is-active" : ""}`} href="/browse">
+            Browse
+          </Link>
         </nav>
         <button className={`deck-toggle ${deckOpen ? "is-active" : ""}`} type="button" onClick={onToggleDeck}>
           {deckOpen ? "Hide deck builder" : "Deck builder"}

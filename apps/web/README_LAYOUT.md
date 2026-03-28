@@ -87,7 +87,7 @@ html
 
 ## Notes
 
-- Home route (`/`) redirects to `/gifts`.
+- Home route (`/`) redirects to `/browse`.
 - `.status`, `.status.error`, `.sections`, `.scroll-hints` buttons, and many deck rows/groups are conditional.
 - `EntityCard` classes are state-based:
   - `.highlight` for highlighted/in-deck cards
