@@ -147,6 +147,14 @@ export default function EntityBrowser({embedded = false}: Props) {
       <div className="filters">
         <div className="filters-body body-wrapper">
           <div className="scroll-hints">
+            <button
+              aria-hidden="true"
+              className="pill-toggle scroll-hints-placeholder"
+              tabIndex={-1}
+              type="button"
+            >
+              Previous match
+            </button>
             {!loading &&
               !error &&
               matchDisplayMode === "fade-unmatched" &&
