@@ -12,7 +12,7 @@ header, .header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-7);
+    gap: var(--space-10);
     height: var(--header-height);
 }
 
@@ -20,8 +20,10 @@ header, .header {
 
 .logo-text {
     font-size: var(--font-size-md);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     letter-spacing: var(--letter-spacing-wide);
+    height: var(--header-height);
+    align-content: center;
 }
 
 /* ---------- Tabs ---------- */

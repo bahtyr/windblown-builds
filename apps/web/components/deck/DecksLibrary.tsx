@@ -87,8 +87,8 @@ export default function DecksLibrary() {
         <section className="decks-page body-wrapper">
           <div className="decks-page-header">
             <div>
-              <h1 className="decks-page-title">Saved builds</h1>
-              <p className="decks-page-copy">Start a new build, reopen an old favorite, or share a setup once it feels worth keeping.</p>
+              <h1 className="decks-page-title">Your library</h1>
+              <p className="decks-page-copy">Revisit your runs and share with others.</p>
             </div>
             <div className="decks-page-header-actions">
               <button className="btn decks-page-primary-button" type="button" onClick={handleCreateNew}>Create new build</button>
