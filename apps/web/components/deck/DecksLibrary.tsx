@@ -181,10 +181,10 @@ function DeckRow({row, onDelete, onDiscardShared, onDuplicate, onEdit, onSaveSha
             </>
           ) : (
             <>
-              <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={onEdit}>Edit</button>
-              <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={onDelete}>Delete</button>
-              <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={onDuplicate}>Duplicate</button>
-              <button className="btn ghost deck-row-action" type="button" onClick={onShare}>Share</button>
+              <button className="btn ghost deck-row-action deck-row-action-auto-hide" type="button" onClick={onEdit}>Edit</button>
+              <button className="btn ghost deck-row-action deck-row-action-auto-hide" type="button" onClick={onDelete}>Delete</button>
+              <button className="btn ghost deck-row-action deck-row-action-auto-hide" type="button" onClick={onDuplicate}>Duplicate</button>
+              <button className="btn ghost deck-row-action deck-row-action-auto-hide" type="button" onClick={onShare}>Share</button>
             </>
           )}
         </div>
