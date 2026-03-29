@@ -92,7 +92,7 @@ export default function EntityBrowser({embedded = false}: Props) {
 
   const matchesFilters = useCallback(
     (item: DisplayEntity) => {
-      const matchSearch = !search || (item.name + " " + item.description).toLowerCase().includes(search.toLowerCase());
+      const matchSearch = !search || buildSearchText(item).includes(search.toLowerCase());
       const matchEntity = !selectedEntity || entityIds(item).includes(selectedEntity);
       const liked = likes.ids.has(`${item.entityType}:${item.name}`);
       const matchLiked = !likedOnly || liked;
@@ -368,6 +368,13 @@ function displayEntityLabel(value: string): string {
     return value.slice(wikiIdx + "/wiki/".length);
   }
   return value;
+}
+
+function buildSearchText(item: DisplayEntity): string {
+  const richText = item.richDescription.map((part) => part.text).join(" ");
+  return [item.name, item.category ?? "", item.description, richText]
+    .join(" ")
+    .toLowerCase();
 }
 
 /**
