@@ -2,7 +2,6 @@
 
 import {useMemo} from "react";
 import {ScrapedEntity} from "../../lib/types";
-import {MatchDisplayMode} from "../../app/[type]/entity-utils";
 
 type Props = {
   items: ScrapedEntity[];
@@ -10,59 +9,34 @@ type Props = {
   onSearch: (v: string) => void;
   selectedEntity: string;
   onEntityChange: (id: string) => void;
-  likedOnly: boolean;
-  onLikedChange: (v: boolean) => void;
-  deckOnly: boolean;
-  onDeckChange: (v: boolean) => void;
-  matchDisplayMode: MatchDisplayMode;
-  onMatchDisplayModeChange: (mode: MatchDisplayMode) => void;
+  onClear: () => void;
 };
 
+/**
+ * Render the top search filters for browse.
+ *
+ * @param {Props} props - Filter values and callbacks.
+ * @returns {JSX.Element} Filter controls.
+ */
 export default function Filters({
   items,
   search,
   onSearch,
   selectedEntity,
   onEntityChange,
-  likedOnly,
-  onLikedChange,
-  deckOnly,
-  onDeckChange,
-  matchDisplayMode,
-  onMatchDisplayModeChange,
+  onClear,
 }: Props) {
   const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
 
   return (
     <>
-      <button
-        className="btn"
-        type="button"
-        onClick={() => {
-          onSearch("");
-          onEntityChange("");
-          onLikedChange(false);
-          onDeckChange(false);
-        }}
-      >
-        Clear
-      </button>
-      <button
-        type="button"
-        className={`pill-toggle ${likedOnly ? "is-active" : ""}`}
-        onClick={() => onLikedChange(!likedOnly)}
-        aria-pressed={likedOnly}
-      >
-        ❤️ Liked
-      </button>
-      <button
-        type="button"
-        className={`pill-toggle ${deckOnly ? "is-active" : ""}`}
-        onClick={() => onDeckChange(!deckOnly)}
-        aria-pressed={deckOnly}
-      >
-        🧩 In deck
-      </button>
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search name/category/text..."
+        value={search}
+        onChange={(e) => onSearch(e.target.value)}
+      />
       <select id="entitySelect" value={selectedEntity} onChange={(e) => onEntityChange(e.target.value)}>
         <option value="">Entities</option>
         {entityOptions.map((opt) => (
@@ -71,23 +45,8 @@ export default function Filters({
           </option>
         ))}
       </select>
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Search name/category/text…"
-        value={search}
-        onChange={(e) => onSearch(e.target.value)}
-      />
-      <button
-        type="button"
-        className={`pill-toggle ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
-        onClick={() =>
-          onMatchDisplayModeChange(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
-        }
-        aria-pressed={matchDisplayMode === "show-matches-only"}
-      >
-        {/*{matchDisplayMode === "fade-unmatched" ? "Hide unmatched result" : "Unmatched: Hidden"}*/}
-        {matchDisplayMode === "fade-unmatched" ? "Fade matching results" : "Show only matching results"}
+      <button className="btn" type="button" onClick={onClear}>
+        Clear
       </button>
     </>
   );

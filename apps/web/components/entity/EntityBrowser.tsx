@@ -116,6 +116,12 @@ export default function EntityBrowser({embedded = false}: Props) {
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
   const {matchNav, scrollToNearest} = useMatchNavigation(!loading && !error, matchNavDeps);
+  const clearFilters = useCallback(() => {
+    setSearch("");
+    setSelectedEntity("");
+    setLikedOnly(false);
+    setDeckOnly(false);
+  }, []);
 
   return (
     <div className={`page entity-browser ${embedded ? "entity-browser-embedded" : ""}`}>
@@ -127,12 +133,7 @@ export default function EntityBrowser({embedded = false}: Props) {
             onSearch={setSearch}
             selectedEntity={selectedEntity}
             onEntityChange={setSelectedEntity}
-            likedOnly={likedOnly}
-            onLikedChange={setLikedOnly}
-            deckOnly={deckOnly}
-            onDeckChange={setDeckOnly}
-            matchDisplayMode={matchDisplayMode}
-            onMatchDisplayModeChange={setMatchDisplayMode}
+            onClear={clearFilters}
           />
 
           <div className="scroll-hints">
@@ -173,6 +174,34 @@ export default function EntityBrowser({embedded = false}: Props) {
         <div className="browse-layout body-wrapper">
           <aside className="browse-sidebar">
             <div className="browse-sidebar-title">Browse</div>
+            <div className="browse-sidebar-tools">
+              <button
+                type="button"
+                className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
+                onClick={() =>
+                  setMatchDisplayMode(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
+                }
+                aria-pressed={matchDisplayMode === "show-matches-only"}
+              >
+                Hide unmatching results
+              </button>
+              <button
+                type="button"
+                className={`browse-sidebar-link ${likedOnly ? "is-active" : ""}`}
+                onClick={() => setLikedOnly(!likedOnly)}
+                aria-pressed={likedOnly}
+              >
+                ❤️ Likes
+              </button>
+              <button
+                type="button"
+                className={`browse-sidebar-link ${deckOnly ? "is-active" : ""}`}
+                onClick={() => setDeckOnly(!deckOnly)}
+                aria-pressed={deckOnly}
+              >
+                🧩 In deck
+              </button>
+            </div>
             <nav className="browse-sidebar-nav">
               <button className={`browse-sidebar-link ${selectedType === "all" ? "is-active" : ""}`} type="button" onClick={() => setSelectedType("all")}>
                 All

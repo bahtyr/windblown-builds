@@ -29,6 +29,13 @@
     gap: var(--space-2);
 }
 
+.browse-sidebar-tools {
+    display: grid;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border);
+}
+
 .browse-sidebar-link {
     padding: var(--space-4) var(--space-5);
     border: 1px solid transparent;
@@ -41,6 +48,12 @@
 }
 
 .browse-sidebar-link:hover,
+.browse-sidebar-link:focus-visible {
+    color: var(--text);
+    border-color: var(--color-surface-chip);
+    background: rgba(255, 255, 255, 0.03);
+}
+
 .browse-sidebar-link.is-active {
     color: var(--text);
     border-color: var(--border);
