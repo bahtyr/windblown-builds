@@ -4,8 +4,12 @@ import Image from "next/image";
 import {useEffect, useState} from "react";
 import {grayscaleImageData, loadImageData, matchTemplate, type MatchResult} from "../../lib/gift-icon-matcher";
 
-const SOURCE_PATH = "/source-cropped.png";
-const MATCH_THRESHOLD = 0.85;
+const SOURCE_PATH = "/source-cropped-2.png";
+const MATCH_THRESHOLD = 0.80;
+const MATCH_SCALES = [0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15];
+const TEMPLATE_BORDER_TRIM = 4;
+const COARSE_STEP = 1;
+const REFINE_RADIUS = 5;
 const TEMPLATE_SPECS = [
   {name: "Intense Burn", path: "/Intense_Burn.webp", shouldFind: true},
   {name: "Gory Flame Icon", path: "/Gory_Flame_Icon.webp", shouldFind: true},
@@ -52,10 +56,10 @@ export default function GiftMatchDebug(): JSX.Element {
               grayscaleImageData(templateImageData),
               {
                 threshold: MATCH_THRESHOLD,
-                scales: [0.9, 1, 1.1],
-                trimBorder: 2,
-                coarseStep: 2,
-                refineRadius: 3,
+                scales: MATCH_SCALES,
+                trimBorder: TEMPLATE_BORDER_TRIM,
+                coarseStep: COARSE_STEP,
+                refineRadius: REFINE_RADIUS,
               },
             );
 
@@ -114,7 +118,10 @@ export default function GiftMatchDebug(): JSX.Element {
         <div style={styles.summaryValue}>
           {state ? `${passedCount}/${state.matches.length} checks matched expectation` : "Running checks..."}
         </div>
-        <div style={styles.summaryNote}>Threshold {MATCH_THRESHOLD}. Grayscale matching with a 2px template border trim and scale search.</div>
+        <div style={styles.summaryNote}>
+          Threshold {MATCH_THRESHOLD}. Grayscale matching with a {TEMPLATE_BORDER_TRIM}px template border trim,
+          coarse step {COARSE_STEP}, refine radius {REFINE_RADIUS}, and scale search at {MATCH_SCALES.join(", ")}.
+        </div>
       </div>
 
       <div style={styles.grid}>
