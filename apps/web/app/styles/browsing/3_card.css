@@ -83,7 +83,7 @@
 }
 
 .card.is-in-deck {
-    /*box-shadow: 0 0 0 1px var(--color-text-link);*/
+    box-shadow: 0 0 0 1px var(--color-text-link);
     /*border-width: 2px;*/
 }
 
