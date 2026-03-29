@@ -215,12 +215,14 @@ export default function EntityBrowser({embedded = false}: Props) {
               options={[{value: "", label: "All entities"}, ...entityOptions]}
               selectedValue={selectedEntity}
               onSelect={setSelectedEntity}
+              deselectValue=""
             />
             <SidebarSection
               subtitle="Category"
               options={categoryOptions}
               selectedValue={selectedType}
               onSelect={(value) => setSelectedType(value as EntityType | "all")}
+              deselectValue="all"
             />
           </aside>
 
@@ -350,9 +352,17 @@ type SidebarSectionProps = {
   selectedValue: string;
   onSelect: (value: string) => void;
   navClassName?: string;
+  deselectValue?: string;
 };
 
-function SidebarSection({subtitle, options, selectedValue, onSelect, navClassName = "browse-sidebar-nav"}: SidebarSectionProps) {
+function SidebarSection({
+  subtitle,
+  options,
+  selectedValue,
+  onSelect,
+  navClassName = "browse-sidebar-nav",
+  deselectValue,
+}: SidebarSectionProps) {
   return (
     <div className="browse-sidebar-section">
       <div className="browse-sidebar-subtitle">{subtitle}</div>
@@ -362,7 +372,7 @@ function SidebarSection({subtitle, options, selectedValue, onSelect, navClassNam
             key={option.value}
             className={`browse-sidebar-link ${selectedValue === option.value ? "is-active" : ""}`}
             type="button"
-            onClick={() => onSelect(option.value)}
+            onClick={() => onSelect(selectedValue === option.value && deselectValue !== undefined ? deselectValue : option.value)}
           >
             {option.image && <img className="browse-sidebar-link-image" src={option.image} alt=""/>}
             <span className="browse-sidebar-link-label" style={option.color ? {color: option.color} : undefined}>{option.label}</span>
