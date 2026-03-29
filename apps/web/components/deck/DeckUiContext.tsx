@@ -21,27 +21,6 @@ export function DeckUiProvider({children}: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const setDrawerOpen = (nextOpen: boolean) => {
-    setOpen(nextOpen);
-    if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    if (url.pathname !== "/decks") return;
-    if (nextOpen) {
-      url.searchParams.set("builder", "open");
-    } else {
-      url.searchParams.delete("builder");
-    }
-    window.history.replaceState(null, "", url);
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    if (pathname === "/decks" && params.get("builder") === "open") {
-      setOpen(true);
-    }
-  }, [pathname]);
-
   useEffect(() => {
     if (pathname === "/decks") return;
     setOpen(false);
@@ -50,8 +29,8 @@ export function DeckUiProvider({children}: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       open,
-      openDeck: () => setDrawerOpen(true),
-      closeDeck: () => setDrawerOpen(false),
+      openDeck: () => setOpen(true),
+      closeDeck: () => setOpen(false),
     }),
     [open],
   );
