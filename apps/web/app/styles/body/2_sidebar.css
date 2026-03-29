@@ -24,12 +24,7 @@
 .browse-sidebar-section {
     display: grid;
     gap: var(--space-2);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--border);
-}
-
-.browse-sidebar-section:last-child {
-    border-bottom: none;
+    padding-bottom: var(--space-3);
 }
 
 .browse-sidebar-tools {
@@ -38,7 +33,6 @@
 }
 
 .browse-sidebar-section-search {
-    border-bottom: 0;
     padding-bottom: 0;
 }
 
@@ -47,10 +41,13 @@
 }
 
 .browse-sidebar-subtitle {
-    font-size: var(--font-size-xs);
-    color: var(--muted);
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-bold);
+    color: color-mix(in srgb, var(--muted) 82%, transparent);
     text-transform: uppercase;
     letter-spacing: var(--letter-spacing-wide);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
 }
 
 .browse-sidebar-nav-entities {
