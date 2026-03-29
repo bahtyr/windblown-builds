@@ -29,6 +29,9 @@ export default function NavBar() {
             <Link className="tab tab-secondary" href="https://discord.com/invite/v4S6Vsarkx" rel="noreferrer" target="_blank">
               Discord ↗
             </Link>
+            <Link className="tab tab-secondary" href="https://github.com/bahtyr/windblown-builds" rel="noreferrer" target="_blank">
+              Support development ↗
+            </Link>
           </nav>
         </div>
       </div>
