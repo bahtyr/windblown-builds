@@ -55,6 +55,7 @@
     letter-spacing: var(--letter-spacing-wide);
     padding-top: var(--space-2);
     padding-bottom: var(--space-2);
+    padding-left: var(--space-4);
 }
 
 .browse-sidebar-nav-entities {
@@ -97,6 +98,10 @@
     border-radius: var(--radius-sm);
     flex: 0 0 auto;
     cursor: pointer;
+}
+
+.browse-sidebar-link-image-placeholder {
+    display: inline-block;
 }
 
 .browse-sidebar-link-label {

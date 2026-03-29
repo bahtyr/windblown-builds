@@ -374,7 +374,11 @@ function SidebarSection({
             type="button"
             onClick={() => onSelect(selectedValue === option.value && deselectValue !== undefined ? deselectValue : option.value)}
           >
-            {option.image && <img className="browse-sidebar-link-image" src={option.image} alt=""/>}
+            {option.image ? (
+              <img className="browse-sidebar-link-image" src={option.image} alt=""/>
+            ) : (
+              <span aria-hidden="true" className="browse-sidebar-link-image browse-sidebar-link-image-placeholder"/>
+            )}
             <span className="browse-sidebar-link-label" style={option.color ? {color: option.color} : undefined}>{option.label}</span>
           </button>
         ))}
