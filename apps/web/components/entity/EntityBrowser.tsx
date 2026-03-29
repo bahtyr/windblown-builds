@@ -52,6 +52,16 @@ export default function EntityBrowser({embedded = false}: Props) {
   );
 
   useEffect(() => {
+    if (embedded) {
+      setSearch("");
+      setSelectedEntity("");
+      setLikedOnly(false);
+      setDeckOnly(deck.mode === "editing");
+      setMatchDisplayMode(deck.mode === "editing" ? "show-matches-only" : "fade-unmatched");
+      setFiltersHydrated(true);
+      return;
+    }
+
     const persisted = parsePersistedFilters(window.localStorage.getItem(FILTERS_STORAGE_KEY));
     if (persisted.search !== undefined) setSearch(persisted.search);
     if (persisted.selectedEntity !== undefined) setSelectedEntity(persisted.selectedEntity);
@@ -67,16 +77,16 @@ export default function EntityBrowser({embedded = false}: Props) {
       }
     }
     setFiltersHydrated(true);
-  }, []);
+  }, [deck.mode, embedded]);
 
   useEffect(() => {
-    if (!filtersHydrated) return;
+    if (!filtersHydrated || embedded) return;
     window.localStorage.setItem(
       FILTERS_STORAGE_KEY,
       JSON.stringify({search, selectedEntity, likedOnly, deckOnly, matchDisplayMode}),
     );
     window.localStorage.setItem(MATCH_DISPLAY_MODE_STORAGE_KEY, matchDisplayMode);
-  }, [deckOnly, filtersHydrated, likedOnly, matchDisplayMode, search, selectedEntity]);
+  }, [deckOnly, embedded, filtersHydrated, likedOnly, matchDisplayMode, search, selectedEntity]);
 
   const deckIds = useMemo(() => new Set(deck.items.map((item) => item.id)), [deck.items]);
 
@@ -189,6 +199,16 @@ export default function EntityBrowser({embedded = false}: Props) {
               >
                 Hide unmatching results
               </button>
+              {embedded && (
+                <button
+                  type="button"
+                  className={`browse-sidebar-link ${deckOnly ? "is-active" : ""}`}
+                  onClick={() => setDeckOnly(!deckOnly)}
+                  aria-pressed={deckOnly}
+                >
+                  🧩 In deck
+                </button>
+              )}
               <button
                 type="button"
                 className={`browse-sidebar-link ${likedOnly ? "is-active" : ""}`}
@@ -196,14 +216,6 @@ export default function EntityBrowser({embedded = false}: Props) {
                 aria-pressed={likedOnly}
               >
                 ❤️ Likes
-              </button>
-              <button
-                type="button"
-                className={`browse-sidebar-link ${deckOnly ? "is-active" : ""}`}
-                onClick={() => setDeckOnly(!deckOnly)}
-                aria-pressed={deckOnly}
-              >
-                🧩 In deck
               </button>
             </div>
             <div className="browse-sidebar-section">
