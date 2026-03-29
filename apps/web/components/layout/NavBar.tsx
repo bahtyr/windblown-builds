@@ -9,11 +9,11 @@ export default function NavBar() {
   return (
     <header className="header">
       <div className="header-body body-wrapper">
-        <span className="logo-text">Windblown Browser</span>
+        <span className="logo-text">Windblown Builds</span>
         <div className="header-nav">
           <nav className="tabs">
             <Link className={`tab ${pathname === "/decks" ? "is-active" : ""}`} href="/decks">
-              Decks
+              My Builds
             </Link>
             <Link className={`tab ${pathname === "/browse" ? "is-active" : ""}`} href="/browse">
               Browse

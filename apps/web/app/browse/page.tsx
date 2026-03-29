@@ -5,7 +5,7 @@ export default function BrowsePage() {
     <>
       <section className="body-wrapper decks-page-header">
         <div>
-          <h1 className="decks-page-title">Browse builds</h1>
+          <h1 className="decks-page-title">Browse items</h1>
           <p className="decks-page-copy">Search all items in one place and compare what fits your build.</p>
         </div>
       </section>
