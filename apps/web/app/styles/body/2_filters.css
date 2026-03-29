@@ -1,9 +1,13 @@
 /* ---------- Filters (Controls) ---------- */
 
 .filters {
-    position: sticky;
+    position: fixed;
+    top: 0;
     top: var(--filters-offset);
+    right: var(--space-8);
     z-index: var(--z-filters);
+    display: flex;
+    justify-content: flex-end;
     /*padding-top: 8px;*/
     /*border: 1px solid var(--border);*/
     /*background: var(--color-overlay-header);*/
@@ -11,10 +15,13 @@
 }
 
 .filters-body {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-5);
+    width: fit-content;
+    margin: 0;
+    max-width: calc(100vw - (var(--space-8) * 2));
     padding: var(--space-6) var(--space-10);
 
     border: 1px solid var(--border);
@@ -39,6 +46,8 @@
     right: var(--space-8);
     bottom: var(--space-8);
     z-index: 20;
+    display: inline-flex;
+    flex-wrap: wrap;
     gap: var(--space-3);
     margin-left: auto;
     /*position: fixed;*/
@@ -50,4 +59,14 @@
 .scroll-hints .pill-toggle:disabled {
     cursor: not-allowed;
     opacity: .4;
+}
+
+@media (max-width: 768px) {
+    .filters {
+        right: var(--space-5);
+    }
+
+    .filters-body {
+        max-width: calc(100vw - (var(--space-5) * 2));
+    }
 }
