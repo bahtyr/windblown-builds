@@ -19,17 +19,23 @@ export type SavedDeck = {
   createdAt: string;
 };
 
+export type SharedDeck = SavedDeck & {
+  source: "shared";
+};
+
 type DeckMode = "new" | "editing";
 export type DeckSessionSnapshot = {
   items: DeckItem[];
   name: string;
   editingDeckName: string | null;
 };
+type DraftSource = "shared" | null;
 
 type DeckContextType = {
   items: DeckItem[];
   name: string;
   saved: SavedDeck[];
+  sharedDeck: SharedDeck | null;
   editingDeckName: string | null;
   mode: DeckMode;
   add: (item: DeckItem, limits: DeckLimits) => { ok: boolean; reason?: string };
@@ -37,8 +43,10 @@ type DeckContextType = {
   moveWithinType: (type: EntityType, from: number, to: number) => void;
   setName: (name: string) => void;
   saveDeck: (asNew?: boolean) => void;
+  saveSharedDeck: () => void;
   createDeck: () => void;
   loadDeck: (name: string) => void;
+  editSharedDeck: () => void;
   cancelEditing: () => void;
   deleteDeck: (name: string) => void;
   duplicateDeck: (name: string) => string | null;
@@ -61,8 +69,10 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   const [items, setItems] = useState<DeckItem[]>([]);
   const [name, setNameState] = useState<string>(DEFAULT_DECK_NAME);
   const [saved, setSaved] = useState<SavedDeck[]>([]);
+  const [sharedDeck, setSharedDeck] = useState<SharedDeck | null>(null);
   const [editingDeckName, setEditingDeckName] = useState<string | null>(null);
   const [sessionStart, setSessionStart] = useState<DeckSessionSnapshot | null>(null);
+  const [draftSource, setDraftSource] = useState<DraftSource>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -89,19 +99,9 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       }
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const paramDeck = params.get("deck");
-    const paramName = params.get("name");
-    if (paramDeck) {
-      const parsed = parseDeckParam(paramDeck);
-      if (parsed.length) {
-        setItems(parsed);
-        setEditingDeckName(null);
-      }
-    }
-    if (paramName) {
-      setNameState(normalizeDeckName(paramName));
-      setEditingDeckName(null);
+    const sharedFromUrl = resolveSharedDeckFromLocation(window.location.pathname, window.location.search);
+    if (sharedFromUrl) {
+      setSharedDeck(sharedFromUrl);
     }
 
     setHydrated(true);
@@ -155,6 +155,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       items,
       name,
       saved,
+      sharedDeck,
       editingDeckName,
       mode,
       add: (item, limits) => {
@@ -184,6 +185,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setEditingDeckName(desiredName);
           setNameState(desiredName);
           setSessionStart(null);
+          setDraftSource(null);
           return;
         }
 
@@ -192,12 +194,25 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setEditingDeckName(targetName);
         setNameState(targetName);
         setSessionStart(null);
+        if (draftSource === "shared") {
+          setSharedDeck(null);
+          clearSharedDeckUrl();
+        }
+        setDraftSource(null);
+      },
+      saveSharedDeck: () => {
+        if (!sharedDeck) return;
+        const targetName = ensureUniqueDeckName(saved, sharedDeck.name);
+        setSaved((prev) => [...prev, {name: targetName, items: sharedDeck.items, createdAt: sharedDeck.createdAt}]);
+        setSharedDeck(null);
+        clearSharedDeckUrl();
       },
       createDeck: () => {
         setSessionStart({items, name, editingDeckName});
         setItems([]);
         setNameState(DEFAULT_DECK_NAME);
         setEditingDeckName(null);
+        setDraftSource(null);
       },
       loadDeck: (deckName) => {
         const match = saved.find((deck) => deck.name === deckName);
@@ -206,13 +221,33 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setItems(match.items);
         setNameState(match.name);
         setEditingDeckName(match.name);
+        setDraftSource(null);
+      },
+      editSharedDeck: () => {
+        if (!sharedDeck) return;
+        setSessionStart(null);
+        setItems(sharedDeck.items);
+        setNameState(sharedDeck.name);
+        setEditingDeckName(null);
+        setDraftSource("shared");
       },
       cancelEditing: () => {
+        if (draftSource === "shared") {
+          setItems([]);
+          setNameState(DEFAULT_DECK_NAME);
+          setEditingDeckName(null);
+          setSessionStart(null);
+          setDraftSource(null);
+          setSharedDeck(null);
+          clearSharedDeckUrl();
+          return;
+        }
         const restored = restoreDeckSession(sessionStart);
         setItems(restored.items);
         setNameState(restored.name);
         setEditingDeckName(restored.editingDeckName);
         setSessionStart(null);
+        setDraftSource(null);
       },
       deleteDeck: (deckName) => {
         setSaved((prev) => prev.filter((deck) => deck.name !== deckName));
@@ -222,6 +257,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setEditingDeckName(null);
         }
         setSessionStart(null);
+        setDraftSource(null);
       },
       duplicateDeck: (deckName) => {
         const source = saved.find((deck) => deck.name === deckName);
@@ -232,7 +268,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       resetDeck: () => setItems([]),
     }),
-    [editingDeckName, items, mode, name, saved, sessionStart],
+    [draftSource, editingDeckName, items, mode, name, saved, sessionStart, sharedDeck],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
@@ -419,6 +455,39 @@ export function restoreDeckSession(snapshot: DeckSessionSnapshot | null): DeckSe
     name: DEFAULT_DECK_NAME,
     editingDeckName: null,
   };
+}
+
+/**
+ * Parse a shared deck row from the current `/decks` URL.
+ *
+ * @param {string} pathname - Current pathname.
+ * @param {string} search - Current search string.
+ * @returns {SharedDeck | null} Transient shared deck row.
+ */
+export function resolveSharedDeckFromLocation(pathname: string, search: string): SharedDeck | null {
+  if (pathname !== "/decks") return null;
+  const params = new URLSearchParams(search);
+  const rawDeck = params.get("deck");
+  if (!rawDeck) return null;
+  const items = parseDeckParam(rawDeck);
+  if (items.length === 0) return null;
+  return {
+    source: "shared",
+    name: normalizeDeckName(params.get("name") ?? undefined),
+    items,
+    createdAt: createTimestamp(),
+  };
+}
+
+/**
+ * Remove transient shared-deck params from the current URL.
+ */
+export function clearSharedDeckUrl() {
+  if (typeof window === "undefined") return;
+  const url = new URL(window.location.href);
+  url.searchParams.delete("deck");
+  url.searchParams.delete("name");
+  window.history.replaceState(null, "", url);
 }
 
 function createTimestamp(): string {

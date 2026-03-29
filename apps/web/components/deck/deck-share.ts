@@ -5,7 +5,7 @@ import {DeckItem, SavedDeck} from "./DeckContext";
  *
  * @param {string} origin - Current site origin.
  * @param {{name: string; items: DeckItem[]}} deck - Deck payload to serialize.
- * @returns {string} Shareable browse URL.
+ * @returns {string} Shareable decks URL.
  */
 export function buildDeckShareUrl(origin: string, deck: Pick<SavedDeck, "name" | "items">): string {
   const params = new URLSearchParams();
@@ -18,5 +18,5 @@ export function buildDeckShareUrl(origin: string, deck: Pick<SavedDeck, "name" |
         .join(","),
     );
   }
-  return `${origin}/browse?${params.toString()}`;
+  return `${origin}/decks?${params.toString()}`;
 }

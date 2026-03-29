@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {normalizeSavedDecks, restoreDeckSession, selectFirstSavedAfterDelete, suggestDuplicateName} from "../components/deck/DeckContext";
+import {normalizeSavedDecks, resolveSharedDeckFromLocation, restoreDeckSession, selectFirstSavedAfterDelete, suggestDuplicateName} from "../components/deck/DeckContext";
 
 describe("selectFirstSavedAfterDelete", () => {
   it("selects the first remaining deck after deletion", () => {
@@ -72,5 +72,23 @@ describe("restoreDeckSession", () => {
       name: "Untitled deck",
       editingDeckName: null,
     });
+  });
+});
+
+describe("resolveSharedDeckFromLocation", () => {
+  it("creates a transient shared deck only for the decks page", () => {
+    const shared = resolveSharedDeckFromLocation("/decks", "?name=Shared%20Build&deck=gifts|Strong_Recovery,weapons|Anchor");
+    expect(shared).toMatchObject({
+      source: "shared",
+      name: "Shared Build",
+    });
+    expect(shared?.items).toEqual([
+      {id: "gifts:Strong_Recovery", type: "gifts", name: "Strong_Recovery"},
+      {id: "weapons:Anchor", type: "weapons", name: "Anchor"},
+    ]);
+  });
+
+  it("ignores shared params outside the decks page", () => {
+    expect(resolveSharedDeckFromLocation("/browse", "?name=Shared%20Build&deck=gifts|Strong_Recovery")).toBeNull();
   });
 });

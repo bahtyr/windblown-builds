@@ -71,6 +71,15 @@ export default function DecksLibrary() {
     deckUi.openDeck();
   };
 
+  const handleEditShared = () => {
+    deck.editSharedDeck();
+    deckUi.openDeck();
+  };
+
+  const handleSaveShared = () => {
+    deck.saveSharedDeck();
+  };
+
   const handleCreateNew = () => {
     deck.createDeck();
     deckUi.openDeck();
@@ -100,6 +109,33 @@ export default function DecksLibrary() {
           </div>
 
           <div className="decks-grid">
+            {deck.sharedDeck && (
+              <article className="deck-row deck-row-shared" key={`shared-${deck.sharedDeck.name}`}>
+                <div className="deck-row-head">
+                  <div className="deck-row-title-group">
+                    <h2 className="deck-row-title">{deck.sharedDeck.name}</h2>
+                    <p className="deck-row-meta">Shared link</p>
+                  </div>
+                  <div className="deck-row-actions">
+                    <button className="btn ghost deck-row-action" type="button" onClick={handleEditShared}>Edit</button>
+                    <button className="btn deck-row-action" type="button" onClick={handleSaveShared}>Save</button>
+                  </div>
+                </div>
+
+                <div className="deck-row-items">
+                  {deck.sharedDeck.items.map((item) => (
+                    <div className="deck-row-item" key={item.id}>
+                      {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
+                      <div className="deck-row-item-copy">
+                        <span className="deck-row-item-name">{item.name}</span>
+                        <span className="deck-row-item-type">{formatItemTypeLabel(item.type)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            )}
+
             {rows.length > 0 ? (
               rows.map((savedDeck) => (
                 <article className="deck-row" key={savedDeck.name}>
@@ -130,7 +166,9 @@ export default function DecksLibrary() {
                 </article>
               ))
             ) : (
+              !deck.sharedDeck && (
               <div className="deck-row-empty">No saved builds yet.</div>
+              )
             )}
           </div>
         </section>
