@@ -183,7 +183,7 @@ export default function EntityBrowser({embedded = false}: Props) {
           </div>
 
           <div className="count">
-            {filteredCount === visibleItems.length ? `${visibleItems.length} total` : `${filteredCount} of ${visibleItems.length} filtered`}
+            {filteredCount === visibleItems.length ? `${visibleItems.length} total` : (filteredCount === 1 ? `1 result` : `${filteredCount} results`)}
           </div>
         </div>
       </div>

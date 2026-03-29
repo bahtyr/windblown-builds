@@ -33,10 +33,7 @@ export default function DeckPanel({onCancel, onCommit}: Props) {
     <div className="deck">
       <div className="deck-manager">
         <div className="deck-builder-title-group">
-          <h2 className="deck-builder-title">{isEditing ? "Editing build" : "Creating new build"}</h2>
-          <p className="deck-builder-subtitle">
-            {isEditing ? `Working on ${deck.editingDeckName}` : "Start from scratch, then save when you are ready."}
-          </p>
+          <h2 className="deck-builder-title">{isEditing ? "Editing build" : "Create new build"}</h2>
         </div>
         <div className="deck-actions">
           <input

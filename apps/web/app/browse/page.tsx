@@ -1,5 +1,15 @@
 import EntityBrowser from "../../components/entity/EntityBrowser";
 
 export default function BrowsePage() {
-  return <EntityBrowser/>;
+  return (
+    <>
+      <section className="body-wrapper decks-page-header">
+        <div>
+          <h1 className="decks-page-title">Browse builds</h1>
+          <p className="decks-page-copy">Search all items in one place and compare what fits your build.</p>
+        </div>
+      </section>
+      <EntityBrowser/>
+    </>
+  );
 }
