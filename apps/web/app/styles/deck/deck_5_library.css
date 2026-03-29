@@ -1,10 +1,10 @@
 .page-decks {
-    padding: var(--space-10) 0 var(--space-12);
+    /*padding-top: var(--space-20);*/
 }
 
 .decks-page {
     display: grid;
-    gap: var(--space-8);
+    /*gap: var(--space-5);*/
 }
 
 .decks-page-header {
@@ -13,6 +13,8 @@
     align-items: flex-end;
     gap: var(--space-5);
     flex-wrap: wrap;
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-20);
 }
 
 .decks-page-title {
@@ -47,18 +49,20 @@
 
 .decks-grid {
     display: grid;
-    gap: var(--space-6);
+    /*gap: var(--space-6);*/
 }
 
 .deck-row {
     display: grid;
-    gap: var(--space-5);
-    padding: var(--space-6);
+    /*gap: var(--space-5);*/
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-10);
     border-bottom: 1px solid var(--color-surface-chip);
 }
 
 .deck-row-shared {
     margin-bottom: var(--space-3);
+    padding-inline: var(--space-6);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     background: linear-gradient(
@@ -73,7 +77,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: var(--space-5);
+    /*align-items: center;*/
+    /*gap: var(--space-5);*/
     flex-wrap: wrap;
 }
 
@@ -121,7 +126,7 @@
 .deck-row-item {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-6);
     position: relative;
     min-width: 0;
     padding: var(--space-3);
