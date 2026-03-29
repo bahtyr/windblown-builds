@@ -130,7 +130,10 @@ export default function EntityBrowser({embedded = false}: Props) {
     () => [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
-  const {matchNav, scrollToNearest} = useMatchNavigation(!loading && !error, matchNavDeps);
+  const {matchNav, scrollToNearest} = useMatchNavigation(
+    !loading && !error && matchDisplayMode === "fade-unmatched",
+    matchNavDeps,
+  );
 
   const resetFilters = useCallback(() => {
     setSearch("");
@@ -146,6 +149,7 @@ export default function EntityBrowser({embedded = false}: Props) {
           <div className="scroll-hints">
             {!loading &&
               !error &&
+              matchDisplayMode === "fade-unmatched" &&
               filteredCount > 0 &&
               filteredCount < items.length &&
               matchNav.above + matchNav.below > 0 && (
