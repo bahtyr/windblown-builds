@@ -19,6 +19,7 @@ import Filters from "./Filters";
 
 type MatchNav = { above: number; below: number };
 type DisplayEntity = ScrapedEntity & { entityType: EntityType };
+type EntityFilterOption = { value: string; label: string };
 type Props = {
   embedded?: boolean;
 };
@@ -109,6 +110,7 @@ export default function EntityBrowser({embedded = false}: Props) {
       }),
     [grouped, matchesFilters],
   );
+  const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
 
   const filteredCount = useMemo(() => visibleItems.filter(matchesFilters).length, [matchesFilters, visibleItems]);
   const matchNavDeps = useMemo(
@@ -128,11 +130,8 @@ export default function EntityBrowser({embedded = false}: Props) {
       <div className="filters">
         <div className="filters-body body-wrapper">
           <Filters
-            items={visibleItems}
             search={search}
             onSearch={setSearch}
-            selectedEntity={selectedEntity}
-            onEntityChange={setSelectedEntity}
             onClear={clearFilters}
           />
 
@@ -201,6 +200,28 @@ export default function EntityBrowser({embedded = false}: Props) {
               >
                 🧩 In deck
               </button>
+            </div>
+            <div className="browse-sidebar-section">
+              <div className="browse-sidebar-subtitle">Entities</div>
+              <nav className="browse-sidebar-nav browse-sidebar-nav-entities">
+                <button
+                  className={`browse-sidebar-link ${selectedEntity === "" ? "is-active" : ""}`}
+                  type="button"
+                  onClick={() => setSelectedEntity("")}
+                >
+                  All entities
+                </button>
+                {entityOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`browse-sidebar-link ${selectedEntity === option.value ? "is-active" : ""}`}
+                    type="button"
+                    onClick={() => setSelectedEntity(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </nav>
             </div>
             <nav className="browse-sidebar-nav">
               <button className={`browse-sidebar-link ${selectedType === "all" ? "is-active" : ""}`} type="button" onClick={() => setSelectedType("all")}>
@@ -301,6 +322,32 @@ function useEntityData() {
 
 function capitalize(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function collectEntityOptions(items: ScrapedEntity[]): EntityFilterOption[] {
+  const map = new Map<string, string>();
+  for (const item of items) {
+    for (const part of item.richDescription || []) {
+      if (part.key !== "entity") continue;
+      if (part.href) {
+        const value = part.href.split("?")[0];
+        map.set(value, displayEntityLabel(value));
+      } else if (part.id) {
+        map.set(part.id, displayEntityLabel(part.id));
+      }
+    }
+  }
+  return Array.from(map.entries())
+    .sort(([, a], [, b]) => a.localeCompare(b))
+    .map(([value, label]) => ({value, label}));
+}
+
+function displayEntityLabel(value: string): string {
+  const wikiIdx = value.indexOf("/wiki/");
+  if (wikiIdx !== -1) {
+    return value.slice(wikiIdx + "/wiki/".length);
+  }
+  return value;
 }
 
 /**
