@@ -6,7 +6,7 @@
 
 .browse-sidebar {
     position: sticky;
-    top: 0;
+    top: var(--filters-offset);
     align-self: start;
     display: grid;
     gap: var(--space-4);
@@ -40,6 +40,10 @@
 .browse-sidebar-section-search {
     border-bottom: 0;
     padding-bottom: 0;
+}
+
+.entity-browser-embedded .browse-sidebar {
+    top: var(--space-6);
 }
 
 .browse-sidebar-subtitle {
