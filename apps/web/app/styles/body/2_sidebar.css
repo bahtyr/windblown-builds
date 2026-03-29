@@ -11,7 +11,7 @@
     display: grid;
     gap: var(--space-3);
     padding: var(--space-4);
-    max-height: calc(100vh - var(--filters-offset) - var(--space-4));
+    max-height: min(calc(100vh - var(--filters-offset) - var(--space-4)), 72vh);
     overflow-y: auto;
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
@@ -44,7 +44,7 @@
 
 .entity-browser-embedded .browse-sidebar {
     top: var(--space-6);
-    max-height: calc(100vh - var(--space-6) - var(--space-6));
+    max-height: min(calc(100vh - var(--space-6) - var(--space-6)), 72vh);
 }
 
 .browse-sidebar-subtitle {
