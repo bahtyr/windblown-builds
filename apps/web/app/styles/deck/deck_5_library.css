@@ -35,6 +35,17 @@
     justify-content: flex-end;
 }
 
+.decks-page-primary-button {
+    padding: var(--space-5) var(--space-8);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 0 0 1px rgba(79, 163, 255, 0.25), 0 12px 28px rgba(var(--color-shadow-rgb), .35);
+}
+
+.decks-page-primary-button:hover {
+    transform: translateY(-1px);
+}
+
 .decks-grid {
     display: grid;
     gap: var(--space-6);

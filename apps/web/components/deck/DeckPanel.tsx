@@ -16,9 +16,6 @@ export default function DeckPanel({open}: Props) {
     <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
       {open && (
         <div className="deck">
-          <button className="btn deck-new-button" type="button" onClick={() => deck.createDeck()}>
-            Create new build
-          </button>
           <div className="deck-manager">
             <div className="deck-builder-title-group">
               <h2 className="deck-builder-title">{isEditing ? "Editing build" : "Creating new build"}</h2>

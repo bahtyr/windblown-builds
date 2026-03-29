@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useMemo, useState} from "react";
+import {useMemo} from "react";
 import {useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
@@ -14,7 +14,6 @@ import {buildDeckShareUrl} from "./deck-share";
 export default function DecksLibrary() {
   const deck = useDeck();
   const deckUi = useDeckUi();
-  const [status, setStatus] = useState<string>("");
 
   const rows = useMemo(
     () => deck.saved.filter((savedDeck) => savedDeck.items.length > 0).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
@@ -26,32 +25,25 @@ export default function DecksLibrary() {
     if (!savedDeck || typeof window === "undefined") return;
     try {
       await navigator.clipboard.writeText(buildDeckShareUrl(window.location.origin, savedDeck));
-      setStatus(`Copied share link for ${deckName}`);
-    } catch {
-      setStatus(`Copy failed for ${deckName}`);
-    }
+    } catch {}
   };
 
   const handleDuplicate = (deckName: string) => {
-    const duplicatedName = deck.duplicateDeck(deckName);
-    setStatus(duplicatedName ? `Duplicated as ${duplicatedName}` : `Duplicate failed for ${deckName}`);
+    deck.duplicateDeck(deckName);
   };
 
   const handleDelete = (deckName: string) => {
     deck.deleteDeck(deckName);
-    setStatus(`Deleted ${deckName}`);
   };
 
   const handleEdit = (deckName: string) => {
     deck.loadDeck(deckName);
     deckUi.openDeck();
-    setStatus(`Editing ${deckName}`);
   };
 
   const handleCreateNew = () => {
     deck.createDeck();
     deckUi.openDeck();
-    setStatus("Creating a new build");
   };
 
   return (
@@ -63,8 +55,7 @@ export default function DecksLibrary() {
             <p className="decks-page-copy">Keep your favorite runs handy, revisit the item mix at a glance, and share a build when you want to send it to someone else.</p>
           </div>
           <div className="decks-page-header-actions">
-            <button className="btn" type="button" onClick={handleCreateNew}>Create new build</button>
-            {status && <div className="decks-page-status">{status}</div>}
+            <button className="btn decks-page-primary-button" type="button" onClick={handleCreateNew}>Create new build</button>
           </div>
         </div>
 
