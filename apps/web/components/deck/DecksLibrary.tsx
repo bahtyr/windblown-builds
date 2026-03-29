@@ -163,14 +163,14 @@ type DeckRowProps = {
 
 function DeckRow({row, onDelete, onDiscardShared, onDuplicate, onEdit, onSaveShared, onShare}: DeckRowProps) {
   const isShared = row.kind === "shared";
-  const meta = isShared ? "Shared link" : formatRoughDate(row.deck.createdAt);
+  const meta = isShared ? null : formatRoughDate(row.deck.createdAt);
 
   return (
     <article className={`deck-row ${isShared ? "deck-row-shared" : ""}`}>
       <div className="deck-row-head">
         <div className="deck-row-title-group">
           <h2 className="deck-row-title">{row.deck.name}</h2>
-          <p className="deck-row-meta">{meta}</p>
+          {meta && <p className="deck-row-meta">{meta}</p>}
         </div>
         <div className="deck-row-actions">
           {isShared ? (

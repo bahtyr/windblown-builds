@@ -80,7 +80,7 @@ describe("resolveSharedDeckFromLocation", () => {
     const shared = resolveSharedDeckFromLocation("/decks", "?name=Shared%20Build&deck=gifts|Strong_Recovery,weapons|Anchor");
     expect(shared).toMatchObject({
       source: "shared",
-      name: "Shared Build",
+      name: "Shared Build (shared)",
     });
     expect(shared?.items).toEqual([
       {id: "gifts:Strong_Recovery", type: "gifts", name: "Strong_Recovery"},

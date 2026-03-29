@@ -502,9 +502,10 @@ export function resolveSharedDeckFromLocation(pathname: string, search: string):
   if (!rawDeck) return null;
   const items = parseDeckParam(rawDeck);
   if (items.length === 0) return null;
+  const sharedName = `${normalizeDeckName(params.get("name") ?? undefined)} (shared)`;
   return {
     source: "shared",
-    name: normalizeDeckName(params.get("name") ?? undefined),
+    name: sharedName,
     items,
     createdAt: createTimestamp(),
   };
