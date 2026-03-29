@@ -6,7 +6,6 @@
 
 .browse-sidebar {
     position: sticky;
-    /*top: calc(var(--header-height) + var(--space-8));*/
     top: 0;
     align-self: start;
     display: grid;
@@ -22,13 +21,6 @@
     gap: var(--space-2);
 }
 
-.browse-sidebar-tools {
-    display: grid;
-    gap: var(--space-2);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--border);
-}
-
 .browse-sidebar-section {
     display: grid;
     gap: var(--space-3);
@@ -36,8 +28,18 @@
     border-bottom: 1px solid var(--border);
 }
 
-.browse-sidebar-section:first-child {
+.browse-sidebar-section:last-child {
+    border-bottom: none;
+}
+
+.browse-sidebar-tools {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.browse-sidebar-section-search {
     border-bottom: 0;
+    padding-bottom: 0;
 }
 
 .browse-sidebar-subtitle {

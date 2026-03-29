@@ -233,9 +233,3 @@ export function formatRoughDate(value: string): string {
 function pluralize(value: number, unit: string): string {
   return `${value} ${unit}${value === 1 ? "" : "s"} ago`;
 }
-
-function formatItemTypeLabel(value: string): string {
-  if (value === "magifishes") return "magifish";
-  if (value.endsWith("s")) return value.slice(0, -1);
-  return value;
-}

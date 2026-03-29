@@ -18,7 +18,7 @@ import EntityCard from "./EntityCard";
 
 type MatchNav = { above: number; below: number };
 type DisplayEntity = ScrapedEntity & { entityType: EntityType };
-type EntityFilterOption = { value: string; label: string };
+type SidebarOption = { value: string; label: string };
 type Props = {
   embedded?: boolean;
 };
@@ -35,8 +35,10 @@ const MATCH_DISPLAY_MODE_STORAGE_KEY = "entityMatchDisplayMode";
  */
 export default function EntityBrowser({embedded = false}: Props) {
   const {items, loading, error} = useEntityData();
-  const [selectedType, setSelectedType] = useState<EntityType | "all">("all");
+  const deck = useDeck();
+  const likes = useLikes();
 
+  const [selectedType, setSelectedType] = useState<EntityType | "all">("all");
   const [search, setSearch] = useState("");
   const [selectedEntity, setSelectedEntity] = useState("");
   const [likedOnly, setLikedOnly] = useState(false);
@@ -44,12 +46,11 @@ export default function EntityBrowser({embedded = false}: Props) {
   const [matchDisplayMode, setMatchDisplayMode] = useState<MatchDisplayMode>("fade-unmatched");
   const [filtersHydrated, setFiltersHydrated] = useState(false);
 
-  const deck = useDeck();
-  const likes = useLikes();
   const visibleItems = useMemo(
     () => items.filter((item) => selectedType === "all" || item.entityType === selectedType),
     [items, selectedType],
   );
+  const deckIds = useMemo(() => new Set(deck.items.map((item) => item.id)), [deck.items]);
 
   useEffect(() => {
     if (embedded) {
@@ -76,11 +77,13 @@ export default function EntityBrowser({embedded = false}: Props) {
         setMatchDisplayMode(legacy);
       }
     }
+
     setFiltersHydrated(true);
   }, [deck.mode, embedded]);
 
   useEffect(() => {
     if (!filtersHydrated || embedded) return;
+
     window.localStorage.setItem(
       FILTERS_STORAGE_KEY,
       JSON.stringify({search, selectedEntity, likedOnly, deckOnly, matchDisplayMode}),
@@ -88,17 +91,13 @@ export default function EntityBrowser({embedded = false}: Props) {
     window.localStorage.setItem(MATCH_DISPLAY_MODE_STORAGE_KEY, matchDisplayMode);
   }, [deckOnly, embedded, filtersHydrated, likedOnly, matchDisplayMode, search, selectedEntity]);
 
-  const deckIds = useMemo(() => new Set(deck.items.map((item) => item.id)), [deck.items]);
-
   const matchesFilters = useCallback(
     (item: DisplayEntity) => {
       const matchSearch = !search || buildSearchText(item).includes(search.toLowerCase());
       const matchEntity = !selectedEntity || entityIds(item).includes(selectedEntity);
       const liked = likes.ids.has(`${item.entityType}:${item.name}`);
-      const matchLiked = !likedOnly || liked;
       const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
-      const matchDeck = !deckOnly || inDeck;
-      return matchSearch && matchEntity && matchLiked && matchDeck;
+      return matchSearch && matchEntity && (!likedOnly || liked) && (!deckOnly || inDeck);
     },
     [deckIds, deckOnly, likedOnly, likes.ids, search, selectedEntity],
   );
@@ -113,25 +112,26 @@ export default function EntityBrowser({embedded = false}: Props) {
   );
   const sections = useMemo(
     () =>
-      grouped.map(([category, list]) => {
-        const filtered = list.filter(matchesFilters);
-        return {category, list, filtered};
-      }),
+      grouped.map(([category, list]) => ({
+        category,
+        list,
+        filtered: list.filter(matchesFilters),
+      })),
     [grouped, matchesFilters],
   );
   const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    selectedEntity !== "" ||
-    likedOnly ||
-    deckOnly;
-
+  const categoryOptions = useMemo<SidebarOption[]>(
+    () => [{value: "all", label: "All"}, ...ENTITY_TYPES.map((type) => ({value: type, label: capitalize(type)}))],
+    [],
+  );
+  const hasActiveFilters = search.trim().length > 0 || selectedEntity !== "" || likedOnly || deckOnly;
   const filteredCount = useMemo(() => visibleItems.filter(matchesFilters).length, [matchesFilters, visibleItems]);
   const matchNavDeps = useMemo(
     () => [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
   const {matchNav, scrollToNearest} = useMatchNavigation(!loading && !error, matchNavDeps);
+
   const resetFilters = useCallback(() => {
     setSearch("");
     setSelectedEntity("");
@@ -144,7 +144,10 @@ export default function EntityBrowser({embedded = false}: Props) {
       <div className="filters">
         <div className="filters-body body-wrapper">
           <div className="scroll-hints">
-            {!loading && !error && filteredCount > 0 && filteredCount < items.length && (
+            {!loading &&
+              !error &&
+              filteredCount > 0 &&
+              filteredCount < items.length &&
               matchNav.above + matchNav.below > 0 && (
                 <>
                   <button
@@ -164,8 +167,7 @@ export default function EntityBrowser({embedded = false}: Props) {
                     Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
                   </button>
                 </>
-              )
-            )}
+              )}
           </div>
 
           <div className="count">
@@ -180,94 +182,36 @@ export default function EntityBrowser({embedded = false}: Props) {
       {!loading && !error && (
         <div className="browse-layout body-wrapper">
           <aside className="browse-sidebar">
-            <div className="browse-sidebar-section">
-              <button
-                className={`btn ghost browse-sidebar-reset ${hasActiveFilters ? "is-active" : ""}`}
-                type="button"
-                onClick={resetFilters}
-              >
-                Reset filters
-              </button>
-              <input
-                className="browse-sidebar-search"
-                id="searchInput"
-                type="text"
-                placeholder="Search text..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-            <div className="browse-sidebar-tools">
-              <button
-                type="button"
-                className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
-                onClick={() =>
-                  setMatchDisplayMode(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
-                }
-                aria-pressed={matchDisplayMode === "show-matches-only"}
-              >
-                Hide unmatching results
-              </button>
-              {embedded && (
-                <button
-                  type="button"
-                  className={`browse-sidebar-link ${deckOnly ? "is-active" : ""}`}
-                  onClick={() => setDeckOnly(!deckOnly)}
-                  aria-pressed={deckOnly}
-                >
-                  🧩 In deck
-                </button>
-              )}
-              <button
-                type="button"
-                className={`browse-sidebar-link ${likedOnly ? "is-active" : ""}`}
-                onClick={() => setLikedOnly(!likedOnly)}
-                aria-pressed={likedOnly}
-              >
-                ❤️ Likes
-              </button>
-            </div>
-            <div className="browse-sidebar-section">
-              <div className="browse-sidebar-subtitle">Entities</div>
-              <nav className="browse-sidebar-nav browse-sidebar-nav-entities">
-                <button
-                  className={`browse-sidebar-link ${selectedEntity === "" ? "is-active" : ""}`}
-                  type="button"
-                  onClick={() => setSelectedEntity("")}
-                >
-                  All entities
-                </button>
-                {entityOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    className={`browse-sidebar-link ${selectedEntity === option.value ? "is-active" : ""}`}
-                    type="button"
-                    onClick={() => setSelectedEntity(option.value)}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </nav>
-            </div>
-            <div className="browse-sidebar-section">
-              <div className="browse-sidebar-subtitle">Category</div>
-              <nav className="browse-sidebar-nav">
-                <button className={`browse-sidebar-link ${selectedType === "all" ? "is-active" : ""}`} type="button" onClick={() => setSelectedType("all")}>
-                  All
-                </button>
-                {ENTITY_TYPES.map((type) => (
-                  <button
-                    key={type}
-                    className={`browse-sidebar-link ${selectedType === type ? "is-active" : ""}`}
-                    type="button"
-                    onClick={() => setSelectedType(type)}
-                  >
-                    {capitalize(type)}
-                  </button>
-                ))}
-              </nav>
-            </div>
+            <SidebarSearch
+              hasActiveFilters={hasActiveFilters}
+              search={search}
+              onReset={resetFilters}
+              onSearchChange={setSearch}
+            />
+            <SidebarActions
+              deckOnly={deckOnly}
+              embedded={embedded}
+              likedOnly={likedOnly}
+              matchDisplayMode={matchDisplayMode}
+              onDeckOnlyChange={setDeckOnly}
+              onLikedOnlyChange={setLikedOnly}
+              onMatchDisplayModeChange={setMatchDisplayMode}
+            />
+            <SidebarSection
+              subtitle="Entities"
+              navClassName="browse-sidebar-nav browse-sidebar-nav-entities"
+              options={[{value: "", label: "All entities"}, ...entityOptions]}
+              selectedValue={selectedEntity}
+              onSelect={setSelectedEntity}
+            />
+            <SidebarSection
+              subtitle="Category"
+              options={categoryOptions}
+              selectedValue={selectedType}
+              onSelect={(value) => setSelectedType(value as EntityType | "all")}
+            />
           </aside>
+
           <section className="sections">
             {sections
               .filter(({filtered}) => matchDisplayMode !== "show-matches-only" || filtered.length > 0)
@@ -302,6 +246,116 @@ export default function EntityBrowser({embedded = false}: Props) {
           </section>
         </div>
       )}
+    </div>
+  );
+}
+
+type SidebarSearchProps = {
+  hasActiveFilters: boolean;
+  search: string;
+  onReset: () => void;
+  onSearchChange: (value: string) => void;
+};
+
+function SidebarSearch({hasActiveFilters, search, onReset, onSearchChange}: SidebarSearchProps) {
+  return (
+    <div className="browse-sidebar-section browse-sidebar-section-search">
+      <button
+        className={`btn ghost browse-sidebar-reset ${hasActiveFilters ? "is-active" : ""}`}
+        type="button"
+        onClick={onReset}
+      >
+        Reset filters
+      </button>
+      <input
+        className="browse-sidebar-search"
+        id="searchInput"
+        type="text"
+        placeholder="Search text..."
+        value={search}
+        onChange={(e) => onSearchChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+type SidebarActionsProps = {
+  deckOnly: boolean;
+  embedded: boolean;
+  likedOnly: boolean;
+  matchDisplayMode: MatchDisplayMode;
+  onDeckOnlyChange: (value: boolean) => void;
+  onLikedOnlyChange: (value: boolean) => void;
+  onMatchDisplayModeChange: (value: MatchDisplayMode) => void;
+};
+
+function SidebarActions({
+  deckOnly,
+  embedded,
+  likedOnly,
+  matchDisplayMode,
+  onDeckOnlyChange,
+  onLikedOnlyChange,
+  onMatchDisplayModeChange,
+}: SidebarActionsProps) {
+  return (
+    <div className="browse-sidebar-section browse-sidebar-tools">
+      <button
+        type="button"
+        className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
+        onClick={() =>
+          onMatchDisplayModeChange(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
+        }
+        aria-pressed={matchDisplayMode === "show-matches-only"}
+      >
+        Hide unmatching results
+      </button>
+      {embedded && (
+        <button
+          type="button"
+          className={`browse-sidebar-link ${deckOnly ? "is-active" : ""}`}
+          onClick={() => onDeckOnlyChange(!deckOnly)}
+          aria-pressed={deckOnly}
+        >
+          🧩 In deck
+        </button>
+      )}
+      <button
+        type="button"
+        className={`browse-sidebar-link ${likedOnly ? "is-active" : ""}`}
+        onClick={() => onLikedOnlyChange(!likedOnly)}
+        aria-pressed={likedOnly}
+      >
+        ❤️ Likes
+      </button>
+    </div>
+  );
+}
+
+type SidebarSectionProps = {
+  subtitle: string;
+  options: SidebarOption[];
+  selectedValue: string;
+  onSelect: (value: string) => void;
+  navClassName?: string;
+};
+
+function SidebarSection({subtitle, options, selectedValue, onSelect, navClassName = "browse-sidebar-nav"}: SidebarSectionProps) {
+  return (
+    <div className="browse-sidebar-section">
+      <div className="browse-sidebar-subtitle">{subtitle}</div>
+      <nav className={navClassName}>
+        {options.map((option) => (
+          <button
+            key={option.value}
+            className={`browse-sidebar-link ${selectedValue === option.value ? "is-active" : ""}`}
+            type="button"
+            onClick={() => onSelect(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </nav>
     </div>
   );
 }
@@ -353,8 +407,15 @@ function capitalize(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-function collectEntityOptions(items: ScrapedEntity[]): EntityFilterOption[] {
+/**
+ * Collect entity-link targets from rich descriptions for the sidebar filter list.
+ *
+ * @param {ScrapedEntity[]} items - Loaded entity data.
+ * @returns {SidebarOption[]} Sorted entity filter options.
+ */
+function collectEntityOptions(items: ScrapedEntity[]): SidebarOption[] {
   const map = new Map<string, string>();
+
   for (const item of items) {
     for (const part of item.richDescription || []) {
       if (part.key !== "entity") continue;
@@ -366,6 +427,7 @@ function collectEntityOptions(items: ScrapedEntity[]): EntityFilterOption[] {
       }
     }
   }
+
   return Array.from(map.entries())
     .sort(([, a], [, b]) => a.localeCompare(b))
     .map(([value, label]) => ({value, label}));
@@ -379,11 +441,15 @@ function displayEntityLabel(value: string): string {
   return value;
 }
 
+/**
+ * Build plain searchable text from card-visible fields and rich inline content.
+ *
+ * @param {DisplayEntity} item - Entity record to search against.
+ * @returns {string} Lower-cased search source text.
+ */
 function buildSearchText(item: DisplayEntity): string {
   const richText = item.richDescription.map((part) => part.text).join(" ");
-  return [item.name, item.category ?? "", item.description, richText]
-    .join(" ")
-    .toLowerCase();
+  return [item.name, item.category ?? "", item.description, richText].join(" ").toLowerCase();
 }
 
 /**
@@ -408,8 +474,8 @@ function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
 
   const refreshMatchNav = useCallback(() => {
     const matches = collectMatches();
-    const above = matches.filter((m) => m.rect.bottom < 0).length;
-    const below = matches.filter((m) => m.rect.top > window.innerHeight).length;
+    const above = matches.filter((match) => match.rect.bottom < 0).length;
+    const below = matches.filter((match) => match.rect.top > window.innerHeight).length;
     setMatchNav({above, below});
   }, [collectMatches]);
 
@@ -417,11 +483,14 @@ function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
     (direction: "up" | "down") => {
       const matches = collectMatches();
       if (matches.length === 0) return;
+
       const candidates =
         direction === "up"
-          ? matches.filter((m) => m.rect.bottom < 0).sort((a, b) => b.rect.bottom - a.rect.bottom)
-          : matches.filter((m) => m.rect.top > window.innerHeight).sort((a, b) => a.rect.top - b.rect.top);
+          ? matches.filter((match) => match.rect.bottom < 0).sort((a, b) => b.rect.bottom - a.rect.bottom)
+          : matches.filter((match) => match.rect.top > window.innerHeight).sort((a, b) => a.rect.top - b.rect.top);
+
       if (candidates.length === 0) return;
+
       candidates[0].el.scrollIntoView({behavior: "smooth", block: "center"});
       window.clearTimeout(scrollTimer.current ?? undefined);
       scrollTimer.current = window.setTimeout(refreshMatchNav, NAV_AFTER_SCROLL_DELAY);
@@ -431,13 +500,16 @@ function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
 
   useEffect(() => {
     if (!active) return;
+
     refreshMatchNav();
     const handler = () => {
       window.clearTimeout(scrollTimer.current ?? undefined);
       scrollTimer.current = window.setTimeout(refreshMatchNav, NAV_REFRESH_DELAY);
     };
+
     window.addEventListener("scroll", handler, {passive: true});
     window.addEventListener("resize", handler);
+
     return () => {
       window.removeEventListener("scroll", handler);
       window.removeEventListener("resize", handler);

@@ -2,16 +2,11 @@
 
 .filters {
     position: fixed;
-    top: 0;
     top: var(--filters-offset);
     right: var(--space-8);
     z-index: var(--z-filters);
     display: flex;
     justify-content: flex-end;
-    /*padding-top: 8px;*/
-    /*border: 1px solid var(--border);*/
-    /*background: var(--color-overlay-header);*/
-    /*margin-top: var(--space-6);*/
 }
 
 .filters-body {
@@ -37,7 +32,6 @@
 
 .count {
     color: var(--muted);
-    /*margin-left: auto;*/
 }
 
 /* ---- Scroll hint buttons ---- */
@@ -50,10 +44,6 @@
     flex-wrap: wrap;
     gap: var(--space-3);
     margin-left: auto;
-    /*position: fixed;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*align-items: flex-end;*/
 }
 
 .scroll-hints .pill-toggle:disabled {
