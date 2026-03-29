@@ -1,6 +1,7 @@
 "use client";
 
 import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import {usePathname} from "next/navigation";
 
 type DeckUiContextType = {
   open: boolean;
@@ -18,6 +19,7 @@ const DeckUiContext = createContext<DeckUiContextType | null>(null);
  */
 export function DeckUiProvider({children}: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   const setDrawerOpen = (nextOpen: boolean) => {
     setOpen(nextOpen);
@@ -35,10 +37,15 @@ export function DeckUiProvider({children}: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
-    if (params.get("builder") === "open") {
+    if (pathname === "/decks" && params.get("builder") === "open") {
       setOpen(true);
     }
-  }, []);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname === "/decks") return;
+    setOpen(false);
+  }, [pathname]);
 
   const value = useMemo(
     () => ({

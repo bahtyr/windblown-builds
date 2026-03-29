@@ -29,7 +29,7 @@ export type DeckSessionSnapshot = {
   name: string;
   editingDeckName: string | null;
 };
-type DraftSource = "shared" | null;
+type EditingSource = "saved" | "shared" | null;
 
 type DeckContextType = {
   items: DeckItem[];
@@ -73,7 +73,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   const [sharedDeck, setSharedDeck] = useState<SharedDeck | null>(null);
   const [editingDeckName, setEditingDeckName] = useState<string | null>(null);
   const [sessionStart, setSessionStart] = useState<DeckSessionSnapshot | null>(null);
-  const [draftSource, setDraftSource] = useState<DraftSource>(null);
+  const [editingSource, setEditingSource] = useState<EditingSource>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -120,29 +120,13 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    const missingTypes = Array.from(new Set(items.filter((item) => !item.image).map((item) => item.type)));
-    if (missingTypes.length === 0) return;
     let cancelled = false;
 
-    (async () => {
-      const fetched = new Map<EntityType, ScrapedEntity[]>();
-      for (const type of missingTypes) {
-        try {
-          fetched.set(type, await loadEntities(type));
-        } catch {
-          // ignore fetch errors; keep existing items
-        }
+    hydrateDeckItems(items).then((nextItems) => {
+      if (!cancelled && nextItems !== items) {
+        setItems(nextItems);
       }
-
-      if (cancelled) return;
-      setItems((prev) =>
-        prev.map((item) => {
-          if (item.image) return item;
-          const match = fetched.get(item.type)?.find((entity) => entity.name === item.name);
-          return match?.image ? {...item, image: match.image} : item;
-        }),
-      );
-    })();
+    });
 
     return () => {
       cancelled = true;
@@ -151,33 +135,13 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated || !sharedDeck) return;
-    const missingTypes = Array.from(new Set(sharedDeck.items.filter((item) => !item.image).map((item) => item.type)));
-    if (missingTypes.length === 0) return;
     let cancelled = false;
 
-    (async () => {
-      const fetched = new Map<EntityType, ScrapedEntity[]>();
-      for (const type of missingTypes) {
-        try {
-          fetched.set(type, await loadEntities(type));
-        } catch {
-          // ignore fetch errors; keep existing items
-        }
+    hydrateDeckItems(sharedDeck.items).then((nextItems) => {
+      if (!cancelled && nextItems !== sharedDeck.items) {
+        setSharedDeck((prev) => (prev ? {...prev, items: nextItems} : prev));
       }
-
-      if (cancelled) return;
-      setSharedDeck((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          items: prev.items.map((item) => {
-            if (item.image) return item;
-            const match = fetched.get(item.type)?.find((entity) => entity.name === item.name);
-            return match?.image ? {...item, image: match.image} : item;
-          }),
-        };
-      });
-    })();
+    });
 
     return () => {
       cancelled = true;
@@ -221,7 +185,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setEditingDeckName(desiredName);
           setNameState(desiredName);
           setSessionStart(null);
-          setDraftSource(null);
+          setEditingSource("saved");
           return;
         }
 
@@ -230,21 +194,23 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setEditingDeckName(targetName);
         setNameState(targetName);
         setSessionStart(null);
-        if (draftSource === "shared") {
+        if (editingSource === "shared") {
           setSharedDeck(null);
           clearSharedDeckUrl();
         }
-        setDraftSource(null);
+        setEditingSource("saved");
       },
       saveSharedDeck: () => {
         if (!sharedDeck) return;
         const targetName = ensureUniqueDeckName(saved, sharedDeck.name);
         setSaved((prev) => [...prev, {name: targetName, items: sharedDeck.items, createdAt: sharedDeck.createdAt}]);
         setSharedDeck(null);
+        setEditingSource(null);
         clearSharedDeckUrl();
       },
       discardSharedDeck: () => {
         setSharedDeck(null);
+        setEditingSource(null);
         clearSharedDeckUrl();
       },
       createDeck: () => {
@@ -252,7 +218,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setItems([]);
         setNameState(DEFAULT_DECK_NAME);
         setEditingDeckName(null);
-        setDraftSource(null);
+        setEditingSource(null);
       },
       loadDeck: (deckName) => {
         const match = saved.find((deck) => deck.name === deckName);
@@ -261,7 +227,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setItems(match.items);
         setNameState(match.name);
         setEditingDeckName(match.name);
-        setDraftSource(null);
+        setEditingSource("saved");
       },
       editSharedDeck: () => {
         if (!sharedDeck) return;
@@ -269,15 +235,15 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setItems(sharedDeck.items);
         setNameState(sharedDeck.name);
         setEditingDeckName(null);
-        setDraftSource("shared");
+        setEditingSource("shared");
       },
       cancelEditing: () => {
-        if (draftSource === "shared") {
+        if (editingSource === "shared") {
           setItems([]);
           setNameState(DEFAULT_DECK_NAME);
           setEditingDeckName(null);
           setSessionStart(null);
-          setDraftSource(null);
+          setEditingSource(null);
           setSharedDeck(null);
           clearSharedDeckUrl();
           return;
@@ -287,7 +253,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setNameState(restored.name);
         setEditingDeckName(restored.editingDeckName);
         setSessionStart(null);
-        setDraftSource(null);
+        setEditingSource(null);
       },
       deleteDeck: (deckName) => {
         setSaved((prev) => prev.filter((deck) => deck.name !== deckName));
@@ -297,7 +263,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setEditingDeckName(null);
         }
         setSessionStart(null);
-        setDraftSource(null);
+        setEditingSource(null);
       },
       duplicateDeck: (deckName) => {
         const source = saved.find((deck) => deck.name === deckName);
@@ -308,7 +274,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       resetDeck: () => setItems([]),
     }),
-    [draftSource, editingDeckName, items, mode, name, saved, sessionStart, sharedDeck],
+    [editingSource, editingDeckName, items, mode, name, saved, sessionStart, sharedDeck],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
@@ -358,6 +324,31 @@ function parseDeckParam(raw: string): DeckItem[] {
     items.push({type: type as EntityType, name, id: deckId(type as EntityType, name)});
   }
   return items;
+}
+
+async function hydrateDeckItems(deckItems: DeckItem[]): Promise<DeckItem[]> {
+  const missingTypes = Array.from(new Set(deckItems.filter((item) => !item.image).map((item) => item.type)));
+  if (missingTypes.length === 0) return deckItems;
+
+  const fetched = new Map<EntityType, ScrapedEntity[]>();
+  for (const type of missingTypes) {
+    try {
+      fetched.set(type, await loadEntities(type));
+    } catch {
+      // ignore fetch errors; keep existing items
+    }
+  }
+
+  let changed = false;
+  const nextItems = deckItems.map((item) => {
+    if (item.image) return item;
+    const match = fetched.get(item.type)?.find((entity) => entity.name === item.name);
+    if (!match?.image) return item;
+    changed = true;
+    return {...item, image: match.image};
+  });
+
+  return changed ? nextItems : deckItems;
 }
 
 const TYPE_ORDER: EntityType[] = ["gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts", "effects"];

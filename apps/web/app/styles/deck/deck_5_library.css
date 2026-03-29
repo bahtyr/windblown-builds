@@ -20,7 +20,6 @@
 }
 
 .decks-page-copy,
-.decks-page-status,
 .deck-row-meta,
 .deck-row-item-type,
 .deck-row-empty {
@@ -131,7 +130,8 @@
             180deg,
             var(--color-card-top),
             var(--color-card-bottom)
-    );    border: 1px solid var(--border);
+    );
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
     transition: var(--transition-card);
