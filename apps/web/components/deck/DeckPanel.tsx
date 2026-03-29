@@ -5,73 +5,90 @@ import {DeckItem, useDeck} from "./DeckContext";
 import {EntityType} from "../../lib/types";
 
 type Props = {
-  open: boolean;
+  onCancel: () => void;
+  onCommit: () => void;
 };
 
-export default function DeckPanel({open}: Props) {
+/**
+ * Render the active deck editor controls and current item list.
+ *
+ * @param {Props} props - Deck editor callbacks.
+ * @returns {JSX.Element} Deck editor content.
+ */
+export default function DeckPanel({onCancel, onCommit}: Props) {
   const deck = useDeck();
   const isEditing = deck.mode === "editing";
 
+  const handleCommit = () => {
+    deck.saveDeck();
+    onCommit();
+  };
+
+  const handleDelete = () => {
+    deck.deleteDeck(deck.editingDeckName ?? deck.name);
+    onCommit();
+  };
+
   return (
-    <aside className={`deck-drawer ${open ? "is-open" : "is-collapsed"}`}>
-      {open && (
-        <div className="deck">
-          <div className="deck-manager">
-            <div className="deck-builder-title-group">
-              <h2 className="deck-builder-title">{isEditing ? "Editing build" : "Creating new build"}</h2>
-              <p className="deck-builder-subtitle">
-                {isEditing ? `Working on ${deck.editingDeckName}` : "Start from scratch, then save when you are ready."}
-              </p>
-            </div>
-            <div className="deck-actions">
-              <input
-                className="deck-name-input"
-                value={deck.name}
-                onChange={(e) => deck.setName(e.target.value)}
-                placeholder="Deck name"
-              />
-              <button className="btn" type="button" onClick={() => deck.saveDeck()}>
-                {isEditing ? "Update build" : "Save build"}
-              </button>
-              <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
-                Reset
-              </button>
-              {isEditing && (
-                <button className="btn ghost" type="button" onClick={() => deck.deleteDeck(deck.editingDeckName ?? deck.name)}>
-                  Delete
-                </button>
-              )}
-            </div>
-            <div className="deck-content">
-              {deck.items.length === 0 && <div className="muted">No items yet</div>}
-              {rows(deck.items).map((groups, rowIdx) => (
-                <div className="deck-groups" key={rowIdx}>
-                  {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
-                    list.length > 0 && (
-                      <div className="deck-group" key={type}>
-                        <div className="deck-items">
-                          {list.map((item, idx) => (
-                            <DeckDraggable
-                              key={item.id}
-                              item={item}
-                              index={idx}
-                              type={type}
-                              onDrop={(from, to) => deck.moveWithinType(type, from, to)}
-                              onRemove={() => deck.remove(item.id)}
-                              highlight={type === "gifts" && idx < 8}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  ))}
-                </div>
+    <div className="deck">
+      <div className="deck-manager">
+        <div className="deck-builder-title-group">
+          <h2 className="deck-builder-title">{isEditing ? "Editing build" : "Creating new build"}</h2>
+          <p className="deck-builder-subtitle">
+            {isEditing ? `Working on ${deck.editingDeckName}` : "Start from scratch, then save when you are ready."}
+          </p>
+        </div>
+        <div className="deck-actions">
+          <input
+            className="deck-name-input"
+            value={deck.name}
+            onChange={(e) => deck.setName(e.target.value)}
+            placeholder="Deck name"
+          />
+
+          <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
+            Reset
+          </button>
+          {isEditing && (
+            <button className="btn ghost" type="button" onClick={handleDelete}>
+              Delete
+            </button>
+          )}
+          <button className="btn ghost" type="button" onClick={onCancel}>
+            Cancel
+          </button>
+          <button className="btn" type="button" onClick={handleCommit}>
+            {isEditing ? "Update build" : "Save build"}
+          </button>
+        </div>
+        <div className="deck-content">
+          {deck.items.length === 0 && <div className="muted">No items yet</div>}
+          {rows(deck.items).map((groups, rowIdx) => (
+            <div className="deck-groups" key={rowIdx}>
+              {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
+                list.length > 0 && (
+                  <div className="deck-group" key={type}>
+                    <div className="deck-items">
+                      {list.map((item, idx) => (
+                        <DeckDraggable
+                          key={item.id}
+                          item={item}
+                          index={idx}
+                          type={type}
+                          onDrop={(from, to) => deck.moveWithinType(type, from, to)}
+                          onRemove={() => deck.remove(item.id)}
+                          highlight={type === "gifts" && idx < 8}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )
               ))}
             </div>
-          </div>
+          ))}
         </div>
-      )}
-    </aside>
+      </div>
+    </div>
   );
 }
 

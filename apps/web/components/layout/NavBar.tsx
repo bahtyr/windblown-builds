@@ -3,12 +3,7 @@
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 
-type Props = {
-  deckOpen: boolean;
-  onToggleDeck: () => void;
-};
-
-export default function NavBar({deckOpen, onToggleDeck}: Props) {
+export default function NavBar() {
   const pathname = usePathname();
   return (
     <header className="header">
@@ -22,9 +17,6 @@ export default function NavBar({deckOpen, onToggleDeck}: Props) {
             Browse
           </Link>
         </nav>
-        <button className={`deck-toggle ${deckOpen ? "is-active" : ""}`} type="button" onClick={onToggleDeck}>
-          {deckOpen ? "Hide deck" : "Show deck"}
-        </button>
       </div>
     </header>
   );

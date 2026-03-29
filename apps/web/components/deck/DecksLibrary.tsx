@@ -5,9 +5,11 @@ import {useMemo} from "react";
 import {useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
+import DeckPanel from "./DeckPanel";
+import EntityBrowser from "../entity/EntityBrowser";
 
 /**
- * Read-only saved deck library with share, duplicate, and delete actions.
+ * Read-only saved deck library with share, duplicate, edit, and delete actions.
  *
  * @returns {JSX.Element} Saved deck library page.
  */
@@ -46,55 +48,90 @@ export default function DecksLibrary() {
     deckUi.openDeck();
   };
 
+  const handleCancelEditing = () => {
+    deck.cancelEditing();
+    deckUi.closeDeck();
+  };
+
+  const handleCommitEditing = () => {
+    deckUi.closeDeck();
+  };
+
   return (
-    <div className="page page-decks">
-      <section className="decks-page body-wrapper">
-        <div className="decks-page-header">
-          <div>
-            <h1 className="decks-page-title">Saved builds</h1>
-            <p className="decks-page-copy">Keep your favorite runs handy, revisit the item mix at a glance, and share a build when you want to send it to someone else.</p>
+    <>
+      <div className="page page-decks">
+        <section className="decks-page body-wrapper">
+          <div className="decks-page-header">
+            <div>
+              <h1 className="decks-page-title">Saved builds</h1>
+              <p className="decks-page-copy">Start a new build, reopen an old favorite, or share a setup once it feels worth keeping.</p>
+            </div>
+            <div className="decks-page-header-actions">
+              <button className="btn decks-page-primary-button" type="button" onClick={handleCreateNew}>Create new build</button>
+            </div>
           </div>
-          <div className="decks-page-header-actions">
-            <button className="btn decks-page-primary-button" type="button" onClick={handleCreateNew}>Create new build</button>
-          </div>
-        </div>
 
-        <div className="decks-grid">
-          {rows.length > 0 ? (
-            rows.map((savedDeck) => (
-              <article className="deck-row" key={savedDeck.name}>
-                <div className="deck-row-head">
-                  <div className="deck-row-title-group">
-                    <h2 className="deck-row-title">{savedDeck.name}</h2>
-                    <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
-                  </div>
-                  <div className="deck-row-actions">
-                    <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleEdit(savedDeck.name)}>Edit</button>
-                    <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
-                    <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
-                    <button className="btn ghost deck-row-action" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>
-                  </div>
-                </div>
-
-                <div className="deck-row-items">
-                  {savedDeck.items.map((item) => (
-                    <div className="deck-row-item" key={item.id}>
-                      {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
-                      <div className="deck-row-item-copy">
-                        <span className="deck-row-item-name">{item.name}</span>
-                        <span className="deck-row-item-type">{formatItemTypeLabel(item.type)}</span>
-                      </div>
+          <div className="decks-grid">
+            {rows.length > 0 ? (
+              rows.map((savedDeck) => (
+                <article className="deck-row" key={savedDeck.name}>
+                  <div className="deck-row-head">
+                    <div className="deck-row-title-group">
+                      <h2 className="deck-row-title">{savedDeck.name}</h2>
+                      <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
                     </div>
-                  ))}
-                </div>
-              </article>
-            ))
-          ) : (
-            <div className="deck-row-empty">No saved builds yet.</div>
-          )}
+                    <div className="deck-row-actions">
+                      <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleEdit(savedDeck.name)}>Edit</button>
+                      <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDelete(savedDeck.name)}>Delete</button>
+                      <button className="btn ghost deck-row-action deck-row-action-secondary" type="button" onClick={() => handleDuplicate(savedDeck.name)}>Duplicate</button>
+                      <button className="btn ghost deck-row-action" type="button" onClick={() => handleShare(savedDeck.name)}>Share</button>
+                    </div>
+                  </div>
+
+                  <div className="deck-row-items">
+                    {savedDeck.items.map((item) => (
+                      <div className="deck-row-item" key={item.id}>
+                        {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
+                        <div className="deck-row-item-copy">
+                          <span className="deck-row-item-name">{item.name}</span>
+                          <span className="deck-row-item-type">{formatItemTypeLabel(item.type)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div className="deck-row-empty">No saved builds yet.</div>
+            )}
+          </div>
+        </section>
+      </div>
+
+      {deckUi.open && (
+        <div className="deck-builder-overlay">
+          <button
+            aria-label="Cancel changes and close build editor"
+            className="deck-builder-dismiss"
+            type="button"
+            onClick={handleCancelEditing}
+          />
+          <div
+            aria-label="Build editor"
+            aria-modal="true"
+            className="deck-builder-drawer"
+            role="dialog"
+          >
+            <div className="deck-builder-surface">
+              <DeckPanel onCancel={handleCancelEditing} onCommit={handleCommitEditing}/>
+              <div className="deck-builder-browser">
+                <EntityBrowser embedded/>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 }
 

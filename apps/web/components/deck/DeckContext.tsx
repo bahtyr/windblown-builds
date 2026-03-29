@@ -20,6 +20,11 @@ export type SavedDeck = {
 };
 
 type DeckMode = "new" | "editing";
+export type DeckSessionSnapshot = {
+  items: DeckItem[];
+  name: string;
+  editingDeckName: string | null;
+};
 
 type DeckContextType = {
   items: DeckItem[];
@@ -34,6 +39,7 @@ type DeckContextType = {
   saveDeck: (asNew?: boolean) => void;
   createDeck: () => void;
   loadDeck: (name: string) => void;
+  cancelEditing: () => void;
   deleteDeck: (name: string) => void;
   duplicateDeck: (name: string) => string | null;
   resetDeck: () => void;
@@ -45,11 +51,18 @@ const STORAGE_KEY = "windblown.deck.v3";
 const STORAGE_SAVED = "windblown.deck.saved.v3";
 const DEFAULT_DECK_NAME = "Untitled deck";
 
+/**
+ * Provide active deck state, saved decks, and editing actions.
+ *
+ * @param {{ children: React.ReactNode }} props - Provider children.
+ * @returns {JSX.Element} Context provider.
+ */
 export function DeckProvider({children}: { children: React.ReactNode }) {
   const [items, setItems] = useState<DeckItem[]>([]);
   const [name, setNameState] = useState<string>(DEFAULT_DECK_NAME);
   const [saved, setSaved] = useState<SavedDeck[]>([]);
   const [editingDeckName, setEditingDeckName] = useState<string | null>(null);
+  const [sessionStart, setSessionStart] = useState<DeckSessionSnapshot | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -170,6 +183,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setSaved((prev) => updateSavedDeck(prev, editingDeckName, desiredName, items));
           setEditingDeckName(desiredName);
           setNameState(desiredName);
+          setSessionStart(null);
           return;
         }
 
@@ -177,8 +191,10 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setSaved((prev) => [...prev, {name: targetName, items, createdAt: createTimestamp()}]);
         setEditingDeckName(targetName);
         setNameState(targetName);
+        setSessionStart(null);
       },
       createDeck: () => {
+        setSessionStart({items, name, editingDeckName});
         setItems([]);
         setNameState(DEFAULT_DECK_NAME);
         setEditingDeckName(null);
@@ -186,9 +202,17 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       loadDeck: (deckName) => {
         const match = saved.find((deck) => deck.name === deckName);
         if (!match) return;
+        setSessionStart({items, name, editingDeckName});
         setItems(match.items);
         setNameState(match.name);
         setEditingDeckName(match.name);
+      },
+      cancelEditing: () => {
+        const restored = restoreDeckSession(sessionStart);
+        setItems(restored.items);
+        setNameState(restored.name);
+        setEditingDeckName(restored.editingDeckName);
+        setSessionStart(null);
       },
       deleteDeck: (deckName) => {
         setSaved((prev) => prev.filter((deck) => deck.name !== deckName));
@@ -197,6 +221,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           setNameState(DEFAULT_DECK_NAME);
           setEditingDeckName(null);
         }
+        setSessionStart(null);
       },
       duplicateDeck: (deckName) => {
         const source = saved.find((deck) => deck.name === deckName);
@@ -207,22 +232,41 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       resetDeck: () => setItems([]),
     }),
-    [editingDeckName, items, mode, name, saved],
+    [editingDeckName, items, mode, name, saved, sessionStart],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
 }
 
+/**
+ * Read active deck state and actions from context.
+ *
+ * @returns {DeckContextType} Deck state and mutations.
+ */
 export function useDeck(): DeckContextType {
   const ctx = useContext(DeckContext);
   if (!ctx) throw new Error("DeckContext missing");
   return ctx;
 }
 
+/**
+ * Build a stable deck item identifier from entity type and name.
+ *
+ * @param {EntityType} type - Entity type.
+ * @param {string} name - Entity name.
+ * @returns {string} Deck item identifier.
+ */
 export function deckId(type: EntityType, name: string): string {
   return `${type}:${name}`;
 }
 
+/**
+ * Convert a scraped entity into the deck item format used by the builder.
+ *
+ * @param {EntityType} type - Entity type.
+ * @param {ScrapedEntity} entity - Source entity.
+ * @returns {DeckItem} Deck item payload.
+ */
 export function makeDeckItem(type: EntityType, entity: ScrapedEntity): DeckItem {
   return {type, name: entity.name, id: deckId(type, entity.name), image: entity.image};
 }
@@ -360,6 +404,21 @@ function ensureUniqueDeckName(existing: SavedDeck[], desiredName: string): strin
 function normalizeDeckName(value?: string): string {
   const trimmed = value?.trim();
   return trimmed ? trimmed : DEFAULT_DECK_NAME;
+}
+
+/**
+ * Resolve the state that should be restored when a deck edit session is cancelled.
+ *
+ * @param {DeckSessionSnapshot | null} snapshot - Starting state captured when the session opened.
+ * @returns {DeckSessionSnapshot} Restored state for the editor.
+ */
+export function restoreDeckSession(snapshot: DeckSessionSnapshot | null): DeckSessionSnapshot {
+  if (snapshot) return snapshot;
+  return {
+    items: [],
+    name: DEFAULT_DECK_NAME,
+    editingDeckName: null,
+  };
 }
 
 function createTimestamp(): string {

@@ -19,6 +19,9 @@ import Filters from "./Filters";
 
 type MatchNav = { above: number; below: number };
 type DisplayEntity = ScrapedEntity & { entityType: EntityType };
+type Props = {
+  embedded?: boolean;
+};
 
 const NAV_REFRESH_DELAY = 80;
 const NAV_AFTER_SCROLL_DELAY = 200;
@@ -27,9 +30,10 @@ const MATCH_DISPLAY_MODE_STORAGE_KEY = "entityMatchDisplayMode";
 /**
  * Browse all entity types together with filtering and deck helpers.
  *
+ * @param {Props} props - Browser rendering options.
  * @returns {JSX.Element} Full browser page.
  */
-export default function EntityBrowser() {
+export default function EntityBrowser({embedded = false}: Props) {
   const {items, loading, error} = useEntityData();
   const [selectedType, setSelectedType] = useState<EntityType | "all">("all");
 
@@ -114,7 +118,7 @@ export default function EntityBrowser() {
   const {matchNav, scrollToNearest} = useMatchNavigation(!loading && !error, matchNavDeps);
 
   return (
-    <div className="page">
+    <div className={`page entity-browser ${embedded ? "entity-browser-embedded" : ""}`}>
       <div className="filters">
         <div className="filters-body body-wrapper">
           <Filters

@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {normalizeSavedDecks, selectFirstSavedAfterDelete, suggestDuplicateName} from "../components/deck/DeckContext";
+import {normalizeSavedDecks, restoreDeckSession, selectFirstSavedAfterDelete, suggestDuplicateName} from "../components/deck/DeckContext";
 
 describe("selectFirstSavedAfterDelete", () => {
   it("selects the first remaining deck after deletion", () => {
@@ -48,5 +48,29 @@ describe("suggestDuplicateName", () => {
       {name: "Deck 1 (copy)", items: []},
     ]);
     expect(suggestDuplicateName(decks, "Deck 1")).toBe("Deck 1 (copy) 2");
+  });
+});
+
+describe("restoreDeckSession", () => {
+  it("restores the captured editing session when available", () => {
+    expect(
+      restoreDeckSession({
+        items: [{id: "gifts:One", type: "gifts", name: "One"}],
+        name: "Deck 1",
+        editingDeckName: "Deck 1",
+      }),
+    ).toEqual({
+      items: [{id: "gifts:One", type: "gifts", name: "One"}],
+      name: "Deck 1",
+      editingDeckName: "Deck 1",
+    });
+  });
+
+  it("falls back to an empty untitled deck when no session exists", () => {
+    expect(restoreDeckSession(null)).toEqual({
+      items: [],
+      name: "Untitled deck",
+      editingDeckName: null,
+    });
   });
 });
