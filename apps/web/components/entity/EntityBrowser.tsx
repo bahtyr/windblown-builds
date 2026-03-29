@@ -121,7 +121,7 @@ export default function EntityBrowser({embedded = false}: Props) {
   );
   const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
   const categoryOptions = useMemo<SidebarOption[]>(
-    () => [{value: "all", label: "All"}, ...ENTITY_TYPES.map((type) => ({value: type, label: capitalize(type)}))],
+    () => [{value: "all", label: "All categories"}, ...ENTITY_TYPES.map((type) => ({value: type, label: capitalize(type)}))],
     [],
   );
   const hasActiveFilters = search.trim().length > 0 || selectedEntity !== "" || likedOnly || deckOnly;
