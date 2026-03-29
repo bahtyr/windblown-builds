@@ -80,6 +80,10 @@ export default function DecksLibrary() {
     deck.saveSharedDeck();
   };
 
+  const handleDiscardShared = () => {
+    deck.discardSharedDeck();
+  };
+
   const handleCreateNew = () => {
     deck.createDeck();
     deckUi.openDeck();
@@ -117,6 +121,7 @@ export default function DecksLibrary() {
                     <p className="deck-row-meta">Shared link</p>
                   </div>
                   <div className="deck-row-actions">
+                    <button className="btn ghost deck-row-action" type="button" onClick={handleDiscardShared}>Discard</button>
                     <button className="btn ghost deck-row-action" type="button" onClick={handleEditShared}>Edit</button>
                     <button className="btn deck-row-action" type="button" onClick={handleSaveShared}>Save</button>
                   </div>

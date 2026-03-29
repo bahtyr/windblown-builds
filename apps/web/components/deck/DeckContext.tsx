@@ -44,6 +44,7 @@ type DeckContextType = {
   setName: (name: string) => void;
   saveDeck: (asNew?: boolean) => void;
   saveSharedDeck: () => void;
+  discardSharedDeck: () => void;
   createDeck: () => void;
   loadDeck: (name: string) => void;
   editSharedDeck: () => void;
@@ -148,6 +149,41 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     };
   }, [hydrated, items]);
 
+  useEffect(() => {
+    if (!hydrated || !sharedDeck) return;
+    const missingTypes = Array.from(new Set(sharedDeck.items.filter((item) => !item.image).map((item) => item.type)));
+    if (missingTypes.length === 0) return;
+    let cancelled = false;
+
+    (async () => {
+      const fetched = new Map<EntityType, ScrapedEntity[]>();
+      for (const type of missingTypes) {
+        try {
+          fetched.set(type, await loadEntities(type));
+        } catch {
+          // ignore fetch errors; keep existing items
+        }
+      }
+
+      if (cancelled) return;
+      setSharedDeck((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          items: prev.items.map((item) => {
+            if (item.image) return item;
+            const match = fetched.get(item.type)?.find((entity) => entity.name === item.name);
+            return match?.image ? {...item, image: match.image} : item;
+          }),
+        };
+      });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated, sharedDeck]);
+
   const mode: DeckMode = editingDeckName ? "editing" : "new";
 
   const api: DeckContextType = useMemo(
@@ -204,6 +240,10 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         if (!sharedDeck) return;
         const targetName = ensureUniqueDeckName(saved, sharedDeck.name);
         setSaved((prev) => [...prev, {name: targetName, items: sharedDeck.items, createdAt: sharedDeck.createdAt}]);
+        setSharedDeck(null);
+        clearSharedDeckUrl();
+      },
+      discardSharedDeck: () => {
         setSharedDeck(null);
         clearSharedDeckUrl();
       },
