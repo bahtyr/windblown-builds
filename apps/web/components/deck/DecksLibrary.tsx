@@ -64,7 +64,7 @@ export default function DecksLibrary() {
             rows.map((savedDeck) => (
               <article className="deck-row" key={savedDeck.name}>
                 <div className="deck-row-head">
-                  <div>
+                  <div className="deck-row-title-group">
                     <h2 className="deck-row-title">{savedDeck.name}</h2>
                     <p className="deck-row-meta">{formatRoughDate(savedDeck.createdAt)}</p>
                   </div>

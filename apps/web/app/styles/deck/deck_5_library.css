@@ -66,8 +66,15 @@
     flex-wrap: wrap;
 }
 
+.deck-row-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
 .deck-row-title {
-    margin: 0 0 var(--space-2);
+    margin: 0;
     font-size: var(--font-size-md);
 }
 
