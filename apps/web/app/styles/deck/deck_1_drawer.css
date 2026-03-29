@@ -53,7 +53,9 @@
     border-top: 1px solid var(--border);
     border-top-left-radius: var(--radius-2xl);
     border-top-right-radius: var(--radius-2xl);
-    background: linear-gradient(180deg, rgba(8, 14, 28, 0.98), rgba(6, 10, 22, 0.98));
+    /*background: linear-gradient(180deg, rgba(8, 14, 28, 0.98), rgba(6, 10, 22, 0.98));*/
+    background: var(--gradient-body-primary), var(--gradient-body-secondary), var(--bg);
+
     box-shadow: 0 -20px 60px rgba(var(--color-shadow-rgb), 0.45);
     transform: translateY(0);
     opacity: 1;
