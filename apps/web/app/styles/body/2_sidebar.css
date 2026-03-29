@@ -96,6 +96,12 @@
     object-fit: cover;
     border-radius: var(--radius-sm);
     flex: 0 0 auto;
+    cursor: pointer;
+}
+
+.browse-sidebar-link-label {
+    min-width: 0;
+    cursor: pointer;
 }
 
 .browse-sidebar-link:hover,

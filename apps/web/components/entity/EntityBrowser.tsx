@@ -18,7 +18,7 @@ import EntityCard from "./EntityCard";
 
 type MatchNav = { above: number; below: number };
 type DisplayEntity = ScrapedEntity & { entityType: EntityType };
-type SidebarOption = { value: string; label: string; image?: string };
+type SidebarOption = { value: string; label: string; image?: string; color?: string };
 type Props = {
   embedded?: boolean;
 };
@@ -365,7 +365,7 @@ function SidebarSection({subtitle, options, selectedValue, onSelect, navClassNam
             onClick={() => onSelect(option.value)}
           >
             {option.image && <img className="browse-sidebar-link-image" src={option.image} alt=""/>}
-            <span>{option.label}</span>
+            <span className="browse-sidebar-link-label" style={option.color ? {color: option.color} : undefined}>{option.label}</span>
           </button>
         ))}
       </nav>
@@ -435,20 +435,22 @@ function collectEntityOptions(items: ScrapedEntity[]): SidebarOption[] {
       if (part.href) {
         const value = part.href.split("?")[0];
         const image = part.image?.trim();
+        const color = part.color?.trim();
         if (!map.has(value)) {
-          map.set(value, JSON.stringify({label: displayEntityLabel(value), image}));
+          map.set(value, JSON.stringify({label: displayEntityLabel(value), image, color}));
         }
       } else if (part.id) {
         const image = part.image?.trim();
+        const color = part.color?.trim();
         if (!map.has(part.id)) {
-          map.set(part.id, JSON.stringify({label: displayEntityLabel(part.id), image}));
+          map.set(part.id, JSON.stringify({label: displayEntityLabel(part.id), image, color}));
         }
       }
     }
   }
 
   return Array.from(map.entries())
-    .map(([value, payload]) => ({value, ...(JSON.parse(payload) as { label: string; image?: string })}))
+    .map(([value, payload]) => ({value, ...(JSON.parse(payload) as { label: string; image?: string; color?: string })}))
     .sort((a, b) => a.label.localeCompare(b.label));
 }
 
