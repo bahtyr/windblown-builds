@@ -15,7 +15,6 @@ import {
   parsePersistedFilters,
 } from "../../app/[type]/entity-utils";
 import EntityCard from "./EntityCard";
-import Filters from "./Filters";
 
 type MatchNav = { above: number; below: number };
 type DisplayEntity = ScrapedEntity & { entityType: EntityType };
@@ -118,7 +117,7 @@ export default function EntityBrowser({embedded = false}: Props) {
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
   const {matchNav, scrollToNearest} = useMatchNavigation(!loading && !error, matchNavDeps);
-  const clearFilters = useCallback(() => {
+  const resetFilters = useCallback(() => {
     setSearch("");
     setSelectedEntity("");
     setLikedOnly(false);
@@ -129,12 +128,6 @@ export default function EntityBrowser({embedded = false}: Props) {
     <div className={`page entity-browser ${embedded ? "entity-browser-embedded" : ""}`}>
       <div className="filters">
         <div className="filters-body body-wrapper">
-          <Filters
-            search={search}
-            onSearch={setSearch}
-            onClear={clearFilters}
-          />
-
           <div className="scroll-hints">
             {!loading && !error && filteredCount > 0 && filteredCount < items.length && (
               matchNav.above + matchNav.below > 0 && (
@@ -172,7 +165,19 @@ export default function EntityBrowser({embedded = false}: Props) {
       {!loading && !error && (
         <div className="browse-layout body-wrapper">
           <aside className="browse-sidebar">
-            <div className="browse-sidebar-title">Browse</div>
+            <div className="browse-sidebar-section">
+              <button className="btn ghost browse-sidebar-reset" type="button" onClick={resetFilters}>
+                Reset filters
+              </button>
+              <input
+                className="browse-sidebar-search"
+                id="searchInput"
+                type="text"
+                placeholder="Search text..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
             <div className="browse-sidebar-tools">
               <button
                 type="button"
@@ -217,27 +222,30 @@ export default function EntityBrowser({embedded = false}: Props) {
                     className={`browse-sidebar-link ${selectedEntity === option.value ? "is-active" : ""}`}
                     type="button"
                     onClick={() => setSelectedEntity(option.value)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </nav>
+            </div>
+            <div className="browse-sidebar-section">
+              <div className="browse-sidebar-subtitle">Category</div>
+              <nav className="browse-sidebar-nav">
+                <button className={`browse-sidebar-link ${selectedType === "all" ? "is-active" : ""}`} type="button" onClick={() => setSelectedType("all")}>
+                  All
+                </button>
+                {ENTITY_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    className={`browse-sidebar-link ${selectedType === type ? "is-active" : ""}`}
+                    type="button"
+                    onClick={() => setSelectedType(type)}
                   >
-                    {option.label}
+                    {capitalize(type)}
                   </button>
                 ))}
               </nav>
             </div>
-            <nav className="browse-sidebar-nav">
-              <button className={`browse-sidebar-link ${selectedType === "all" ? "is-active" : ""}`} type="button" onClick={() => setSelectedType("all")}>
-                All
-              </button>
-              {ENTITY_TYPES.map((type) => (
-                <button
-                  key={type}
-                  className={`browse-sidebar-link ${selectedType === type ? "is-active" : ""}`}
-                  type="button"
-                  onClick={() => setSelectedType(type)}
-                >
-                  {capitalize(type)}
-                </button>
-              ))}
-            </nav>
           </aside>
           <section className="sections">
             {sections

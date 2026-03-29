@@ -16,14 +16,6 @@
     background: var(--color-overlay-header);
 }
 
-.browse-sidebar-title {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: var(--letter-spacing-wide);
-    text-transform: uppercase;
-    color: var(--muted);
-}
-
 .browse-sidebar-nav {
     display: grid;
     gap: var(--space-2);
@@ -43,6 +35,10 @@
     border-bottom: 1px solid var(--border);
 }
 
+.browse-sidebar-section:first-child {
+    border-bottom: 0;
+}
+
 .browse-sidebar-subtitle {
     font-size: var(--font-size-xs);
     color: var(--muted);
@@ -54,6 +50,14 @@
     max-height: 320px;
     overflow: auto;
     padding-right: var(--space-2);
+}
+
+.browse-sidebar-search {
+    width: 100%;
+}
+
+.browse-sidebar-reset {
+    justify-content: flex-start;
 }
 
 .browse-sidebar-link {
