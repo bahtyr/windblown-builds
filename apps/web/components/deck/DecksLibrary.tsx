@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
@@ -16,11 +16,39 @@ import EntityBrowser from "../entity/EntityBrowser";
 export default function DecksLibrary() {
   const deck = useDeck();
   const deckUi = useDeckUi();
+  const [drawerMounted, setDrawerMounted] = useState(deckUi.open);
+  const [drawerPhase, setDrawerPhase] = useState<"opening" | "open" | "closing">(deckUi.open ? "open" : "closing");
 
   const rows = useMemo(
     () => deck.saved.filter((savedDeck) => savedDeck.items.length > 0).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
     [deck.saved],
   );
+
+  useEffect(() => {
+    let frameId = 0;
+    let timeoutId = 0;
+
+    if (deckUi.open) {
+      setDrawerMounted(true);
+      setDrawerPhase("opening");
+      frameId = window.requestAnimationFrame(() => {
+        setDrawerPhase("open");
+      });
+      return () => {
+        window.cancelAnimationFrame(frameId);
+      };
+    }
+
+    if (!drawerMounted) return;
+    setDrawerPhase("closing");
+    timeoutId = window.setTimeout(() => {
+      setDrawerMounted(false);
+    }, 220);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [deckUi.open, drawerMounted]);
 
   const handleShare = async (deckName: string) => {
     const savedDeck = deck.saved.find((entry) => entry.name === deckName);
@@ -108,8 +136,9 @@ export default function DecksLibrary() {
         </section>
       </div>
 
-      {deckUi.open && (
-        <div className="deck-builder-overlay">
+      {drawerMounted && (
+        <div className={`deck-builder-overlay is-${drawerPhase}`}>
+          <div className={`deck-builder-backdrop is-${drawerPhase}`}/>
           <button
             aria-label="Cancel changes and close build editor"
             className="deck-builder-dismiss"
@@ -119,10 +148,10 @@ export default function DecksLibrary() {
           <div
             aria-label="Build editor"
             aria-modal="true"
-            className="deck-builder-drawer"
+            className={`deck-builder-drawer is-${drawerPhase}`}
             role="dialog"
           >
-            <div className="deck-builder-surface">
+            <div className={`deck-builder-surface is-${drawerPhase}`}>
               <DeckPanel onCancel={handleCancelEditing} onCommit={handleCommitEditing}/>
               <div className="deck-builder-browser">
                 <EntityBrowser embedded/>
