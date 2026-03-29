@@ -5,24 +5,36 @@ import {useEffect, useState} from "react";
 import {grayscaleImageData, loadImageData, matchTemplate, type MatchResult} from "../../lib/gift-icon-matcher";
 
 const SOURCE_PATH = "/source-cropped.png";
-const TEMPLATE_PATH = "/Intense_Burn.webp";
 const MATCH_THRESHOLD = 0.85;
+const TEMPLATE_SPECS = [
+  {name: "Intense Burn", path: "/Intense_Burn.webp", shouldFind: true},
+  {name: "Gory Flame Icon", path: "/Gory_Flame_Icon.webp", shouldFind: true},
+  {name: "Protection Icon", path: "/Protection_Icon.webp", shouldFind: false},
+] as const;
 
-type MatchState = {
-  sourceWidth: number;
-  sourceHeight: number;
+type MatchEntry = {
+  name: string;
+  path: string;
+  shouldFind: boolean;
   templateWidth: number;
   templateHeight: number;
   result: MatchResult;
 };
 
+type MatchState = {
+  sourceWidth: number;
+  sourceHeight: number;
+  matches: MatchEntry[];
+};
+
 /**
  * Renders a client-side debug view for gift icon template matching.
  *
- * @returns {JSX.Element} Debug UI showing images, score, and best match bounds.
+ * @returns {JSX.Element} Debug UI showing explicit found or not found results for each template.
  */
 export default function GiftMatchDebug(): JSX.Element {
   const [state, setState] = useState<MatchState | null>(null);
+  const [selectedPath, setSelectedPath] = useState<string>(TEMPLATE_SPECS[0].path);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,31 +42,39 @@ export default function GiftMatchDebug(): JSX.Element {
 
     async function runMatch() {
       try {
-        const [sourceImageData, templateImageData] = await Promise.all([
-          loadImageData(SOURCE_PATH),
-          loadImageData(TEMPLATE_PATH),
-        ]);
+        const sourceImageData = await loadImageData(SOURCE_PATH);
+        const sourceGray = grayscaleImageData(sourceImageData);
+        const matches = await Promise.all(
+          TEMPLATE_SPECS.map(async (templateSpec) => {
+            const templateImageData = await loadImageData(templateSpec.path);
+            const result = matchTemplate(
+              sourceGray,
+              grayscaleImageData(templateImageData),
+              {
+                threshold: MATCH_THRESHOLD,
+                scales: [0.9, 1, 1.1],
+                trimBorder: 2,
+                coarseStep: 2,
+                refineRadius: 3,
+              },
+            );
 
-        const result = matchTemplate(
-          grayscaleImageData(sourceImageData),
-          grayscaleImageData(templateImageData),
-          {
-            threshold: MATCH_THRESHOLD,
-            scales: [0.9, 1, 1.1],
-            trimBorder: 2,
-            coarseStep: 2,
-            refineRadius: 3,
-          },
+            return {
+              ...templateSpec,
+              templateWidth: templateImageData.width,
+              templateHeight: templateImageData.height,
+              result,
+            };
+          }),
         );
 
         if (!cancelled) {
           setState({
             sourceWidth: sourceImageData.width,
             sourceHeight: sourceImageData.height,
-            templateWidth: templateImageData.width,
-            templateHeight: templateImageData.height,
-            result,
+            matches,
           });
+          setSelectedPath(matches[0]?.path ?? TEMPLATE_SPECS[0].path);
         }
       } catch (matchError) {
         if (!cancelled) {
@@ -69,45 +89,100 @@ export default function GiftMatchDebug(): JSX.Element {
     };
   }, []);
 
-  const overlayStyle = state ? {
-    left: `${(state.result.x / state.sourceWidth) * 100}%`,
-    top: `${(state.result.y / state.sourceHeight) * 100}%`,
-    width: `${(state.result.width / state.sourceWidth) * 100}%`,
-    height: `${(state.result.height / state.sourceHeight) * 100}%`,
-    borderColor: state.result.isMatch ? "#2f855a" : "#c53030",
+  const selectedMatch = state?.matches.find((match) => match.path === selectedPath) ?? state?.matches[0] ?? null;
+  const overlayStyle = state && selectedMatch ? {
+    left: `${(selectedMatch.result.x / state.sourceWidth) * 100}%`,
+    top: `${(selectedMatch.result.y / state.sourceHeight) * 100}%`,
+    width: `${(selectedMatch.result.width / state.sourceWidth) * 100}%`,
+    height: `${(selectedMatch.result.height / state.sourceHeight) * 100}%`,
+    borderColor: selectedMatch.result.isMatch ? "#2f855a" : "#c53030",
+    opacity: selectedMatch.result.isMatch ? 1 : 0.45,
   } : undefined;
+  const passedCount = state?.matches.filter((match) => match.result.isMatch === match.shouldFind).length ?? 0;
 
   return (
     <section style={styles.shell}>
       <div style={styles.header}>
         <h1 style={styles.title}>Gift icon match debug</h1>
-        <p style={styles.subtitle}>Client-side grayscale template matching against a cropped screenshot.</p>
+        <p style={styles.subtitle}>This page explicitly reports whether each template was found inside the cropped source screenshot.</p>
       </div>
 
       {error ? <p style={styles.error}>{error}</p> : null}
 
-      <div style={styles.metrics}>
-        <Metric label="Best score" value={state ? state.result.score.toFixed(4) : "Running..."} />
-        <Metric label="Match" value={state ? (state.result.isMatch ? "Yes" : "No") : "Running..."} />
-        <Metric label="Position" value={state ? `${state.result.x}, ${state.result.y}` : "Running..."} />
-        <Metric label="Bounds" value={state ? `${state.result.width} x ${state.result.height}` : "Running..."} />
+      <div style={styles.summary}>
+        <div style={styles.summaryLabel}>Overall result</div>
+        <div style={styles.summaryValue}>
+          {state ? `${passedCount}/${state.matches.length} checks matched expectation` : "Running checks..."}
+        </div>
+        <div style={styles.summaryNote}>Threshold {MATCH_THRESHOLD}. Grayscale matching with a 2px template border trim and scale search.</div>
       </div>
 
       <div style={styles.grid}>
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>Source image</h2>
+          <p style={styles.cardSubtitle}>
+            {selectedMatch
+              ? `Overlay shown for ${selectedMatch.name}: ${selectedMatch.result.isMatch ? "FOUND" : "NOT FOUND"}`
+              : "Running..."}
+          </p>
           <div style={styles.imageFrame}>
-            <Image alt="Source screenshot" src={SOURCE_PATH} width={766} height={162} style={styles.image} />
-            {overlayStyle ? <div style={{...styles.overlay, ...overlayStyle}} /> : null}
+            <Image alt="Source screenshot" src={SOURCE_PATH} width={766} height={162} style={styles.image}/>
+            {overlayStyle ? <div style={{...styles.overlay, ...overlayStyle}}/> : null}
           </div>
         </div>
 
-        <div style={styles.card}>
-          <h2 style={styles.cardTitle}>Template image</h2>
-          <div style={styles.templateFrame}>
-            <Image alt="Template icon" src={TEMPLATE_PATH} width={48} height={48} style={styles.templateImage} />
-          </div>
-          <p style={styles.note}>Threshold: {MATCH_THRESHOLD}. Border trim: 2px. Scales: 0.9, 1.0, 1.1.</p>
+        <div style={styles.resultsColumn}>
+          {state?.matches.map((match) => {
+            const expectationMet = match.result.isMatch === match.shouldFind;
+            const statusText = match.result.isMatch ? "FOUND" : "NOT FOUND";
+            const expectedText = match.shouldFind ? "Should be found" : "Should not be found";
+
+            return (
+              <button
+                key={match.path}
+                onClick={() => setSelectedPath(match.path)}
+                style={{
+                  ...styles.resultCard,
+                  ...(selectedMatch?.path === match.path ? styles.resultCardSelected : null),
+                }}
+                type="button"
+              >
+                <div style={styles.resultHeader}>
+                  <div style={styles.resultHeaderText}>
+                    <h2 style={styles.resultTitle}>{match.name}</h2>
+                    <p style={styles.resultExpected}>{expectedText}</p>
+                  </div>
+                  <Image alt={match.name} src={match.path} width={48} height={48} style={styles.templateImage}/>
+                </div>
+
+                <div style={styles.badgeRow}>
+                  <span style={{
+                    ...styles.badge,
+                    ...(match.result.isMatch ? styles.badgeFound : styles.badgeNotFound),
+                  }}>
+                    {statusText}
+                  </span>
+                  <span style={{
+                    ...styles.badge,
+                    ...(expectationMet ? styles.badgePass : styles.badgeFail),
+                  }}>
+                    {expectationMet ? "EXPECTED" : "UNEXPECTED"}
+                  </span>
+                </div>
+
+                <div style={styles.metrics}>
+                  <Metric label="Score" value={match.result.score.toFixed(4)}/>
+                  <Metric label="Position" value={`${match.result.x}, ${match.result.y}`}/>
+                  <Metric label="Bounds" value={`${match.result.width} x ${match.result.height}`}/>
+                  <Metric label="Scale" value={match.result.scale.toFixed(2)}/>
+                </div>
+              </button>
+            );
+          }) ?? (
+            <div style={styles.resultCard}>
+              <p style={styles.loadingText}>Running template checks...</p>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -145,33 +220,33 @@ const styles: Record<string, React.CSSProperties> = {
     margin: 0,
     color: "#c53030",
   },
-  metrics: {
-    display: "grid",
-    gap: "12px",
-    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-  },
-  metricCard: {
+  summary: {
     border: "1px solid #d6dce5",
-    borderRadius: "12px",
+    borderRadius: "16px",
     background: "#ffffff",
-    padding: "14px 16px",
+    padding: "16px 18px",
+    display: "grid",
+    gap: "6px",
   },
-  metricLabel: {
+  summaryLabel: {
     fontSize: "12px",
     letterSpacing: "0.08em",
     textTransform: "uppercase",
     color: "#687282",
   },
-  metricValue: {
-    marginTop: "6px",
-    fontSize: "20px",
-    fontWeight: 600,
+  summaryValue: {
+    fontSize: "24px",
+    fontWeight: 700,
     color: "#111827",
+  },
+  summaryNote: {
+    color: "#596273",
+    fontSize: "14px",
   },
   grid: {
     display: "grid",
     gap: "16px",
-    gridTemplateColumns: "minmax(0, 1.8fr) minmax(260px, 0.8fr)",
+    gridTemplateColumns: "minmax(0, 1.5fr) minmax(320px, 1fr)",
     alignItems: "start",
   },
   card: {
@@ -181,8 +256,13 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "16px",
   },
   cardTitle: {
-    margin: "0 0 12px",
+    margin: 0,
     fontSize: "18px",
+  },
+  cardSubtitle: {
+    margin: "8px 0 12px",
+    color: "#596273",
+    fontSize: "14px",
   },
   imageFrame: {
     position: "relative",
@@ -204,25 +284,106 @@ const styles: Record<string, React.CSSProperties> = {
     pointerEvents: "none",
     boxSizing: "border-box",
   },
-  templateFrame: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "18px",
-    borderRadius: "12px",
+  resultsColumn: {
+    display: "grid",
+    gap: "12px",
+  },
+  resultCard: {
     border: "1px solid #d6dce5",
-    background: "#eef2f7",
+    borderRadius: "16px",
+    background: "#ffffff",
+    padding: "16px",
+    display: "grid",
+    gap: "14px",
+    textAlign: "left",
+    cursor: "pointer",
+  },
+  resultCardSelected: {
+    borderColor: "#2563eb",
+    boxShadow: "0 0 0 1px rgba(37, 99, 235, 0.2)",
+  },
+  resultHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "12px",
+  },
+  resultHeaderText: {
+    display: "grid",
+    gap: "4px",
+  },
+  resultTitle: {
+    margin: 0,
+    fontSize: "18px",
+    color: "#111827",
+  },
+  resultExpected: {
+    margin: 0,
+    color: "#596273",
+    fontSize: "14px",
   },
   templateImage: {
     display: "block",
-    width: "96px",
-    height: "96px",
-    imageRendering: "pixelated",
+    width: "48px",
+    height: "48px",
   },
-  note: {
-    margin: "12px 0 0",
+  badgeRow: {
+    display: "flex",
+    gap: "8px",
+    flexWrap: "wrap",
+  },
+  badge: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "28px",
+    padding: "0 10px",
+    borderRadius: "999px",
+    fontSize: "12px",
+    fontWeight: 700,
+    letterSpacing: "0.04em",
+  },
+  badgeFound: {
+    background: "#dcfce7",
+    color: "#166534",
+  },
+  badgeNotFound: {
+    background: "#fee2e2",
+    color: "#991b1b",
+  },
+  badgePass: {
+    background: "#dbeafe",
+    color: "#1d4ed8",
+  },
+  badgeFail: {
+    background: "#fef3c7",
+    color: "#92400e",
+  },
+  metrics: {
+    display: "grid",
+    gap: "10px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+  },
+  metricCard: {
+    border: "1px solid #e5e7eb",
+    borderRadius: "12px",
+    background: "#f8fafc",
+    padding: "10px 12px",
+  },
+  metricLabel: {
+    fontSize: "11px",
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "#687282",
+  },
+  metricValue: {
+    marginTop: "6px",
+    fontSize: "16px",
+    fontWeight: 600,
+    color: "#111827",
+  },
+  loadingText: {
+    margin: 0,
     color: "#596273",
-    fontSize: "14px",
-    lineHeight: 1.5,
   },
 };
