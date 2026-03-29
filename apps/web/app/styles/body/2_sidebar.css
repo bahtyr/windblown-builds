@@ -59,6 +59,12 @@
 
 .browse-sidebar-reset {
     justify-content: flex-start;
+    background: transparent;
+}
+
+.browse-sidebar-reset.is-active {
+    border-color: var(--border);
+    background: var(--color-surface-hover);
 }
 
 .browse-sidebar-link {

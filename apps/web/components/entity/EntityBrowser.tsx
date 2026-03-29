@@ -120,6 +120,11 @@ export default function EntityBrowser({embedded = false}: Props) {
     [grouped, matchesFilters],
   );
   const entityOptions = useMemo(() => collectEntityOptions(items), [items]);
+  const hasActiveFilters =
+    search.trim().length > 0 ||
+    selectedEntity !== "" ||
+    likedOnly ||
+    deckOnly;
 
   const filteredCount = useMemo(() => visibleItems.filter(matchesFilters).length, [matchesFilters, visibleItems]);
   const matchNavDeps = useMemo(
@@ -176,7 +181,11 @@ export default function EntityBrowser({embedded = false}: Props) {
         <div className="browse-layout body-wrapper">
           <aside className="browse-sidebar">
             <div className="browse-sidebar-section">
-              <button className="btn ghost browse-sidebar-reset" type="button" onClick={resetFilters}>
+              <button
+                className={`btn ghost browse-sidebar-reset ${hasActiveFilters ? "is-active" : ""}`}
+                type="button"
+                onClick={resetFilters}
+              >
                 Reset filters
               </button>
               <input
