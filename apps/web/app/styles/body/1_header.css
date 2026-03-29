@@ -12,7 +12,7 @@ header, .header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-10);
+    gap: var(--space-12);
     height: var(--header-height);
 }
 
@@ -31,6 +31,15 @@ header, .header {
 .tabs {
     display: flex;
     flex-wrap: wrap;
+    /*gap: var(--space-2);*/
+}
+
+.header-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /*gap: var(--space-20);*/
+    gap: var(--space-12);
 }
 
 .tab {
@@ -40,9 +49,24 @@ header, .header {
     text-decoration: none;
     height: var(--header-height);
     align-content: center;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .tab.is-active {
     color: var(--text);
     border-bottom: 1px solid var(--color-accent);
+}
+
+.tabs-secondary {
+    gap: var(--space-1);
+}
+
+.tab-secondary {
+    font-size: var(--font-size-sm);
+    color: color-mix(in srgb, var(--muted) 78%, transparent);
+}
+
+.tab-secondary:hover,
+.tab-secondary:focus-visible {
+    color: var(--color-accent);
 }
