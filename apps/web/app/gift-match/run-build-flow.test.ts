@@ -47,14 +47,14 @@ describe("buildFailedSquareCandidates", () => {
 describe("saveExternalDeck", () => {
   it("creates a saved deck with a unique name", () => {
     const result = saveExternalDeck(
-      [{name: "Detected Run 0330-1840", items: [], createdAt: "2026-03-30T18:40:00.000Z"}],
-      "Detected Run 0330-1840",
+      [{name: "Run 0330-1840", items: [], createdAt: "2026-03-30T18:40:00.000Z"}],
+      "Run 0330-1840",
       [{id: "gifts:Abundance", type: "gifts", name: "Abundance"}],
       () => "2026-03-30T18:45:00.000Z",
     );
 
     expect(result.savedDeck).toEqual({
-      name: "Detected Run 0330-1840 2",
+      name: "Run 0330-1840 2",
       items: [{id: "gifts:Abundance", type: "gifts", name: "Abundance"}],
       createdAt: "2026-03-30T18:45:00.000Z",
     });
@@ -64,7 +64,7 @@ describe("saveExternalDeck", () => {
 
 describe("buildDetectedRunName", () => {
   it("formats the default run name from the current time", () => {
-    expect(buildDetectedRunName(new Date("2026-03-30T18:45:00.000Z"))).toBe("Detected Run 0330-1445");
+    expect(buildDetectedRunName(new Date("2026-03-30T18:45:00.000Z"))).toBe("Run 0330-1445");
   });
 });
 

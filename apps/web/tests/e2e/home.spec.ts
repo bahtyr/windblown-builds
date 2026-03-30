@@ -26,5 +26,5 @@ test("new run dialog can parse a screenshot and save a build", async ({page}) =>
   await saveButton.click();
 
   await expect(page.getByRole("dialog", {name: "New run"})).not.toBeVisible();
-  await expect(page.getByText("Detected Run", {exact: false})).toBeVisible({timeout: 10000});
+  await expect(page.getByRole("heading", {name: /^Run \d{4}-\d{4}$/})).toBeVisible({timeout: 10000});
 });

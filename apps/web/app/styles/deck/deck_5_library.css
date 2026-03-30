@@ -450,6 +450,7 @@
     max-height: 520px;
     overflow: hidden;
     border-radius: var(--radius-md);
+    isolation: isolate;
 }
 
 .run-build-source-image {
@@ -478,12 +479,16 @@
     inset: 0;
     z-index: 2;
     display: grid;
-    align-content: start;
+    place-content: center;
     justify-items: center;
     gap: var(--space-3);
-    padding-top: var(--space-6);
+    background: linear-gradient(
+            180deg,
+            rgba(4, 8, 15, 0.48),
+            rgba(4, 8, 15, 0.68)
+    );
     color: var(--color-text);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
     pointer-events: none;
 }
 
@@ -560,11 +565,19 @@
 
 .run-build-failed-tile {
     cursor: pointer;
+    opacity: 0.42;
+    transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
-.run-build-failed-tile:disabled {
-    opacity: 0.45;
-    cursor: default;
+.run-build-failed-tile:hover,
+.run-build-failed-tile:focus-visible {
+    opacity: 0.8;
+}
+
+.run-build-failed-tile.is-selected {
+    opacity: 1;
+    border-color: rgba(79, 163, 255, 0.75);
+    box-shadow: 0 0 0 1px rgba(79, 163, 255, 0.28), 0 10px 24px rgba(5, 11, 21, 0.3);
 }
 
 @keyframes run-build-spin {

@@ -101,7 +101,7 @@ export function buildDetectedRunName(now: Date = new Date()): string {
   const hours = `${now.getHours()}`.padStart(2, "0");
   const minutes = `${now.getMinutes()}`.padStart(2, "0");
 
-  return `Detected Run ${month}${day}-${hours}${minutes}`;
+  return `Run ${month}${day}-${hours}${minutes}`;
 }
 
 function buildDeckItemFromTemplate(template: GiftMatchTemplateScore | null | undefined): MatchedDeckItem | null {

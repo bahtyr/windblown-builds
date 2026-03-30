@@ -55,10 +55,24 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen || typeof document === "undefined") {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   const matchedItems = useMemo(() => buildDetectedDeckItems(runResult?.squareResults ?? []), [runResult?.squareResults]);
   const failedSquares = useMemo(() => buildFailedSquareCandidates(runResult?.squareResults ?? []), [runResult?.squareResults]);
   const visibleMatchedItems = useMemo(() => matchedItems, [matchedItems]);
   const buildItems = useMemo(() => [...visibleMatchedItems, ...manualItems], [manualItems, visibleMatchedItems]);
+  const selectedCandidateIds = useMemo(() => new Set(manualItems.map((item) => item.id)), [manualItems]);
 
   if (!isOpen) {
     return null;
@@ -117,11 +131,11 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
   }
 
   function handleAddCandidate(item: MatchedDeckItem) {
-    if (buildItems.some((entry) => entry.id === item.id)) {
-      return;
-    }
-
-    setManualItems((current) => [...current, item]);
+    setManualItems((current) => (
+      current.some((entry) => entry.id === item.id)
+        ? current.filter((entry) => entry.id !== item.id)
+        : [...current, item]
+    ));
   }
 
   function handleSave() {
@@ -153,10 +167,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
 
         <div className="run-build-shell">
           <div className="run-build-header">
-            <div>
-              <h2 className="run-build-title">New run</h2>
-              <p className="run-build-copy">Upload a run screenshot to detect items and save a build directly into your library.</p>
-            </div>
+            <h2 className="run-build-title">New run</h2>
           </div>
 
           <div className="run-build-layout">
@@ -227,8 +238,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
               </button>
 
               <div className="run-build-preview-meta">
-                {!isRunning && runResult ? <p>{runResult.squares.length} squares detected. Green squares were matched automatically.</p> : null}
-                {!isRunning && !runResult && sourceSrc ? <p>Preparing detection...</p> : null}
+                {!isRunning && runResult ? <p>{runResult.squares.length} squares detected.</p> : null}
                 {error ? <p className="run-build-error">{error}</p> : null}
               </div>
             </section>
@@ -245,12 +255,12 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                 />
               </div>
 
-              <div className="run-build-section">
-                <div className="run-build-section-head">
-                  <h3>Build items</h3>
-                  <span>{visibleMatchedItems.length}</span>
-                </div>
-                {visibleMatchedItems.length > 0 ? (
+              {visibleMatchedItems.length > 0 ? (
+                <div className="run-build-section">
+                  <div className="run-build-section-head">
+                    <h3>Build items</h3>
+                    <span>{visibleMatchedItems.length}</span>
+                  </div>
                   <div className="run-build-success-grid" aria-label="Detected build items">
                     {visibleMatchedItems.map((item) => (
                       <div className="run-build-success-tile" key={item.id} title={item.name}>
@@ -258,23 +268,21 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                       </div>
                     ))}
                   </div>
-                ) : (
-                  <p className="run-build-empty">Matched items will appear here after parsing.</p>
-                )}
-              </div>
-
-              <div className="run-build-section">
-                <div className="run-build-section-head">
-                  <h3>Candidates for failed matches</h3>
-                  <span>{failedSquares.length}</span>
                 </div>
-                {failedSquares.length > 0 ? (
+              ) : null}
+
+              {failedSquares.length > 0 ? (
+                <div className="run-build-section">
+                  <div className="run-build-section-head">
+                    <h3>Candidates for failed matches</h3>
+                    <span>{failedSquares.length}</span>
+                  </div>
                   <div className="run-build-success-grid" aria-label="Failed match candidates">
                     {failedSquares.map((candidate) => (
                       <button
                         key={candidate.id}
-                        className="run-build-success-tile run-build-failed-tile"
-                        disabled={buildItems.some((item) => item.id === candidate.id)}
+                        aria-pressed={selectedCandidateIds.has(candidate.id)}
+                        className={`run-build-success-tile run-build-failed-tile ${selectedCandidateIds.has(candidate.id) ? "is-selected" : ""}`}
                         title={candidate.name}
                         type="button"
                         onClick={() => handleAddCandidate(candidate)}
@@ -283,10 +291,8 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                       </button>
                     ))}
                   </div>
-                ) : (
-                  <p className="run-build-empty">{runResult ? "No failed matches for this screenshot." : "Failed matches and alternates will show here when needed."}</p>
-                )}
-              </div>
+                </div>
+              ) : null}
 
               <div className="run-build-actions">
                 <button className="btn ghost" type="button" onClick={onClose}>Cancel</button>
