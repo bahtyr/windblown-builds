@@ -1,78 +1,176 @@
+# TODO
 
-# Liked deck build
-1. to the my builds page; add a "Favorites" deck.
-2. hidden if there are no favorites
-3. auto add all liked entities from the browse page here
+## Status Overview
 
-# Deck more info
-- add list of gift categories
-- location: left of a deck (like sidepanel)
-- note: categories currently don't have a image list, but it would be good if we create a image mapping for category titles, we can find this from entity images? and store it in a json file maybe? this would be a one time thing to generate. then, this would be only used for this purpose, no need to add this to browse page.
+### Ready to implement, execution order
+1. Liked deck build
+2. Deck more info
+3. Deck hover content
+4. Entity videos
+5. Better detect build flow
 
-# Deck hover content
-- hovering on a deck item shows their description - as seen in the browse page cards (image & fav / add actions hidden)
-- remove names from deck items, image only. hovering will show name.
-
-# Entity videos
-1. parse from wiki > opening entity page has video
-2. weapons have multiple videos need to store all...
-3. need to show this somewhere somehow... 
-4. on the deck hover; show this alongside on top of entity description card
-5. on the browse page. show the video on hover to the image (floating not inserted in to the card)
-6. show be small thumb not huge
+### To discuss before implementing
+- Gift matching debugger
+- Builds vs runs
+- Browse filter button
 
 ---
 
-# Gift matching improvements
+## 1. Liked deck build
 
-# Gift matching debugger
-to discuss before implementing
+Goal: add a dynamic Favorites deck to My Builds.
 
-- suggest crop zone. issue: bigger in game image screenshot detects unintentional squares - we need to ensure the detector focuses on right area. A this should be done automatically. need to define how B allow user to adjust if needed??
-- for failed case, allow picking from the top 3
-- the found success cases should be faded/less visible?
-
-
-# Better detect build flow
-- keep the gift matcher debugger page as separate ui flow
-- goal: need to make a user facing easier flow to auto detect build from image and create a build;
-
-## v1 dialog
-- add 'New run' button (this means the user play a game / a run. we will upload their run screenshot)
-- opens a popup.
-- says; click here to upload image / or drag and drop image here. (similar to attach file or drag modals in google drive etc)
-- attached source image should have max width/height - should not take over full screen
-- auto start parsing when file selected
-- no need to show total time took.
-- still highlight found & not found squares
-- show deck builder like layout, input for name, and list of added items. added items have remove button.
-- add items should be successful matches
-- below separate section shows failed matches;
-- in similar UI, show all other candidates with add button.
-- adding adds to deck above (don't remove from current list)
-- save build button.
-- edit button >> this saves first then opens edit modal so the user doesn't loose it.
-- dialog has x button at top right
-- backgounrd faded
-- 
-- clicking these items does not change the highlighted squares in the source image.
-- note; this saves deck immeditely does not use share link / open link method previously used
-
-## v2 anywhere in the app
-- anyhwere in the app accept drag&drop image (show some drop image to create deck kind of text)
-- dropping opens the dialog
-- also accept copy/paste - if user clicks paste and it's content is image open the dialog
+- Add a `Favorites` deck to the My Builds page.
+- Hide it if there are no liked entities.
+- The deck is auto-generated from the user's current likes from the Browse page.
+- This is not a snapshot or independent saved deck.
 
 ---
 
-# Builds vs runs
-to discuss first before implementing;
-now that parsing a deck from an image is easy - people might do many.
-so we might need to differentiate between auto generated just played this run / match history vs saved liked currated decks
-so there could be two tabs in my builds page maybe? or two separate secionts / lists
-potenntionally rebrand my builds/your libray as "my profile"
+## 2. Deck hover content
 
-# Browse filter button
-to discuss first before impelemting;
-need to consider reset filters button look location
-issue: scrolling within the side panel hides the button + any other selected filter. this is a bit bad.
+Goal: make deck items image-first and move detail to hover.
+
+- Remove visible names from deck items so the grid is image only.
+- On hover, show the entity name.
+- On hover, show the entity description using the same card-style content used on Browse.
+- Hide image actions inside the hover content:
+- No favorite action
+- No add action
+
+---
+
+## 3. Deck more info
+
+Goal: show extra metadata for every deck.
+
+- Add a visible list of gift categories for every deck.
+- Place this to the left of the deck, similar to a side panel.
+- This should always be visible, not only on selection or expand.
+- Categories do not currently have their own image list.
+- Create a category-image mapping based on existing entity images.
+- Store that mapping in a JSON file.
+- This can be generated once and used only for this deck info UI.
+- No need to add category images to the Browse page.
+
+---
+
+## 4. Entity videos
+
+Goal: bring entity videos into the app and surface them in deck/browse hover UI.
+
+- Parse videos from the wiki so opening an entity page has video data available.
+- Store video assets as URLs, consistent with current scraper asset handling.
+- Weapons can have multiple videos, so all videos need to be stored.
+- Decide where to show them in the UI:
+- On deck hover, show the video above the entity description card.
+- On the Browse page, hovering the image should show the video as a floating preview, not inserted into the card.
+- Video previews should stay small, like thumbnails, not large embeds.
+
+Reference:
+- Wiki parsing lives in `packages/scrapper`.
+
+---
+
+## 5. Better detect build flow
+
+Goal: keep the debugger flow separate, and create a simpler user-facing flow for making a build from an image.
+
+- Keep the gift matcher debugger page as a separate UI flow.
+- Add a user-facing flow to upload a run screenshot, parse it, and create a build.
+- For v1, this still saves into normal builds.
+- The entry point button should be named `New run`.
+
+### v1 dialog
+
+- Add a `New run` button.
+- Meaning: the user just played a game/run and wants to upload the screenshot.
+- Clicking it opens a popup dialog.
+- Dialog should support:
+  - Click to upload image
+  - Drag and drop image
+  - Use a familiar upload/dropzone pattern, similar to file attach or Google Drive drag/drop modals.
+  - The source image preview should have a max width/height and should not take over the full screen.
+  - Auto-start parsing when the file is selected.
+    - No need to show total parsing time.
+      - Still highlight found and not-found squares in the source image.
+- Show a deck-builder style layout with:
+  - Input for build name
+  - List of added items
+  - Remove button for added items
+  - Successful matches should be added automatically to the build list.
+  - Below that, show failed matches in a separate section.
+  - For failed matches, show alternate candidates in a similar UI with add buttons.
+  - Adding a candidate adds it to the build list above.
+    - Do not remove it from the failed list when added.
+- Save build button.
+- Edit button: 
+  - Save first
+  - Then open the edit modal
+  - This prevents the user from losing the build
+- Dialog should have:
+  - X button at top right
+  - Faded background overlay
+- Clicking items should not change the highlighted squares in the source image.
+- This flow should save the deck immediately.
+- Do not use the previous share-link/open-link method.
+
+### v2 anywhere in the app
+
+- Allow drag-and-drop image upload anywhere in the app.
+- Show a clear "drop image to create deck" style affordance.
+- Dropping an image should open the same dialog.
+- Also support paste:
+- If the user pastes an image, open the same dialog.
+
+---
+
+## 6. Gift matching debugger
+
+Status: discuss before implementing.
+
+Open questions / ideas:
+- Suggest a crop zone automatically.
+- Problem: large in-game screenshots can detect unintended squares.
+- The detector should focus on the correct area automatically.
+- Need to define how that automatic crop suggestion works.
+- Consider whether the user should be allowed to adjust the crop if needed.
+- For failed cases, allow picking from the top 3 candidates.
+- Consider whether successful matches should appear faded / less visually prominent.
+
+---
+
+## 7. Builds vs runs
+
+Status: discuss before implementing.
+
+Discussion point:
+- Parsing a deck from an image will make it easy for users to create many records.
+- We may need to distinguish between:
+- Auto-generated run history / recently played runs
+- Saved, curated, liked builds
+
+Possible directions:
+- Two tabs on My Builds
+- Two separate sections/lists
+- Potentially rebrand My Builds / Your Library as `My Profile`
+
+Current decision:
+- For now, `New run` still saves into the same builds collection.
+
+---
+
+## 8. Browse filter button
+
+Status: discuss before implementing.
+
+Problem:
+- Need to consider both reset-filter button placement and side-panel layout.
+- When scrolling inside the side panel, the reset button and selected filters can be hidden.
+- That hurts usability.
+
+Initial implementation direction:
+- Make selected filters and relevant actions sticky while scrolling.
+
+Still to consider:
+- Whether the side-panel layout should be changed more broadly.
