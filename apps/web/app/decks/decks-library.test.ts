@@ -57,6 +57,7 @@ describe("buildDeckCategoryMeta", () => {
     );
 
     expect(categories.map((category) => category.name)).toEqual(["General", "Rush"]);
-    expect(categories[0].image).toEqual(expect.any(String));
+    expect(categories[0].image).toBeUndefined();
+    expect(categories[1].image).toEqual(expect.any(String));
   });
 });

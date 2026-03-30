@@ -229,30 +229,15 @@ function DeckRow({categories, row, onDelete, onDiscardShared, onDuplicate, onEdi
   const isShared = row.kind === "shared";
   const isFavorites = row.kind === "favorites";
   const meta = isShared || isFavorites ? null : formatRoughDate(row.deck.createdAt);
+  const title = isFavorites ? "\u2665 Favorites" : row.deck.name;
 
   return (
     <article className={`deck-row ${isShared ? "deck-row-shared" : ""}`}>
       <div className="deck-row-layout">
-        <aside className="deck-row-side-panel" aria-label={`${row.deck.name} categories`}>
-          <p className="deck-row-side-title">Gift categories</p>
-          {categories.length > 0 ? (
-            <div className="deck-row-category-list">
-              {categories.map((category) => (
-                <div key={category.name} className="deck-row-category-chip">
-                  {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : <div className="deck-row-category-thumb deck-row-category-thumb-empty"/>}
-                  <span>{category.name}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="deck-row-side-empty">No gift categories</p>
-          )}
-        </aside>
-
         <div className="deck-row-main">
           <div className="deck-row-head">
             <div className="deck-row-title-group">
-              <h2 className="deck-row-title">{row.deck.name}</h2>
+              <h2 className="deck-row-title">{title}</h2>
               {meta && <p className="deck-row-meta">{meta}</p>}
               {isFavorites && <p className="deck-row-meta">Built from your current likes</p>}
             </div>
@@ -274,10 +259,27 @@ function DeckRow({categories, row, onDelete, onDiscardShared, onDuplicate, onEdi
             </div>
           </div>
 
-          <div className="deck-row-items">
-            {row.deck.items.map((item) => (
-              <DeckRowItem key={item.id} item={item}/>
-            ))}
+          <div className="deck-row-content">
+            <div className="deck-row-items-meta">
+              {categories.length > 0 ? (
+                <div className="deck-row-category-list" aria-label={`${row.deck.name} categories`}>
+                  {categories.map((category) => (
+                    <div key={category.name} className="deck-row-category-chip">
+                      {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : null}
+                      <span>{category.name}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="deck-row-side-empty">No gift categories</p>
+              )}
+            </div>
+
+            <div className="deck-row-items">
+              {row.deck.items.map((item) => (
+                <DeckRowItem key={item.id} item={item}/>
+              ))}
+            </div>
           </div>
         </div>
       </div>
