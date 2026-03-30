@@ -1,0 +1,373 @@
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import Image from "next/image";
+import {type ChangeEvent, type CSSProperties, useEffect, useMemo, useRef, useState} from "react";
+import {
+  isGiftMatch,
+  type GiftMatchRunResult,
+  type GiftMatchTemplateSpec,
+  runGiftMatchWorkflow,
+} from "../../app/gift-match/gift-match-workflow";
+import {
+  buildDetectedDeckItems,
+  buildDetectedRunName,
+  buildFailedSquareCandidates,
+  type FailedSquareCandidate,
+  type MatchedDeckItem,
+} from "../../app/gift-match/run-build-flow";
+import {type Rectangle} from "../../lib/gift-icon-matcher";
+import {useDeck} from "./DeckContext";
+import {useDeckUi} from "./DeckUiContext";
+
+type RunBuildDialogProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  templateSpecs: GiftMatchTemplateSpec[];
+};
+
+/**
+ * Renders the user-facing run upload flow that detects a build from a screenshot.
+ *
+ * @param {RunBuildDialogProps} props - Dialog state and template catalog.
+ * @returns {JSX.Element | null} Upload and review dialog when open.
+ */
+export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuildDialogProps): JSX.Element | null {
+  const deck = useDeck();
+  const deckUi = useDeckUi();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const objectUrlRef = useRef<string | null>(null);
+  const [sourceSrc, setSourceSrc] = useState<string | null>(null);
+  const [runResult, setRunResult] = useState<GiftMatchRunResult | null>(null);
+  const [manualItems, setManualItems] = useState<MatchedDeckItem[]>([]);
+  const [removedMatchedIds, setRemovedMatchedIds] = useState<string[]>([]);
+  const [buildName, setBuildName] = useState<string>(buildDetectedRunName());
+  const [error, setError] = useState<string | null>(null);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isDragActive, setIsDragActive] = useState<boolean>(false);
+
+  useEffect(() => () => {
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetDialogState();
+    }
+  }, [isOpen]);
+
+  const matchedItems = useMemo(() => buildDetectedDeckItems(runResult?.squareResults ?? []), [runResult?.squareResults]);
+  const failedSquares = useMemo(() => buildFailedSquareCandidates(runResult?.squareResults ?? []), [runResult?.squareResults]);
+  const visibleMatchedItems = useMemo(
+    () => matchedItems.filter((item) => !removedMatchedIds.includes(item.id)),
+    [matchedItems, removedMatchedIds],
+  );
+  const buildItems = useMemo(() => [...visibleMatchedItems, ...manualItems], [manualItems, visibleMatchedItems]);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  async function runDetection(nextSourceSrc: string) {
+    try {
+      setIsRunning(true);
+      setError(null);
+      setRunResult(null);
+      setManualItems([]);
+      setRemovedMatchedIds([]);
+
+      const nextState = await runGiftMatchWorkflow(templateSpecs, nextSourceSrc);
+      setRunResult(nextState);
+    } catch (matchError) {
+      setError(matchError instanceof Error ? matchError.message : "Failed to run image matching.");
+    } finally {
+      setIsRunning(false);
+    }
+  }
+
+  function resetDialogState() {
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
+
+    setSourceSrc(null);
+    setRunResult(null);
+    setManualItems([]);
+    setRemovedMatchedIds([]);
+    setBuildName(buildDetectedRunName());
+    setError(null);
+    setIsRunning(false);
+    setIsDragActive(false);
+  }
+
+  function setSourceFile(file: File) {
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+    }
+
+    const nextObjectUrl = URL.createObjectURL(file);
+    objectUrlRef.current = nextObjectUrl;
+    setSourceSrc(nextObjectUrl);
+    void runDetection(nextObjectUrl);
+  }
+
+  function handleFileInput(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    setSourceFile(file);
+    event.target.value = "";
+  }
+
+  function handleRemoveBuildItem(item: MatchedDeckItem) {
+    if (matchedItems.some((matchedItem) => matchedItem.id === item.id)) {
+      setRemovedMatchedIds((current) => current.includes(item.id) ? current : [...current, item.id]);
+      return;
+    }
+
+    setManualItems((current) => current.filter((entry) => entry.id !== item.id));
+  }
+
+  function handleAddCandidate(item: MatchedDeckItem) {
+    if (buildItems.some((entry) => entry.id === item.id)) {
+      return;
+    }
+
+    setManualItems((current) => [...current, item]);
+  }
+
+  function handleSave() {
+    if (buildItems.length === 0) {
+      return;
+    }
+
+    deck.saveImportedDeck(buildName, buildItems);
+    onClose();
+  }
+
+  function handleSaveAndEdit() {
+    if (buildItems.length === 0) {
+      return;
+    }
+
+    deck.saveImportedDeck(buildName, buildItems);
+    onClose();
+    deckUi.openDeck();
+  }
+
+  return (
+    <div className="run-build-overlay" role="presentation">
+      <div className="run-build-backdrop" onClick={onClose}/>
+      <div aria-label="New run" aria-modal="true" className="run-build-dialog" role="dialog">
+        <button aria-label="Close new run dialog" className="run-build-close" type="button" onClick={onClose}>
+          x
+        </button>
+
+        <div className="run-build-shell">
+          <div className="run-build-header">
+            <div>
+              <h2 className="run-build-title">New run</h2>
+              <p className="run-build-copy">Upload a run screenshot to detect items and save a build directly into your library.</p>
+            </div>
+          </div>
+
+          <div className="run-build-layout">
+            <section className="run-build-preview-panel">
+              <input
+                ref={fileInputRef}
+                accept="image/*"
+                className="run-build-hidden-input"
+                type="file"
+                onChange={handleFileInput}
+              />
+              <button
+                className={`run-build-dropzone ${isDragActive ? "is-drag-active" : ""}`}
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                onDragEnter={(event) => {
+                  event.preventDefault();
+                  setIsDragActive(true);
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  setIsDragActive(true);
+                }}
+                onDragLeave={(event) => {
+                  event.preventDefault();
+                  if (event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                    return;
+                  }
+                  setIsDragActive(false);
+                }}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  setIsDragActive(false);
+                  const file = event.dataTransfer.files?.[0];
+                  if (file) {
+                    setSourceFile(file);
+                  }
+                }}
+              >
+                {sourceSrc ? (
+                  <div className="run-build-source-frame">
+                    <img alt="Uploaded run screenshot" className="run-build-source-image" src={sourceSrc}/>
+                    {runResult?.squareResults.map((square) => (
+                      <div
+                        key={`${square.index}-${square.bounds.x}-${square.bounds.y}`}
+                        className="run-build-square"
+                        style={buildOverlayStyle(
+                          square.bounds,
+                          runResult.sourceWidth,
+                          runResult.sourceHeight,
+                          isGiftMatch(square.bestTemplate?.score ?? 0) ? "#16a34a" : "#dc2626",
+                        )}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="run-build-dropzone-copy">
+                    <strong>Drop an image here</strong>
+                    <span>or click to upload a run screenshot</span>
+                  </div>
+                )}
+              </button>
+
+              <div className="run-build-preview-meta">
+                {isRunning ? <p>Parsing screenshot...</p> : null}
+                {!isRunning && runResult ? <p>{runResult.squares.length} squares detected. Green squares were matched automatically.</p> : null}
+                {!isRunning && !runResult && sourceSrc ? <p>Preparing detection...</p> : null}
+                {error ? <p className="run-build-error">{error}</p> : null}
+              </div>
+            </section>
+
+            <section className="run-build-results-panel">
+              <div className="run-build-form-row">
+                <label className="run-build-label" htmlFor="run-build-name">Build name</label>
+                <input
+                  className="run-build-name-input"
+                  id="run-build-name"
+                  value={buildName}
+                  onChange={(event) => setBuildName(event.target.value)}
+                  placeholder="Build name"
+                />
+              </div>
+
+              <div className="run-build-section">
+                <div className="run-build-section-head">
+                  <h3>Build items</h3>
+                  <span>{buildItems.length}</span>
+                </div>
+                {buildItems.length > 0 ? (
+                  <div className="run-build-item-list">
+                    {buildItems.map((item) => (
+                      <div className="run-build-item-card" key={item.id}>
+                        {item.image ? <img alt="" className="run-build-item-thumb" src={item.image}/> : null}
+                        <div className="run-build-item-meta">
+                          <strong>{item.name}</strong>
+                          <span>{item.type}</span>
+                        </div>
+                        <button type="button" className="btn ghost run-build-item-remove" onClick={() => handleRemoveBuildItem(item)}>
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="run-build-empty">Matched items will appear here after parsing.</p>
+                )}
+              </div>
+
+              <div className="run-build-section">
+                <div className="run-build-section-head">
+                  <h3>Failed matches</h3>
+                  <span>{failedSquares.length}</span>
+                </div>
+                {failedSquares.length > 0 ? (
+                  <div className="run-build-failed-list">
+                    {failedSquares.map((square) => (
+                      <FailedSquareCard
+                        buildItems={buildItems}
+                        key={square.squareIndex}
+                        square={square}
+                        onAdd={handleAddCandidate}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="run-build-empty">{runResult ? "No failed matches for this screenshot." : "Failed matches and alternates will show here when needed."}</p>
+                )}
+              </div>
+
+              <div className="run-build-actions">
+                <button className="btn ghost" type="button" onClick={onClose}>Cancel</button>
+                <button className="btn ghost" disabled={buildItems.length === 0} type="button" onClick={handleSaveAndEdit}>Edit</button>
+                <button className="btn" disabled={buildItems.length === 0} type="button" onClick={handleSave}>Save build</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FailedSquareCard({
+  buildItems,
+  square,
+  onAdd,
+}: {
+  buildItems: MatchedDeckItem[];
+  square: FailedSquareCandidate;
+  onAdd: (item: MatchedDeckItem) => void;
+}) {
+  return (
+    <article className="run-build-failed-card">
+      <div className="run-build-failed-head">
+        <h4>Square {square.squareIndex + 1}</h4>
+        <span>{square.candidates.length} candidates</span>
+      </div>
+
+      <div className="run-build-candidate-list">
+        {square.candidates.map((candidate) => {
+          const isAdded = buildItems.some((item) => item.id === candidate.id);
+
+          return (
+            <div className="run-build-candidate-card" key={`${square.squareIndex}-${candidate.id}`}>
+              {candidate.image ? (
+                <Image
+                  alt={candidate.name}
+                  className="run-build-candidate-thumb"
+                  height={40}
+                  src={candidate.image}
+                  width={40}
+                />
+              ) : null}
+              <div className="run-build-candidate-meta">
+                <strong>{candidate.name}</strong>
+                <span>{candidate.type}</span>
+              </div>
+              <button className="btn ghost" disabled={isAdded} type="button" onClick={() => onAdd(candidate)}>
+                {isAdded ? "Added" : "Add"}
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </article>
+  );
+}
+
+function buildOverlayStyle(square: Rectangle, sourceWidth: number, sourceHeight: number, borderColor: string): CSSProperties {
+  return {
+    left: `${(square.x / sourceWidth) * 100}%`,
+    top: `${(square.y / sourceHeight) * 100}%`,
+    width: `${(square.width / sourceWidth) * 100}%`,
+    height: `${(square.height / sourceHeight) * 100}%`,
+    borderColor,
+  };
+}

@@ -6,6 +6,7 @@ import {DeckItem, SavedDeck, SharedDeck, makeDeckItem, useDeck} from "./DeckCont
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
 import DeckPanel from "./DeckPanel";
+import RunBuildDialog from "./RunBuildDialog";
 import EntityBrowser from "../entity/EntityBrowser";
 import {useLikes} from "../like/LikeContext";
 import {ENTITY_TYPES, loadEntities} from "../../lib/loadEntities";
@@ -14,6 +15,7 @@ import {EntityType, ScrapedEntity} from "../../lib/types";
 import RichText from "../entity/RichText";
 import {getEntityStats} from "../entity/EntityCard";
 import EntityVideoPreview from "../entity/EntityVideoPreview";
+import {type GiftMatchTemplateSpec} from "../../app/gift-match/gift-match-workflow";
 
 type DrawerPhase = "opening" | "open" | "closing";
 type DeckRowModel =
@@ -38,14 +40,16 @@ type DeckCategoryMeta = {
 /**
  * Read-only saved deck library with share, duplicate, edit, and delete actions.
  *
+ * @param {{ templateSpecs: GiftMatchTemplateSpec[] }} props - Template catalog used by the new run flow.
  * @returns {JSX.Element} Saved deck library page.
  */
-export default function DecksLibrary() {
+export default function DecksLibrary({templateSpecs}: { templateSpecs: GiftMatchTemplateSpec[] }) {
   const deck = useDeck();
   const deckUi = useDeckUi();
   const likes = useLikes();
   const [drawerMounted, setDrawerMounted] = useState(deckUi.open);
   const [drawerPhase, setDrawerPhase] = useState<DrawerPhase>(deckUi.open ? "open" : "closing");
+  const [runDialogOpen, setRunDialogOpen] = useState(false);
   const [entityLookup, setEntityLookup] = useState<EntityLookup>(new Map());
   const [giftCategoryLookup, setGiftCategoryLookup] = useState<GiftCategoryLookup>(new Map());
 
@@ -163,6 +167,7 @@ export default function DecksLibrary() {
               <p className="decks-page-copy">Revisit your runs and share with others.</p>
             </div>
             <div className="decks-page-header-actions">
+              <button className="btn decks-page-primary-button" type="button" onClick={() => setRunDialogOpen(true)}>New run</button>
               <button className="btn decks-page-primary-button" type="button" onClick={handleCreateNew}>Create new build</button>
             </div>
           </div>
@@ -238,6 +243,12 @@ export default function DecksLibrary() {
           </div>
         </div>
       )}
+
+      <RunBuildDialog
+        isOpen={runDialogOpen}
+        onClose={() => setRunDialogOpen(false)}
+        templateSpecs={templateSpecs}
+      />
     </>
   );
 }

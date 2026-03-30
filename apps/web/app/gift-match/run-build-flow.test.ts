@@ -1,0 +1,86 @@
+import {describe, expect, it} from "vitest";
+import {
+  buildDetectedDeckItems,
+  buildDetectedRunName,
+  buildFailedSquareCandidates,
+  saveExternalDeck,
+} from "./run-build-flow";
+
+describe("buildDetectedDeckItems", () => {
+  it("keeps unique successful matches and ignores boosts", () => {
+    const items = buildDetectedDeckItems([
+      buildSquareResult(0, {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.91}),
+      buildSquareResult(1, {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.84}),
+      buildSquareResult(2, {name: "Damage Boost", path: "/images/boosts/Damage_Boost_Icon.png", score: 0.95}),
+      buildSquareResult(3, {name: "Anchor Boom", path: "/images/weapons/Anchor_Boom_Icon.png", score: 0.92}),
+    ]);
+
+    expect(items).toEqual([
+      {id: "gifts:Abundance", type: "gifts", name: "Abundance", image: "/images/gifts/Abundance_Icon.png"},
+      {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
+    ]);
+  });
+});
+
+describe("buildFailedSquareCandidates", () => {
+  it("returns alternate candidates for failed squares only", () => {
+    const failedSquares = buildFailedSquareCandidates([
+      buildSquareResult(0, {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.91}),
+      buildSquareResult(1, {name: "Balance", path: "/images/gifts/Balance_Icon.png", score: 0.61}, [
+        {name: "Balance", path: "/images/gifts/Balance_Icon.png", score: 0.61},
+        {name: "Anchor Boom", path: "/images/weapons/Anchor_Boom_Icon.png", score: 0.59},
+        {name: "Damage Boost", path: "/images/boosts/Damage_Boost_Icon.png", score: 0.58},
+      ]),
+    ]);
+
+    expect(failedSquares).toEqual([
+      {
+        squareIndex: 1,
+        bounds: {x: 0, y: 0, width: 20, height: 20},
+        candidates: [
+          {id: "gifts:Balance", type: "gifts", name: "Balance", image: "/images/gifts/Balance_Icon.png"},
+          {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
+        ],
+      },
+    ]);
+  });
+});
+
+describe("saveExternalDeck", () => {
+  it("creates a saved deck with a unique name", () => {
+    const result = saveExternalDeck(
+      [{name: "Detected Run 0330-1840", items: [], createdAt: "2026-03-30T18:40:00.000Z"}],
+      "Detected Run 0330-1840",
+      [{id: "gifts:Abundance", type: "gifts", name: "Abundance"}],
+      () => "2026-03-30T18:45:00.000Z",
+    );
+
+    expect(result.savedDeck).toEqual({
+      name: "Detected Run 0330-1840 2",
+      items: [{id: "gifts:Abundance", type: "gifts", name: "Abundance"}],
+      createdAt: "2026-03-30T18:45:00.000Z",
+    });
+    expect(result.saved).toHaveLength(2);
+  });
+});
+
+describe("buildDetectedRunName", () => {
+  it("formats the default run name from the current time", () => {
+    expect(buildDetectedRunName(new Date("2026-03-30T18:45:00.000Z"))).toBe("Detected Run 0330-1445");
+  });
+});
+
+function buildSquareResult(
+  index: number,
+  bestTemplate: {name: string; path: string; score: number} | null,
+  topTemplates: Array<{name: string; path: string; score: number}> = bestTemplate ? [bestTemplate] : [],
+) {
+  return {
+    index,
+    bounds: {x: 0, y: 0, width: 20, height: 20},
+    preprocessMilliseconds: 1,
+    matchMilliseconds: 1,
+    bestTemplate,
+    topTemplates,
+  };
+}

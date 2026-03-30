@@ -3,6 +3,7 @@
 import {createContext, useContext, useEffect, useMemo, useState} from "react";
 import {loadEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
+import {saveExternalDeck} from "../../app/gift-match/run-build-flow";
 
 export type DeckItem = {
   id: string;
@@ -44,6 +45,7 @@ type DeckContextType = {
   moveWithinType: (type: EntityType, from: number, to: number) => void;
   setName: (name: string) => void;
   saveDeck: (asNew?: boolean) => void;
+  saveImportedDeck: (name: string, items: DeckItem[]) => string;
   saveSharedDeck: () => void;
   discardSharedDeck: () => void;
   createDeck: () => void;
@@ -202,6 +204,16 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
           clearSharedDeckUrl();
         }
         setEditingSource("saved");
+      },
+      saveImportedDeck: (deckName, nextItems) => {
+        const persisted = saveExternalDeck(saved, deckName, nextItems);
+        setSaved(persisted.saved);
+        setItems(persisted.savedDeck.items);
+        setEditingDeckName(persisted.savedDeck.name);
+        setNameState(persisted.savedDeck.name);
+        setSessionStart(null);
+        setEditingSource("saved");
+        return persisted.savedDeck.name;
       },
       saveSharedDeck: () => {
         if (!sharedDeck) return;
