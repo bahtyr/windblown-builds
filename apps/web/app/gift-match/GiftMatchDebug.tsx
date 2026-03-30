@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {type Rectangle} from "../../lib/gift-icon-matcher";
 import {
   GIFT_MATCH_SOURCE_PATH,
+  GIFT_MATCH_WORKFLOW_CONFIG,
   isGiftMatch,
   runGiftMatchWorkflow,
   selectGiftMatchOverlay,
@@ -26,35 +27,26 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
   const [state, setState] = useState<GiftMatchRunResult | null>(null);
   const [selectedSquareIndex, setSelectedSquareIndex] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
 
-  useEffect(() => {
-    let cancelled = false;
+  async function handleStart() {
+    try {
+      setIsRunning(true);
+      setError(null);
+      setState(null);
 
-    async function runMatching() {
-      try {
-        const nextState = await runGiftMatchWorkflow(templateSpecs);
-
-        if (!cancelled) {
-          setState(nextState);
-          setSelectedSquareIndex(nextState.squareResults[0]?.index ?? 0);
-        }
-      } catch (matchError) {
-        if (!cancelled) {
-          setError(matchError instanceof Error ? matchError.message : "Failed to run image matching.");
-        }
-      }
+      const nextState = await runGiftMatchWorkflow(templateSpecs);
+      setState(nextState);
+      setSelectedSquareIndex(nextState.squareResults[0]?.index ?? 0);
+    } catch (matchError) {
+      setError(matchError instanceof Error ? matchError.message : "Failed to run image matching.");
+    } finally {
+      setIsRunning(false);
     }
-
-    setState(null);
-    setError(null);
-    runMatching();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [templateSpecs]);
+  }
 
   const selectedOverlay = state ? selectGiftMatchOverlay(state, selectedSquareIndex) : null;
+  const foundSquares = state?.squareResults.filter((square) => square.bestTemplate && isGiftMatch(square.bestTemplate.score)) ?? [];
   const selectedOverlayStyle = state && selectedOverlay ? buildOverlayStyle(
     selectedOverlay.bounds,
     state.sourceWidth,
@@ -66,6 +58,17 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
     <section style={styles.shell}>
       {error ? <p style={styles.error}>{error}</p> : null}
 
+      <div style={styles.actions}>
+        <button type="button" onClick={() => void handleStart()} disabled={isRunning} style={styles.startButton}>
+          {isRunning ? "Running..." : "Start"}
+        </button>
+        <span style={styles.actionMeta}>
+          {state
+            ? `${state.squares.length} squares x ${state.templateCount} templates`
+            : `${templateSpecs.length} templates ready`}
+        </span>
+      </div>
+
       <div style={styles.sourceCard}>
         <div style={styles.imageFrame}>
           {state ? (
@@ -76,7 +79,9 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
               height={state.sourceHeight}
               style={styles.image}
             />
-          ) : null}
+          ) : (
+            <div style={styles.placeholder}>Click Start to run matching.</div>
+          )}
           {state?.squares.map((square, index) => (
             <div
               key={`${square.x}-${square.y}-${index}`}
@@ -86,6 +91,42 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
             </div>
           ))}
           {selectedOverlayStyle ? <div style={{...styles.selectedOverlay, ...selectedOverlayStyle}} /> : null}
+        </div>
+      </div>
+
+      <div style={styles.resultsCard}>
+        <h2 style={styles.sectionTitle}>Found Images</h2>
+        <div style={styles.resultsGrid}>
+          {foundSquares.length ? foundSquares.map((square) => (
+            <button
+              key={square.index}
+              type="button"
+              onClick={() => setSelectedSquareIndex(square.index)}
+              style={{
+                ...styles.resultTile,
+                ...(selectedSquareIndex === square.index ? styles.resultTileSelected : null),
+              }}
+            >
+              <div style={styles.resultTileHeader}>Square {square.index}</div>
+              {square.bestTemplate?.path ? (
+                <Image
+                  alt={square.bestTemplate.name}
+                  src={square.bestTemplate.path}
+                  width={64}
+                  height={64}
+                  style={styles.resultImage}
+                />
+              ) : (
+                <div style={styles.resultPlaceholder}>No image</div>
+              )}
+              <div style={styles.resultName}>{square.bestTemplate?.name ?? "No result"}</div>
+              <div style={styles.resultMeta}>
+                {square.bestTemplate ? `Found | ${square.bestTemplate.score.toFixed(4)}` : "-"}
+              </div>
+            </button>
+          )) : (
+            <p style={styles.emptyText}>{isRunning ? "Running..." : state ? "No matches above threshold." : "No results yet."}</p>
+          )}
         </div>
       </div>
 
@@ -101,19 +142,19 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
           <tbody>
           <tr>
             <td style={styles.tableCell}>Whole run, load source and {templateSpecs.length} reference images, then compare all detected squares</td>
-            <td style={styles.tableCell}>{state ? formatMilliseconds(state.totalMilliseconds) : "Loading..."}</td>
+            <td style={styles.tableCell}>{state ? formatMilliseconds(state.totalMilliseconds) : isRunning ? "Running..." : "-"}</td>
             <td style={styles.tableCell}>{state ? `${state.squares.length} squares x ${state.templateCount} templates` : "-"}</td>
           </tr>
           <tr>
             <td style={styles.tableCell}>Phase 1, identify squares and prepare square crops</td>
-            <td style={styles.tableCell}>{state ? formatMilliseconds(state.phase1Milliseconds) : "Loading..."}</td>
+            <td style={styles.tableCell}>{state ? formatMilliseconds(state.phase1Milliseconds) : isRunning ? "Running..." : "-"}</td>
             <td style={styles.tableCell}>{state ? `${state.squares.length} squares` : "-"}</td>
           </tr>
           {state?.squareResults.flatMap((square) => [
             <tr
               key={`process-${square.index}`}
               onClick={() => setSelectedSquareIndex(square.index)}
-              style={selectedSquareIndex === square.index ? styles.tableRowSelected : undefined}
+              style={selectedSquareIndex === square.index ? styles.tableRowSelected : styles.tableRow}
             >
               <td style={styles.tableCell}>Square {square.index}, crop and preprocess square</td>
               <td style={styles.tableCell}>{formatMilliseconds(square.preprocessMilliseconds)}</td>
@@ -122,7 +163,7 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
             <tr
               key={`match-${square.index}`}
               onClick={() => setSelectedSquareIndex(square.index)}
-              style={selectedSquareIndex === square.index ? styles.tableRowSelected : undefined}
+              style={selectedSquareIndex === square.index ? styles.tableRowSelected : styles.tableRow}
             >
               <td style={styles.tableCell}>Square {square.index}, compare against {state.templateCount} reference images</td>
               <td style={styles.tableCell}>{formatMilliseconds(square.matchMilliseconds)}</td>
@@ -176,6 +217,26 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "0 0 16px",
     color: "#dc2626",
   },
+  actions: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    marginBottom: "16px",
+  },
+  startButton: {
+    border: "1px solid #111827",
+    borderRadius: "10px",
+    background: "#111827",
+    color: "#ffffff",
+    padding: "10px 16px",
+    fontSize: "14px",
+    fontWeight: 700,
+    cursor: "pointer",
+  },
+  actionMeta: {
+    color: "#596273",
+    fontSize: "14px",
+  },
   sourceCard: {
     border: "1px solid #d6dce5",
     borderRadius: "16px",
@@ -187,6 +248,14 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: "12px",
     overflow: "hidden",
     background: "#111827",
+    minHeight: "320px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  placeholder: {
+    color: "#cbd5e1",
+    fontSize: "16px",
   },
   image: {
     display: "block",
@@ -221,6 +290,72 @@ const styles: Record<string, React.CSSProperties> = {
     boxSizing: "border-box",
     pointerEvents: "none",
   },
+  resultsCard: {
+    marginTop: "16px",
+    border: "1px solid #d6dce5",
+    borderRadius: "16px",
+    background: "#ffffff",
+    padding: "16px",
+  },
+  sectionTitle: {
+    margin: "0 0 12px",
+    fontSize: "18px",
+    color: "#111827",
+  },
+  resultsGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+    gap: "12px",
+  },
+  resultTile: {
+    border: "1px solid #d6dce5",
+    borderRadius: "14px",
+    background: "#ffffff",
+    padding: "12px",
+    display: "grid",
+    gap: "8px",
+    justifyItems: "center",
+    textAlign: "center",
+    cursor: "pointer",
+  },
+  resultTileSelected: {
+    borderColor: "#111827",
+    background: "#f8fafc",
+  },
+  resultTileHeader: {
+    fontSize: "13px",
+    fontWeight: 700,
+    color: "#596273",
+  },
+  resultImage: {
+    display: "block",
+    width: "64px",
+    height: "64px",
+  },
+  resultPlaceholder: {
+    width: "64px",
+    height: "64px",
+    borderRadius: "12px",
+    background: "#e5e7eb",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#596273",
+    fontSize: "12px",
+  },
+  resultName: {
+    fontWeight: 700,
+    fontSize: "14px",
+    color: "#111827",
+  },
+  resultMeta: {
+    color: "#596273",
+    fontSize: "13px",
+  },
+  emptyText: {
+    margin: 0,
+    color: "#596273",
+  },
   tableCard: {
     marginTop: "16px",
     border: "1px solid #d6dce5",
@@ -239,6 +374,9 @@ const styles: Record<string, React.CSSProperties> = {
     borderBottom: "1px solid #e5e7eb",
     fontSize: "13px",
     color: "#596273",
+  },
+  tableRow: {
+    cursor: "pointer",
   },
   tableRowSelected: {
     background: "#f8fafc",

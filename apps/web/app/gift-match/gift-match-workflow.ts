@@ -15,7 +15,7 @@ import {
 export const GIFT_MATCH_SOURCE_PATH = "/source-cropped-2.PNG";
 
 export const GIFT_MATCH_WORKFLOW_CONFIG = {
-  matchThreshold: 0.8,
+  matchThreshold: 0.73,
   templateBorderTrim: 4,
   squareInnerTrim: 6,
   matchBorderColor: "#16a34a",
