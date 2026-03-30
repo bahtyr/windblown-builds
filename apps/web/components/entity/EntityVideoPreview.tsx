@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import {useEffect, useRef} from "react";
 import {ScrapedEntity} from "../../lib/types";
 
 type Props = {
-  className?: string;
   entity: ScrapedEntity;
+  mediaClassName?: string;
+  wrapperClassName?: string;
 };
 
 /**
@@ -29,20 +31,32 @@ export function getEntityVideos(entity: ScrapedEntity): string[] {
  * @param {Props} props - Video preview props.
  * @returns {JSX.Element | null} Video preview when media exists.
  */
-export default function EntityVideoPreview({className = "", entity}: Props) {
+export default function EntityVideoPreview({entity, mediaClassName = "", wrapperClassName = ""}: Props) {
   const videos = getEntityVideos(entity);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    void video.play().catch(() => {});
+  }, [videos]);
+
   if (videos.length === 0) return null;
 
   return (
-    <div className={`entity-video-preview ${className}`.trim()}>
+    <div className={`entity-video-preview ${wrapperClassName}`.trim()}>
       <video
         aria-label={`${entity.name} preview video`}
         autoPlay
-        className="entity-video-preview-media"
+        className={`entity-video-preview-media ${mediaClassName}`.trim()}
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
+        ref={videoRef}
       >
         <source src={videos[0]} type="video/webm"/>
       </video>

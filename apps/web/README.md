@@ -25,3 +25,5 @@ Notes:
 - Playwright uses the local Next dev server at `http://127.0.0.1:3000`.
 - The config starts the dev server automatically unless one is already running.
 - No snapshots are used right now. If snapshot assertions are added later, update them with `npx playwright test --update-snapshots`.
+- For hover tooltips, overlays, or video previews, prefer assertions on bounding boxes and playback state instead of only checking `toBeVisible()`.
+- If a UI bug involves overlap or stacking, reproduce it with Playwright and verify the hovered element stays within the intended card or layer.

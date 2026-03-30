@@ -95,6 +95,9 @@ Avoid:
 - Prefer accessible selectors in Playwright tests (`role`, `label`, `text`) over brittle selectors.
 - Keep Playwright coverage targeted and maintainable.
 - Do not add broad screenshot-heavy or flaky visual coverage by default.
+- For hover cards, tooltips, overlays, and popovers, assert stacking/placement with bounding boxes so adjacent UI is not covering or covered unexpectedly.
+- For video or animated hover states, assert behavior, not just visibility: check playback state such as `paused`, `currentTime`, or `readyState` when practical.
+- If a bug report mentions overlap, clipping, autoplay, or layering, reproduce it in Playwright before and after the fix instead of relying on CSS inspection alone.
 
 ### Method Organization
 

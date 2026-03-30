@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import {useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
@@ -28,6 +29,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
   const presentInDeck = inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`);
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
+  const [showPreview, setShowPreview] = useState(false);
 
   const handleAdd = () => {
     const res = deck.add(makeDeckItem(type, item), limits);
@@ -49,10 +51,22 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
       <div className="card-head">
         <div className="card-title-wrap">
           <div className="card-thumb-wrap">
-            {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
-            <div className="card-image-hover-preview">
-              <EntityVideoPreview className="card-image-hover-preview-media" entity={item}/>
-            </div>
+            <button
+              aria-label={`Preview ${item.name}`}
+              className="card-thumb-preview-trigger"
+              type="button"
+              onBlur={() => setShowPreview(false)}
+              onFocus={() => setShowPreview(true)}
+              onMouseEnter={() => setShowPreview(true)}
+              onMouseLeave={() => setShowPreview(false)}
+            >
+              {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
+            </button>
+            {showPreview ? (
+              <div className="card-image-hover-preview">
+                <EntityVideoPreview entity={item} wrapperClassName="card-image-hover-preview-surface" mediaClassName="card-image-hover-preview-media"/>
+              </div>
+            ) : null}
           </div>
           <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
             {item.name}

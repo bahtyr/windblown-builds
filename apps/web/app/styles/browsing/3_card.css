@@ -30,6 +30,11 @@
     overflow: visible;
 }
 
+.card:hover,
+.card:focus-within {
+    z-index: 10;
+}
+
 .card::before {
     content: "";
     position: absolute;
@@ -116,6 +121,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
+}
+
+.card-thumb-preview-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
 
 .card-title {
@@ -134,21 +150,24 @@
 
 .card-image-hover-preview {
     position: absolute;
-    top: calc(100% + var(--space-2));
-    left: 0;
-    z-index: 12;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    left: 50%;
+    bottom: calc(100% + var(--space-3));
+    z-index: 20;
+    transform: translateX(-18%);
     pointer-events: none;
 }
 
-.card-thumb-wrap:hover .card-image-hover-preview,
-.card-thumb-wrap:focus-within .card-image-hover-preview {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.card-image-hover-preview-surface {
+    width: 322px;
+    min-width: 322px;
+    box-shadow: var(--shadow);
+}
+
+.card-image-hover-preview-media {
+    width: 320px;
+    min-width: 320px;
+    height: 180px;
+    flex: 0 0 320px;
 }
 
 /* ---------- Card Actions ---------- */
