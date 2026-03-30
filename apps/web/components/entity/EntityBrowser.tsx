@@ -13,6 +13,7 @@ import {
   groupByCategory,
   MatchDisplayMode,
   parsePersistedFilters,
+  resolveEmbeddedBrowserFilters,
 } from "../../app/[type]/entity-utils";
 import EntityCard from "./EntityCard";
 
@@ -54,11 +55,12 @@ export default function EntityBrowser({embedded = false}: Props) {
 
   useEffect(() => {
     if (embedded) {
+      const embeddedFilters = resolveEmbeddedBrowserFilters(deck.isEditingBuild);
       setSearch("");
       setSelectedEntity("");
       setLikedOnly(false);
-      setDeckOnly(deck.mode === "editing");
-      setMatchDisplayMode(deck.mode === "editing" ? "show-matches-only" : "fade-unmatched");
+      setDeckOnly(embeddedFilters.deckOnly);
+      setMatchDisplayMode(embeddedFilters.matchDisplayMode);
       setFiltersHydrated(true);
       return;
     }
@@ -79,7 +81,7 @@ export default function EntityBrowser({embedded = false}: Props) {
     }
 
     setFiltersHydrated(true);
-  }, [deck.mode, embedded]);
+  }, [deck.isEditingBuild, embedded]);
 
   useEffect(() => {
     if (!filtersHydrated || embedded) return;

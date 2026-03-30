@@ -7,7 +7,6 @@ import {buildDeckShareUrl} from "../../components/deck/deck-share";
 import {type Rectangle} from "../../lib/gift-icon-matcher";
 import {type EntityType} from "../../lib/types";
 import {
-  GIFT_MATCH_SOURCE_PATH,
   isGiftMatch,
   runGiftMatchWorkflow,
   type GiftMatchRunResult,
@@ -36,10 +35,10 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
   const [state, setState] = useState<GiftMatchRunResult | null>(null);
-  const [selectedSquareIndex, setSelectedSquareIndex] = useState<number>(0);
+  const [selectedSquareIndex, setSelectedSquareIndex] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [sourceSrc, setSourceSrc] = useState<string>(GIFT_MATCH_SOURCE_PATH);
+  const [sourceSrc, setSourceSrc] = useState<string | null>(null);
 
   useEffect(() => () => {
     if (objectUrlRef.current) {
@@ -50,14 +49,19 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
   const matchedDeckItems = useMemo(() => buildDeckItems(state?.squareResults ?? []), [state?.squareResults]);
 
   async function handleStart() {
+    if (!sourceSrc) {
+      setError("Upload a build screenshot before running detection.");
+      return;
+    }
+
     try {
       setIsRunning(true);
       setError(null);
       setState(null);
+      setSelectedSquareIndex(null);
 
       const nextState = await runGiftMatchWorkflow(templateSpecs, sourceSrc);
       setState(nextState);
-      setSelectedSquareIndex(nextState.squareResults[0]?.index ?? 0);
     } catch (matchError) {
       setError(matchError instanceof Error ? matchError.message : "Failed to run image matching.");
     } finally {
@@ -80,7 +84,7 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
     setSourceSrc(nextObjectUrl);
     setState(null);
     setError(null);
-    setSelectedSquareIndex(0);
+    setSelectedSquareIndex(null);
     event.target.value = "";
   }
 
@@ -89,7 +93,7 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
       return;
     }
 
-    const deckName = `Gift Match ${buildShortTimestamp()}`;
+    const deckName = `Detected Build ${buildShortTimestamp()}`;
     const url = buildDeckShareUrl(window.location.origin, {
       name: deckName,
       items: matchedDeckItems,
@@ -100,114 +104,138 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
 
   return (
     <section style={styles.shell}>
+      <div style={styles.heroCard}>
+        <div style={styles.heroCopy}>
+          <h1 style={styles.title}>Turn a screenshot into a draft build.</h1>
+          <p style={styles.subtitle}>
+            Load a source image, run detection, review every square, then save the matched gifts into a deck.
+          </p>
+        </div>
+
+        <div style={styles.actions}>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isRunning}
+            style={styles.primaryButton}
+          >
+            Upload Build Screenshot
+          </button>
+          <button
+            type="button"
+            onClick={() => void handleStart()}
+            disabled={isRunning || !sourceSrc}
+            style={styles.secondaryButton}
+          >
+            {isRunning ? "Detecting..." : "Detect Build"}
+          </button>
+          <button
+            type="button"
+            onClick={handleSaveToDeck}
+            disabled={!matchedDeckItems.length}
+            style={styles.secondaryButton}
+          >
+            Save Deck
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleReplaceSource}
+            style={styles.hiddenInput}
+          />
+        </div>
+
+        {sourceSrc ? <div style={styles.heroMeta}>{state ? `${state.squares.length} detected squares` : "Screenshot selected and ready."}</div> : null}
+      </div>
+
       {error ? <p style={styles.error}>{error}</p> : null}
 
-      <div style={styles.actions}>
-        <button type="button" onClick={() => void handleStart()} disabled={isRunning} style={styles.primaryButton}>
-          {isRunning ? "Running..." : "Start"}
-        </button>
-        <button
-          type="button"
-          onClick={handleSaveToDeck}
-          disabled={!matchedDeckItems.length}
-          style={styles.secondaryButton}
-        >
-          Save to Deck
-        </button>
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isRunning}
-          style={styles.secondaryButton}
-        >
-          Replace Source Image
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleReplaceSource}
-          style={styles.hiddenInput}
-        />
-      </div>
+      <div style={styles.inlinePanels}>
+        <div style={styles.panelCard}>
+          <div style={styles.panelHeader}>
+            <h2 style={styles.sectionTitle}>Source Image</h2>
+            {state ? <p style={styles.sectionMeta}>Squares turn green or red after detection. Click any result card to highlight that square in yellow.</p> : null}
+          </div>
 
-      <div style={styles.sourceCard}>
-        <div style={styles.imageFrame}>
-          <img alt="Source screenshot" src={sourceSrc} style={styles.sourceImage}/>
-          {state ? state.squareResults.map((square) => (
-            <div
-              key={`${square.bounds.x}-${square.bounds.y}-${square.index}`}
-              style={buildOverlayStyle(
-                square.bounds,
-                state.sourceWidth,
-                state.sourceHeight,
-                square.index === selectedSquareIndex ? "#facc15" : getSquareBorderColor(square),
-              )}
-            >
-              <span style={styles.overlayLabel}>{square.index}</span>
-            </div>
-          )) : null}
-        </div>
-      </div>
-
-      <div style={styles.summaryCard}>
-        <div style={styles.summaryValue}>
-          {state ? `Total time: ${formatMilliseconds(state.totalMilliseconds)}` : isRunning ? "Running..." : "Click Start to process the source image."}
-        </div>
-        <div style={styles.summaryMeta}>
-          {state ? `${state.squares.length} squares x ${state.templateCount} templates` : `${templateSpecs.length} templates ready`}
-        </div>
-      </div>
-
-      <div style={styles.resultsCard}>
-        <h2 style={styles.sectionTitle}>Found Images</h2>
-        <div style={styles.resultsGrid}>
-          {state?.squareResults.length ? state.squareResults.map((square) => (
-            <button
-              key={square.index}
-              type="button"
-              onClick={() => setSelectedSquareIndex(square.index)}
-              style={{
-                ...styles.resultTile,
-                ...(selectedSquareIndex === square.index ? styles.resultTileSelected : null),
-              }}
-            >
-              <div style={styles.resultTileHeader}>
-                <span>Square {square.index}</span>
-                <span style={isSuccessfulSquare(square) ? styles.matchStatusFound : styles.matchStatusFailed}>
-                  {isSuccessfulSquare(square) ? "Found" : "Failed"}
-                </span>
+          <div style={styles.imageFrame}>
+            {sourceSrc ? <img alt="Source screenshot" src={sourceSrc} style={styles.sourceImage}/> : <div style={styles.emptySource}>Upload a build screenshot to begin.</div>}
+            {state ? state.squareResults.map((square) => (
+              <div
+                key={`${square.bounds.x}-${square.bounds.y}-${square.index}`}
+                style={buildOverlayStyle(
+                  square.bounds,
+                  state.sourceWidth,
+                  state.sourceHeight,
+                  square.index === selectedSquareIndex ? "#facc15" : getSquareBorderColor(square),
+                )}
+              >
+                <span style={styles.overlayLabel}>{square.index}</span>
               </div>
+            )) : null}
+          </div>
+        </div>
 
-              {isSuccessfulSquare(square) ? (
-                <div style={styles.singleResult}>
-                  {square.bestTemplate?.path ? (
-                    <Image
-                      alt={square.bestTemplate.name}
-                      src={square.bestTemplate.path}
-                      width={44}
-                      height={44}
-                      style={styles.resultImage}
-                    />
-                  ) : null}
-                  <div style={styles.resultName}>{square.bestTemplate?.name ?? "No result"}</div>
-                  <div style={styles.resultMeta}>{square.bestTemplate?.score.toFixed(4)}</div>
+        <div style={styles.panelCard}>
+          <div style={styles.panelHeader}>
+            <h2 style={styles.sectionTitle}>Detected Matches</h2>
+            <p style={styles.sectionMeta}>
+              {state
+                ? `Total processing time: ${formatMilliseconds(state.totalMilliseconds)}`
+                : isRunning
+                  ? "Processing screenshot..."
+                  : "Run detection to see matched images for each square."}
+            </p>
+          </div>
+
+          <div style={styles.resultsGrid}>
+            {state?.squareResults.length ? state.squareResults.map((square) => (
+              <button
+                key={square.index}
+                type="button"
+                onClick={() => setSelectedSquareIndex(square.index)}
+                style={{
+                  ...styles.resultTile,
+                  ...(selectedSquareIndex === square.index ? styles.resultTileSelected : null),
+                }}
+              >
+                <div style={styles.resultTileHeader}>
+                  <span>Square {square.index}</span>
+                  <span style={isSuccessfulSquare(square) ? styles.matchStatusFound : styles.matchStatusFailed}>
+                    {isSuccessfulSquare(square) ? "Found" : "Failed"}
+                  </span>
                 </div>
-              ) : (
-                <div style={styles.failedResults}>
-                  {square.topTemplates.map((template) => (
-                    <div key={`${square.index}-${template.path}`} style={styles.failedResultItem}>
-                      <Image alt={template.name} src={template.path} width={36} height={36} style={styles.smallResultImage}/>
-                      <div style={styles.failedResultName}>{template.name}</div>
-                      <div style={styles.failedResultScore}>{template.score.toFixed(4)}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </button>
-          )) : (
-            <p style={styles.emptyText}>{isRunning ? "Running..." : "No results yet."}</p>
-          )}
+
+                {isSuccessfulSquare(square) ? (
+                  <div style={styles.singleResult}>
+                    {square.bestTemplate?.path ? (
+                      <Image
+                        alt={square.bestTemplate.name}
+                        src={square.bestTemplate.path}
+                        width={40}
+                        height={40}
+                        style={styles.resultImage}
+                      />
+                    ) : null}
+                    <div style={styles.resultName}>{square.bestTemplate?.name ?? "No result"}</div>
+                    <div style={styles.resultMeta}>{square.bestTemplate?.score.toFixed(4)}</div>
+                  </div>
+                ) : (
+                  <div style={styles.failedResults}>
+                    {square.topTemplates.map((template) => (
+                      <div key={`${square.index}-${template.path}`} style={styles.failedResultItem}>
+                        <Image alt={template.name} src={template.path} width={32} height={32} style={styles.smallResultImage}/>
+                        <div style={styles.failedResultName}>{template.name}</div>
+                        <div style={styles.failedResultScore}>{template.score.toFixed(4)}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </button>
+            )) : (
+              <p style={styles.emptyText}>{isRunning ? "Processing screenshot..." : "No results yet."}</p>
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -289,34 +317,60 @@ function buildShortTimestamp(): string {
 const styles: Record<string, React.CSSProperties> = {
   shell: {
     padding: "24px",
+    display: "grid",
+    gap: "18px",
+  },
+  heroCard: {
+    border: "1px solid #d6dce5",
+    borderRadius: "20px",
+    background: "linear-gradient(135deg, #fffef6 0%, #ffffff 52%, #f7fbff 100%)",
+    padding: "20px",
+    display: "grid",
+    gap: "16px",
+  },
+  heroCopy: {
+    display: "grid",
+    gap: "8px",
+  },
+  title: {
+    margin: 0,
+    fontSize: "32px",
+    lineHeight: 1.1,
+    color: "#111827",
+  },
+  subtitle: {
+    margin: 0,
+    maxWidth: "760px",
+    color: "#4b5563",
+    fontSize: "16px",
+    lineHeight: 1.5,
   },
   error: {
-    margin: "0 0 16px",
+    margin: 0,
     color: "#dc2626",
   },
   actions: {
     display: "flex",
     alignItems: "center",
     gap: "12px",
-    marginBottom: "16px",
     flexWrap: "wrap",
   },
   primaryButton: {
     border: "1px solid #111827",
-    borderRadius: "10px",
+    borderRadius: "999px",
     background: "#111827",
     color: "#ffffff",
-    padding: "10px 16px",
+    padding: "11px 18px",
     fontSize: "14px",
     fontWeight: 700,
     cursor: "pointer",
   },
   secondaryButton: {
     border: "1px solid #d6dce5",
-    borderRadius: "10px",
+    borderRadius: "999px",
     background: "#ffffff",
     color: "#111827",
-    padding: "10px 16px",
+    padding: "11px 18px",
     fontSize: "14px",
     fontWeight: 700,
     cursor: "pointer",
@@ -324,17 +378,55 @@ const styles: Record<string, React.CSSProperties> = {
   hiddenInput: {
     display: "none",
   },
-  sourceCard: {
+  heroMeta: {
+    display: "flex",
+    gap: "12px",
+    flexWrap: "wrap",
+    color: "#596273",
+    fontSize: "14px",
+  },
+  inlinePanels: {
+    display: "grid",
+    gap: "18px",
+    gridTemplateColumns: "minmax(0, 1.1fr) minmax(340px, 0.9fr)",
+    alignItems: "start",
+  },
+  panelCard: {
     border: "1px solid #d6dce5",
-    borderRadius: "16px",
+    borderRadius: "18px",
     background: "#ffffff",
     padding: "16px",
+    display: "grid",
+    gap: "14px",
+  },
+  panelHeader: {
+    display: "grid",
+    gap: "6px",
+  },
+  sectionTitle: {
+    margin: 0,
+    fontSize: "20px",
+    color: "#111827",
+  },
+  sectionMeta: {
+    margin: 0,
+    color: "#596273",
+    fontSize: "14px",
+    lineHeight: 1.5,
   },
   imageFrame: {
     position: "relative",
-    borderRadius: "12px",
+    borderRadius: "14px",
     overflow: "hidden",
     background: "#111827",
+    minHeight: "280px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptySource: {
+    color: "#cbd5e1",
+    fontSize: "16px",
   },
   sourceImage: {
     display: "block",
@@ -362,39 +454,13 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: 1.4,
     textAlign: "center",
   },
-  summaryCard: {
-    marginTop: "16px",
-    border: "1px solid #d6dce5",
-    borderRadius: "16px",
-    background: "#ffffff",
-    padding: "16px",
-  },
-  summaryValue: {
-    fontSize: "18px",
-    fontWeight: 700,
-    color: "#111827",
-  },
-  summaryMeta: {
-    marginTop: "6px",
-    color: "#596273",
-    fontSize: "14px",
-  },
-  resultsCard: {
-    marginTop: "16px",
-    border: "1px solid #d6dce5",
-    borderRadius: "16px",
-    background: "#ffffff",
-    padding: "16px",
-  },
-  sectionTitle: {
-    margin: "0 0 12px",
-    fontSize: "18px",
-    color: "#111827",
-  },
   resultsGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
     gap: "12px",
+    maxHeight: "940px",
+    overflowY: "auto",
+    paddingRight: "4px",
   },
   resultTile: {
     border: "1px solid #d6dce5",
@@ -407,8 +473,9 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: "pointer",
   },
   resultTileSelected: {
-    borderColor: "#111827",
-    background: "#f8fafc",
+    borderColor: "#facc15",
+    boxShadow: "0 0 0 2px rgba(250, 204, 21, 0.18)",
+    background: "#fffef6",
   },
   resultTileHeader: {
     display: "flex",
@@ -432,8 +499,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   resultImage: {
     display: "block",
-    width: "44px",
-    height: "44px",
+    width: "40px",
+    height: "40px",
   },
   resultName: {
     fontWeight: 700,
@@ -450,14 +517,14 @@ const styles: Record<string, React.CSSProperties> = {
   },
   failedResultItem: {
     display: "grid",
-    gridTemplateColumns: "36px minmax(0, 1fr)",
+    gridTemplateColumns: "32px minmax(0, 1fr)",
     gap: "8px",
     alignItems: "center",
   },
   smallResultImage: {
     display: "block",
-    width: "36px",
-    height: "36px",
+    width: "32px",
+    height: "32px",
   },
   failedResultName: {
     fontSize: "13px",

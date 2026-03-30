@@ -37,6 +37,7 @@ type DeckContextType = {
   saved: SavedDeck[];
   sharedDeck: SharedDeck | null;
   editingDeckName: string | null;
+  isEditingBuild: boolean;
   mode: DeckMode;
   add: (item: DeckItem, limits: DeckLimits) => { ok: boolean; reason?: string };
   remove: (id: string) => void;
@@ -149,6 +150,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
   }, [hydrated, sharedDeck]);
 
   const mode: DeckMode = editingDeckName ? "editing" : "new";
+  const isEditingBuild = isEditingDeckSession(editingDeckName, editingSource);
 
   const api: DeckContextType = useMemo(
     () => ({
@@ -157,6 +159,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       saved,
       sharedDeck,
       editingDeckName,
+      isEditingBuild,
       mode,
       add: (item, limits) => {
         if (items.some((current) => current.id === item.id)) {
@@ -231,7 +234,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       editSharedDeck: () => {
         if (!sharedDeck) return;
-        setSessionStart(null);
+        setSessionStart({items, name, editingDeckName});
         setItems(sharedDeck.items);
         setNameState(sharedDeck.name);
         setEditingDeckName(null);
@@ -239,13 +242,12 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       cancelEditing: () => {
         if (editingSource === "shared") {
-          setItems([]);
-          setNameState(DEFAULT_DECK_NAME);
-          setEditingDeckName(null);
+          const restored = restoreDeckSession(sessionStart);
+          setItems(restored.items);
+          setNameState(restored.name);
+          setEditingDeckName(restored.editingDeckName);
           setSessionStart(null);
           setEditingSource(null);
-          setSharedDeck(null);
-          clearSharedDeckUrl();
           return;
         }
         const restored = restoreDeckSession(sessionStart);
@@ -274,7 +276,7 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
       },
       resetDeck: () => setItems([]),
     }),
-    [editingSource, editingDeckName, items, mode, name, saved, sessionStart, sharedDeck],
+    [editingSource, editingDeckName, isEditingBuild, items, mode, name, saved, sessionStart, sharedDeck],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
@@ -486,6 +488,20 @@ export function restoreDeckSession(snapshot: DeckSessionSnapshot | null): DeckSe
     name: DEFAULT_DECK_NAME,
     editingDeckName: null,
   };
+}
+
+/**
+ * Determine whether the builder is currently editing an existing saved or shared build.
+ *
+ * @param {string | null} editingDeckName - Saved deck currently being edited, if any.
+ * @param {"saved" | "shared" | null} editingSource - Source for the current editing session.
+ * @returns {boolean} True when editing an existing build.
+ */
+export function isEditingDeckSession(
+  editingDeckName: string | null,
+  editingSource: "saved" | "shared" | null,
+): boolean {
+  return editingDeckName !== null || editingSource === "shared";
 }
 
 /**

@@ -6,6 +6,7 @@ import {
   getVisibleItems,
   groupByCategory,
   parsePersistedFilters,
+  resolveEmbeddedBrowserFilters,
   resolveType,
   VALID_TYPES,
 } from "./entity-utils";
@@ -114,6 +115,22 @@ describe("getVisibleItems", () => {
     const all = [{...baseEntity, name: "One"}, {...baseEntity, name: "Two"}];
     const matched = [all[1]];
     expect(getVisibleItems(all, matched, "show-matches-only")).toEqual(matched);
+  });
+});
+
+describe("resolveEmbeddedBrowserFilters", () => {
+  it("enables hide and in-deck defaults while editing a build", () => {
+    expect(resolveEmbeddedBrowserFilters(true)).toEqual({
+      deckOnly: true,
+      matchDisplayMode: "show-matches-only",
+    });
+  });
+
+  it("keeps the default browsing mode for a fresh build", () => {
+    expect(resolveEmbeddedBrowserFilters(false)).toEqual({
+      deckOnly: false,
+      matchDisplayMode: "fade-unmatched",
+    });
   });
 });
 

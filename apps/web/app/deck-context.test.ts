@@ -1,5 +1,12 @@
 import {describe, expect, it} from "vitest";
-import {normalizeSavedDecks, resolveSharedDeckFromLocation, restoreDeckSession, selectFirstSavedAfterDelete, suggestDuplicateName} from "../components/deck/DeckContext";
+import {
+  isEditingDeckSession,
+  normalizeSavedDecks,
+  resolveSharedDeckFromLocation,
+  restoreDeckSession,
+  selectFirstSavedAfterDelete,
+  suggestDuplicateName,
+} from "../components/deck/DeckContext";
 
 describe("selectFirstSavedAfterDelete", () => {
   it("selects the first remaining deck after deletion", () => {
@@ -72,6 +79,16 @@ describe("restoreDeckSession", () => {
       name: "Untitled deck",
       editingDeckName: null,
     });
+  });
+});
+
+describe("isEditingDeckSession", () => {
+  it("treats shared edits as editing sessions", () => {
+    expect(isEditingDeckSession(null, "shared")).toBe(true);
+  });
+
+  it("returns false for a fresh unsaved build", () => {
+    expect(isEditingDeckSession(null, null)).toBe(false);
   });
 });
 

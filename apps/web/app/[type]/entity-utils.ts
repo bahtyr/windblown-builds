@@ -88,6 +88,22 @@ export function getVisibleItems<T extends ScrapedEntity>(
 }
 
 /**
+ * Resolve embedded browser defaults for build-edit sessions.
+ *
+ * @param {boolean} isEditingBuild - Whether the builder is editing an existing build.
+ * @returns {{deckOnly: boolean; matchDisplayMode: MatchDisplayMode}} Embedded filter defaults.
+ */
+export function resolveEmbeddedBrowserFilters(isEditingBuild: boolean): {
+  deckOnly: boolean;
+  matchDisplayMode: MatchDisplayMode;
+} {
+  return {
+    deckOnly: isEditingBuild,
+    matchDisplayMode: isEditingBuild ? "show-matches-only" : "fade-unmatched",
+  };
+}
+
+/**
  * Parse persisted filter JSON while validating known keys and value types.
  *
  * @param {string | null} raw - Serialized persisted filter payload.
