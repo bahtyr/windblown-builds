@@ -3,70 +3,16 @@
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {
-  cropGrayImage,
-  detectSquareRegionsDetailed,
-  grayscaleImageData,
-  loadImageData,
-  resizeGrayImage,
-  scoreAlignedImages,
-  trimImageBorder,
-  type GrayImage,
   type Rectangle,
 } from "../../lib/gift-icon-matcher";
-
-const SOURCE_PATH = "/source-cropped-2.PNG";
-const MATCH_THRESHOLD = 0.8;
-const TEMPLATE_BORDER_TRIM = 4;
-const SQUARE_INNER_TRIM = 6;
-const TEMPLATE_SPECS = [
-  {name: "Intense Burn", path: "/images/Intense_Burn_Icon.png"},
-  {name: "Gory Flame Icon", path: "/images/Gory_Flame_Icon.png"},
-  {name: "Protection Icon", path: "/images/Protection_Icon.png"},
-] as const;
-
-type SquareScore = {
-  index: number;
-  bounds: Rectangle;
-  score: number;
-};
-
-type PreparedSquare = {
-  index: number;
-  bounds: Rectangle;
-  image: GrayImage;
-  preprocessMilliseconds: number;
-};
-
-type TemplateImage = {
-  name: string;
-  path: string;
-  image: GrayImage;
-};
-
-type TemplateMatch = {
-  name: string;
-  path: string;
-  bestSquare: SquareScore | null;
-};
-
-type SquareOperation = {
-  squareIndex: number;
-  preprocessMilliseconds: number;
-  matchMilliseconds: number;
-  bestMatchName: string | null;
-  bestMatchPath: string | null;
-  bestScore: number | null;
-  isMatch: boolean;
-};
-
-type MatchState = {
-  sourceWidth: number;
-  sourceHeight: number;
-  phase1Milliseconds: number;
-  squares: Rectangle[];
-  templateMatches: TemplateMatch[];
-  squareOperations: SquareOperation[];
-};
+import {
+  GIFT_MATCH_SOURCE_PATH,
+  GIFT_MATCH_TEMPLATE_SPECS,
+  isGiftMatch,
+  runGiftMatchWorkflow,
+  selectGiftMatchOverlay,
+  type GiftMatchRunResult,
+} from "./gift-match-workflow";
 
 /**
  * Renders the source image, current matches, and an operations timing table.
@@ -74,8 +20,8 @@ type MatchState = {
  * @returns {JSX.Element} Debug UI for square detection and three-image matching.
  */
 export default function GiftMatchDebug(): JSX.Element {
-  const [state, setState] = useState<MatchState | null>(null);
-  const [selectedPath, setSelectedPath] = useState<string>(TEMPLATE_SPECS[0].path);
+  const [state, setState] = useState<GiftMatchRunResult | null>(null);
+  const [selectedPath, setSelectedPath] = useState<string>(GIFT_MATCH_TEMPLATE_SPECS[0].path);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -83,41 +29,10 @@ export default function GiftMatchDebug(): JSX.Element {
 
     async function runMatching() {
       try {
-        const sourceImageData = await loadImageData(SOURCE_PATH);
-        const sourceGray = grayscaleImageData(sourceImageData);
-
-        const phase1Start = performance.now();
-        const detectedSquares = detectSquareRegionsDetailed(sourceImageData).rawSquares;
-        const preparedSquares = detectedSquares.map((square, index) => prepareSquare(sourceGray, square, index));
-        const phase1Milliseconds = performance.now() - phase1Start;
-
-        const templates = await Promise.all(
-          TEMPLATE_SPECS.map(async (templateSpec) => {
-            const templateImageData = await loadImageData(templateSpec.path);
-            return {
-              name: templateSpec.name,
-              path: templateSpec.path,
-              image: trimImageBorder(grayscaleImageData(templateImageData), TEMPLATE_BORDER_TRIM),
-            };
-          }),
-        );
-
-        const squareOperations = preparedSquares.map((square) => scoreSquareAcrossTemplates(square, templates));
-        const templateMatches = templates.map((template) => ({
-          name: template.name,
-          path: template.path,
-          bestSquare: findBestSquareForTemplate(preparedSquares, template),
-        }));
+        const nextState = await runGiftMatchWorkflow();
 
         if (!cancelled) {
-          setState({
-            sourceWidth: sourceImageData.width,
-            sourceHeight: sourceImageData.height,
-            phase1Milliseconds,
-            squares: detectedSquares,
-            templateMatches,
-            squareOperations,
-          });
+          setState(nextState);
         }
       } catch (matchError) {
         if (!cancelled) {
@@ -135,12 +50,12 @@ export default function GiftMatchDebug(): JSX.Element {
     };
   }, []);
 
-  const selectedMatch = state?.templateMatches.find((match) => match.path === selectedPath) ?? state?.templateMatches[0] ?? null;
-  const selectedOverlay = state && selectedMatch?.bestSquare ? buildOverlayStyle(
-    selectedMatch.bestSquare.bounds,
+  const selectedOverlay = state ? selectGiftMatchOverlay(state, selectedPath) : null;
+  const selectedOverlayStyle = state && selectedOverlay ? buildOverlayStyle(
+    selectedOverlay.bounds,
     state.sourceWidth,
     state.sourceHeight,
-    selectedMatch.bestSquare.score >= MATCH_THRESHOLD ? "#16a34a" : "#dc2626",
+    selectedOverlay.borderColor,
   ) : undefined;
 
   return (
@@ -153,7 +68,7 @@ export default function GiftMatchDebug(): JSX.Element {
             {state ? (
               <Image
                 alt="Source screenshot"
-                src={SOURCE_PATH}
+                src={GIFT_MATCH_SOURCE_PATH}
                 width={state.sourceWidth}
                 height={state.sourceHeight}
                 style={styles.image}
@@ -165,13 +80,13 @@ export default function GiftMatchDebug(): JSX.Element {
                 style={buildOverlayStyle(square, state.sourceWidth, state.sourceHeight, "#facc15")}
               />
             ))}
-            {selectedOverlay ? <div style={{...styles.selectedOverlay, ...selectedOverlay}} /> : null}
+            {selectedOverlayStyle ? <div style={{...styles.selectedOverlay, ...selectedOverlayStyle}} /> : null}
           </div>
         </div>
 
         <div style={styles.resultsCard}>
-          {state?.templateMatches.map((match) => {
-            const isMatch = (match.bestSquare?.score ?? 0) >= MATCH_THRESHOLD;
+          {state?.templateResults.map((match) => {
+            const matchPassed = isGiftMatch(match.bestSquare?.score ?? 0);
 
             return (
               <button
@@ -188,7 +103,7 @@ export default function GiftMatchDebug(): JSX.Element {
                   <div style={styles.resultName}>{match.name}</div>
                   <div style={styles.resultMeta}>
                     {match.bestSquare
-                      ? `${isMatch ? "Match" : "No match"} | square ${match.bestSquare.index} | ${match.bestSquare.score.toFixed(4)}`
+                      ? `${matchPassed ? "Match" : "No match"} | square ${match.bestSquare.index} | ${match.bestSquare.score.toFixed(4)}`
                       : "No square found"}
                   </div>
                 </div>
@@ -213,26 +128,26 @@ export default function GiftMatchDebug(): JSX.Element {
             <td style={styles.tableCell}>{state ? formatMilliseconds(state.phase1Milliseconds) : "Loading..."}</td>
             <td style={styles.tableCell}>{state ? `${state.squares.length} squares` : "-"}</td>
           </tr>
-          {state?.squareOperations.flatMap((operation) => [
-            <tr key={`process-${operation.squareIndex}`}>
-              <td style={styles.tableCell}>Square {operation.squareIndex}, crop and preprocess square</td>
-              <td style={styles.tableCell}>{formatMilliseconds(operation.preprocessMilliseconds)}</td>
+          {state?.squareResults.flatMap((square) => [
+            <tr key={`process-${square.index}`}>
+              <td style={styles.tableCell}>Square {square.index}, crop and preprocess square</td>
+              <td style={styles.tableCell}>{formatMilliseconds(square.preprocessMilliseconds)}</td>
               <td style={styles.tableCell}>Prepared inner crop</td>
             </tr>,
-            <tr key={`match-${operation.squareIndex}`}>
-              <td style={styles.tableCell}>Square {operation.squareIndex}, compare against 3 reference images</td>
-              <td style={styles.tableCell}>{formatMilliseconds(operation.matchMilliseconds)}</td>
+            <tr key={`match-${square.index}`}>
+              <td style={styles.tableCell}>Square {square.index}, compare against 3 reference images</td>
+              <td style={styles.tableCell}>{formatMilliseconds(square.matchMilliseconds)}</td>
               <td style={styles.tableCell}>
                 <div style={styles.tableResult}>
                   <span>
-                    {operation.bestMatchName
-                      ? `${operation.isMatch ? "Found" : "Best failed"} ${operation.bestMatchName}`
+                    {square.bestTemplate
+                      ? `${isGiftMatch(square.bestTemplate.score) ? "Found" : "Best failed"} ${square.bestTemplate.name}`
                       : "No result"}
                   </span>
-                  {operation.bestMatchPath ? (
+                  {square.bestTemplate?.path ? (
                     <Image
-                      alt={operation.bestMatchName ?? "Match result"}
-                      src={operation.bestMatchPath}
+                      alt={square.bestTemplate.name}
+                      src={square.bestTemplate.path}
                       width={32}
                       height={32}
                       style={styles.tableImage}
@@ -247,79 +162,6 @@ export default function GiftMatchDebug(): JSX.Element {
       </div>
     </section>
   );
-}
-
-function prepareSquare(sourceGray: GrayImage, square: Rectangle, index: number): PreparedSquare {
-  const preprocessStart = performance.now();
-  const trimmedSquare = trimSquareBounds(square, SQUARE_INNER_TRIM);
-  const image = cropGrayImage(sourceGray, trimmedSquare);
-
-  return {
-    index,
-    bounds: square,
-    image,
-    preprocessMilliseconds: performance.now() - preprocessStart,
-  };
-}
-
-function scoreSquareAcrossTemplates(square: PreparedSquare, templates: TemplateImage[]): SquareOperation {
-  const matchStart = performance.now();
-  let bestMatchName: string | null = null;
-  let bestMatchPath: string | null = null;
-  let bestScore: number | null = null;
-
-  for (const template of templates) {
-    const resizedSquare = resizeGrayImage(square.image, template.image.width, template.image.height);
-    const score = scoreAlignedImages(resizedSquare, template.image);
-
-    if (bestScore === null || score > bestScore) {
-      bestScore = score;
-      bestMatchName = template.name;
-      bestMatchPath = template.path;
-    }
-  }
-
-  return {
-    squareIndex: square.index,
-    preprocessMilliseconds: square.preprocessMilliseconds,
-    matchMilliseconds: performance.now() - matchStart,
-    bestMatchName,
-    bestMatchPath,
-    bestScore,
-    isMatch: (bestScore ?? 0) >= MATCH_THRESHOLD,
-  };
-}
-
-function findBestSquareForTemplate(squares: PreparedSquare[], template: TemplateImage): SquareScore | null {
-  let bestSquare: SquareScore | null = null;
-
-  for (const square of squares) {
-    const resizedSquare = resizeGrayImage(square.image, template.image.width, template.image.height);
-    const score = scoreAlignedImages(resizedSquare, template.image);
-
-    if (!bestSquare || score > bestSquare.score) {
-      bestSquare = {
-        index: square.index,
-        bounds: square.bounds,
-        score,
-      };
-    }
-  }
-
-  return bestSquare;
-}
-
-function trimSquareBounds(square: Rectangle, trim: number): Rectangle {
-  const safeTrim = Math.max(0, Math.min(trim, Math.floor((Math.min(square.width, square.height) - 1) / 2)));
-  const width = Math.max(1, square.width - safeTrim * 2);
-  const height = Math.max(1, square.height - safeTrim * 2);
-
-  return {
-    x: square.x + safeTrim,
-    y: square.y + safeTrim,
-    width,
-    height,
-  };
 }
 
 function buildOverlayStyle(square: Rectangle, sourceWidth: number, sourceHeight: number, borderColor: string): React.CSSProperties {

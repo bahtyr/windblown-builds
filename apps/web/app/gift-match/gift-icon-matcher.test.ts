@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {detectSquareRegions, detectSquareRegionsDetailed, scoreAlignedImages, trimImageBorder, type GrayImage} from "../../lib/gift-icon-matcher";
+import {detectSquareRegionsDetailed, scoreAlignedImages, trimImageBorder, type GrayImage} from "../../lib/gift-icon-matcher";
 
 describe("trimImageBorder", () => {
   it("removes a uniform border from a grayscale image", () => {
@@ -49,7 +49,7 @@ describe("scoreAlignedImages", () => {
   });
 });
 
-describe("detectSquareRegions", () => {
+describe("detectSquareRegionsDetailed", () => {
   it("finds square foreground regions against a flat background", () => {
     const width = 80;
     const height = 60;
@@ -66,14 +66,14 @@ describe("detectSquareRegions", () => {
     fillSquare(image, width, 8, 10, 30, [130, 120, 220, 255]);
     fillSquare(image, width, 42, 12, 28, [80, 200, 240, 255]);
 
-    const squares = detectSquareRegions({width, height, data: image});
+    const result = detectSquareRegionsDetailed({width, height, data: image});
 
-    expect(squares).toHaveLength(2);
-    expect(squares[0]).toEqual({x: 8, y: 10, width: 30, height: 30});
-    expect(squares[1]).toEqual({x: 42, y: 12, width: 28, height: 28});
+    expect(result.rawSquares).toHaveLength(2);
+    expect(result.rawSquares[0]).toEqual({x: 8, y: 10, width: 30, height: 30});
+    expect(result.rawSquares[1]).toEqual({x: 42, y: 12, width: 28, height: 28});
   });
 
-  it("returns raw detections separately from filtered candidate squares", () => {
+  it("returns only the raw square detections used by the workflow", () => {
     const width = 100;
     const height = 70;
     const background = [10, 5, 20, 255];
@@ -93,9 +93,6 @@ describe("detectSquareRegions", () => {
 
     expect(result.rawSquares).toEqual([
       {x: 10, y: 10, width: 24, height: 24},
-      {x: 50, y: 10, width: 34, height: 34},
-    ]);
-    expect(result.candidateSquares).toEqual([
       {x: 50, y: 10, width: 34, height: 34},
     ]);
   });

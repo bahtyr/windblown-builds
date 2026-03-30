@@ -19,20 +19,22 @@ export type RgbaImageLike = {
 
 export type SquareDetectionResult = {
   rawSquares: Rectangle[];
-  candidateSquares: Rectangle[];
 };
 
-const RAW_SQUARE_MIN_ASPECT_RATIO = 0.90;
-const RAW_SQUARE_MAX_ASPECT_RATIO = 1.15;
-const FOREGROUND_DISTANCE_THRESHOLD = 60;
+export const SQUARE_DETECTION_CONFIG = {
+  foregroundDistanceThreshold: 60,
+  rawSquareMinSize: 20,
+  rawSquareMinAspectRatio: 0.90,
+  rawSquareMaxAspectRatio: 1.15,
+} as const;
 
 /**
  * Converts RGBA image data into a grayscale image buffer.
  *
- * @param {ImageData} imageData - Source browser image data.
+ * @param {RgbaImageLike} imageData - Source browser image data.
  * @returns {GrayImage} Grayscale pixels using luminance weighting.
  */
-export function grayscaleImageData(imageData: ImageData): GrayImage {
+export function grayscaleImageData(imageData: RgbaImageLike): GrayImage {
   const {width, height, data} = imageData;
   const pixels = new Float32Array(width * height);
 
@@ -115,20 +117,10 @@ export function cropGrayImage(image: GrayImage, rect: Rectangle): GrayImage {
 }
 
 /**
- * Detects icon-like square regions by grouping pixels that differ from the background.
+ * Detects raw square-like regions by grouping pixels that differ from the background.
  *
  * @param {RgbaImageLike} imageData - Source color image data.
- * @returns {Rectangle[]} Square candidate bounds sorted top-to-bottom, then left-to-right.
- */
-export function detectSquareRegions(imageData: RgbaImageLike): Rectangle[] {
-  return detectSquareRegionsDetailed(imageData).candidateSquares;
-}
-
-/**
- * Detects raw square-like regions and the filtered candidate set used for scoring.
- *
- * @param {RgbaImageLike} imageData - Source color image data.
- * @returns {SquareDetectionResult} Raw detections plus filtered square candidates.
+ * @returns {SquareDetectionResult} Raw square detections sorted top-to-bottom, then left-to-right.
  */
 export function detectSquareRegionsDetailed(imageData: RgbaImageLike): SquareDetectionResult {
   const background = sampleBackgroundColor(imageData);
@@ -136,7 +128,6 @@ export function detectSquareRegionsDetailed(imageData: RgbaImageLike): SquareDet
   const queueX = new Int32Array(imageData.width * imageData.height);
   const queueY = new Int32Array(imageData.width * imageData.height);
   const rawSquares: Rectangle[] = [];
-  const candidateSquares: Rectangle[] = [];
 
   for (let y = 0; y < imageData.height; y += 1) {
     for (let x = 0; x < imageData.width; x += 1) {
@@ -156,13 +147,11 @@ export function detectSquareRegionsDetailed(imageData: RgbaImageLike): SquareDet
       let maxX = x;
       let minY = y;
       let maxY = y;
-      let pixelCount = 0;
 
       while (queueStart < queueEnd) {
         const currentX = queueX[queueStart];
         const currentY = queueY[queueStart];
         queueStart += 1;
-        pixelCount += 1;
 
         minX = Math.min(minX, currentX);
         maxX = Math.max(maxX, currentX);
@@ -199,36 +188,21 @@ export function detectSquareRegionsDetailed(imageData: RgbaImageLike): SquareDet
       const width = maxX - minX + 1;
       const height = maxY - minY + 1;
       const aspectRatio = width / height;
-      const fillRatio = pixelCount / (width * height);
-
       const rectangle = {x: minX, y: minY, width, height};
 
       if (
-        width >= 20 &&
-        height >= 20 &&
-        aspectRatio >= RAW_SQUARE_MIN_ASPECT_RATIO &&
-        aspectRatio <= RAW_SQUARE_MAX_ASPECT_RATIO
+        width >= SQUARE_DETECTION_CONFIG.rawSquareMinSize &&
+        height >= SQUARE_DETECTION_CONFIG.rawSquareMinSize &&
+        aspectRatio >= SQUARE_DETECTION_CONFIG.rawSquareMinAspectRatio &&
+        aspectRatio <= SQUARE_DETECTION_CONFIG.rawSquareMaxAspectRatio
       ) {
         rawSquares.push(rectangle);
-      }
-
-      if (
-        width >= 28 &&
-        height >= 28 &&
-        width <= 96 &&
-        height <= 96 &&
-        aspectRatio >= 0.75 &&
-        aspectRatio <= 1.25 &&
-        fillRatio >= 0.18
-      ) {
-        candidateSquares.push(rectangle);
       }
     }
   }
 
   return {
     rawSquares: sortRectangles(dedupeRectangles(rawSquares)),
-    candidateSquares: sortRectangles(dedupeRectangles(candidateSquares)),
   };
 }
 
@@ -342,7 +316,7 @@ function isForegroundPixel(imageData: RgbaImageLike, x: number, y: number, backg
     Math.abs(red - background[0]) +
     Math.abs(green - background[1]) +
     Math.abs(blue - background[2])
-  ) > FOREGROUND_DISTANCE_THRESHOLD;
+  ) > SQUARE_DETECTION_CONFIG.foregroundDistanceThreshold;
 }
 
 function dedupeRectangles(rectangles: Rectangle[]): Rectangle[] {
