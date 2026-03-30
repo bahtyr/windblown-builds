@@ -169,6 +169,10 @@
     flex: 0 0 auto;
 }
 
+.deck-row-category-thumb-placeholder {
+    display: inline-block;
+}
+
 .deck-row-action-auto-hide {
     opacity: 0;
     visibility: hidden;

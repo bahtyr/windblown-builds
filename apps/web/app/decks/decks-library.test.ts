@@ -48,16 +48,36 @@ describe("buildDeckCategoryMeta", () => {
         {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom"},
         {id: "gifts:A", type: "gifts", name: "A"},
         {id: "gifts:C", type: "gifts", name: "C"},
+        {id: "gifts:D", type: "gifts", name: "D"},
       ],
       new Map([
         ["gifts:A", "Rush"],
         ["gifts:B", "General"],
         ["gifts:C", "General"],
+        ["gifts:D", "Rush"],
       ]),
     );
 
     expect(categories.map((category) => category.name)).toEqual(["General", "Rush"]);
+    expect(categories.map((category) => category.count)).toEqual([2, 2]);
     expect(categories[0].image).toBeUndefined();
     expect(categories[1].image).toEqual(expect.any(String));
+  });
+
+  it("orders categories by count descending before name", () => {
+    const categories = buildDeckCategoryMeta(
+      [
+        {id: "gifts:A", type: "gifts", name: "A"},
+        {id: "gifts:B", type: "gifts", name: "B"},
+        {id: "gifts:C", type: "gifts", name: "C"},
+      ],
+      new Map([
+        ["gifts:A", "Rush"],
+        ["gifts:B", "General"],
+        ["gifts:C", "Rush"],
+      ]),
+    );
+
+    expect(categories.map((category) => `${category.count} ${category.name}`)).toEqual(["2 Rush", "1 General"]);
   });
 });

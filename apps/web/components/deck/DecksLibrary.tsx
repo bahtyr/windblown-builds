@@ -21,6 +21,7 @@ type DeckRowModel =
 type EntityLookup = Map<string, DeckItem>;
 type GiftCategoryLookup = Map<string, string>;
 type DeckCategoryMeta = {
+  count: number;
   image?: string;
   name: string;
 };
@@ -265,8 +266,11 @@ function DeckRow({categories, row, onDelete, onDiscardShared, onDuplicate, onEdi
                 <div className="deck-row-category-list" aria-label={`${row.deck.name} categories`}>
                   {categories.map((category) => (
                     <div key={category.name} className="deck-row-category-chip">
-                      {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : null}
-                      <span>{category.name}</span>
+                      {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : <span className="deck-row-category-thumb deck-row-category-thumb-placeholder" aria-hidden="true"/>}
+                      <span>
+                        {category.count > 1 ? `${category.count} ` : ""}
+                        {category.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -353,18 +357,22 @@ export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<stri
  * @returns {DeckCategoryMeta[]} Visible category metadata.
  */
 export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map<string, string>): DeckCategoryMeta[] {
-  const categoryNames = new Set<string>();
+  const categoryCounts = new Map<string, number>();
   for (const item of items) {
     if (item.type !== "gifts") continue;
     const category = giftCategoryLookup.get(item.id);
     if (category) {
-      categoryNames.add(category);
+      categoryCounts.set(category, (categoryCounts.get(category) ?? 0) + 1);
     }
   }
 
-  return Array.from(categoryNames)
-    .sort((a, b) => a.localeCompare(b))
-    .map((name) => ({
+  return Array.from(categoryCounts.entries())
+    .sort(([nameA, countA], [nameB, countB]) => {
+      if (countB !== countA) return countB - countA;
+      return nameA.localeCompare(nameB);
+    })
+    .map(([name, count]) => ({
+      count,
       name,
       image: categoryImages[name as keyof typeof categoryImages],
     }));
