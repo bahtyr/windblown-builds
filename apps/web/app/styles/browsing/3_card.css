@@ -27,7 +27,7 @@
 
     transition: border-color 0.2s ease;
     cursor: default;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .card::before {
@@ -136,7 +136,7 @@
     position: absolute;
     top: calc(100% + var(--space-2));
     left: 0;
-    z-index: 4;
+    z-index: 12;
     opacity: 0;
     visibility: hidden;
     transform: translateY(4px);
