@@ -14,12 +14,6 @@ import {
 
 export const GIFT_MATCH_SOURCE_PATH = "/source-cropped-2.PNG";
 
-export const GIFT_MATCH_TEMPLATE_SPECS = [
-  {name: "Intense Burn", path: "/images/Intense_Burn_Icon.png"},
-  {name: "Gory Flame Icon", path: "/images/Gory_Flame_Icon.png"},
-  {name: "Protection Icon", path: "/images/Protection_Icon.png"},
-] as const;
-
 export const GIFT_MATCH_WORKFLOW_CONFIG = {
   matchThreshold: 0.8,
   templateBorderTrim: 4,
@@ -69,6 +63,8 @@ export type GiftMatchRunResult = {
   sourceWidth: number;
   sourceHeight: number;
   phase1Milliseconds: number;
+  totalMilliseconds: number;
+  templateCount: number;
   squares: Rectangle[];
   squareResults: GiftMatchSquareResult[];
   templateResults: GiftMatchTemplateResult[];
@@ -90,12 +86,14 @@ type GiftMatchPreparedTemplate = {
 /**
  * Loads the source image and templates, then runs the active gift-match workflow.
  *
+ * @param {GiftMatchTemplateSpec[]} templateSpecs - Comparison templates for the run.
  * @returns {Promise<GiftMatchRunResult>} Shared run result for the debug page.
  */
-export async function runGiftMatchWorkflow(): Promise<GiftMatchRunResult> {
+export async function runGiftMatchWorkflow(templateSpecs: GiftMatchTemplateSpec[]): Promise<GiftMatchRunResult> {
+  const runStart = performance.now();
   const sourceImageData = await loadImageData(GIFT_MATCH_SOURCE_PATH);
   const templates = await Promise.all(
-    GIFT_MATCH_TEMPLATE_SPECS.map(async (templateSpec) => {
+    templateSpecs.map(async (templateSpec) => {
       const templateImageData = await loadImageData(templateSpec.path);
 
       return {
@@ -109,10 +107,15 @@ export async function runGiftMatchWorkflow(): Promise<GiftMatchRunResult> {
     }),
   );
 
-  return computeGiftMatchRunResult({
+  const result = computeGiftMatchRunResult({
     sourceImageData,
     templates,
   });
+
+  return {
+    ...result,
+    totalMilliseconds: performance.now() - runStart,
+  };
 }
 
 /**
@@ -130,6 +133,7 @@ export function computeGiftMatchRunResult(input: {
   now?: () => number;
 }): GiftMatchRunResult {
   const now = input.now ?? (() => performance.now());
+  const totalStart = now();
   const sourceGray = grayscaleImageData(input.sourceImageData);
 
   const phase1Start = now();
@@ -182,6 +186,8 @@ export function computeGiftMatchRunResult(input: {
     sourceWidth: input.sourceImageData.width,
     sourceHeight: input.sourceImageData.height,
     phase1Milliseconds,
+    totalMilliseconds: now() - totalStart,
+    templateCount: input.templates.length,
     squares: detectedSquares,
     squareResults,
     templateResults,
@@ -189,25 +195,25 @@ export function computeGiftMatchRunResult(input: {
 }
 
 /**
- * Selects the current overlay rectangle and color for the chosen template row.
+ * Selects the overlay rectangle and color for the chosen square row.
  *
- * @param {GiftMatchRunResult} result - Shared run result from the workflow.
- * @param {string} selectedPath - Currently selected template image path.
+ * @param {result} result - Shared run result from the workflow.
+ * @param {number} selectedSquareIndex - Currently selected square index.
  * @returns {GiftMatchOverlayResult | null} Overlay bounds and color, if a best square exists.
  */
 export function selectGiftMatchOverlay(
   result: GiftMatchRunResult,
-  selectedPath: string,
+  selectedSquareIndex: number,
 ): GiftMatchOverlayResult | null {
-  const selectedMatch = result.templateResults.find((match) => match.path === selectedPath) ?? result.templateResults[0] ?? null;
+  const selectedSquare = result.squareResults.find((square) => square.index === selectedSquareIndex) ?? result.squareResults[0] ?? null;
 
-  if (!selectedMatch?.bestSquare) {
+  if (!selectedSquare) {
     return null;
   }
 
   return {
-    bounds: selectedMatch.bestSquare.bounds,
-    borderColor: selectedMatch.bestSquare.score >= GIFT_MATCH_WORKFLOW_CONFIG.matchThreshold
+    bounds: selectedSquare.bounds,
+    borderColor: selectedSquare.bestTemplate && isGiftMatch(selectedSquare.bestTemplate.score)
       ? GIFT_MATCH_WORKFLOW_CONFIG.matchBorderColor
       : GIFT_MATCH_WORKFLOW_CONFIG.noMatchBorderColor,
   };

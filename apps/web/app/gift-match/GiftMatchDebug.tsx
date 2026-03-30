@@ -2,26 +2,29 @@
 
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {
-  type Rectangle,
-} from "../../lib/gift-icon-matcher";
+import {type Rectangle} from "../../lib/gift-icon-matcher";
 import {
   GIFT_MATCH_SOURCE_PATH,
-  GIFT_MATCH_TEMPLATE_SPECS,
   isGiftMatch,
   runGiftMatchWorkflow,
   selectGiftMatchOverlay,
   type GiftMatchRunResult,
+  type GiftMatchTemplateSpec,
 } from "./gift-match-workflow";
 
+type GiftMatchDebugProps = {
+  templateSpecs: GiftMatchTemplateSpec[];
+};
+
 /**
- * Renders the source image, current matches, and an operations timing table.
+ * Renders the source image and the current catalog-based match table.
  *
- * @returns {JSX.Element} Debug UI for square detection and three-image matching.
+ * @param {GiftMatchDebugProps} props - Comparison template specs for the current run.
+ * @returns {JSX.Element} Debug UI for square detection and full image-catalog matching.
  */
-export default function GiftMatchDebug(): JSX.Element {
+export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JSX.Element {
   const [state, setState] = useState<GiftMatchRunResult | null>(null);
-  const [selectedPath, setSelectedPath] = useState<string>(GIFT_MATCH_TEMPLATE_SPECS[0].path);
+  const [selectedSquareIndex, setSelectedSquareIndex] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,10 +32,11 @@ export default function GiftMatchDebug(): JSX.Element {
 
     async function runMatching() {
       try {
-        const nextState = await runGiftMatchWorkflow();
+        const nextState = await runGiftMatchWorkflow(templateSpecs);
 
         if (!cancelled) {
           setState(nextState);
+          setSelectedSquareIndex(nextState.squareResults[0]?.index ?? 0);
         }
       } catch (matchError) {
         if (!cancelled) {
@@ -48,9 +52,9 @@ export default function GiftMatchDebug(): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [templateSpecs]);
 
-  const selectedOverlay = state ? selectGiftMatchOverlay(state, selectedPath) : null;
+  const selectedOverlay = state ? selectGiftMatchOverlay(state, selectedSquareIndex) : null;
   const selectedOverlayStyle = state && selectedOverlay ? buildOverlayStyle(
     selectedOverlay.bounds,
     state.sourceWidth,
@@ -62,56 +66,26 @@ export default function GiftMatchDebug(): JSX.Element {
     <section style={styles.shell}>
       {error ? <p style={styles.error}>{error}</p> : null}
 
-      <div style={styles.layout}>
-        <div style={styles.sourceCard}>
-          <div style={styles.imageFrame}>
-            {state ? (
-              <Image
-                alt="Source screenshot"
-                src={GIFT_MATCH_SOURCE_PATH}
-                width={state.sourceWidth}
-                height={state.sourceHeight}
-                style={styles.image}
-              />
-            ) : null}
-            {state?.squares.map((square, index) => (
-              <div
-                key={`${square.x}-${square.y}-${index}`}
-                style={buildOverlayStyle(square, state.sourceWidth, state.sourceHeight, "#facc15")}
-              >
-                <span style={styles.overlayLabel}>{index}</span>
-              </div>
-            ))}
-            {selectedOverlayStyle ? <div style={{...styles.selectedOverlay, ...selectedOverlayStyle}} /> : null}
-          </div>
-        </div>
-
-        <div style={styles.resultsCard}>
-          {state?.templateResults.map((match) => {
-            const matchPassed = isGiftMatch(match.bestSquare?.score ?? 0);
-
-            return (
-              <button
-                key={match.path}
-                type="button"
-                onClick={() => setSelectedPath(match.path)}
-                style={{
-                  ...styles.resultRow,
-                  ...(selectedPath === match.path ? styles.resultRowSelected : null),
-                }}
-              >
-                <Image alt={match.name} src={match.path} width={56} height={56} style={styles.resultImage} />
-                <div style={styles.resultText}>
-                  <div style={styles.resultName}>{match.name}</div>
-                  <div style={styles.resultMeta}>
-                    {match.bestSquare
-                      ? `${matchPassed ? "Match" : "No match"} | square ${match.bestSquare.index} | ${match.bestSquare.score.toFixed(4)}`
-                      : "No square found"}
-                  </div>
-                </div>
-              </button>
-            );
-          }) ?? <p style={styles.loadingText}>Loading...</p>}
+      <div style={styles.sourceCard}>
+        <div style={styles.imageFrame}>
+          {state ? (
+            <Image
+              alt="Source screenshot"
+              src={GIFT_MATCH_SOURCE_PATH}
+              width={state.sourceWidth}
+              height={state.sourceHeight}
+              style={styles.image}
+            />
+          ) : null}
+          {state?.squares.map((square, index) => (
+            <div
+              key={`${square.x}-${square.y}-${index}`}
+              style={buildOverlayStyle(square, state.sourceWidth, state.sourceHeight, "#facc15")}
+            >
+              <span style={styles.overlayLabel}>{index}</span>
+            </div>
+          ))}
+          {selectedOverlayStyle ? <div style={{...styles.selectedOverlay, ...selectedOverlayStyle}} /> : null}
         </div>
       </div>
 
@@ -126,24 +100,37 @@ export default function GiftMatchDebug(): JSX.Element {
           </thead>
           <tbody>
           <tr>
+            <td style={styles.tableCell}>Whole run, load source and {templateSpecs.length} reference images, then compare all detected squares</td>
+            <td style={styles.tableCell}>{state ? formatMilliseconds(state.totalMilliseconds) : "Loading..."}</td>
+            <td style={styles.tableCell}>{state ? `${state.squares.length} squares x ${state.templateCount} templates` : "-"}</td>
+          </tr>
+          <tr>
             <td style={styles.tableCell}>Phase 1, identify squares and prepare square crops</td>
             <td style={styles.tableCell}>{state ? formatMilliseconds(state.phase1Milliseconds) : "Loading..."}</td>
             <td style={styles.tableCell}>{state ? `${state.squares.length} squares` : "-"}</td>
           </tr>
           {state?.squareResults.flatMap((square) => [
-            <tr key={`process-${square.index}`}>
+            <tr
+              key={`process-${square.index}`}
+              onClick={() => setSelectedSquareIndex(square.index)}
+              style={selectedSquareIndex === square.index ? styles.tableRowSelected : undefined}
+            >
               <td style={styles.tableCell}>Square {square.index}, crop and preprocess square</td>
               <td style={styles.tableCell}>{formatMilliseconds(square.preprocessMilliseconds)}</td>
               <td style={styles.tableCell}>Prepared inner crop</td>
             </tr>,
-            <tr key={`match-${square.index}`}>
-              <td style={styles.tableCell}>Square {square.index}, compare against 3 reference images</td>
+            <tr
+              key={`match-${square.index}`}
+              onClick={() => setSelectedSquareIndex(square.index)}
+              style={selectedSquareIndex === square.index ? styles.tableRowSelected : undefined}
+            >
+              <td style={styles.tableCell}>Square {square.index}, compare against {state.templateCount} reference images</td>
               <td style={styles.tableCell}>{formatMilliseconds(square.matchMilliseconds)}</td>
               <td style={styles.tableCell}>
                 <div style={styles.tableResult}>
                   <span>
                     {square.bestTemplate
-                      ? `${isGiftMatch(square.bestTemplate.score) ? "Found" : "Best failed"} ${square.bestTemplate.name}`
+                      ? `${isGiftMatch(square.bestTemplate.score) ? "Found" : "Best failed"} ${square.bestTemplate.name} | ${square.bestTemplate.score.toFixed(4)}`
                       : "No result"}
                   </span>
                   {square.bestTemplate?.path ? (
@@ -188,12 +175,6 @@ const styles: Record<string, React.CSSProperties> = {
   error: {
     margin: "0 0 16px",
     color: "#dc2626",
-  },
-  layout: {
-    display: "grid",
-    gap: "16px",
-    gridTemplateColumns: "minmax(0, 1.7fr) minmax(280px, 0.9fr)",
-    alignItems: "start",
   },
   sourceCard: {
     border: "1px solid #d6dce5",
@@ -240,48 +221,6 @@ const styles: Record<string, React.CSSProperties> = {
     boxSizing: "border-box",
     pointerEvents: "none",
   },
-  resultsCard: {
-    border: "1px solid #d6dce5",
-    borderRadius: "16px",
-    background: "#ffffff",
-    padding: "12px",
-    display: "grid",
-    gap: "10px",
-  },
-  resultRow: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    width: "100%",
-    padding: "10px",
-    borderRadius: "12px",
-    border: "1px solid transparent",
-    background: "#ffffff",
-    textAlign: "left",
-    cursor: "pointer",
-    color: "#111827",
-  },
-  resultRowSelected: {
-    borderColor: "#d6dce5",
-    background: "#f8fafc",
-  },
-  resultImage: {
-    display: "block",
-    width: "56px",
-    height: "56px",
-  },
-  resultText: {
-    display: "grid",
-    gap: "4px",
-  },
-  resultName: {
-    fontWeight: 700,
-    fontSize: "16px",
-  },
-  resultMeta: {
-    color: "#596273",
-    fontSize: "14px",
-  },
   tableCard: {
     marginTop: "16px",
     border: "1px solid #d6dce5",
@@ -301,6 +240,10 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: "13px",
     color: "#596273",
   },
+  tableRowSelected: {
+    background: "#f8fafc",
+    cursor: "pointer",
+  },
   tableCell: {
     padding: "10px 12px",
     borderBottom: "1px solid #e5e7eb",
@@ -317,9 +260,5 @@ const styles: Record<string, React.CSSProperties> = {
     display: "block",
     width: "32px",
     height: "32px",
-  },
-  loadingText: {
-    margin: 0,
-    color: "#596273",
   },
 };

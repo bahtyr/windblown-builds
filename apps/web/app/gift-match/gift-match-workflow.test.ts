@@ -14,6 +14,7 @@ describe("computeGiftMatchRunResult", () => {
         buildTemplate("Alpha", "/alpha.png", alphaPattern()),
         buildTemplate("Beta", "/beta.png", betaPattern()),
         buildTemplate("Gamma", "/gamma.png", gammaPattern()),
+        buildTemplate("Delta", "/delta.png", deltaPattern()),
       ],
       now: createNow(),
     });
@@ -22,6 +23,7 @@ describe("computeGiftMatchRunResult", () => {
       {x: 8, y: 6, width: 28, height: 28},
       {x: 44, y: 6, width: 28, height: 28},
     ]);
+    expect(result.templateCount).toBe(4);
     expect(result.squareResults).toHaveLength(2);
     expect(result.squareResults[0].bestTemplate?.name).toBe("Alpha");
     expect(result.squareResults[1].bestTemplate?.name).toBe("Beta");
@@ -58,9 +60,10 @@ describe("computeGiftMatchRunResult", () => {
       },
     ]);
     expect(result.phase1Milliseconds).toBeGreaterThan(0);
+    expect(result.totalMilliseconds).toBeGreaterThan(result.phase1Milliseconds);
     expect(result.squareResults[0].preprocessMilliseconds).toBeGreaterThan(0);
     expect(result.squareResults[0].matchMilliseconds).toBeGreaterThan(0);
-    expect(selectGiftMatchOverlay(result, "/beta.png")).toEqual({
+    expect(selectGiftMatchOverlay(result, 1)).toEqual({
       bounds: {x: 44, y: 6, width: 28, height: 28},
       borderColor: "#16a34a",
     });
@@ -143,6 +146,10 @@ function betaPattern(): number[][] {
 
 function gammaPattern(): number[][] {
   return buildPattern((x, y) => (Math.abs(x - 7.5) + Math.abs(y - 7.5) <= 4 ? 200 : 90));
+}
+
+function deltaPattern(): number[][] {
+  return buildPattern((x, y) => ((x + y) % 3 === 0 ? 170 : 35));
 }
 
 function buildPattern(getValue: (x: number, y: number) => number): number[][] {
