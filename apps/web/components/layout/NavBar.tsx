@@ -18,6 +18,9 @@ export default function NavBar() {
             <Link className={`tab ${pathname === "/browse" ? "is-active" : ""}`} href="/browse">
               Browse
             </Link>
+            <Link className={`tab ${pathname === "/gift-match" ? "is-active" : ""}`} href="/gift-match">
+              Gift Match
+            </Link>
           </nav>
           <nav className="tabs tabs-secondary" aria-label="Community links">
             <Link className="tab tab-secondary" href="https://windblown.wiki.gg/" rel="noreferrer" target="_blank">

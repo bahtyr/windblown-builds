@@ -46,6 +46,7 @@ export type GiftMatchSquareResult = {
   preprocessMilliseconds: number;
   matchMilliseconds: number;
   bestTemplate: GiftMatchTemplateScore | null;
+  topTemplates: GiftMatchTemplateScore[];
 };
 
 export type GiftMatchTemplateResult = {
@@ -87,11 +88,12 @@ type GiftMatchPreparedTemplate = {
  * Loads the source image and templates, then runs the active gift-match workflow.
  *
  * @param {GiftMatchTemplateSpec[]} templateSpecs - Comparison templates for the run.
+ * @param {string} sourcePath - Source image path or object URL to process.
  * @returns {Promise<GiftMatchRunResult>} Shared run result for the debug page.
  */
-export async function runGiftMatchWorkflow(templateSpecs: GiftMatchTemplateSpec[]): Promise<GiftMatchRunResult> {
+export async function runGiftMatchWorkflow(templateSpecs: GiftMatchTemplateSpec[], sourcePath: string): Promise<GiftMatchRunResult> {
   const runStart = performance.now();
-  const sourceImageData = await loadImageData(GIFT_MATCH_SOURCE_PATH);
+  const sourceImageData = await loadImageData(sourcePath);
   const templates = await Promise.all(
     templateSpecs.map(async (templateSpec) => {
       const templateImageData = await loadImageData(templateSpec.path);
@@ -150,17 +152,21 @@ export function computeGiftMatchRunResult(input: {
   const squareResults = preparedSquares.map((square) => {
     const matchStart = now();
     let bestTemplate: GiftMatchTemplateScore | null = null;
+    const scoredTemplates: GiftMatchTemplateScore[] = [];
 
     for (const [templateIndex, template] of input.templates.entries()) {
       const resizedSquare = resizeGrayImage(square.image, template.image.width, template.image.height);
       const score = scoreAlignedImages(resizedSquare, template.image);
+      const templateScore = {
+        name: template.name,
+        path: template.path,
+        score,
+      };
+
+      scoredTemplates.push(templateScore);
 
       if (!bestTemplate || score > bestTemplate.score) {
-        bestTemplate = {
-          name: template.name,
-          path: template.path,
-          score,
-        };
+        bestTemplate = templateScore;
       }
 
       const existingBestSquare = templateResults[templateIndex].bestSquare;
@@ -179,6 +185,7 @@ export function computeGiftMatchRunResult(input: {
       preprocessMilliseconds: square.preprocessMilliseconds,
       matchMilliseconds: now() - matchStart,
       bestTemplate,
+      topTemplates: scoredTemplates.sort((left, right) => right.score - left.score).slice(0, 3),
     };
   });
 

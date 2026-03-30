@@ -60,5 +60,6 @@ async function collectTemplateImagePaths(directoryPath: string, relativeDirector
 function formatTemplateName(fileName: string): string {
   return fileName
     .replace(/\.png$/i, "")
+    .replace(/_Icon$/i, "")
     .replace(/_/g, " ");
 }
