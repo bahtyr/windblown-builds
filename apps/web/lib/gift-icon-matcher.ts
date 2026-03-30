@@ -4,24 +4,6 @@ export type GrayImage = {
   pixels: Float32Array;
 };
 
-export type MatchResult = {
-  score: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  isMatch: boolean;
-  scale: number;
-};
-
-export type MatchOptions = {
-  threshold?: number;
-  scales?: number[];
-  trimBorder?: number;
-  coarseStep?: number;
-  refineRadius?: number;
-};
-
 export type Rectangle = {
   x: number;
   y: number;
@@ -43,12 +25,6 @@ export type SquareDetectionResult = {
 const RAW_SQUARE_MIN_ASPECT_RATIO = 0.90;
 const RAW_SQUARE_MAX_ASPECT_RATIO = 1.15;
 const FOREGROUND_DISTANCE_THRESHOLD = 60;
-
-type PreparedTemplate = {
-  image: GrayImage;
-  centeredPixels: Float32Array;
-  variance: number;
-};
 
 /**
  * Converts RGBA image data into a grayscale image buffer.
@@ -87,33 +63,6 @@ export function trimImageBorder(image: GrayImage, border: number): GrayImage {
   for (let y = 0; y < height; y += 1) {
     const sourceOffset = (y + border) * image.width + border;
     pixels.set(image.pixels.subarray(sourceOffset, sourceOffset + width), y * width);
-  }
-
-  return {width, height, pixels};
-}
-
-/**
- * Resizes a grayscale image with nearest-neighbor sampling.
- *
- * @param {GrayImage} image - Image to resize.
- * @param {number} scale - Scalar multiplier applied to width and height.
- * @returns {GrayImage} Scaled image.
- */
-export function scaleGrayImage(image: GrayImage, scale: number): GrayImage {
-  if (scale === 1) {
-    return image;
-  }
-
-  const width = Math.max(1, Math.round(image.width * scale));
-  const height = Math.max(1, Math.round(image.height * scale));
-  const pixels = new Float32Array(width * height);
-
-  for (let y = 0; y < height; y += 1) {
-    const sourceY = Math.min(image.height - 1, Math.round(y / scale));
-    for (let x = 0; x < width; x += 1) {
-      const sourceX = Math.min(image.width - 1, Math.round(x / scale));
-      pixels[y * width + x] = image.pixels[sourceY * image.width + sourceX];
-    }
   }
 
   return {width, height, pixels};
@@ -305,71 +254,29 @@ export function scoreAlignedImages(source: GrayImage, template: GrayImage): numb
     throw new Error("Aligned image scoring requires identical image sizes.");
   }
 
-  const prepared = prepareTemplate(template);
-  return computeCorrelationAt(source, prepared, 0, 0);
-}
+  const templateMean = average(template.pixels);
+  let templateVariance = 0;
+  let sumSource = 0;
+  let sumSourceSquares = 0;
+  let sumCross = 0;
 
-/**
- * Finds the strongest template match in a grayscale source image.
- *
- * @param {GrayImage} source - Larger image to search.
- * @param {GrayImage} template - Template image to locate.
- * @param {MatchOptions} [options] - Matching thresholds and scale search options.
- * @returns {MatchResult} Best match score and bounds.
- */
-export function matchTemplate(source: GrayImage, template: GrayImage, options: MatchOptions = {}): MatchResult {
-  const threshold = options.threshold ?? 0.85;
-  const scales = options.scales ?? [0.9, 1, 1.1];
-  const trimBorder = options.trimBorder ?? 2;
-  const coarseStep = Math.max(1, options.coarseStep ?? 2);
-  const refineRadius = Math.max(0, options.refineRadius ?? 2);
-  const trimmedTemplate = trimImageBorder(template, trimBorder);
-
-  let bestMatch: MatchResult = {
-    score: 0,
-    x: 0,
-    y: 0,
-    width: trimmedTemplate.width,
-    height: trimmedTemplate.height,
-    isMatch: false,
-    scale: 1,
-  };
-
-  for (const scale of scales) {
-    const scaledTemplate = scaleGrayImage(trimmedTemplate, scale);
-    if (scaledTemplate.width > source.width || scaledTemplate.height > source.height) {
-      continue;
-    }
-
-    const prepared = prepareTemplate(scaledTemplate);
-    const coarseMatch = scanTemplate(source, prepared, coarseStep);
-    const refineMatch = scanTemplate(
-      source,
-      prepared,
-      1,
-      Math.max(0, coarseMatch.x - refineRadius),
-      Math.min(source.width - scaledTemplate.width, coarseMatch.x + refineRadius),
-      Math.max(0, coarseMatch.y - refineRadius),
-      Math.min(source.height - scaledTemplate.height, coarseMatch.y + refineRadius),
-    );
-
-    if (refineMatch.score > bestMatch.score) {
-      bestMatch = {
-        score: refineMatch.score,
-        x: refineMatch.x,
-        y: refineMatch.y,
-        width: scaledTemplate.width,
-        height: scaledTemplate.height,
-        isMatch: refineMatch.score >= threshold,
-        scale,
-      };
-    }
+  for (let index = 0; index < template.pixels.length; index += 1) {
+    const centered = template.pixels[index] - templateMean;
+    templateVariance += centered * centered;
+    const sourcePixel = source.pixels[index];
+    sumSource += sourcePixel;
+    sumSourceSquares += sourcePixel * sourcePixel;
+    sumCross += sourcePixel * centered;
   }
 
-  return {
-    ...bestMatch,
-    isMatch: bestMatch.score >= threshold,
-  };
+  const pixelCount = template.width * template.height;
+  const sourceVariance = sumSourceSquares - (sumSource * sumSource) / pixelCount;
+  if (sourceVariance <= 0 || templateVariance <= 0) {
+    return 0;
+  }
+
+  const correlation = sumCross / Math.sqrt(sourceVariance * templateVariance);
+  return (correlation + 1) / 2;
 }
 
 /**
@@ -394,82 +301,6 @@ export async function loadImageData(src: string): Promise<ImageData> {
 
   context.drawImage(image, 0, 0);
   return context.getImageData(0, 0, canvas.width, canvas.height);
-}
-
-function prepareTemplate(template: GrayImage): PreparedTemplate {
-  const mean = average(template.pixels);
-  const centeredPixels = new Float32Array(template.pixels.length);
-  let variance = 0;
-
-  for (let index = 0; index < template.pixels.length; index += 1) {
-    const centered = template.pixels[index] - mean;
-    centeredPixels[index] = centered;
-    variance += centered * centered;
-  }
-
-  return {
-    image: template,
-    centeredPixels,
-    variance,
-  };
-}
-
-function scanTemplate(
-  source: GrayImage,
-  template: PreparedTemplate,
-  step: number,
-  minX = 0,
-  maxX = source.width - template.image.width,
-  minY = 0,
-  maxY = source.height - template.image.height,
-): { score: number; x: number; y: number } {
-  let bestScore = -1;
-  let bestX = minX;
-  let bestY = minY;
-  const templateWidth = template.image.width;
-  const templateHeight = template.image.height;
-
-  for (let y = minY; y <= maxY; y += step) {
-    for (let x = minX; x <= maxX; x += step) {
-      const score = computeCorrelationAt(source, template, x, y);
-      if (score > bestScore) {
-        bestScore = score;
-        bestX = x;
-        bestY = y;
-      }
-    }
-  }
-
-  return {score: bestScore, x: bestX, y: bestY};
-}
-
-function computeCorrelationAt(source: GrayImage, template: PreparedTemplate, startX: number, startY: number): number {
-  let sumSource = 0;
-  let sumSourceSquares = 0;
-  let sumCross = 0;
-  const templateWidth = template.image.width;
-  const templateHeight = template.image.height;
-
-  for (let y = 0; y < templateHeight; y += 1) {
-    const sourceRowOffset = (startY + y) * source.width + startX;
-    const templateRowOffset = y * templateWidth;
-
-    for (let x = 0; x < templateWidth; x += 1) {
-      const sourcePixel = source.pixels[sourceRowOffset + x];
-      sumSource += sourcePixel;
-      sumSourceSquares += sourcePixel * sourcePixel;
-      sumCross += sourcePixel * template.centeredPixels[templateRowOffset + x];
-    }
-  }
-
-  const pixelCount = templateWidth * templateHeight;
-  const sourceVariance = sumSourceSquares - (sumSource * sumSource) / pixelCount;
-  if (sourceVariance <= 0 || template.variance <= 0) {
-    return 0;
-  }
-
-  const correlation = sumCross / Math.sqrt(sourceVariance * template.variance);
-  return (correlation + 1) / 2;
 }
 
 function average(values: Float32Array): number {

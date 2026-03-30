@@ -209,18 +209,18 @@ export default function GiftMatchDebug(): JSX.Element {
           </thead>
           <tbody>
           <tr>
-            <td style={styles.tableCell}>Phase 1, identify squares</td>
+            <td style={styles.tableCell}>Phase 1, identify squares and prepare square crops</td>
             <td style={styles.tableCell}>{state ? formatMilliseconds(state.phase1Milliseconds) : "Loading..."}</td>
             <td style={styles.tableCell}>{state ? `${state.squares.length} squares` : "-"}</td>
           </tr>
           {state?.squareOperations.flatMap((operation) => [
             <tr key={`process-${operation.squareIndex}`}>
-              <td style={styles.tableCell}>Square {operation.squareIndex}, processing/preprocessing</td>
+              <td style={styles.tableCell}>Square {operation.squareIndex}, crop and preprocess square</td>
               <td style={styles.tableCell}>{formatMilliseconds(operation.preprocessMilliseconds)}</td>
               <td style={styles.tableCell}>Prepared inner crop</td>
             </tr>,
             <tr key={`match-${operation.squareIndex}`}>
-              <td style={styles.tableCell}>Square {operation.squareIndex}, try to find match</td>
+              <td style={styles.tableCell}>Square {operation.squareIndex}, compare against 3 reference images</td>
               <td style={styles.tableCell}>{formatMilliseconds(operation.matchMilliseconds)}</td>
               <td style={styles.tableCell}>
                 <div style={styles.tableResult}>

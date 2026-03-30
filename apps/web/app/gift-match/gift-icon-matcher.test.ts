@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {detectSquareRegions, detectSquareRegionsDetailed, matchTemplate, trimImageBorder, type GrayImage} from "../../lib/gift-icon-matcher";
+import {detectSquareRegions, detectSquareRegionsDetailed, scoreAlignedImages, trimImageBorder, type GrayImage} from "../../lib/gift-icon-matcher";
 
 describe("trimImageBorder", () => {
   it("removes a uniform border from a grayscale image", () => {
@@ -22,12 +22,16 @@ describe("trimImageBorder", () => {
   });
 });
 
-describe("matchTemplate", () => {
-  it("finds the best match despite a brightness shift in the source", () => {
+describe("scoreAlignedImages", () => {
+  it("scores aligned images highly despite a brightness shift", () => {
     const source: GrayImage = {
-      width: 6,
-      height: 6,
-      pixels: new Float32Array(36).fill(10),
+      width: 3,
+      height: 3,
+      pixels: new Float32Array([
+        60, 80, 60,
+        80, 130, 80,
+        60, 80, 60,
+      ]),
     };
     const template: GrayImage = {
       width: 3,
@@ -39,30 +43,9 @@ describe("matchTemplate", () => {
       ]),
     };
 
-    const embedded = [
-      60, 80, 60,
-      80, 130, 80,
-      60, 80, 60,
-    ];
+    const result = scoreAlignedImages(source, template);
 
-    for (let y = 0; y < 3; y += 1) {
-      for (let x = 0; x < 3; x += 1) {
-        source.pixels[(y + 2) * source.width + (x + 1)] = embedded[y * 3 + x];
-      }
-    }
-
-    const result = matchTemplate(source, template, {
-      threshold: 0.85,
-      scales: [1],
-      trimBorder: 0,
-      coarseStep: 1,
-      refineRadius: 0,
-    });
-
-    expect(result.isMatch).toBe(true);
-    expect(result.x).toBe(1);
-    expect(result.y).toBe(2);
-    expect(result.score).toBeGreaterThan(0.99);
+    expect(result).toBeGreaterThan(0.99);
   });
 });
 
