@@ -13,9 +13,10 @@ import {
   type Rectangle,
 } from "../../lib/gift-icon-matcher";
 
-const SOURCE_PATH = "/source-cropped-2.png";
+const SOURCE_PATH = "/source-cropped-3.JPG";
 const MATCH_THRESHOLD = 0.8;
 const TEMPLATE_BORDER_TRIM = 4;
+const SQUARE_INNER_TRIM = 6;
 const TEMPLATE_SPECS = [
   {name: "Intense Burn", path: "/Intense_Burn.webp", shouldFind: true},
   {name: "Gory Flame Icon", path: "/Gory_Flame_Icon.webp", shouldFind: true},
@@ -77,7 +78,7 @@ export default function GiftMatchDebug(): JSX.Element {
 
         const comparisonStart = performance.now();
         const scoredSquares = squares.map((square, index) => {
-          const squareCrop = cropGrayImage(sourceGray, square);
+          const squareCrop = cropGrayImage(sourceGray, trimSquareBounds(square, SQUARE_INNER_TRIM));
           const resizedSquare = resizeGrayImage(squareCrop, trimmedTemplate.width, trimmedTemplate.height);
 
           return {
@@ -221,6 +222,7 @@ export default function GiftMatchDebug(): JSX.Element {
                 <div style={styles.targetDetailLine}>
                   Trimmed size: {state ? `${state.targetTrimmedWidth} x ${state.targetTrimmedHeight}` : "Running..."}
                 </div>
+                <div style={styles.targetDetailLine}>Square inner trim: {SQUARE_INNER_TRIM}px per side</div>
                 <div style={styles.targetDetailLine}>Phase 1 yellow boxes: raw detected squares</div>
                 <div style={styles.targetDetailLine}>Phase 2 blue boxes: filtered candidate squares</div>
                 <div style={styles.targetDetailLine}>Threshold: {MATCH_THRESHOLD}</div>
@@ -252,6 +254,19 @@ function Metric({label, value}: { label: string; value: string }) {
       <div style={styles.metricValue}>{value}</div>
     </div>
   );
+}
+
+function trimSquareBounds(square: Rectangle, trim: number): Rectangle {
+  const safeTrim = Math.max(0, Math.min(trim, Math.floor((Math.min(square.width, square.height) - 1) / 2)));
+  const width = Math.max(1, square.width - safeTrim * 2);
+  const height = Math.max(1, square.height - safeTrim * 2);
+
+  return {
+    x: square.x + safeTrim,
+    y: square.y + safeTrim,
+    width,
+    height,
+  };
 }
 
 const styles: Record<string, React.CSSProperties> = {
