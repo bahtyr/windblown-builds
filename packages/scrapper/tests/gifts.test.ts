@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {buildGiftVideoUrl, normalizeGiftImageUrl, toGiftPublicImagePath} from "../src/pages/gifts.js";
+import {buildGiftVideoUrl, normalizeGiftImageUrl} from "../src/pages/gifts.js";
 
 describe("buildGiftVideoUrl", () => {
   it("maps a gift wiki URL to its webm asset", () => {
@@ -24,13 +24,5 @@ describe("normalizeGiftImageUrl", () => {
     expect(
       normalizeGiftImageUrl("https://windblown.wiki.gg/images/48px-Balance_Icon.png?format=original"),
     ).toBe("https://windblown.wiki.gg/images/Balance_Icon.png");
-  });
-});
-
-describe("toGiftPublicImagePath", () => {
-  it("maps gift images into the gifts folder", () => {
-    expect(
-      toGiftPublicImagePath("https://windblown.wiki.gg/images/thumb/a/a4/Balance_Icon.png/48px-Balance_Icon.png?abc=123"),
-    ).toBe("/images/gifts/Balance_Icon.png");
   });
 });

@@ -78,7 +78,7 @@ export function toPublicImagePath(imageUrl: string | undefined, type: string): s
  *
  * @param {T[]} entities - Scraped entities to localize.
  * @param {string} type - Entity type folder name.
- * @returns {Promise<void>} Resolves when entity images are written and paths updated.
+ * @returns {Promise<void>} Resolves when entity images are written.
  */
 export async function localizeEntityImages<T extends ImageEntity>(entities: T[], type: string): Promise<void> {
   const outputDir = path.join(IMAGES_OUTPUT_DIR, type);
@@ -86,8 +86,7 @@ export async function localizeEntityImages<T extends ImageEntity>(entities: T[],
 
   for (const entity of entities) {
     const imageUrl = normalizeWikiImageUrl(entity.image);
-    const publicImagePath = toPublicImagePath(imageUrl, type);
-    if (!imageUrl || !publicImagePath) {
+    if (!imageUrl) {
       continue;
     }
 
@@ -100,8 +99,6 @@ export async function localizeEntityImages<T extends ImageEntity>(entities: T[],
         await writeFile(outputPath, buffer);
       }
     }
-
-    entity.image = publicImagePath;
   }
 }
 

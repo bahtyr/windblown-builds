@@ -1,7 +1,7 @@
 import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
 import {findSectionTableRows, fetchWikiDocument} from "../core/wikiHtml.js";
-import {localizeEntityImages, normalizeWikiImageUrl, toPublicImagePath} from "../core/imageAssets.js";
+import {localizeEntityImages, normalizeWikiImageUrl} from "../core/imageAssets.js";
 import {parseRichDescription} from "../core/richTextParser.js";
 import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
 import {Gift} from "./types.js";
@@ -127,14 +127,4 @@ export function normalizeGiftImageUrl(imageUrl?: string): string | undefined {
  */
 export async function downloadGiftImages(gifts: Gift[]): Promise<void> {
   await localizeEntityImages(gifts, "gifts");
-}
-
-/**
- * Convert a gift image URL into the public app path under the gifts folder.
- *
- * @param {string | undefined} imageUrl - Raw or normalized gift image URL.
- * @returns {string | undefined} Public app image path for gifts.
- */
-export function toGiftPublicImagePath(imageUrl?: string): string | undefined {
-  return toPublicImagePath(normalizeGiftImageUrl(imageUrl), "gifts");
 }
