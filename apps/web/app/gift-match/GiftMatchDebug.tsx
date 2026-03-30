@@ -10,6 +10,7 @@ import {
   resizeGrayImage,
   scoreAlignedImages,
   trimImageBorder,
+  type GrayImage,
   type Rectangle,
 } from "../../lib/gift-icon-matcher";
 
@@ -18,9 +19,9 @@ const MATCH_THRESHOLD = 0.8;
 const TEMPLATE_BORDER_TRIM = 4;
 const SQUARE_INNER_TRIM = 6;
 const TEMPLATE_SPECS = [
-  {name: "Intense Burn", path: "/Intense_Burn.webp", shouldFind: true},
-  {name: "Gory Flame Icon", path: "/Gory_Flame_Icon.webp", shouldFind: true},
-  {name: "Protection Icon", path: "/Protection_Icon.webp", shouldFind: false},
+  {name: "Intense Burn", path: "/images/Intense_Burn_Icon.png"},
+  {name: "Gory Flame Icon", path: "/images/Gory_Flame_Icon.png"},
+  {name: "Protection Icon", path: "/images/Protection_Icon.png"},
 ] as const;
 
 type SquareScore = {
@@ -29,231 +30,283 @@ type SquareScore = {
   score: number;
 };
 
+type PreparedSquare = {
+  index: number;
+  bounds: Rectangle;
+  image: GrayImage;
+  preprocessMilliseconds: number;
+};
+
+type TemplateImage = {
+  name: string;
+  path: string;
+  image: GrayImage;
+};
+
+type TemplateMatch = {
+  name: string;
+  path: string;
+  bestSquare: SquareScore | null;
+};
+
+type SquareOperation = {
+  squareIndex: number;
+  preprocessMilliseconds: number;
+  matchMilliseconds: number;
+  bestMatchName: string | null;
+  bestMatchPath: string | null;
+  bestScore: number | null;
+  isMatch: boolean;
+};
+
 type MatchState = {
   sourceWidth: number;
   sourceHeight: number;
-  targetName: string;
-  targetPath: string;
-  targetWidth: number;
-  targetHeight: number;
-  targetTrimmedWidth: number;
-  targetTrimmedHeight: number;
-  squareDetectionSeconds: number;
-  comparisonSeconds: number;
-  rawSquares: Rectangle[];
+  phase1Milliseconds: number;
   squares: Rectangle[];
-  bestSquare: SquareScore | null;
-  topSquares: SquareScore[];
+  templateMatches: TemplateMatch[];
+  squareOperations: SquareOperation[];
 };
 
 /**
- * Renders a timed two-phase matching debug view.
+ * Renders the source image, current matches, and an operations timing table.
  *
- * @returns {JSX.Element} Debug UI showing square detection and per-square comparison timings.
+ * @returns {JSX.Element} Debug UI for square detection and three-image matching.
  */
 export default function GiftMatchDebug(): JSX.Element {
-  const [selectedPath, setSelectedPath] = useState<string>(TEMPLATE_SPECS[0].path);
   const [state, setState] = useState<MatchState | null>(null);
+  const [selectedPath, setSelectedPath] = useState<string>(TEMPLATE_SPECS[0].path);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
-    async function runBreakdown() {
+    async function runMatching() {
       try {
-        const selectedTemplate = TEMPLATE_SPECS.find((template) => template.path === selectedPath) ?? TEMPLATE_SPECS[0];
-        const [sourceImageData, templateImageData] = await Promise.all([
-          loadImageData(SOURCE_PATH),
-          loadImageData(selectedTemplate.path),
-        ]);
-
+        const sourceImageData = await loadImageData(SOURCE_PATH);
         const sourceGray = grayscaleImageData(sourceImageData);
-        const trimmedTemplate = trimImageBorder(grayscaleImageData(templateImageData), TEMPLATE_BORDER_TRIM);
 
-        const squareDetectionStart = performance.now();
-        const detection = detectSquareRegionsDetailed(sourceImageData);
-        const squareDetectionSeconds = (performance.now() - squareDetectionStart) / 1000;
-        const rawSquares = detection.rawSquares;
-        const squares = detection.candidateSquares;
+        const phase1Start = performance.now();
+        const detectedSquares = detectSquareRegionsDetailed(sourceImageData).rawSquares;
+        const preparedSquares = detectedSquares.map((square, index) => prepareSquare(sourceGray, square, index));
+        const phase1Milliseconds = performance.now() - phase1Start;
 
-        const comparisonStart = performance.now();
-        const scoredSquares = squares.map((square, index) => {
-          const squareCrop = cropGrayImage(sourceGray, trimSquareBounds(square, SQUARE_INNER_TRIM));
-          const resizedSquare = resizeGrayImage(squareCrop, trimmedTemplate.width, trimmedTemplate.height);
+        const templates = await Promise.all(
+          TEMPLATE_SPECS.map(async (templateSpec) => {
+            const templateImageData = await loadImageData(templateSpec.path);
+            return {
+              name: templateSpec.name,
+              path: templateSpec.path,
+              image: trimImageBorder(grayscaleImageData(templateImageData), TEMPLATE_BORDER_TRIM),
+            };
+          }),
+        );
 
-          return {
-            index,
-            bounds: square,
-            score: scoreAlignedImages(resizedSquare, trimmedTemplate),
-          };
-        });
-        const comparisonSeconds = (performance.now() - comparisonStart) / 1000;
-        const topSquares = [...scoredSquares].sort((left, right) => right.score - left.score).slice(0, 8);
-        const bestSquare = topSquares[0] ?? null;
+        const squareOperations = preparedSquares.map((square) => scoreSquareAcrossTemplates(square, templates));
+        const templateMatches = templates.map((template) => ({
+          name: template.name,
+          path: template.path,
+          bestSquare: findBestSquareForTemplate(preparedSquares, template),
+        }));
 
         if (!cancelled) {
           setState({
             sourceWidth: sourceImageData.width,
             sourceHeight: sourceImageData.height,
-            targetName: selectedTemplate.name,
-            targetPath: selectedTemplate.path,
-            targetWidth: templateImageData.width,
-            targetHeight: templateImageData.height,
-            targetTrimmedWidth: trimmedTemplate.width,
-            targetTrimmedHeight: trimmedTemplate.height,
-            squareDetectionSeconds,
-            comparisonSeconds,
-            rawSquares,
-            squares,
-            bestSquare,
-            topSquares,
+            phase1Milliseconds,
+            squares: detectedSquares,
+            templateMatches,
+            squareOperations,
           });
         }
       } catch (matchError) {
         if (!cancelled) {
-          setError(matchError instanceof Error ? matchError.message : "Failed to run square detection.");
+          setError(matchError instanceof Error ? matchError.message : "Failed to run image matching.");
         }
       }
     }
 
     setState(null);
     setError(null);
-    runBreakdown();
+    runMatching();
 
     return () => {
       cancelled = true;
     };
-  }, [selectedPath]);
+  }, []);
 
-  const bestSquare = state?.bestSquare ?? null;
-  const bestSquareOverlay = state && bestSquare ? {
-    left: `${(bestSquare.bounds.x / state.sourceWidth) * 100}%`,
-    top: `${(bestSquare.bounds.y / state.sourceHeight) * 100}%`,
-    width: `${(bestSquare.bounds.width / state.sourceWidth) * 100}%`,
-    height: `${(bestSquare.bounds.height / state.sourceHeight) * 100}%`,
-    borderColor: bestSquare.score >= MATCH_THRESHOLD ? "#2f855a" : "#c53030",
-  } : undefined;
+  const selectedMatch = state?.templateMatches.find((match) => match.path === selectedPath) ?? state?.templateMatches[0] ?? null;
+  const selectedOverlay = state && selectedMatch?.bestSquare ? buildOverlayStyle(
+    selectedMatch.bestSquare.bounds,
+    state.sourceWidth,
+    state.sourceHeight,
+    selectedMatch.bestSquare.score >= MATCH_THRESHOLD ? "#16a34a" : "#dc2626",
+  ) : undefined;
 
   return (
     <section style={styles.shell}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>Gift icon match breakdown</h1>
-        <p style={styles.subtitle}>
-          Phase 1 detects square icon regions in the source. Phase 2 compares each detected square to the selected target thumb.
-        </p>
-      </div>
-
-      <div style={styles.targetRow}>
-        {TEMPLATE_SPECS.map((template) => (
-          <button
-            key={template.path}
-            onClick={() => setSelectedPath(template.path)}
-            style={{
-              ...styles.targetButton,
-              ...(selectedPath === template.path ? styles.targetButtonSelected : null),
-            }}
-            type="button"
-          >
-            <Image alt={template.name} src={template.path} width={48} height={48} style={styles.targetImage}/>
-            <span>{template.name}</span>
-          </button>
-        ))}
-      </div>
-
       {error ? <p style={styles.error}>{error}</p> : null}
 
-      <div style={styles.summary}>
-        <Metric label="Raw squares" value={state ? String(state.rawSquares.length) : "Running..."} />
-        <Metric label="Candidate squares" value={state ? String(state.squares.length) : "Running..."} />
-        <Metric label="Detect squares" value={state ? `${state.squareDetectionSeconds.toFixed(3)}s` : "Running..."} />
-        <Metric label="Compare squares" value={state ? `${state.comparisonSeconds.toFixed(3)}s` : "Running..."} />
-        <Metric label="Best score" value={state?.bestSquare ? state.bestSquare.score.toFixed(4) : "Running..."} />
-        <Metric label="Match" value={state?.bestSquare ? (state.bestSquare.score >= MATCH_THRESHOLD ? "Yes" : "No") : "Running..."} />
-      </div>
-
-      <div style={styles.grid}>
-        <div style={styles.card}>
-          <h2 style={styles.cardTitle}>Source image</h2>
-          <p style={styles.cardSubtitle}>
-            {state
-              ? `Phase 1 found ${state.rawSquares.length} raw squares. ${state.squares.length} remained as comparison candidates.`
-              : "Running square detection..."}
-          </p>
+      <div style={styles.layout}>
+        <div style={styles.sourceCard}>
           <div style={styles.imageFrame}>
-            <Image alt="Source screenshot" src={SOURCE_PATH} width={807} height={750} style={styles.image}/>
-            {state?.rawSquares.map((square, index) => (
-              <div
-                key={`${square.x}-${square.y}-${index}`}
-                style={{
-                  ...styles.rawSquareOverlay,
-                  left: `${(square.x / state.sourceWidth) * 100}%`,
-                  top: `${(square.y / state.sourceHeight) * 100}%`,
-                  width: `${(square.width / state.sourceWidth) * 100}%`,
-                  height: `${(square.height / state.sourceHeight) * 100}%`,
-                }}
+            {state ? (
+              <Image
+                alt="Source screenshot"
+                src={SOURCE_PATH}
+                width={state.sourceWidth}
+                height={state.sourceHeight}
+                style={styles.image}
               />
-            ))}
+            ) : null}
             {state?.squares.map((square, index) => (
               <div
-                key={`candidate-${square.x}-${square.y}-${index}`}
-                style={{
-                  ...styles.squareOverlay,
-                  left: `${(square.x / state.sourceWidth) * 100}%`,
-                  top: `${(square.y / state.sourceHeight) * 100}%`,
-                  width: `${(square.width / state.sourceWidth) * 100}%`,
-                  height: `${(square.height / state.sourceHeight) * 100}%`,
-                }}
+                key={`${square.x}-${square.y}-${index}`}
+                style={buildOverlayStyle(square, state.sourceWidth, state.sourceHeight, "#facc15")}
               />
             ))}
-            {bestSquareOverlay ? <div style={{...styles.bestSquareOverlay, ...bestSquareOverlay}}/> : null}
+            {selectedOverlay ? <div style={{...styles.selectedOverlay, ...selectedOverlay}} /> : null}
           </div>
         </div>
 
-        <div style={styles.sidebar}>
-          <div style={styles.card}>
-            <h2 style={styles.cardTitle}>Selected target</h2>
-            <div style={styles.targetDetail}>
-              {state ? <Image alt={state.targetName} src={state.targetPath} width={64} height={64} style={styles.targetDetailImage}/> : null}
-              <div style={styles.targetDetailText}>
-                <div style={styles.targetDetailTitle}>{state?.targetName ?? "Loading..."}</div>
-                <div style={styles.targetDetailLine}>
-                  Raw size: {state ? `${state.targetWidth} x ${state.targetHeight}` : "Running..."}
-                </div>
-                <div style={styles.targetDetailLine}>
-                  Trimmed size: {state ? `${state.targetTrimmedWidth} x ${state.targetTrimmedHeight}` : "Running..."}
-                </div>
-                <div style={styles.targetDetailLine}>Square inner trim: {SQUARE_INNER_TRIM}px per side</div>
-                <div style={styles.targetDetailLine}>Phase 1 yellow boxes: raw detected squares</div>
-                <div style={styles.targetDetailLine}>Phase 2 blue boxes: filtered candidate squares</div>
-                <div style={styles.targetDetailLine}>Threshold: {MATCH_THRESHOLD}</div>
-              </div>
-            </div>
-          </div>
+        <div style={styles.resultsCard}>
+          {state?.templateMatches.map((match) => {
+            const isMatch = (match.bestSquare?.score ?? 0) >= MATCH_THRESHOLD;
 
-          <div style={styles.card}>
-            <h2 style={styles.cardTitle}>Top square candidates</h2>
-            {state?.topSquares.length ? state.topSquares.map((square) => (
-              <div key={square.index} style={styles.candidateRow}>
-                <div style={styles.candidateName}>Square {square.index}</div>
-                <div style={styles.candidateMeta}>
-                  score {square.score.toFixed(4)} at {square.bounds.x}, {square.bounds.y} ({square.bounds.width} x {square.bounds.height})
+            return (
+              <button
+                key={match.path}
+                type="button"
+                onClick={() => setSelectedPath(match.path)}
+                style={{
+                  ...styles.resultRow,
+                  ...(selectedPath === match.path ? styles.resultRowSelected : null),
+                }}
+              >
+                <Image alt={match.name} src={match.path} width={56} height={56} style={styles.resultImage} />
+                <div style={styles.resultText}>
+                  <div style={styles.resultName}>{match.name}</div>
+                  <div style={styles.resultMeta}>
+                    {match.bestSquare
+                      ? `${isMatch ? "Match" : "No match"} | square ${match.bestSquare.index} | ${match.bestSquare.score.toFixed(4)}`
+                      : "No square found"}
+                  </div>
                 </div>
-              </div>
-            )) : <p style={styles.loadingText}>Running square comparisons...</p>}
-          </div>
+              </button>
+            );
+          }) ?? <p style={styles.loadingText}>Loading...</p>}
         </div>
+      </div>
+
+      <div style={styles.tableCard}>
+        <table style={styles.table}>
+          <thead>
+          <tr>
+            <th style={styles.tableHeader}>Phase / Step</th>
+            <th style={styles.tableHeader}>How Long</th>
+            <th style={styles.tableHeader}>Result</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td style={styles.tableCell}>Phase 1, identify squares</td>
+            <td style={styles.tableCell}>{state ? formatMilliseconds(state.phase1Milliseconds) : "Loading..."}</td>
+            <td style={styles.tableCell}>{state ? `${state.squares.length} squares` : "-"}</td>
+          </tr>
+          {state?.squareOperations.flatMap((operation) => [
+            <tr key={`process-${operation.squareIndex}`}>
+              <td style={styles.tableCell}>Square {operation.squareIndex}, processing/preprocessing</td>
+              <td style={styles.tableCell}>{formatMilliseconds(operation.preprocessMilliseconds)}</td>
+              <td style={styles.tableCell}>Prepared inner crop</td>
+            </tr>,
+            <tr key={`match-${operation.squareIndex}`}>
+              <td style={styles.tableCell}>Square {operation.squareIndex}, try to find match</td>
+              <td style={styles.tableCell}>{formatMilliseconds(operation.matchMilliseconds)}</td>
+              <td style={styles.tableCell}>
+                <div style={styles.tableResult}>
+                  <span>
+                    {operation.bestMatchName
+                      ? `${operation.isMatch ? "Found" : "Best failed"} ${operation.bestMatchName}`
+                      : "No result"}
+                  </span>
+                  {operation.bestMatchPath ? (
+                    <Image
+                      alt={operation.bestMatchName ?? "Match result"}
+                      src={operation.bestMatchPath}
+                      width={32}
+                      height={32}
+                      style={styles.tableImage}
+                    />
+                  ) : null}
+                </div>
+              </td>
+            </tr>,
+          ]) ?? null}
+          </tbody>
+        </table>
       </div>
     </section>
   );
 }
 
-function Metric({label, value}: { label: string; value: string }) {
-  return (
-    <div style={styles.metricCard}>
-      <div style={styles.metricLabel}>{label}</div>
-      <div style={styles.metricValue}>{value}</div>
-    </div>
-  );
+function prepareSquare(sourceGray: GrayImage, square: Rectangle, index: number): PreparedSquare {
+  const preprocessStart = performance.now();
+  const trimmedSquare = trimSquareBounds(square, SQUARE_INNER_TRIM);
+  const image = cropGrayImage(sourceGray, trimmedSquare);
+
+  return {
+    index,
+    bounds: square,
+    image,
+    preprocessMilliseconds: performance.now() - preprocessStart,
+  };
+}
+
+function scoreSquareAcrossTemplates(square: PreparedSquare, templates: TemplateImage[]): SquareOperation {
+  const matchStart = performance.now();
+  let bestMatchName: string | null = null;
+  let bestMatchPath: string | null = null;
+  let bestScore: number | null = null;
+
+  for (const template of templates) {
+    const resizedSquare = resizeGrayImage(square.image, template.image.width, template.image.height);
+    const score = scoreAlignedImages(resizedSquare, template.image);
+
+    if (bestScore === null || score > bestScore) {
+      bestScore = score;
+      bestMatchName = template.name;
+      bestMatchPath = template.path;
+    }
+  }
+
+  return {
+    squareIndex: square.index,
+    preprocessMilliseconds: square.preprocessMilliseconds,
+    matchMilliseconds: performance.now() - matchStart,
+    bestMatchName,
+    bestMatchPath,
+    bestScore,
+    isMatch: (bestScore ?? 0) >= MATCH_THRESHOLD,
+  };
+}
+
+function findBestSquareForTemplate(squares: PreparedSquare[], template: TemplateImage): SquareScore | null {
+  let bestSquare: SquareScore | null = null;
+
+  for (const square of squares) {
+    const resizedSquare = resizeGrayImage(square.image, template.image.width, template.image.height);
+    const score = scoreAlignedImages(resizedSquare, template.image);
+
+    if (!bestSquare || score > bestSquare.score) {
+      bestSquare = {
+        index: square.index,
+        bounds: square.bounds,
+        score,
+      };
+    }
+  }
+
+  return bestSquare;
 }
 
 function trimSquareBounds(square: Rectangle, trim: number): Rectangle {
@@ -269,172 +322,143 @@ function trimSquareBounds(square: Rectangle, trim: number): Rectangle {
   };
 }
 
+function buildOverlayStyle(square: Rectangle, sourceWidth: number, sourceHeight: number, borderColor: string): React.CSSProperties {
+  return {
+    ...styles.overlay,
+    left: `${(square.x / sourceWidth) * 100}%`,
+    top: `${(square.y / sourceHeight) * 100}%`,
+    width: `${(square.width / sourceWidth) * 100}%`,
+    height: `${(square.height / sourceHeight) * 100}%`,
+    borderColor,
+  };
+}
+
+function formatMilliseconds(milliseconds: number): string {
+  return `${(milliseconds / 1000).toFixed(3)}s`;
+}
+
 const styles: Record<string, React.CSSProperties> = {
   shell: {
-    display: "grid",
-    gap: "24px",
     padding: "24px",
   },
-  header: {
-    display: "grid",
-    gap: "6px",
-  },
-  title: {
-    margin: 0,
-    fontSize: "32px",
-  },
-  subtitle: {
-    margin: 0,
-    color: "#596273",
-  },
-  targetRow: {
-    display: "flex",
-    gap: "12px",
-    flexWrap: "wrap",
-  },
-  targetButton: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "10px",
-    padding: "10px 12px",
-    borderRadius: "12px",
-    border: "1px solid #d6dce5",
-    background: "#ffffff",
-    cursor: "pointer",
-    color: "#111827",
-    fontWeight: 600,
-  },
-  targetButtonSelected: {
-    borderColor: "#2563eb",
-    boxShadow: "0 0 0 1px rgba(37, 99, 235, 0.18)",
-  },
-  targetImage: {
-    display: "block",
-    width: "32px",
-    height: "32px",
-  },
   error: {
-    margin: 0,
-    color: "#c53030",
+    margin: "0 0 16px",
+    color: "#dc2626",
   },
-  summary: {
-    display: "grid",
-    gap: "12px",
-    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-  },
-  grid: {
+  layout: {
     display: "grid",
     gap: "16px",
-    gridTemplateColumns: "minmax(0, 1.55fr) minmax(320px, 1fr)",
+    gridTemplateColumns: "minmax(0, 1.7fr) minmax(280px, 0.9fr)",
     alignItems: "start",
   },
-  sidebar: {
-    display: "grid",
-    gap: "16px",
-  },
-  card: {
+  sourceCard: {
     border: "1px solid #d6dce5",
     borderRadius: "16px",
     background: "#ffffff",
     padding: "16px",
   },
-  cardTitle: {
-    margin: 0,
-    fontSize: "18px",
-  },
-  cardSubtitle: {
-    margin: "8px 0 12px",
-    color: "#596273",
-    fontSize: "14px",
-  },
   imageFrame: {
     position: "relative",
     borderRadius: "12px",
     overflow: "hidden",
-    border: "1px solid #d6dce5",
-    background: "#eef2f7",
+    background: "#111827",
   },
   image: {
     display: "block",
     width: "100%",
     height: "auto",
   },
-  squareOverlay: {
-    position: "absolute",
-    border: "1px solid rgba(37, 99, 235, 0.55)",
-    background: "rgba(37, 99, 235, 0.08)",
-    pointerEvents: "none",
-    boxSizing: "border-box",
-  },
-  rawSquareOverlay: {
-    position: "absolute",
-    border: "2px solid rgba(245, 158, 11, 0.95)",
-    background: "rgba(245, 158, 11, 0.08)",
-    pointerEvents: "none",
-    boxSizing: "border-box",
-  },
-  bestSquareOverlay: {
+  overlay: {
     position: "absolute",
     borderStyle: "solid",
     borderWidth: "3px",
-    boxShadow: "0 0 0 9999px rgba(15, 23, 42, 0.14)",
-    pointerEvents: "none",
     boxSizing: "border-box",
+    pointerEvents: "none",
   },
-  metricCard: {
+  selectedOverlay: {
+    position: "absolute",
+    borderStyle: "solid",
+    borderWidth: "4px",
+    boxSizing: "border-box",
+    pointerEvents: "none",
+  },
+  resultsCard: {
     border: "1px solid #d6dce5",
-    borderRadius: "12px",
+    borderRadius: "16px",
     background: "#ffffff",
-    padding: "14px 16px",
+    padding: "12px",
+    display: "grid",
+    gap: "10px",
   },
-  metricLabel: {
-    fontSize: "12px",
-    letterSpacing: "0.08em",
-    textTransform: "uppercase",
-    color: "#687282",
-  },
-  metricValue: {
-    marginTop: "6px",
-    fontSize: "20px",
-    fontWeight: 600,
+  resultRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    width: "100%",
+    padding: "10px",
+    borderRadius: "12px",
+    border: "1px solid transparent",
+    background: "#ffffff",
+    textAlign: "left",
+    cursor: "pointer",
     color: "#111827",
   },
-  targetDetail: {
-    display: "flex",
-    gap: "14px",
-    alignItems: "center",
+  resultRowSelected: {
+    borderColor: "#d6dce5",
+    background: "#f8fafc",
   },
-  targetDetailImage: {
+  resultImage: {
     display: "block",
-    width: "64px",
-    height: "64px",
+    width: "56px",
+    height: "56px",
   },
-  targetDetailText: {
+  resultText: {
     display: "grid",
     gap: "4px",
   },
-  targetDetailTitle: {
-    fontSize: "18px",
+  resultName: {
     fontWeight: 700,
-    color: "#111827",
+    fontSize: "16px",
   },
-  targetDetailLine: {
+  resultMeta: {
     color: "#596273",
     fontSize: "14px",
   },
-  candidateRow: {
-    padding: "10px 0",
-    borderTop: "1px solid #e5e7eb",
+  tableCard: {
+    marginTop: "16px",
+    border: "1px solid #d6dce5",
+    borderRadius: "16px",
+    background: "#ffffff",
+    padding: "12px",
+    overflowX: "auto",
   },
-  candidateName: {
-    fontWeight: 700,
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+  },
+  tableHeader: {
+    textAlign: "left",
+    padding: "10px 12px",
+    borderBottom: "1px solid #e5e7eb",
+    fontSize: "13px",
+    color: "#596273",
+  },
+  tableCell: {
+    padding: "10px 12px",
+    borderBottom: "1px solid #e5e7eb",
+    verticalAlign: "middle",
+    fontSize: "14px",
     color: "#111827",
   },
-  candidateMeta: {
-    marginTop: "4px",
-    color: "#596273",
-    fontSize: "14px",
-    lineHeight: 1.5,
+  tableResult: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+  },
+  tableImage: {
+    display: "block",
+    width: "32px",
+    height: "32px",
   },
   loadingText: {
     margin: 0,

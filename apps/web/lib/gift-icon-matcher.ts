@@ -278,7 +278,7 @@ export function detectSquareRegionsDetailed(imageData: RgbaImageLike): SquareDet
   }
 
   return {
-    rawSquares: sortRectangles(rawSquares),
+    rawSquares: sortRectangles(dedupeRectangles(rawSquares)),
     candidateSquares: sortRectangles(dedupeRectangles(candidateSquares)),
   };
 }
