@@ -40,10 +40,9 @@ export type SquareDetectionResult = {
   candidateSquares: Rectangle[];
 };
 
-// const RAW_SQUARE_MIN_ASPECT_RATIO = 0.85;
-const RAW_SQUARE_MIN_ASPECT_RATIO = 0.95;
-// const RAW_SQUARE_MAX_ASPECT_RATIO = 1.15;
-const RAW_SQUARE_MAX_ASPECT_RATIO = 1.05;
+const RAW_SQUARE_MIN_ASPECT_RATIO = 0.90;
+const RAW_SQUARE_MAX_ASPECT_RATIO = 1.15;
+const FOREGROUND_DISTANCE_THRESHOLD = 60;
 
 type PreparedTemplate = {
   image: GrayImage;
@@ -508,7 +507,11 @@ function isForegroundPixel(imageData: RgbaImageLike, x: number, y: number, backg
   const green = imageData.data[offset + 1];
   const blue = imageData.data[offset + 2];
 
-  return Math.abs(red - background[0]) + Math.abs(green - background[1]) + Math.abs(blue - background[2]) > 50;
+  return (
+    Math.abs(red - background[0]) +
+    Math.abs(green - background[1]) +
+    Math.abs(blue - background[2])
+  ) > FOREGROUND_DISTANCE_THRESHOLD;
 }
 
 function dedupeRectangles(rectangles: Rectangle[]): Rectangle[] {

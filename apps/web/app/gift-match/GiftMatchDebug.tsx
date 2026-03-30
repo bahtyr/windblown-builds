@@ -13,7 +13,7 @@ import {
   type Rectangle,
 } from "../../lib/gift-icon-matcher";
 
-const SOURCE_PATH = "/source-cropped-3.JPG";
+const SOURCE_PATH = "/source-cropped-2.PNG";
 const MATCH_THRESHOLD = 0.8;
 const TEMPLATE_BORDER_TRIM = 4;
 const SQUARE_INNER_TRIM = 6;
