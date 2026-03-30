@@ -10,7 +10,6 @@ import {
   GIFT_MATCH_SOURCE_PATH,
   isGiftMatch,
   runGiftMatchWorkflow,
-  selectGiftMatchOverlay,
   type GiftMatchRunResult,
   type GiftMatchSquareResult,
   type GiftMatchTemplateSpec,
@@ -48,13 +47,6 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
     }
   }, []);
 
-  const selectedOverlay = state ? selectGiftMatchOverlay(state, selectedSquareIndex) : null;
-  const selectedOverlayStyle = state && selectedOverlay ? buildOverlayStyle(
-    selectedOverlay.bounds,
-    state.sourceWidth,
-    state.sourceHeight,
-    selectedOverlay.borderColor,
-  ) : undefined;
   const matchedDeckItems = useMemo(() => buildDeckItems(state?.squareResults ?? []), [state?.squareResults]);
 
   async function handleStart() {
@@ -142,15 +134,19 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
       <div style={styles.sourceCard}>
         <div style={styles.imageFrame}>
           <img alt="Source screenshot" src={sourceSrc} style={styles.sourceImage}/>
-          {state?.squares.map((square, index) => (
+          {state ? state.squareResults.map((square) => (
             <div
-              key={`${square.x}-${square.y}-${index}`}
-              style={buildOverlayStyle(square, state.sourceWidth, state.sourceHeight, "#facc15")}
+              key={`${square.bounds.x}-${square.bounds.y}-${square.index}`}
+              style={buildOverlayStyle(
+                square.bounds,
+                state.sourceWidth,
+                state.sourceHeight,
+                square.index === selectedSquareIndex ? "#facc15" : getSquareBorderColor(square),
+              )}
             >
-              <span style={styles.overlayLabel}>{index}</span>
+              <span style={styles.overlayLabel}>{square.index}</span>
             </div>
-          ))}
-          {selectedOverlayStyle ? <div style={{...styles.selectedOverlay, ...selectedOverlayStyle}} /> : null}
+          )) : null}
         </div>
       </div>
 
@@ -235,6 +231,10 @@ function formatMilliseconds(milliseconds: number): string {
 
 function isSuccessfulSquare(square: GiftMatchSquareResult): boolean {
   return Boolean(square.bestTemplate && isGiftMatch(square.bestTemplate.score));
+}
+
+function getSquareBorderColor(square: GiftMatchSquareResult): string {
+  return isSuccessfulSquare(square) ? "#16a34a" : "#dc2626";
 }
 
 function buildDeckItems(squareResults: GiftMatchSquareResult[]): MatchedDeckItem[] {
@@ -361,13 +361,6 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     lineHeight: 1.4,
     textAlign: "center",
-  },
-  selectedOverlay: {
-    position: "absolute",
-    borderStyle: "solid",
-    borderWidth: "4px",
-    boxSizing: "border-box",
-    pointerEvents: "none",
   },
   summaryCard: {
     marginTop: "16px",
