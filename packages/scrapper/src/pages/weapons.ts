@@ -1,5 +1,6 @@
 import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
+import {localizeEntityImages} from "../core/imageAssets.js";
 import {fetchWikiDocument} from "../core/wikiHtml.js";
 import {parseRichDescription} from "../core/richTextParser.js";
 import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
@@ -21,6 +22,7 @@ export async function scrapeWeapons(): Promise<Weapon[]> {
     }
   }
 
+  await localizeEntityImages(weapons, "weapons");
   return weapons;
 }
 
