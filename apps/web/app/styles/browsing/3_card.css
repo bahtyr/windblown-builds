@@ -111,6 +111,13 @@
     gap: var(--space-4);
 }
 
+.card-thumb-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .card-title {
     margin: 0;
     font-weight: var(--font-weight-bold);
@@ -123,6 +130,25 @@
     object-fit: contain;
     background: var(--color-bg-alt);
     /*border: 1px solid var(--border);*/
+}
+
+.card-image-hover-preview {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    z-index: 4;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    pointer-events: none;
+}
+
+.card-thumb-wrap:hover .card-image-hover-preview,
+.card-thumb-wrap:focus-within .card-image-hover-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 /* ---------- Card Actions ---------- */

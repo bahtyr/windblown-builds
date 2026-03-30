@@ -44,7 +44,12 @@
     ],
     "baseDamage": "171",
     "damageType": "DPS",
-    "alterattackBonus": "+60%"
+    "alterattackBonus": "+60%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Anchor_Boom.webm",
+      "https://windblown.wiki.gg/images/Anchor_Boom_Held.webm",
+      "https://windblown.wiki.gg/images/Anchor_Boom_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Beatbolt_Icon.png/48px-Beatbolt_Icon.png?eec9e1",
@@ -76,7 +81,11 @@
     ],
     "baseDamage": "80",
     "damageType": "DPS",
-    "alterattackBonus": "+45%"
+    "alterattackBonus": "+45%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Beatbolt.webm",
+      "https://windblown.wiki.gg/images/Beatbolt_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Boomerang_Icon.png/47px-Boomerang_Icon.png?a0c481",
@@ -89,7 +98,11 @@
     ],
     "baseDamage": "48",
     "damageType": "DPS",
-    "alterattackBonus": "+110%"
+    "alterattackBonus": "+110%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Boomerang.webm",
+      "https://windblown.wiki.gg/images/Boomerang_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Charged_Blade_Icon.png/48px-Charged_Blade_Icon.png?ea18a3",
@@ -122,7 +135,12 @@
     ],
     "baseDamage": "52",
     "damageType": "DPS",
-    "alterattackBonus": "+345%"
+    "alterattackBonus": "+345%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Charged_Blade.webm",
+      "https://windblown.wiki.gg/images/Charged_Blade_Held.webm",
+      "https://windblown.wiki.gg/images/Charged_Blade_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Crocojaws_Icon.png/48px-Crocojaws_Icon.png?15cbfd",
@@ -154,7 +172,12 @@
     ],
     "baseDamage": "83",
     "damageType": "DPS",
-    "alterattackBonus": "+130%"
+    "alterattackBonus": "+130%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Crocojaws.webm",
+      "https://windblown.wiki.gg/images/Crocojaws_Held.webm",
+      "https://windblown.wiki.gg/images/Crocojaws_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Cuprik%27s_Hammer_Icon.png/42px-Cuprik%27s_Hammer_Icon.png?64a81b",
@@ -202,7 +225,12 @@
     ],
     "baseDamage": "50",
     "damageType": "DPS",
-    "alterattackBonus": "+150%"
+    "alterattackBonus": "+150%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Cuprik%27s_Hammer.webm",
+      "https://windblown.wiki.gg/images/Cuprik%27s_Hammer_Alterattack.webm",
+      "https://windblown.wiki.gg/images/Cuprik%27s_Hammer_Freeze_Mode.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Elder_Sword_Icon.png/48px-Elder_Sword_Icon.png?514cfc",
@@ -234,7 +262,11 @@
     ],
     "baseDamage": "79",
     "damageType": "DPS",
-    "alterattackBonus": "+310%"
+    "alterattackBonus": "+310%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Elder_Sword.webm",
+      "https://windblown.wiki.gg/images/Elder_Sword_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Eye_Blade_Icon.png/44px-Eye_Blade_Icon.png?2ef611",
@@ -267,7 +299,11 @@
     ],
     "baseDamage": "59",
     "damageType": "DPS",
-    "alterattackBonus": "+100%"
+    "alterattackBonus": "+100%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Eye_Blade.webm",
+      "https://windblown.wiki.gg/images/Eye_Blade_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Fiery_Claws_Icon.png/47px-Fiery_Claws_Icon.png?3b17ba",
@@ -324,7 +360,12 @@
     ],
     "baseDamage": "112",
     "damageType": "DPS",
-    "alterattackBonus": "+185%"
+    "alterattackBonus": "+185%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Fiery_Claws.webm",
+      "https://windblown.wiki.gg/images/Fiery_Claws_Held.webm",
+      "https://windblown.wiki.gg/images/Fiery_Claws_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Fish_Knife_Icon.png/47px-Fish_Knife_Icon.png?85ea43",
@@ -370,7 +411,11 @@
     ],
     "baseDamage": "80",
     "damageType": "DPS",
-    "alterattackBonus": "+105%"
+    "alterattackBonus": "+105%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Fish_Knife.webm",
+      "https://windblown.wiki.gg/images/Fish_Knife_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Fishing_Rod_Icon.png/48px-Fishing_Rod_Icon.png?4b784a",
@@ -397,7 +442,12 @@
     ],
     "baseDamage": "122",
     "damageType": "DPS",
-    "alterattackBonus": "+165%"
+    "alterattackBonus": "+165%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Fishing_Rod.webm",
+      "https://windblown.wiki.gg/images/Fishing_Rod_Held.webm",
+      "https://windblown.wiki.gg/images/Fishing_Rod_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Golem_Flail_Icon.png/48px-Golem_Flail_Icon.png?4afcf7",
@@ -429,7 +479,11 @@
     ],
     "baseDamage": "129",
     "damageType": "DPS",
-    "alterattackBonus": "+150%"
+    "alterattackBonus": "+150%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Golem_Flail.webm",
+      "https://windblown.wiki.gg/images/Golem_Flail_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Goo_Brush_Icon.png/48px-Goo_Brush_Icon.png?8b718a",
@@ -462,7 +516,11 @@
     ],
     "baseDamage": "125",
     "damageType": "DPS",
-    "alterattackBonus": "+155%"
+    "alterattackBonus": "+155%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Goo_Brush.webm",
+      "https://windblown.wiki.gg/images/Goo_Brush_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Heavy_Blade_Icon.png/44px-Heavy_Blade_Icon.png?67db7d",
@@ -494,7 +552,11 @@
     ],
     "baseDamage": "159",
     "damageType": "DPS",
-    "alterattackBonus": "+330%"
+    "alterattackBonus": "+330%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Heavy_Blade.webm",
+      "https://windblown.wiki.gg/images/Heavy_Blade_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Hibiki%27s_Umbrella_Icon.png/48px-Hibiki%27s_Umbrella_Icon.png?d4ced4",
@@ -517,7 +579,11 @@
     ],
     "baseDamage": "219",
     "damageType": "DPS",
-    "alterattackBonus": "+145%"
+    "alterattackBonus": "+145%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Hibiki%27s_Umbrella.webm",
+      "https://windblown.wiki.gg/images/Hibiki%27s_Umbrella_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Impactone_Icon.png/48px-Impactone_Icon.png?1763c2",
@@ -549,7 +615,11 @@
     ],
     "baseDamage": "175",
     "damageType": "DPS",
-    "alterattackBonus": "+380%"
+    "alterattackBonus": "+380%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Impactone.webm",
+      "https://windblown.wiki.gg/images/Impactone_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Jar_Icon.png/48px-Jar_Icon.png?eabb1e",
@@ -571,7 +641,12 @@
     ],
     "baseDamage": "191",
     "damageType": "DPS",
-    "alterattackBonus": "+150%"
+    "alterattackBonus": "+150%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Jar.webm",
+      "https://windblown.wiki.gg/images/Jar_Alterattack.webm",
+      "https://windblown.wiki.gg/images/Jar_Shell_Mode.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Katars_Icon.png/48px-Katars_Icon.png?cc551c",
@@ -614,7 +689,12 @@
     ],
     "baseDamage": "80",
     "damageType": "DPS",
-    "alterattackBonus": "+220%"
+    "alterattackBonus": "+220%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Katars.webm",
+      "https://windblown.wiki.gg/images/Katars_Held.webm",
+      "https://windblown.wiki.gg/images/Katars_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Kunai_Icon.png/48px-Kunai_Icon.png?d4e64a",
@@ -689,7 +769,12 @@
     ],
     "baseDamage": "35",
     "damageType": "DPS",
-    "alterattackBonus": "+50%"
+    "alterattackBonus": "+50%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Kunai.webm",
+      "https://windblown.wiki.gg/images/Kunai_Held.webm",
+      "https://windblown.wiki.gg/images/Kunai_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Ninja_Stars_Icon.png/38px-Ninja_Stars_Icon.png?6cbd68",
@@ -712,7 +797,11 @@
     ],
     "baseDamage": "35",
     "damageType": "DPS",
-    "alterattackBonus": "+95%"
+    "alterattackBonus": "+95%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Ninja_Stars.webm",
+      "https://windblown.wiki.gg/images/Ninja_Stars_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Ravenblade_Icon.png/46px-Ravenblade_Icon.png?4c3101",
@@ -749,7 +838,12 @@
     ],
     "baseDamage": "114",
     "damageType": "DPS",
-    "alterattackBonus": "+230%"
+    "alterattackBonus": "+230%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Ravenblade.webm",
+      "https://windblown.wiki.gg/images/Ravenblade_Held.webm",
+      "https://windblown.wiki.gg/images/Ravenblade_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Sentinel_Wings_Icon.png/47px-Sentinel_Wings_Icon.png?4efd05",
@@ -771,7 +865,11 @@
     ],
     "baseDamage": "105",
     "damageType": "DPS",
-    "alterattackBonus": "+40%"
+    "alterattackBonus": "+40%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Sentinel_Wings.webm",
+      "https://windblown.wiki.gg/images/Sentinel_Wings_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Sharp_Sisters_Icon.png/48px-Sharp_Sisters_Icon.png?955c82",
@@ -799,7 +897,11 @@
     ],
     "baseDamage": "125",
     "damageType": "DPS",
-    "alterattackBonus": "+275%"
+    "alterattackBonus": "+275%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Sharp_Sisters.webm",
+      "https://windblown.wiki.gg/images/Sharp_Sisters_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Shield_Icon.png/48px-Shield_Icon.png?e786a2",
@@ -860,7 +962,12 @@
     ],
     "baseDamage": "300",
     "damageType": "DMG",
-    "alterattackBonus": "+400%"
+    "alterattackBonus": "+400%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Shield.webm",
+      "https://windblown.wiki.gg/images/Shield_Alterattack.webm",
+      "https://windblown.wiki.gg/images/Shield_Block.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Sirocco_Icon.png/45px-Sirocco_Icon.png?fc6ecd",
@@ -903,7 +1010,11 @@
     ],
     "baseDamage": "40",
     "damageType": "DPS",
-    "alterattackBonus": "+80%"
+    "alterattackBonus": "+80%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Sirocco.webm",
+      "https://windblown.wiki.gg/images/Sirocco_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Spinalsword_Icon.png/46px-Spinalsword_Icon.png?c347a5",
@@ -945,7 +1056,12 @@
     ],
     "baseDamage": "78",
     "damageType": "DPS",
-    "alterattackBonus": "+130%"
+    "alterattackBonus": "+130%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Spinalsword.webm",
+      "https://windblown.wiki.gg/images/Spinalsword_Alterattack.webm",
+      "https://windblown.wiki.gg/images/Spinalsword_Activated.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Telepike_Icon.png/43px-Telepike_Icon.png?35c1cc",
@@ -982,7 +1098,12 @@
     ],
     "baseDamage": "73",
     "damageType": "DPS",
-    "alterattackBonus": "+160%"
+    "alterattackBonus": "+160%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Telepike.webm",
+      "https://windblown.wiki.gg/images/Telepike_Held.webm",
+      "https://windblown.wiki.gg/images/Telepike_Alterattack.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Worm_Claws_Icon.png/42px-Worm_Claws_Icon.png?69e5a4",
@@ -1024,6 +1145,11 @@
     ],
     "baseDamage": "73",
     "damageType": "DPS",
-    "alterattackBonus": "+130%"
+    "alterattackBonus": "+130%",
+    "videos": [
+      "https://windblown.wiki.gg/images/Worm_Claws.webm",
+      "https://windblown.wiki.gg/images/Worm_Claws_Held.webm",
+      "https://windblown.wiki.gg/images/Worm_Claws_Alterattack.webm"
+    ]
   }
 ]

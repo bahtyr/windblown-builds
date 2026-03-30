@@ -5,6 +5,7 @@ import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
 import RichText from "./RichText";
+import EntityVideoPreview from "./EntityVideoPreview";
 
 type Props = {
   item: ScrapedEntity;
@@ -47,7 +48,12 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
     >
       <div className="card-head">
         <div className="card-title-wrap">
-          {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
+          <div className="card-thumb-wrap">
+            {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
+            <div className="card-image-hover-preview">
+              <EntityVideoPreview className="card-image-hover-preview-media" entity={item}/>
+            </div>
+          </div>
           <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
             {item.name}
           </div>

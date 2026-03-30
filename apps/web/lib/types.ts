@@ -28,6 +28,7 @@ export interface ScrapedEntity {
   name: string;
   nameColor?: string;
   video?: string;
+  videos?: string[];
   description: string;
   richDescription: RichDescriptionNode[];
   category?: string;

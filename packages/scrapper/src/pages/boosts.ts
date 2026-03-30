@@ -1,7 +1,7 @@
 import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
 import {localizeEntityImages} from "../core/imageAssets.js";
-import {fetchWikiDocument} from "../core/wikiHtml.js";
+import {fetchWikiDocument, fetchWikiVideoUrls} from "../core/wikiHtml.js";
 import {parseRichDescription} from "../core/richTextParser.js";
 import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
 import {Boost} from "./types.js";
@@ -15,15 +15,20 @@ const PAGE = {
  */
 export async function scrapeBoosts(): Promise<Boost[]> {
   const document = await fetchWikiDocument(PAGE.url);
-  const rows = document.$("h1 + div table.wikitable").first().find("tbody tr").toArray();
+  const rows = document.$("table.wikitable").first().find("tbody tr").toArray();
 
-  const boosts: Boost[] = [];
+  const boostRows: Array<{ boost: Boost; wikiHref?: string }> = [];
   for (const row of rows) {
     const parsed = parseBoostRow(document.$, row);
     if (parsed) {
-      boosts.push(parsed);
+      boostRows.push(parsed);
     }
   }
+
+  const boosts = await Promise.all(boostRows.map(async ({boost, wikiHref}) => {
+    const videos = await fetchWikiVideoUrls(wikiHref).catch(() => []);
+    return videos.length > 0 ? {...boost, videos} : boost;
+  }));
 
   await localizeEntityImages(boosts, "boosts");
   return boosts;
@@ -32,7 +37,7 @@ export async function scrapeBoosts(): Promise<Boost[]> {
 /**
  * Parse a table row into a Boost record.
  */
-function parseBoostRow($: CheerioAPI, row: Element): Boost | null {
+function parseBoostRow($: CheerioAPI, row: Element): { boost: Boost; wikiHref?: string } | null {
   const cells = $(row).find("td");
   if (cells.length < 4) {
     return null;
@@ -41,6 +46,7 @@ function parseBoostRow($: CheerioAPI, row: Element): Boost | null {
   const image = normalizeUrl(cells.eq(0).find("img").first().attr("src")?.trim());
   const nameCell = cells.eq(1);
   const name = nameCell.text().trim();
+  const wikiHref = normalizeUrl(nameCell.find("a").first().attr("href")?.trim());
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
@@ -51,10 +57,13 @@ function parseBoostRow($: CheerioAPI, row: Element): Boost | null {
   }
 
   return {
-    image,
-    name,
-    ...(nameColor ? {nameColor} : {}),
-    richDescription,
-    ...(healthBonus ? {healthBonus} : {}),
+    boost: {
+      image,
+      name,
+      ...(nameColor ? {nameColor} : {}),
+      richDescription,
+      ...(healthBonus ? {healthBonus} : {}),
+    },
+    wikiHref,
   };
 }

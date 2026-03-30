@@ -10,7 +10,10 @@
     ],
     "baseDamage": "40",
     "damageType": "DPS",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Blade_Storm.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Bleed_Aura_Icon.png/48px-Bleed_Aura_Icon.png?8fdbf8",
@@ -52,7 +55,10 @@
     ],
     "baseDamage": "1",
     "damageType": "BleedBleed DebuffHits deal bonus damage for each stack. Triggered max 6 times per second. Max stacks: 15. DMG",
-    "cooldown": "30s"
+    "cooldown": "30s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Bleed_Aura.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Bomb_Icon.png/41px-Bomb_Icon.png?7d534e",
@@ -65,7 +71,10 @@
     ],
     "baseDamage": "350",
     "damageType": "DMG",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Bomb.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Burn_Aura_Icon.png/48px-Burn_Aura_Icon.png?a8438f",
@@ -107,7 +116,10 @@
     ],
     "baseDamage": "2",
     "damageType": "BurnBurn DebuffDeals its damage every 0.5s for 4s. Max stacks: 15. DMG",
-    "cooldown": "30s"
+    "cooldown": "30s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Burn_Aura.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Chrono_Catch_Icon.png/43px-Chrono_Catch_Icon.png?b05f13",
@@ -126,7 +138,10 @@
     ],
     "baseDamage": "20",
     "damageType": "DMG",
-    "cooldown": "42s"
+    "cooldown": "42s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Chrono_Catch.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Curse_Trap_Icon.png/46px-Curse_Trap_Icon.png?a3b33f",
@@ -156,7 +171,10 @@
     ],
     "baseDamage": "3",
     "damageType": "CurseCurse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final CurseFinal Curse DebuffEach stack increases damage dealt to the target by a percentage. At 10 stacks, triggers a Final Curse that multiplies the bonus by 2 for 4s. In this state, stronger Curses replace the bonuses of weaker ones. that multiplies the bonus by 2 for 4s. %",
-    "cooldown": "25s"
+    "cooldown": "25s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Curse_Trap.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Death_Orb_Icon.png/48px-Death_Orb_Icon.png?7f944a",
@@ -169,7 +187,10 @@
     ],
     "baseDamage": "117",
     "damageType": "DPS",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Death_Orb.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Detonado_Icon.png/48px-Detonado_Icon.png?ef11f3",
@@ -196,7 +217,10 @@
     ],
     "baseDamage": "150",
     "damageType": "DMG",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Detonado.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Ethereal_Blades_Icon.png/43px-Ethereal_Blades_Icon.png?db6fdc",
@@ -223,7 +247,10 @@
     ],
     "baseDamage": "80",
     "damageType": "DMG",
-    "cooldown": "12s"
+    "cooldown": "12s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Ethereal_Blades.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Fireworks_Icon.png/48px-Fireworks_Icon.png?4feb8b",
@@ -251,7 +278,10 @@
     ],
     "baseDamage": "5",
     "damageType": "DMG",
-    "cooldown": "15s"
+    "cooldown": "15s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Fireworks.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Frost_Nova_Icon.png/48px-Frost_Nova_Icon.png?501f08",
@@ -279,7 +309,10 @@
     ],
     "baseDamage": "50",
     "damageType": "DMG",
-    "cooldown": "30s"
+    "cooldown": "30s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Frost_Nova.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Fury_Icon.png/48px-Fury_Icon.png?7583b5",
@@ -338,7 +371,10 @@
     ],
     "baseDamage": "70",
     "damageType": "%",
-    "cooldown": "30s"
+    "cooldown": "30s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Fury.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Goo_Bomb_Icon.png/39px-Goo_Bomb_Icon.png?25b273",
@@ -371,7 +407,10 @@
     ],
     "baseDamage": "40",
     "damageType": "DPS",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Goo_Bomb.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Grenade_Icon.png/48px-Grenade_Icon.png?cd5864",
@@ -384,7 +423,10 @@
     ],
     "baseDamage": "100",
     "damageType": "DMG",
-    "cooldown": "10s"
+    "cooldown": "10s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Grenade.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/L-BR0_Icon.png/48px-L-BR0_Icon.png?8ff420",
@@ -420,7 +462,10 @@
     ],
     "baseDamage": "8",
     "damageType": "DPS",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/L-BR0.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Leafade_Icon.png/48px-Leafade_Icon.png?58ac11",
@@ -443,7 +488,10 @@
     ],
     "baseDamage": "100",
     "damageType": "BrutalityBrutality BuffGives a damage bonus for the duration. %",
-    "cooldown": "12s"
+    "cooldown": "12s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Leafade.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Mark_Zone_Icon.png/48px-Mark_Zone_Icon.png?dfc7e2",
@@ -476,7 +524,10 @@
     ],
     "baseDamage": "100",
     "damageType": "MarkMark DebuffTrigger a Mark on a target by hitting it with a Weapon. DMG",
-    "cooldown": "25s"
+    "cooldown": "25s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Mark_Zone.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Smokey_Dokey_Icon.png/48px-Smokey_Dokey_Icon.png?bd77ad",
@@ -509,7 +560,10 @@
     ],
     "baseDamage": "20",
     "damageType": "DMG",
-    "cooldown": "51s"
+    "cooldown": "51s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Smokey_Dokey.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Ultra_Laser_Icon.png/48px-Ultra_Laser_Icon.png?9f54be",
@@ -522,7 +576,10 @@
     ],
     "baseDamage": "300",
     "damageType": "DMG",
-    "cooldown": "35s"
+    "cooldown": "35s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Ultra_Laser.webm"
+    ]
   },
   {
     "image": "https://windblown.wiki.gg/images/thumb/Wind_Gust_Icon.png/48px-Wind_Gust_Icon.png?868f2a",
@@ -540,6 +597,9 @@
     ],
     "baseDamage": "20",
     "damageType": "DMG",
-    "cooldown": "20s"
+    "cooldown": "20s",
+    "videos": [
+      "https://windblown.wiki.gg/images/Wind_Gust.webm"
+    ]
   }
 ]

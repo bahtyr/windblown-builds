@@ -43,6 +43,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Affliction_Blast_Hex.webm"
     ]
   },
   {
@@ -97,6 +100,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Affliction_Hex.webm"
     ]
   },
   {
@@ -149,6 +155,9 @@
         "key": "text",
         "text": " is not active."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Brutality_Hex.webm"
     ]
   },
   {
@@ -193,6 +202,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Critical_Hex.webm"
     ]
   },
   {
@@ -236,6 +248,9 @@
         "key": "text",
         "text": " for the team."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Curse_Hex.webm"
     ]
   },
   {
@@ -278,6 +293,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Echo_Hex.webm"
     ]
   },
   {
@@ -320,6 +338,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Mark_Hex.webm"
     ]
   },
   {
@@ -362,6 +383,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Melee_Hex.webm"
     ]
   },
   {
@@ -417,6 +441,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Overwhelm_Hex.webm"
     ]
   },
   {
@@ -462,6 +489,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Pool_Hex.webm"
     ]
   },
   {
@@ -490,6 +520,9 @@
         "key": "text",
         "text": " but they can no longer apply Bleed, Burn or Curse."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Power_Blast_Hex.webm"
     ]
   },
   {
@@ -500,6 +533,9 @@
         "key": "text",
         "text": "Get a random negative effect. After 25 enemy kills, it transforms into a random positive effect."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Random_Chrysalis_Hex.webm"
     ]
   },
   {
@@ -510,6 +546,9 @@
         "key": "text",
         "text": "Get a random positive effect. Every kill reduces the value of the effect."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Random_Eroding_Hex.webm"
     ]
   },
   {
@@ -520,6 +559,9 @@
         "key": "text",
         "text": "Get a random positive effect in exchange of a random negative effect."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Random_Trade_Hex.webm"
     ]
   },
   {
@@ -562,6 +604,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Ranged_Hex.webm"
     ]
   },
   {
@@ -590,6 +635,9 @@
         "key": "text",
         "text": " but it no longer stuns."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Rush_Hex.webm"
     ]
   },
   {
@@ -626,6 +674,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Simple_Hex.webm"
     ]
   },
   {
@@ -664,6 +715,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Speed_Hex.webm"
     ]
   },
   {
@@ -706,6 +760,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Trinket_Hex.webm"
     ]
   },
   {
@@ -748,6 +805,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Weapon_Hex.webm"
     ]
   }
 ]

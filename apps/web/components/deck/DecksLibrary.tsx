@@ -13,6 +13,7 @@ import categoryImages from "../../public/category-images.json";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import RichText from "../entity/RichText";
 import {getEntityStats} from "../entity/EntityCard";
+import EntityVideoPreview from "../entity/EntityVideoPreview";
 
 type DrawerPhase = "opening" | "open" | "closing";
 type DeckRowModel =
@@ -325,6 +326,7 @@ function DeckRowItem({item, details}: { item: DeckItem; details: LoadedDeckEntit
     <div className="deck-row-item" tabIndex={0}>
       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
       <div className="deck-row-item-hover" role="tooltip">
+        {details ? <EntityVideoPreview className="deck-row-item-video" entity={details.entity}/> : null}
         <div className="deck-row-item-hover-head">
           <div className="deck-row-item-name">{item.name}</div>
         </div>

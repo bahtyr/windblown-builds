@@ -1,6 +1,6 @@
 import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
-import {findSectionTableRows, fetchWikiDocument} from "../core/wikiHtml.js";
+import {fetchWikiVideoUrls, findSectionTableRows, fetchWikiDocument} from "../core/wikiHtml.js";
 import {localizeEntityImages, normalizeWikiImageUrl} from "../core/imageAssets.js";
 import {parseRichDescription} from "../core/richTextParser.js";
 import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
@@ -39,18 +39,23 @@ const PAGE = {
  */
 export async function scrapeGifts(): Promise<Gift[]> {
   const document = await fetchWikiDocument(PAGE.url);
-  const gifts: Gift[] = [];
+  const giftRows: Array<{ gift: Gift; wikiHref?: string }> = [];
 
   // For each section, find its table and loop through its rows to scrape gifts.
   for (const section of PAGE.sections) {
     const rows = findSectionTableRows(document.$, section);
     for (const row of rows) {
-      const gift = parseGiftRow(document.$, row, section);
-      if (gift) {
-        gifts.push(gift);
+      const parsed = parseGiftRow(document.$, row, section);
+      if (parsed) {
+        giftRows.push(parsed);
       }
     }
   }
+
+  const gifts = await Promise.all(giftRows.map(async ({gift, wikiHref}) => {
+    const videos = await fetchWikiVideoUrls(wikiHref).catch(() => []);
+    return videos.length > 0 ? {...gift, videos} : gift;
+  }));
 
   await localizeEntityImages(gifts, "gifts");
   return gifts;
@@ -68,7 +73,7 @@ export async function scrapeGifts(): Promise<Gift[]> {
  * @param section Section heading used to derive the gift category.
  * @returns Parsed gift record or null when data is incomplete.
  */
-function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null {
+function parseGiftRow($: CheerioAPI, row: Element, section: string): { gift: Gift; wikiHref?: string } | null {
   const cells = $(row).find("td");
   if (cells.length < 3) {
     return null;
@@ -87,26 +92,15 @@ function parseGiftRow($: CheerioAPI, row: Element, section: string): Gift | null
   }
 
   return {
-    image,
-    name,
-    ...(nameColor ? {nameColor} : {}),
-    ...(buildGiftVideoUrl(wikiHref) ? {video: buildGiftVideoUrl(wikiHref)} : {}),
-    category: section.replace(/\s+Gifts$/, "").trim(),
-    richDescription,
+    gift: {
+      image,
+      name,
+      ...(nameColor ? {nameColor} : {}),
+      category: section.replace(/\s+Gifts$/, "").trim(),
+      richDescription,
+    },
+    wikiHref,
   };
-}
-
-/**
- * Convert a gift wiki URL into the corresponding `.webm` asset URL.
- *
- * @param {string | undefined} wikiHref - Gift wiki URL.
- * @returns {string | undefined} Derived video URL when the wiki path is valid.
- */
-export function buildGiftVideoUrl(wikiHref?: string): string | undefined {
-  if (!wikiHref) return undefined;
-  const match = wikiHref.match(/\/wiki\/([^/?#]+)/);
-  if (!match) return undefined;
-  return `https://windblown.wiki.gg/images/${match[1]}.webm`;
 }
 
 /**

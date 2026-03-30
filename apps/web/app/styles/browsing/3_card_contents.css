@@ -6,6 +6,35 @@
     border-radius: var(--radius-sm);
 }
 
+.entity-video-preview {
+    position: relative;
+    display: inline-flex;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: rgba(11, 15, 26, 0.96);
+}
+
+.entity-video-preview-media {
+    display: block;
+    width: 160px;
+    height: 90px;
+    object-fit: cover;
+}
+
+.entity-video-preview-count {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-full);
+    background: rgba(11, 15, 26, 0.88);
+    color: var(--color-text);
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.6;
+}
+
 /* ------------------------ Stats -------------------- */
 
 .card-stats {

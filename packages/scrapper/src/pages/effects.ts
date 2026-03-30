@@ -1,7 +1,7 @@
 import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
 import {localizeEntityImages} from "../core/imageAssets.js";
-import {fetchWikiDocument, findSectionTableRows} from "../core/wikiHtml.js";
+import {fetchWikiDocument, fetchWikiVideoUrls, findSectionTableRows} from "../core/wikiHtml.js";
 import {parseRichDescription} from "../core/richTextParser.js";
 import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
 import {Effect} from "./types.js";
@@ -13,24 +13,29 @@ const PAGE = {
 
 export async function scrapeEffects(): Promise<Effect[]> {
   const document = await fetchWikiDocument(PAGE.url);
-  const effects: Effect[] = [];
+  const effectRows: Array<{ effect: Effect; wikiHref?: string }> = [];
 
   // For each section, find its table and loop through its rows to scrape effects
   for (const section of PAGE.sections) {
     const rows = findSectionTableRows(document.$, section);
     for (const row of rows) {
-      const effect = parseEffectRow(document.$, row, section);
-      if (effect) {
-        effects.push(effect);
+      const parsed = parseEffectRow(document.$, row, section);
+      if (parsed) {
+        effectRows.push(parsed);
       }
     }
   }
+
+  const effects = await Promise.all(effectRows.map(async ({effect, wikiHref}) => {
+    const videos = await fetchWikiVideoUrls(wikiHref).catch(() => []);
+    return videos.length > 0 ? {...effect, videos} : effect;
+  }));
 
   await localizeEntityImages(effects, "effects");
   return effects;
 }
 
-function parseEffectRow($: CheerioAPI, row: Element, category: string): Effect | null {
+function parseEffectRow($: CheerioAPI, row: Element, category: string): { effect: Effect; wikiHref?: string } | null {
   const cells = $(row).find("td");
   if (cells.length < 5) {
     return null;
@@ -39,6 +44,7 @@ function parseEffectRow($: CheerioAPI, row: Element, category: string): Effect |
   const image = normalizeUrl(cells.eq(0).find("img").first().attr("src")?.trim());
   const nameCell = cells.eq(1);
   const name = nameCell.text().trim();
+  const wikiHref = normalizeUrl(nameCell.find("a").first().attr("href")?.trim());
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
@@ -54,14 +60,17 @@ function parseEffectRow($: CheerioAPI, row: Element, category: string): Effect |
   }
 
   return {
-    image,
-    name,
-    ...(nameColor ? {nameColor} : {}),
-    category,
-    richDescription,
-    advancedDescription,
-    richAdvancedDescription,
-    notes,
-    richNotes,
+    effect: {
+      image,
+      name,
+      ...(nameColor ? {nameColor} : {}),
+      category,
+      richDescription,
+      advancedDescription,
+      richAdvancedDescription,
+      notes,
+      richNotes,
+    },
+    wikiHref,
   };
 }

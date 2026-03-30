@@ -7,6 +7,9 @@
         "key": "text",
         "text": "Dash on it to perform jump attacks."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Boing_Fish.webm"
     ]
   },
   {
@@ -26,6 +29,9 @@
         "key": "text",
         "text": "Hit it to strengthen the explosion."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Gobbling_Fish.webm"
     ]
   },
   {
@@ -36,6 +42,9 @@
         "key": "text",
         "text": "Protects all leapers inside its bubble."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Protector_Fish.webm"
     ]
   }
 ]

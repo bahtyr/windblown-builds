@@ -21,6 +21,9 @@
         "text": " for the team.",
         "bold": true
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Abundance.webm"
     ]
   },
   {
@@ -43,6 +46,9 @@
         "key": "text",
         "text": " for every point of Max HP above your starting total (Currently: +x%)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Balance.webm"
     ]
   },
   {
@@ -65,6 +71,9 @@
         "key": "text",
         "text": " for every missing HP (Currently: +x%)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Berserk_Fury.webm"
     ]
   },
   {
@@ -86,6 +95,9 @@
         "key": "text",
         "text": " when completed."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Boost_Stock.webm"
     ]
   },
   {
@@ -121,6 +133,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Boss_Killer.webm"
     ]
   },
   {
@@ -229,6 +244,9 @@
         "key": "text",
         "text": " attacks."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Crippling_Dodge.webm"
     ]
   },
   {
@@ -269,6 +287,9 @@
         "key": "text",
         "text": " (up to 6 times per second)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Critical_Refill.webm"
     ]
   },
   {
@@ -291,6 +312,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Deadly_Explosion.webm"
     ]
   },
   {
@@ -323,6 +347,9 @@
         "key": "text",
         "text": " of HP lost by Bosses."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Deadly_Extension.webm"
     ]
   },
   {
@@ -354,6 +381,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Deadly_Refill.webm"
     ]
   },
   {
@@ -384,6 +414,9 @@
         "key": "text",
         "text": " against isolated enemies."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Duelist.webm"
     ]
   },
   {
@@ -498,6 +531,9 @@
         "key": "text",
         "text": " any damage."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Enraged_Dodge.webm"
     ]
   },
   {
@@ -525,6 +561,9 @@
         "key": "text",
         "text": " for each point of damage instead of HP."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Golden_Health.webm"
     ]
   },
   {
@@ -577,6 +616,9 @@
         "key": "text",
         "text": " for 10s)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Lifesteal_Flasks.webm"
     ]
   },
   {
@@ -604,6 +646,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Lucky_Boosts.webm"
     ]
   },
   {
@@ -644,6 +689,9 @@
         "key": "text",
         "text": "(Currently: x%)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Midas.webm"
     ]
   },
   {
@@ -666,6 +714,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Necromancy.webm"
     ]
   },
   {
@@ -714,6 +765,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Power_Refill.webm"
     ]
   },
   {
@@ -745,6 +799,9 @@
         "key": "text",
         "text": " kills (Kills left: x)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Protection.webm"
     ]
   },
   {
@@ -775,6 +832,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Proximity.webm"
     ]
   },
   {
@@ -819,6 +879,9 @@
         "key": "text",
         "text": " of Weapons and Trinkets."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Refillable_Flask.webm"
     ]
   },
   {
@@ -863,6 +926,9 @@
         "key": "text",
         "text": " can trigger this effect."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Strong_Recovery.webm"
     ]
   },
   {
@@ -885,6 +951,9 @@
         "key": "text",
         "text": ". Destroyed when used."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Survivor.webm"
     ]
   },
   {
@@ -915,6 +984,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Tranquility.webm"
     ]
   },
   {
@@ -946,6 +1018,9 @@
         "key": "text",
         "text": " of the damage."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Unstable.webm"
     ]
   },
   {
@@ -1003,6 +1078,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Advanced_Alterattacks.webm"
     ]
   },
   {
@@ -1039,6 +1117,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Aggressive_Alterattacks.webm"
     ]
   },
   {
@@ -1079,6 +1160,9 @@
         "bold": true,
         "color": "#00ff22"
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Double_Alterattack.webm"
     ]
   },
   {
@@ -1106,6 +1190,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Megalterattacks.webm"
     ]
   },
   {
@@ -1158,6 +1245,9 @@
         "key": "text",
         "text": " to trigger other effects."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Critical_Blast.webm"
     ]
   },
   {
@@ -1203,6 +1293,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Enhanced_Blast.webm"
     ]
   },
   {
@@ -1261,6 +1354,9 @@
         "key": "text",
         "text": " to those behind it."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Explosive_Criticals.webm"
     ]
   },
   {
@@ -1306,6 +1402,9 @@
         "key": "text",
         "text": " to those behind it."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Explosive_Hits.webm"
     ]
   },
   {
@@ -1327,6 +1426,9 @@
         "key": "text",
         "text": " change shape and hit in all directions around the target."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Full_Blast.webm"
     ]
   },
   {
@@ -1381,6 +1483,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Goo_Blast.webm"
     ]
   },
   {
@@ -1444,6 +1549,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Marked_Blast.webm"
     ]
   },
   {
@@ -1497,6 +1605,9 @@
         "key": "text",
         "text": " bonus damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Bleeding_Criticals.webm"
     ]
   },
   {
@@ -1541,6 +1652,9 @@
         "key": "text",
         "text": " bonus damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Bleeding_Hits.webm"
     ]
   },
   {
@@ -1598,6 +1712,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Blood_Boil.webm"
     ]
   },
   {
@@ -1629,6 +1746,9 @@
         "key": "text",
         "text": " more times per second."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Blood_Gush.webm"
     ]
   },
   {
@@ -1670,6 +1790,9 @@
         "key": "text",
         "text": " max stacks for the team."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Heavy_Bleeding.webm"
     ]
   },
   {
@@ -1713,6 +1836,9 @@
         "key": "text",
         "text": " at max stacks."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Hemorrhage.webm"
     ]
   },
   {
@@ -1763,6 +1889,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Brutal_Alternation.webm"
     ]
   },
   {
@@ -1813,6 +1942,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Brutal_Dash.webm"
     ]
   },
   {
@@ -1872,6 +2004,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Brutal_Trinkets.webm"
     ]
   },
   {
@@ -1922,6 +2057,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Deadly_Brutality.webm"
     ]
   },
   {
@@ -1953,6 +2091,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Persistent_Brutality.webm"
     ]
   },
   {
@@ -1999,6 +2140,9 @@
         "key": "text",
         "text": " per second it's active (bonus maximized after 15 seconds)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Powerful_Brutality.webm"
     ]
   },
   {
@@ -2052,6 +2196,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Burning_Criticals.webm"
     ]
   },
   {
@@ -2096,6 +2243,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Burning_Hits.webm"
     ]
   },
   {
@@ -2140,6 +2290,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Fireball.webm"
     ]
   },
   {
@@ -2197,6 +2350,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Gory_Flame.webm"
     ]
   },
   {
@@ -2238,6 +2394,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Incandescent_Burn.webm"
     ]
   },
   {
@@ -2291,6 +2450,9 @@
         "key": "text",
         "text": " per 5 stacks."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Intense_Burn.webm"
     ]
   },
   {
@@ -2344,6 +2506,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Corrosive_Alterattack.webm"
     ]
   },
   {
@@ -2406,6 +2571,9 @@
         "key": "text",
         "text": " damage every 0.5s for the full duration of the effect, even if resisted."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Corrosive_Control.webm"
     ]
   },
   {
@@ -2459,6 +2627,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Corrosive_Trinkets.webm"
     ]
   },
   {
@@ -2494,6 +2665,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Dissolve.webm"
     ]
   },
   {
@@ -2519,6 +2693,9 @@
         "key": "text",
         "text": " by the team."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Complete_Crystallize.webm"
     ]
   },
   {
@@ -2559,6 +2736,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Crystallize_Barrier.webm"
     ]
   },
   {
@@ -2599,6 +2779,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Refilling_Crystallize.webm"
     ]
   },
   {
@@ -2652,6 +2835,9 @@
         "key": "text",
         "text": "(Currently: x%)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Upgrading_Crystallize.webm"
     ]
   },
   {
@@ -2705,6 +2891,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Cursed_Criticals.webm"
     ]
   },
   {
@@ -2749,6 +2938,9 @@
         "key": "text",
         "text": ")"
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Cursed_Hits.webm"
     ]
   },
   {
@@ -2793,6 +2985,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Cursed_Replication.webm"
     ]
   },
   {
@@ -2854,6 +3049,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Cursed_Stun.webm"
     ]
   },
   {
@@ -2885,6 +3083,9 @@
         "key": "text",
         "text": " for the team."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Persistent_Curse.webm"
     ]
   },
   {
@@ -2943,6 +3144,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Weakening_Curse.webm"
     ]
   },
   {
@@ -2995,6 +3199,9 @@
         "key": "text",
         "text": " to trigger other effects."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Critical_Echo.webm"
     ]
   },
   {
@@ -3069,6 +3276,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Echoing_Effects.webm"
     ]
   },
   {
@@ -3104,6 +3314,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Echoing_Hits.webm"
     ]
   },
   {
@@ -3135,6 +3348,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Hammer_Echo.webm"
     ]
   },
   {
@@ -3166,6 +3382,9 @@
         "key": "text",
         "text": " of its damage."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Spread_Echo.webm"
     ]
   },
   {
@@ -3197,6 +3416,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Swift_Echo.webm"
     ]
   },
   {
@@ -3232,6 +3454,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Deep_Freeze.webm"
     ]
   },
   {
@@ -3275,6 +3500,9 @@
         "key": "text",
         "text": " and explodes around the target."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Intense_Freeze.webm"
     ]
   },
   {
@@ -3327,6 +3555,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Cruel_Goo.webm"
     ]
   },
   {
@@ -3358,6 +3589,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Enduring_Goo.webm"
     ]
   },
   {
@@ -3406,6 +3640,9 @@
         "key": "text",
         "text": ")."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Alter_Mark.webm"
     ]
   },
   {
@@ -3463,6 +3700,9 @@
         "key": "text",
         "text": " damage each)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Burning_Mark.webm"
     ]
   },
   {
@@ -3497,6 +3737,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Critical_Mark.webm"
     ]
   },
   {
@@ -3541,6 +3784,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Dash_Mark.webm"
     ]
   },
   {
@@ -3585,6 +3831,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Random_Mark.webm"
     ]
   },
   {
@@ -3616,6 +3865,9 @@
         "key": "text",
         "text": " of their damage."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Spread_Mark.webm"
     ]
   },
   {
@@ -3665,6 +3917,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Trinket_Mark.webm"
     ]
   },
   {
@@ -3713,6 +3968,9 @@
         "key": "text",
         "text": " for 2s (stackable)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Assassinate.webm"
     ]
   },
   {
@@ -3752,6 +4010,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Overpower.webm"
     ]
   },
   {
@@ -3787,6 +4048,9 @@
         "key": "text",
         "text": " with Weapons and Trinkets against that target (Final Curse counts as 10)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Overwhelming_Afflictions.webm"
     ]
   },
   {
@@ -3822,6 +4086,9 @@
         "key": "text",
         "text": " with Weapons and Trinkets for 1s (not stackable)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Overwhelming_Dash.webm"
     ]
   },
   {
@@ -3857,6 +4124,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Overwhelming_Hits.webm"
     ]
   },
   {
@@ -3901,6 +4171,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Sneaky.webm"
     ]
   },
   {
@@ -3922,6 +4195,9 @@
         "key": "text",
         "text": " can be used twice in a row."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Double_Rush.webm"
     ]
   },
   {
@@ -3963,6 +4239,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Heavy_Rush.webm"
     ]
   },
   {
@@ -4008,6 +4287,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Powerful_Rush.webm"
     ]
   },
   {
@@ -4061,6 +4343,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Rush_Alterattacks.webm"
     ]
   },
   {
@@ -4114,6 +4399,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Rush_Trinkets.webm"
     ]
   },
   {
@@ -4149,6 +4437,9 @@
         "key": "text",
         "text": " at the same time."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Countless_Scythes.webm"
     ]
   },
   {
@@ -4210,6 +4501,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Damage_Scythe.webm"
     ]
   },
   {
@@ -4254,6 +4548,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Deadly_Scythe.webm"
     ]
   },
   {
@@ -4295,6 +4592,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Extended_Scythe.webm"
     ]
   },
   {
@@ -4340,6 +4640,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Fast_Scythe.webm"
     ]
   },
   {
@@ -4408,6 +4711,9 @@
         "key": "text",
         "text": " merges)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Merged_Scythe.webm"
     ]
   },
   {
@@ -4451,6 +4757,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Persistent_Scythe.webm"
     ]
   },
   {
@@ -4496,6 +4805,9 @@
         "key": "text",
         "text": "."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Powerful_Scythe.webm"
     ]
   },
   {
@@ -4549,6 +4861,9 @@
         "key": "text",
         "text": " damage)."
       }
+    ],
+    "videos": [
+      "https://windblown.wiki.gg/images/Trinket_Scythe.webm"
     ]
   }
 ]

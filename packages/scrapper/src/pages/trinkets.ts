@@ -1,7 +1,7 @@
 import {CheerioAPI} from "cheerio";
 import {Element} from "domhandler";
 import {localizeEntityImages} from "../core/imageAssets.js";
-import {fetchWikiDocument} from "../core/wikiHtml.js";
+import {fetchWikiDocument, fetchWikiVideoUrls} from "../core/wikiHtml.js";
 import {parseRichDescription} from "../core/richTextParser.js";
 import {getColor, normalizeUrl} from "../core/richTextParser.helpers.js";
 import {Trinket} from "./types.js";
@@ -12,29 +12,35 @@ const PAGE = {
 
 export async function scrapeTrinkets(): Promise<Trinket[]> {
   const document = await fetchWikiDocument(PAGE.url);
-  const rows = document.$("h1 + div table.wikitable").first().find("tbody tr").toArray();
+  const rows = document.$("table.wikitable").first().find("tbody tr").toArray();
 
-  const trinkets: Trinket[] = [];
+  const trinketRows: Array<{ trinket: Trinket; wikiHref?: string }> = [];
   for (const row of rows) {
     const parsed = parseTrinketRow(document.$, row);
     if (parsed) {
-      trinkets.push(parsed);
+      trinketRows.push(parsed);
     }
   }
+
+  const trinkets = await Promise.all(trinketRows.map(async ({trinket, wikiHref}) => {
+    const videos = await fetchWikiVideoUrls(wikiHref).catch(() => []);
+    return videos.length > 0 ? {...trinket, videos} : trinket;
+  }));
 
   await localizeEntityImages(trinkets, "trinkets");
   return trinkets;
 }
 
-function parseTrinketRow($: CheerioAPI, row: Element): Trinket | null {
+function parseTrinketRow($: CheerioAPI, row: Element): { trinket: Trinket; wikiHref?: string } | null {
   const cells = $(row).find("td");
-  if (cells.length < 8) {
+  if (cells.length < 6) {
     return null;
   }
 
   const image = normalizeUrl(cells.eq(0).find("img").first().attr("src")?.trim());
   const nameCell = cells.eq(1);
   const name = nameCell.text().trim();
+  const wikiHref = normalizeUrl(nameCell.find("a").first().attr("href")?.trim());
   const nameColor = getColor(nameCell.find("[style]").first().attr("style") ?? nameCell.attr("style"));
   const descriptionCell = cells.eq(2);
   const richDescription = parseRichDescription(descriptionCell.html() ?? "");
@@ -47,12 +53,15 @@ function parseTrinketRow($: CheerioAPI, row: Element): Trinket | null {
   }
 
   return {
-    image,
-    name,
-    ...(nameColor ? {nameColor} : {}),
-    richDescription,
-    baseDamage,
-    damageType,
-    cooldown,
+    trinket: {
+      image,
+      name,
+      ...(nameColor ? {nameColor} : {}),
+      richDescription,
+      baseDamage,
+      damageType,
+      cooldown,
+    },
+    wikiHref,
   };
 }

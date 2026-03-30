@@ -276,6 +276,16 @@
     gap: var(--space-3);
 }
 
+.deck-row-item-video {
+    width: 100%;
+}
+
+.deck-row-item-video .entity-video-preview-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
 .deck-row-item-stats {
     display: flex;
     flex-wrap: wrap;
