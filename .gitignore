@@ -42,3 +42,5 @@ build/
 # Temporary files
 *.tmp
 *.cache/
+playwright-report/
+test-results/

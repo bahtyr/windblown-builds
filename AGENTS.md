@@ -29,6 +29,7 @@ Unless the user explicitly asks to remove them.
 - If you touch logic, add/adjust tests.
 - If you add a function, document it.
 - If you add a feature, include usage notes.
+- If you change UI, layout, styling, interaction flows, or visible states, verify it in the browser with Playwright before calling it done.
 
 ---
 
@@ -52,6 +53,7 @@ Unless the user explicitly asks to remove them.
 - Run tests / lint / typecheck if present.
 - Add tests if missing.
 - If you can’t run, still write tests and explain what they cover.
+- For UI work, prefer focused Playwright coverage for the affected flow and extend coverage when the change adds new visible behavior.
 
 ### Step 4 — Produce clean output
 - Final changes summary (Added / Changed / Fixed / Removed).
@@ -83,6 +85,16 @@ Allowed:
 
 Avoid:
 - Comments that simply restate the code
+
+### UI Verification
+
+- Playwright is the default browser verification tool for UI work in this repo.
+- When changing UI, layout, styling, interaction flows, or visible states, run or update focused Playwright tests for the affected routes.
+- For new UI features, add or extend Playwright coverage when the behavior is user-visible and stable enough to assert.
+- Do not claim a UI change is complete without checking it in the browser.
+- Prefer accessible selectors in Playwright tests (`role`, `label`, `text`) over brittle selectors.
+- Keep Playwright coverage targeted and maintainable.
+- Do not add broad screenshot-heavy or flaky visual coverage by default.
 
 ### Method Organization
 

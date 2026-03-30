@@ -341,6 +341,9 @@ Web app tests:
 - [apps/web/app/gift-match/gift-icon-matcher.test.ts](C:/Users/bahti/IdeaProjects/windblown-builds/apps/web/app/gift-match/gift-icon-matcher.test.ts)
 - [apps/web/app/gift-match/gift-match-workflow.test.ts](C:/Users/bahti/IdeaProjects/windblown-builds/apps/web/app/gift-match/gift-match-workflow.test.ts)
 - [apps/web/app/[type]/entity-utils.test.ts](C:/Users/bahti/IdeaProjects/windblown-builds/apps/web/app/[type]/entity-utils.test.ts)
+- [apps/web/tests/e2e/home.spec.ts](C:/Users/bahti/IdeaProjects/windblown-builds/apps/web/tests/e2e/home.spec.ts)
+- [apps/web/tests/e2e/browse.spec.ts](C:/Users/bahti/IdeaProjects/windblown-builds/apps/web/tests/e2e/browse.spec.ts)
+- Playwright config: [apps/web/playwright.config.ts](C:/Users/bahti/IdeaProjects/windblown-builds/apps/web/playwright.config.ts)
 
 Scraper tests:
 - [packages/scrapper/tests/gifts.test.ts](C:/Users/bahti/IdeaProjects/windblown-builds/packages/scrapper/tests/gifts.test.ts)
@@ -349,6 +352,8 @@ Scraper tests:
 
 Commands:
 - web tests: `npm test` from `apps/web`
+- web Playwright tests: `npm run test:e2e` from `apps/web`
+- web Playwright UI: `npm run test:e2e:ui` from `apps/web`
 - web lint: `npm run lint` from `apps/web`
 - scraper tests: `npm test` from `packages/scrapper`
 - scraper typecheck: `npm run check` from `packages/scrapper`
@@ -357,6 +362,7 @@ Use tests as behavior clues:
 - if a feature touches deck save/load behavior, read `deck-context.test.ts`
 - if a feature touches matcher flow, read `gift-match-workflow.test.ts`
 - if a feature touches shared deck URL behavior, read `deck-share.test.ts`
+- if a feature changes visible UI or interaction flow, run focused Playwright coverage before calling it complete
 
 ---
 
