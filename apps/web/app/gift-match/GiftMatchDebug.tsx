@@ -78,7 +78,9 @@ export default function GiftMatchDebug(): JSX.Element {
               <div
                 key={`${square.x}-${square.y}-${index}`}
                 style={buildOverlayStyle(square, state.sourceWidth, state.sourceHeight, "#facc15")}
-              />
+              >
+                <span style={styles.overlayLabel}>{index}</span>
+              </div>
             ))}
             {selectedOverlayStyle ? <div style={{...styles.selectedOverlay, ...selectedOverlayStyle}} /> : null}
           </div>
@@ -216,6 +218,20 @@ const styles: Record<string, React.CSSProperties> = {
     borderWidth: "3px",
     boxSizing: "border-box",
     pointerEvents: "none",
+  },
+  overlayLabel: {
+    position: "absolute",
+    top: "-14px",
+    left: "-3px",
+    minWidth: "20px",
+    padding: "1px 6px",
+    borderRadius: "999px",
+    background: "#facc15",
+    color: "#111827",
+    fontSize: "12px",
+    fontWeight: 700,
+    lineHeight: 1.4,
+    textAlign: "center",
   },
   selectedOverlay: {
     position: "absolute",
