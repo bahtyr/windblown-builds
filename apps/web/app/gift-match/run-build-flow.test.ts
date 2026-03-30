@@ -23,25 +23,23 @@ describe("buildDetectedDeckItems", () => {
 });
 
 describe("buildFailedSquareCandidates", () => {
-  it("returns alternate candidates for failed squares only", () => {
+  it("returns a unique alternate list for failed squares only", () => {
     const failedSquares = buildFailedSquareCandidates([
       buildSquareResult(0, {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.91}),
       buildSquareResult(1, {name: "Balance", path: "/images/gifts/Balance_Icon.png", score: 0.61}, [
         {name: "Balance", path: "/images/gifts/Balance_Icon.png", score: 0.61},
-        {name: "Anchor Boom", path: "/images/weapons/Anchor_Boom_Icon.png", score: 0.59},
+        {name: "Affliction Hex", path: "/images/hexes/Affliction_Hex_Icon.png", score: 0.59},
         {name: "Damage Boost", path: "/images/boosts/Damage_Boost_Icon.png", score: 0.58},
+      ]),
+      buildSquareResult(2, {name: "Anchor Boom", path: "/images/weapons/Anchor_Boom_Icon.png", score: 0.6}, [
+        {name: "Anchor Boom", path: "/images/weapons/Anchor_Boom_Icon.png", score: 0.6},
+        {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.59},
       ]),
     ]);
 
     expect(failedSquares).toEqual([
-      {
-        squareIndex: 1,
-        bounds: {x: 0, y: 0, width: 20, height: 20},
-        candidates: [
-          {id: "gifts:Balance", type: "gifts", name: "Balance", image: "/images/gifts/Balance_Icon.png"},
-          {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
-        ],
-      },
+      {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
+      {id: "hexes:Affliction Hex", type: "hexes", name: "Affliction Hex", image: "/images/hexes/Affliction_Hex_Icon.png"},
     ]);
   });
 });

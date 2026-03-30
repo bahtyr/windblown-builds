@@ -10,9 +10,10 @@ export type MatchedDeckItem = {
 };
 
 export type FailedSquareCandidate = {
-  squareIndex: number;
-  bounds: GiftMatchSquareResult["bounds"];
-  candidates: MatchedDeckItem[];
+  id: string;
+  type: Exclude<EntityType, "effects">;
+  name: string;
+  image?: string;
 };
 
 /**
@@ -35,20 +36,28 @@ export function buildDetectedDeckItems(squareResults: GiftMatchSquareResult[]): 
 }
 
 /**
- * Collects alternate candidates for squares that did not meet the match threshold.
+ * Collects unique alternate candidates for squares that did not meet the match threshold.
  *
  * @param {GiftMatchSquareResult[]} squareResults - Workflow results for every detected square.
  * @returns {FailedSquareCandidate[]} Candidate groups for failed squares.
  */
 export function buildFailedSquareCandidates(squareResults: GiftMatchSquareResult[]): FailedSquareCandidate[] {
-  return squareResults
-    .filter((square) => !isGiftMatch(square.bestTemplate?.score ?? 0))
-    .map((square) => ({
-      squareIndex: square.index,
-      bounds: square.bounds,
-      candidates: dedupeMatchedItems(square.topTemplates.map((template) => buildDeckItemFromTemplate(template))),
-    }))
-    .filter((square) => square.candidates.length > 0);
+  const foundIds = new Set(buildDetectedDeckItems(squareResults).map((item) => item.id));
+  const uniqueCandidates = new Map<string, FailedSquareCandidate>();
+
+  for (const square of squareResults) {
+    if (isGiftMatch(square.bestTemplate?.score ?? 0)) {
+      continue;
+    }
+
+    for (const candidate of dedupeMatchedItems(square.topTemplates.map((template) => buildDeckItemFromTemplate(template)))) {
+      if (candidate.type !== "gifts" && !foundIds.has(candidate.id) && !uniqueCandidates.has(candidate.id)) {
+        uniqueCandidates.set(candidate.id, candidate);
+      }
+    }
+  }
+
+  return [...uniqueCandidates.values()].sort(compareMatchedDeckItems);
 }
 
 /**
@@ -152,4 +161,34 @@ function ensureUniqueDeckName(existing: SavedDeck[], desiredName: string): strin
 function normalizeDeckName(value?: string): string {
   const trimmed = value?.trim();
   return trimmed ? trimmed : "Untitled deck";
+}
+
+function compareMatchedDeckItems(left: MatchedDeckItem, right: MatchedDeckItem): number {
+  const typeOrder = compareTypeOrder(left.type, right.type);
+  if (typeOrder !== 0) {
+    return typeOrder;
+  }
+
+  return left.name.localeCompare(right.name);
+}
+
+function compareTypeOrder(left: Exclude<EntityType, "effects">, right: Exclude<EntityType, "effects">): number {
+  return getTypeOrder(left) - getTypeOrder(right);
+}
+
+function getTypeOrder(type: Exclude<EntityType, "effects">): number {
+  switch (type) {
+    case "weapons":
+      return 0;
+    case "trinkets":
+      return 1;
+    case "magifishes":
+      return 2;
+    case "hexes":
+      return 3;
+    case "boosts":
+      return 4;
+    case "gifts":
+      return 5;
+  }
 }
