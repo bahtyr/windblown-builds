@@ -107,7 +107,14 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
   );
 }
 
-function getEntityStats(item: ScrapedEntity, type: EntityType): StatRow[] {
+/**
+ * Build the stat rows shown for an entity card.
+ *
+ * @param {ScrapedEntity} item - Entity payload.
+ * @param {EntityType} type - Entity type.
+ * @returns {StatRow[]} Visible stat rows for the entity.
+ */
+export function getEntityStats(item: ScrapedEntity, type: EntityType): StatRow[] {
   if (type === "weapons") {
     return [
       asStat("DMG", item.baseDamage),

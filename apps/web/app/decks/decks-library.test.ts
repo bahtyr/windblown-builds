@@ -21,8 +21,16 @@ describe("formatRoughDate", () => {
 describe("buildFavoritesDeck", () => {
   it("returns a sorted derived favorites deck from liked ids", () => {
     const entityLookup = new Map([
-      ["weapons:Anchor Boom", {id: "weapons:Anchor Boom", type: "weapons" as const, name: "Anchor Boom", image: "/anchor.png"}],
-      ["gifts:Abundance", {id: "gifts:Abundance", type: "gifts" as const, name: "Abundance", image: "/abundance.png"}],
+      ["weapons:Anchor Boom", {
+        type: "weapons" as const,
+        entity: {name: "Anchor Boom", image: "/anchor.png", description: "", richDescription: []},
+        card: {id: "weapons:Anchor Boom", type: "weapons" as const, name: "Anchor Boom", image: "/anchor.png"},
+      }],
+      ["gifts:Abundance", {
+        type: "gifts" as const,
+        entity: {name: "Abundance", image: "/abundance.png", description: "", richDescription: []},
+        card: {id: "gifts:Abundance", type: "gifts" as const, name: "Abundance", image: "/abundance.png"},
+      }],
     ]);
 
     expect(buildFavoritesDeck(new Set(["weapons:Anchor Boom", "gifts:Abundance"]), entityLookup)).toEqual({

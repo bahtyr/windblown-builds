@@ -11,6 +11,8 @@ import {useLikes} from "../like/LikeContext";
 import {ENTITY_TYPES, loadEntities} from "../../lib/loadEntities";
 import categoryImages from "../../public/category-images.json";
 import {EntityType, ScrapedEntity} from "../../lib/types";
+import RichText from "../entity/RichText";
+import {getEntityStats} from "../entity/EntityCard";
 
 type DrawerPhase = "opening" | "open" | "closing";
 type DeckRowModel =
@@ -18,7 +20,13 @@ type DeckRowModel =
   | { kind: "shared"; deck: SharedDeck }
   | { kind: "saved"; deck: SavedDeck };
 
-type EntityLookup = Map<string, DeckItem>;
+type LoadedDeckEntity = {
+  card: DeckItem;
+  entity: ScrapedEntity;
+  type: EntityType;
+};
+
+type EntityLookup = Map<string, LoadedDeckEntity>;
 type GiftCategoryLookup = Map<string, string>;
 type DeckCategoryMeta = {
   count: number;
@@ -59,7 +67,7 @@ export default function DecksLibrary() {
       for (const entry of entityEntries) {
         for (const entity of entry.entities) {
           const deckItem = makeDeckItem(entry.type, entity);
-          nextEntityLookup.set(deckItem.id, deckItem);
+          nextEntityLookup.set(deckItem.id, {card: deckItem, entity, type: entry.type});
           if (entry.type === "gifts" && entity.category) {
             nextGiftCategoryLookup.set(deckItem.id, entity.category);
           }
@@ -163,6 +171,7 @@ export default function DecksLibrary() {
               <DeckRow
                 key={`${favoritesRow.kind}-${favoritesRow.deck.name}`}
                 categories={buildDeckCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
+                entityLookup={entityLookup}
                 row={favoritesRow}
                 onDelete={() => {}}
                 onDiscardShared={() => {}}
@@ -180,6 +189,7 @@ export default function DecksLibrary() {
                 <DeckRow
                   key={`${row.kind}-${row.deck.name}`}
                   categories={buildDeckCategoryMeta(row.deck.items, giftCategoryLookup)}
+                  entityLookup={entityLookup}
                   row={row}
                   onDelete={() => deck.deleteDeck(row.deck.name)}
                   onDiscardShared={() => deck.discardSharedDeck()}
@@ -233,6 +243,7 @@ export default function DecksLibrary() {
 
 type DeckRowProps = {
   categories: DeckCategoryMeta[];
+  entityLookup: EntityLookup;
   row: DeckRowModel;
   onDelete: () => void;
   onDiscardShared: () => void;
@@ -242,7 +253,7 @@ type DeckRowProps = {
   onShare: () => void;
 };
 
-function DeckRow({categories, row, onDelete, onDiscardShared, onDuplicate, onEdit, onSaveShared, onShare}: DeckRowProps) {
+function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDuplicate, onEdit, onSaveShared, onShare}: DeckRowProps) {
   const isShared = row.kind === "shared";
   const isFavorites = row.kind === "favorites";
   const meta = isShared || isFavorites ? null : formatRoughDate(row.deck.createdAt);
@@ -297,7 +308,7 @@ function DeckRow({categories, row, onDelete, onDiscardShared, onDuplicate, onEdi
 
             <div className="deck-row-items">
               {row.deck.items.map((item) => (
-                <DeckRowItem key={item.id} item={item}/>
+                <DeckRowItem key={item.id} item={item} details={entityLookup.get(item.id) ?? null}/>
               ))}
             </div>
           </div>
@@ -307,12 +318,27 @@ function DeckRow({categories, row, onDelete, onDiscardShared, onDuplicate, onEdi
   );
 }
 
-function DeckRowItem({item}: { item: DeckItem }) {
+function DeckRowItem({item, details}: { item: DeckItem; details: LoadedDeckEntity | null }) {
+  const stats = details ? getEntityStats(details.entity, details.type) : [];
+
   return (
-    <div className="deck-row-item">
+    <div className="deck-row-item" tabIndex={0}>
       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
-      <div className="deck-row-item-copy">
-        <span className="deck-row-item-name">{item.name}</span>
+      <div className="deck-row-item-hover" role="tooltip">
+        <div className="deck-row-item-hover-head">
+          <div className="deck-row-item-name">{item.name}</div>
+        </div>
+        {stats.length > 0 && (
+          <div className="deck-row-item-stats">
+            {stats.map((stat) => (
+              <div className="deck-row-item-stat" key={stat.label}>
+                <span className="deck-row-item-stat-value">{stat.value}</span>
+                <span className="deck-row-item-stat-label">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {details ? <RichText parts={details.entity.richDescription}/> : null}
       </div>
     </div>
   );
@@ -349,11 +375,11 @@ function pluralize(value: number, unit: string): string {
  * @param {Map<string, DeckItem>} entityLookup - Loaded entity lookup by deck id.
  * @returns {SavedDeck | null} Derived favorites deck, or null when empty.
  */
-export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<string, DeckItem>): SavedDeck | null {
+export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<string, LoadedDeckEntity>): SavedDeck | null {
   if (likedIds.size === 0 || entityLookup.size === 0) return null;
 
   const items = Array.from(likedIds)
-    .map((id) => entityLookup.get(id))
+    .map((id) => entityLookup.get(id)?.card)
     .filter((item): item is DeckItem => Boolean(item));
 
   if (items.length === 0) return null;
