@@ -40,6 +40,11 @@ export type SquareDetectionResult = {
   candidateSquares: Rectangle[];
 };
 
+// const RAW_SQUARE_MIN_ASPECT_RATIO = 0.85;
+const RAW_SQUARE_MIN_ASPECT_RATIO = 0.95;
+// const RAW_SQUARE_MAX_ASPECT_RATIO = 1.15;
+const RAW_SQUARE_MAX_ASPECT_RATIO = 1.05;
+
 type PreparedTemplate = {
   image: GrayImage;
   centeredPixels: Float32Array;
@@ -250,7 +255,12 @@ export function detectSquareRegionsDetailed(imageData: RgbaImageLike): SquareDet
 
       const rectangle = {x: minX, y: minY, width, height};
 
-      if (width >= 20 && height >= 20 && aspectRatio >= 0.6 && aspectRatio <= 1.4) {
+      if (
+        width >= 20 &&
+        height >= 20 &&
+        aspectRatio >= RAW_SQUARE_MIN_ASPECT_RATIO &&
+        aspectRatio <= RAW_SQUARE_MAX_ASPECT_RATIO
+      ) {
         rawSquares.push(rectangle);
       }
 
