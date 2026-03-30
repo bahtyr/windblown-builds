@@ -82,23 +82,23 @@ export default function DecksLibrary() {
     };
   }, []);
 
+  const favoritesRow = useMemo(() => {
+    const favoritesDeck = buildFavoritesDeck(likes.ids, entityLookup);
+    return favoritesDeck ? {kind: "favorites" as const, deck: favoritesDeck} : null;
+  }, [entityLookup, likes.ids]);
+
   const rows = useMemo(() => {
     const libraryRows: DeckRowModel[] = deck.saved
       .filter((savedDeck) => savedDeck.items.length > 0)
       .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
       .map((savedDeck) => ({kind: "saved" as const, deck: savedDeck}));
 
-    const favoritesDeck = buildFavoritesDeck(likes.ids, entityLookup);
-    if (favoritesDeck) {
-      libraryRows.unshift({kind: "favorites", deck: favoritesDeck});
-    }
-
     if (deck.sharedDeck) {
       libraryRows.unshift({kind: "shared", deck: deck.sharedDeck});
     }
 
     return libraryRows;
-  }, [deck.saved, deck.sharedDeck, entityLookup, likes.ids]);
+  }, [deck.saved, deck.sharedDeck]);
 
   useEffect(() => {
     let frameId = 0;
@@ -157,6 +157,22 @@ export default function DecksLibrary() {
               <button className="btn decks-page-primary-button" type="button" onClick={handleCreateNew}>Create new build</button>
             </div>
           </div>
+
+          {favoritesRow ? (
+            <div className="decks-grid decks-grid-favorites">
+              <DeckRow
+                key={`${favoritesRow.kind}-${favoritesRow.deck.name}`}
+                categories={buildDeckCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
+                row={favoritesRow}
+                onDelete={() => {}}
+                onDiscardShared={() => {}}
+                onDuplicate={() => {}}
+                onEdit={() => {}}
+                onSaveShared={() => {}}
+                onShare={() => {}}
+              />
+            </div>
+          ) : null}
 
           <div className="decks-grid">
             {rows.length > 0 ? (

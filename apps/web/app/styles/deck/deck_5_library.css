@@ -57,6 +57,10 @@
     background: var(--color-overlay-header);
 }
 
+.decks-grid-favorites {
+    margin-bottom: var(--space-6);
+}
+
 .deck-row {
     display: grid;
     /*gap: var(--space-5);*/
