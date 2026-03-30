@@ -79,10 +79,10 @@ h1, h2, h3, h4, h5, h6, p, span, div {
 
 /* disable text selection */
 *, img, svg {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    /*user-select: none;*/
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
 }
 
 .allow-text-selection {
