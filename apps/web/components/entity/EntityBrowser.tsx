@@ -252,13 +252,13 @@ export default function EntityBrowser({embedded = false}: Props) {
                   <div className={`card-list ${viewMode === "thumbs" ? "card-list-thumbs" : ""}`}>
                     {getVisibleItems(list, filtered, matchDisplayMode).map((item, idx) => {
                       const matched = filtered.includes(item);
-                      const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
+                      const inDeck = embedded && deckIds.has(`${item.entityType}:${item.name}`);
                       return (
                         <EntityCard
                           key={`${item.entityType}-${item.name}-${idx}`}
                           item={item}
                           type={item.entityType}
-                          highlight={inDeck}
+                          highlight={embedded && inDeck}
                           deck={deck}
                           likes={likes}
                           limits={DEFAULT_LIMITS}
@@ -266,6 +266,7 @@ export default function EntityBrowser({embedded = false}: Props) {
                           inDeck={inDeck}
                           onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
                           allowAddToDeck={embedded}
+                          showDeckState={embedded}
                           viewMode={viewMode}
                         />
                       );

@@ -21,6 +21,7 @@ type Props = {
   inDeck?: boolean;
   onEntityFilter?: (id: string) => void;
   allowAddToDeck?: boolean;
+  showDeckState?: boolean;
   viewMode?: CardViewMode;
 };
 
@@ -45,9 +46,10 @@ export default function EntityCard({
   inDeck,
   onEntityFilter,
   allowAddToDeck = true,
+  showDeckState = true,
   viewMode = "details",
 }: Props) {
-  const presentInDeck = inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`);
+  const presentInDeck = showDeckState && (inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`));
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
   const [showPreview, setShowPreview] = useState(false);
@@ -284,7 +286,7 @@ function CardActionButtons({
           +
         </button>
       )}
-      {type !== "effects" && presentInDeck && (
+      {type !== "effects" && presentInDeck && allowAddToDeck && (
         <button
           className="card-action-btn"
           aria-label="Remove from deck"

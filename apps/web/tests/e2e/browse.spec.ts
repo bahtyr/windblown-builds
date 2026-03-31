@@ -25,6 +25,28 @@ test("browse search flow can narrow and reset visible results", async ({page}) =
   await expect(page.getByRole("button", {name: "Add to deck"})).toHaveCount(0);
 });
 
+test("browse page ignores deck membership state", async ({page}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("windblown.deck.v3", JSON.stringify({
+      name: "Current Build",
+      createdAt: "2026-03-31T12:00:00.000Z",
+      items: [
+        {id: "gifts:Abundance", type: "gifts", name: "Abundance", image: "/images/gifts/Abundance_Icon.png"},
+      ],
+    }));
+  });
+
+  await page.goto("/browse");
+
+  await page.getByPlaceholder("Search text...").fill("Abundance");
+
+  const card = page.locator(".card", {has: page.getByText("Abundance", {exact: true})}).first();
+  await expect(card).toBeVisible();
+  await expect(card).not.toHaveClass(/is-in-deck/);
+  await expect(card.getByRole("button", {name: "Add to deck"})).toHaveCount(0);
+  await expect(card.getByRole("button", {name: "Remove from deck"})).toHaveCount(0);
+});
+
 test("browse hover preview plays above the hovered card", async ({page}) => {
   await page.goto("/browse");
 
