@@ -113,6 +113,13 @@ test("deck category hover activates a filter and reset clears it", async ({page}
     .poll(async () => await deckRow.locator(".deck-row-item.is-category-mismatch").count())
     .toBeGreaterThan(0);
 
+  await deckRow.locator(".deck-row-actions").hover();
+  await expect(deckRow.getByRole("button", {name: "Reset"})).toHaveCount(0);
+  await expect(deckRow.locator(".deck-row-item.is-category-mismatch")).toHaveCount(0);
+
+  await firstChip.hover();
+  await expect(deckRow.getByRole("button", {name: "Reset"})).toBeVisible();
+
   await deckRow.getByRole("button", {name: "Reset"}).click();
   await expect(deckRow.getByRole("button", {name: "Reset"})).toHaveCount(0);
   await expect(deckRow.locator(".deck-row-item.is-category-mismatch")).toHaveCount(0);

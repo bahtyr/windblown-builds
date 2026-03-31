@@ -2,7 +2,7 @@
 "use client";
 
 import {useEffect, useMemo, useState} from "react";
-import {DeckItem, SavedDeck, SharedDeck, makeDeckItem, useDeck} from "./DeckContext";
+import {DeckItem, SavedDeck, SharedDeck, groupDeckItemsByType, makeDeckItem, useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
 import DeckPanel from "./DeckPanel";
@@ -307,7 +307,16 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
           <div className="deck-row-content">
             <div className="deck-row-items-meta">
               {categories.length > 0 ? (
-                <div className="deck-row-category-list" aria-label={`${row.deck.name} categories`}>
+                <div
+                  className="deck-row-category-list"
+                  aria-label={`${row.deck.name} categories`}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                      setActiveCategory(null);
+                    }
+                  }}
+                  onMouseLeave={() => setActiveCategory(null)}
+                >
                   {categories.map((category) => (
                     <button
                       key={category.name}
@@ -473,19 +482,5 @@ export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map
 }
 
 function sortDeckItemsByType(items: DeckItem[]): DeckItem[] {
-  const groupedItems = new Map<EntityType, DeckItem[]>();
-
-  for (const item of items) {
-    groupedItems.set(item.type, [...(groupedItems.get(item.type) ?? []), item]);
-  }
-
-  return [
-    ...(groupedItems.get("gifts") ?? []),
-    ...(groupedItems.get("hexes") ?? []),
-    ...(groupedItems.get("weapons") ?? []),
-    ...(groupedItems.get("trinkets") ?? []),
-    ...(groupedItems.get("magifishes") ?? []),
-    ...(groupedItems.get("boosts") ?? []),
-    ...(groupedItems.get("effects") ?? []),
-  ];
+  return groupDeckItemsByType(items);
 }
