@@ -69,7 +69,6 @@ Still to consider:
 
 ---
 
-- deck hover tooltip - should be considered of browser overflow. tooltip should position within browser when close to the edge of the screen.
 - cursor issue: even when a div is cursor pointer, hovering on a text within reverts to cursor default
 
 - my profile
@@ -97,4 +96,4 @@ Still to consider:
 
 
 - recent runs; remove 'duplicate' button. make share a primary action button (should have different bg)
-- recent runs; add 
+- recent runs; add

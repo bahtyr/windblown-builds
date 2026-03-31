@@ -43,6 +43,8 @@ type DeckTooltipPosition = {
   top: number;
 };
 
+const DRAWER_OPENING_DELAY_MS = 24;
+
 function getTooltipSafeTop(gap: number, viewportPadding: number): number {
   const blockers = [
     document.querySelector<HTMLElement>(".header"),
@@ -167,16 +169,24 @@ export default function DecksLibrary() {
   }, [deck.saved, deck.sharedDeck]);
 
   useEffect(() => {
-    let frameId = 0;
+    let firstFrameId = 0;
+    let secondFrameId = 0;
+    let openTimerId = 0;
 
     if (deckUi.open) {
       setDrawerMounted(true);
       setDrawerPhase("opening");
-      frameId = window.requestAnimationFrame(() => {
-        setDrawerPhase("open");
+      firstFrameId = window.requestAnimationFrame(() => {
+        secondFrameId = window.requestAnimationFrame(() => {
+          openTimerId = window.setTimeout(() => {
+            setDrawerPhase("open");
+          }, DRAWER_OPENING_DELAY_MS);
+        });
       });
       return () => {
-        window.cancelAnimationFrame(frameId);
+        window.cancelAnimationFrame(firstFrameId);
+        window.cancelAnimationFrame(secondFrameId);
+        window.clearTimeout(openTimerId);
       };
     }
 

@@ -96,3 +96,17 @@ test("closing an edited build drawer keeps edit mode visible until unmount", asy
 
   await expect(page.getByRole("dialog", {name: "Build editor"})).not.toBeVisible();
 });
+
+test("creating a new build drawer renders an opening phase before settling open", async ({page}) => {
+  await page.goto("/decks");
+
+  await page.getByRole("button", {name: "Create new build"}).click();
+
+  const surface = page.locator(".deck-builder-surface");
+  await expect(surface).toHaveClass(/is-opening/);
+
+  const openingTransform = await surface.evaluate((node) => window.getComputedStyle(node).transform);
+  expect(openingTransform).not.toBe("none");
+
+  await expect(surface).toHaveClass(/is-open/);
+});
