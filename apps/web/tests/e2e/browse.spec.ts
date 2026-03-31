@@ -84,3 +84,36 @@ test("decks hover tooltip renders a visible video area", async ({page}) => {
   expect(box?.width ?? 0).toBeGreaterThan(300);
   expect(box?.height ?? 0).toBeGreaterThan(170);
 });
+
+test("deck category hover highlights matching gifts and clears on hover out", async ({page}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("windblown.deck.saved.v3", JSON.stringify([
+      {
+        name: "Category Test",
+        createdAt: "2026-03-30T12:00:00.000Z",
+        items: [
+          {id: "gifts:Abundance", type: "gifts", name: "Abundance", image: "/images/gifts/Abundance_Icon.png"},
+          {id: "gifts:Balance", type: "gifts", name: "Balance", image: "/images/gifts/Balance_Icon.png"},
+          {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
+        ],
+      },
+    ]));
+  });
+
+  await page.goto("/decks");
+
+  const deckRow = page.locator(".deck-row", {has: page.getByRole("heading", {name: "Category Test"})});
+  await expect(deckRow).toBeVisible();
+
+  const firstChip = deckRow.locator(".deck-row-category-chip").first();
+  await firstChip.hover();
+
+  await expect(deckRow.getByRole("button", {name: "Reset"})).toBeVisible();
+  await expect
+    .poll(async () => await deckRow.locator(".deck-row-item.is-category-match").count())
+    .toBeGreaterThan(0);
+
+  await deckRow.getByRole("heading", {name: "Category Test"}).hover();
+  await expect(deckRow.getByRole("button", {name: "Reset"})).toHaveCount(0);
+  await expect(deckRow.locator(".deck-row-item.is-category-match")).toHaveCount(0);
+});

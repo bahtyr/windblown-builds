@@ -70,6 +70,8 @@ describe("buildDeckCategoryMeta", () => {
     expect(categories.map((category) => category.count)).toEqual([2, 2]);
     expect(categories[0].image).toBeUndefined();
     expect(categories[1].image).toEqual(expect.any(String));
+    expect(categories[0].itemIds).toEqual(["gifts:B", "gifts:C"]);
+    expect(categories[1].itemIds).toEqual(["gifts:A", "gifts:D"]);
   });
 
   it("orders categories by count descending before name", () => {

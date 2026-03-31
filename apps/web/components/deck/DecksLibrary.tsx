@@ -34,6 +34,7 @@ type GiftCategoryLookup = Map<string, string>;
 type DeckCategoryMeta = {
   count: number;
   image?: string;
+  itemIds: string[];
   name: string;
 };
 
@@ -270,6 +271,13 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
   const isFavorites = row.kind === "favorites";
   const meta = isShared || isFavorites ? null : formatRoughDate(row.deck.createdAt);
   const title = isFavorites ? "\u2665 Favorites" : row.deck.name;
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const activeCategory = hoveredCategory ?? selectedCategory;
+  const activeCategoryItemIds = useMemo(
+    () => new Set(categories.find((category) => category.name === activeCategory)?.itemIds ?? []),
+    [activeCategory, categories],
+  );
 
   return (
     <article className={`deck-row ${isShared ? "deck-row-shared" : ""}`}>
@@ -303,14 +311,36 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
               {categories.length > 0 ? (
                 <div className="deck-row-category-list" aria-label={`${row.deck.name} categories`}>
                   {categories.map((category) => (
-                    <div key={category.name} className="deck-row-category-chip">
-                      {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : <span className="deck-row-category-thumb deck-row-category-thumb-placeholder" aria-hidden="true"/>}
+                    <button
+                      key={category.name}
+                      aria-pressed={selectedCategory === category.name}
+                      className={`deck-row-category-chip ${activeCategory === category.name ? "is-active" : ""}`}
+                      type="button"
+                      onClick={() => setSelectedCategory((current) => current === category.name ? null : category.name)}
+                      onMouseEnter={() => setHoveredCategory(category.name)}
+                      onMouseLeave={() => setHoveredCategory(null)}
+                      onFocus={() => setHoveredCategory(category.name)}
+                      onBlur={() => setHoveredCategory(null)}
+                    >
+                      {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : null}
                       <span>
                         {category.count > 1 ? `${category.count} ` : ""}
                         {category.name}
                       </span>
-                    </div>
+                    </button>
                   ))}
+                  {activeCategory ? (
+                    <button
+                      className="btn ghost deck-row-category-reset"
+                      type="button"
+                      onClick={() => {
+                        setHoveredCategory(null);
+                        setSelectedCategory(null);
+                      }}
+                    >
+                      Reset
+                    </button>
+                  ) : null}
                 </div>
               ) : (
                 <p className="deck-row-side-empty">No gift categories</p>
@@ -319,7 +349,12 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
 
             <div className="deck-row-items">
               {row.deck.items.map((item) => (
-                <DeckRowItem key={item.id} item={item} details={entityLookup.get(item.id) ?? null}/>
+                <DeckRowItem
+                  key={item.id}
+                  item={item}
+                  details={entityLookup.get(item.id) ?? null}
+                  highlightCategoryMatch={activeCategoryItemIds.has(item.id)}
+                />
               ))}
             </div>
           </div>
@@ -329,11 +364,19 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
   );
 }
 
-function DeckRowItem({item, details}: { item: DeckItem; details: LoadedDeckEntity | null }) {
+function DeckRowItem({
+  item,
+  details,
+  highlightCategoryMatch,
+}: {
+  item: DeckItem;
+  details: LoadedDeckEntity | null;
+  highlightCategoryMatch: boolean;
+}) {
   const stats = details ? getEntityStats(details.entity, details.type) : [];
 
   return (
-    <div className="deck-row-item" tabIndex={0}>
+    <div className={`deck-row-item ${highlightCategoryMatch ? "is-category-match" : ""}`} tabIndex={0}>
       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
       <div className="deck-row-item-hover" role="tooltip">
         <div className="deck-row-item-hover-head">
@@ -411,24 +454,27 @@ export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<stri
  * @returns {DeckCategoryMeta[]} Visible category metadata.
  */
 export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map<string, string>): DeckCategoryMeta[] {
-  const categoryCounts = new Map<string, number>();
+  const categoryItems = new Map<string, string[]>();
   for (const item of items) {
     if (item.type !== "gifts") continue;
     const category = giftCategoryLookup.get(item.id);
     if (category) {
-      categoryCounts.set(category, (categoryCounts.get(category) ?? 0) + 1);
+      categoryItems.set(category, [...(categoryItems.get(category) ?? []), item.id]);
     }
   }
 
-  return Array.from(categoryCounts.entries())
-    .sort(([nameA, countA], [nameB, countB]) => {
+  return Array.from(categoryItems.entries())
+    .sort(([nameA, itemIdsA], [nameB, itemIdsB]) => {
+      const countA = itemIdsA.length;
+      const countB = itemIdsB.length;
       if (countB !== countA) return countB - countA;
       return nameA.localeCompare(nameB);
     })
-    .map(([name, count]) => ({
-      count,
+    .map(([name, itemIds]) => ({
+      count: itemIds.length,
       name,
       image: categoryImages[name as keyof typeof categoryImages],
+      itemIds,
     }));
 }
 
