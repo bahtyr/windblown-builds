@@ -38,6 +38,11 @@ type DeckCategoryMeta = {
   name: string;
 };
 
+type DeckTooltipPosition = {
+  left: number;
+  top: number;
+};
+
 /**
  * Read-only saved deck library with share, duplicate, edit, and delete actions.
  *
@@ -377,11 +382,51 @@ function DeckRowItem({
   fadeCategoryMismatch: boolean;
 }) {
   const stats = details ? getEntityStats(details.entity, details.type) : [];
+  const [tooltipPosition, setTooltipPosition] = useState<DeckTooltipPosition>({left: 0, top: 0});
+
+  const updateTooltipPosition = (itemElement: HTMLDivElement | null) => {
+    if (!itemElement || typeof window === "undefined") return;
+
+    const tooltipElement = itemElement.querySelector<HTMLDivElement>(".deck-row-item-hover");
+    if (!tooltipElement) return;
+
+    const viewportPadding = 12;
+    const gap = 8;
+    const itemRect = itemElement.getBoundingClientRect();
+    const tooltipRect = tooltipElement.getBoundingClientRect();
+    const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipRect.width - viewportPadding);
+    let left = itemRect.left + (itemRect.width / 2) - (tooltipRect.width / 2);
+    left = Math.min(Math.max(left, viewportPadding), maxLeft);
+
+    const belowTop = itemRect.bottom + gap;
+    const aboveTop = itemRect.top - tooltipRect.height - gap;
+    const maxTop = Math.max(viewportPadding, window.innerHeight - tooltipRect.height - viewportPadding);
+    let top = belowTop;
+
+    if (belowTop + tooltipRect.height > window.innerHeight - viewportPadding && aboveTop >= viewportPadding) {
+      top = aboveTop;
+    }
+
+    top = Math.min(Math.max(top, viewportPadding), maxTop);
+    setTooltipPosition({left, top});
+  };
 
   return (
-    <div className={`deck-row-item ${fadeCategoryMismatch ? "is-category-mismatch" : ""}`} tabIndex={0}>
+    <div
+      className={`deck-row-item ${fadeCategoryMismatch ? "is-category-mismatch" : ""}`}
+      tabIndex={0}
+      onFocus={(event) => updateTooltipPosition(event.currentTarget)}
+      onMouseEnter={(event) => updateTooltipPosition(event.currentTarget)}
+    >
       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
-      <div className="deck-row-item-hover" role="tooltip">
+      <div
+        className="deck-row-item-hover"
+        role="tooltip"
+        style={{
+          left: `${tooltipPosition.left}px`,
+          top: `${tooltipPosition.top}px`,
+        }}
+      >
         <div className="deck-row-item-hover-head">
           <div className="deck-row-item-name">{item.name}</div>
         </div>

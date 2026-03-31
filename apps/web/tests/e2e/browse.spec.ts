@@ -5,6 +5,10 @@ test("browse search flow can narrow and reset visible results", async ({page}) =
 
   await expect(page.getByRole("heading", {name: "Browse items"})).toBeVisible();
 
+  const sidebarSubtitles = page.locator(".browse-sidebar .browse-sidebar-subtitle");
+  await expect(sidebarSubtitles.nth(0)).toHaveText("Category");
+  await expect(sidebarSubtitles.nth(1)).toHaveText("Entities");
+
   const searchInput = page.getByPlaceholder("Search text...");
   await searchInput.fill("Abundance");
 
@@ -64,14 +68,35 @@ test("browse hover preview plays above the hovered card", async ({page}) => {
 
 test("decks hover tooltip renders a visible video area", async ({page}) => {
   await page.addInitScript(() => {
-    localStorage.setItem("windblown.likes.v1", JSON.stringify(["gifts:Abundance"]));
+    localStorage.setItem("windblown.likes.v1", JSON.stringify([
+      "gifts:Abundance",
+      "gifts:Balance",
+      "gifts:Big Pockets",
+      "gifts:Blaze",
+      "gifts:Bombs Away",
+      "gifts:Boomerang",
+      "gifts:Break Time",
+      "gifts:Critical Thinking",
+      "gifts:Cupidon",
+      "gifts:Death's Door",
+      "gifts:Ebb and Flow",
+      "gifts:Echoes",
+      "gifts:Emergency Flask",
+      "gifts:Exclusive",
+      "gifts:Extra Fish",
+      "gifts:Featherweight",
+      "gifts:Final Gift",
+      "gifts:Foundation",
+      "gifts:Fresh Produce",
+      "gifts:Fully Equipped",
+    ]));
   });
 
   await page.goto("/decks");
 
   await expect(page.getByText("Favorites", {exact: false})).toBeVisible();
 
-  const item = page.locator(".decks-grid-favorites .deck-row-item").first();
+  const item = page.locator(".decks-grid-favorites .deck-row-item").last();
   await item.hover();
 
   const tooltip = item.locator(".deck-row-item-hover");
@@ -80,7 +105,14 @@ test("decks hover tooltip renders a visible video area", async ({page}) => {
   await expect(tooltip).toBeVisible();
   await expect(video).toBeVisible();
 
+  const tooltipBox = await tooltip.boundingBox();
   const box = await video.boundingBox();
+
+  expect(tooltipBox).not.toBeNull();
+  expect(tooltipBox?.x ?? 0).toBeGreaterThanOrEqual(0);
+  expect(tooltipBox?.y ?? 0).toBeGreaterThanOrEqual(0);
+  expect((tooltipBox?.x ?? 0) + (tooltipBox?.width ?? 0)).toBeLessThanOrEqual(1280);
+  expect((tooltipBox?.y ?? 0) + (tooltipBox?.height ?? 0)).toBeLessThanOrEqual(720);
   expect(box?.width ?? 0).toBeGreaterThan(300);
   expect(box?.height ?? 0).toBeGreaterThan(170);
 });

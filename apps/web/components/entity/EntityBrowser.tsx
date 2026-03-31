@@ -212,19 +212,19 @@ export default function EntityBrowser({embedded = false}: Props) {
               onMatchDisplayModeChange={setMatchDisplayMode}
             />
             <SidebarSection
+              subtitle="Category"
+              options={categoryOptions}
+              selectedValue={selectedType}
+              onSelect={(value) => setSelectedType(value as EntityType | "all")}
+              deselectValue="all"
+            />
+            <SidebarSection
               subtitle="Entities"
               navClassName="browse-sidebar-nav browse-sidebar-nav-entities"
               options={[{value: "", label: "All entities"}, ...entityOptions]}
               selectedValue={selectedEntity}
               onSelect={setSelectedEntity}
               deselectValue=""
-            />
-            <SidebarSection
-              subtitle="Category"
-              options={categoryOptions}
-              selectedValue={selectedType}
-              onSelect={(value) => setSelectedType(value as EntityType | "all")}
-              deselectValue="all"
             />
           </aside>
 

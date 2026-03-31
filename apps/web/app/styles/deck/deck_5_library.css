@@ -260,13 +260,11 @@
 }
 
 .deck-row-item-hover {
-    position: absolute;
-    top: calc(100% + var(--space-2));
-    left: 50%;
+    position: fixed;
     z-index: 4;
     width: min(420px, 72vw);
     max-height: 420px;
-    transform: translateX(-50%) translateY(4px);
+    transform: translateY(4px);
     display: grid;
     align-content: start;
     gap: var(--space-3);
@@ -290,7 +288,7 @@
 .deck-row-item:focus-within .deck-row-item-hover {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
 }
 
 .deck-row-item-hover-head {
