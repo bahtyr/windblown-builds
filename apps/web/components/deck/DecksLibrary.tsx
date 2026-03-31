@@ -198,16 +198,6 @@ export default function DecksLibrary() {
                   Favorites
                 </button>
                 <button
-                  aria-selected={activeTab === "saved-builds"}
-                  className={`decks-page-tab ${activeTab === "saved-builds" ? "is-active" : ""}`}
-                  id="decks-tab-saved-builds"
-                  role="tab"
-                  type="button"
-                  onClick={() => setActiveTab("saved-builds")}
-                >
-                  Saved Builds
-                </button>
-                <button
                   aria-selected={activeTab === "recent-runs"}
                   className={`decks-page-tab ${activeTab === "recent-runs" ? "is-active" : ""}`}
                   id="decks-tab-recent-runs"
@@ -216,6 +206,16 @@ export default function DecksLibrary() {
                   onClick={() => setActiveTab("recent-runs")}
                 >
                   Recent Runs
+                </button>
+                <button
+                  aria-selected={activeTab === "saved-builds"}
+                  className={`decks-page-tab ${activeTab === "saved-builds" ? "is-active" : ""}`}
+                  id="decks-tab-saved-builds"
+                  role="tab"
+                  type="button"
+                  onClick={() => setActiveTab("saved-builds")}
+                >
+                  Saved Builds
                 </button>
               </div>
             </div>
