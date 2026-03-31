@@ -1,23 +1,18 @@
-"use client";
-
 import "./globals.css";
-import {ReactNode} from "react";
-import {DeckProvider} from "../components/deck/DeckContext";
-import {DeckUiProvider} from "../components/deck/DeckUiContext";
-import {LikeProvider} from "../components/like/LikeContext";
+import {type ReactNode} from "react";
+import AppProviders from "../components/layout/AppProviders";
 import NavBar from "../components/layout/NavBar";
+import {loadGiftMatchTemplateSpecs} from "./gift-match/template-specs";
 
-export default function RootLayout({children}: { children: ReactNode }) {
+export default async function RootLayout({children}: { children: ReactNode }) {
+  const templateSpecs = await loadGiftMatchTemplateSpecs();
+
   return (
     <html lang="en">
     <body>
-    <DeckProvider>
-      <DeckUiProvider>
-        <LikeProvider>
+    <AppProviders templateSpecs={templateSpecs}>
           <AppChrome>{children}</AppChrome>
-        </LikeProvider>
-      </DeckUiProvider>
-    </DeckProvider>
+    </AppProviders>
     </body>
     </html>
   );

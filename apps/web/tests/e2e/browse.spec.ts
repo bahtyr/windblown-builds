@@ -156,3 +156,21 @@ test("deck category hover activates a filter and reset clears it", async ({page}
   await expect(deckRow.getByRole("button", {name: "Reset"})).toHaveCount(0);
   await expect(deckRow.locator(".deck-row-item.is-category-mismatch")).toHaveCount(0);
 });
+
+test("dropping an image anywhere in the app opens the new run dialog", async ({page}) => {
+  await page.goto("/browse");
+
+  const dataTransfer = await page.evaluateHandle(async () => {
+    const transfer = new DataTransfer();
+    const response = await fetch("/source-cropped-2.png");
+    const blob = await response.blob();
+    transfer.items.add(new File([blob], "source-cropped-2.png", {type: blob.type}));
+    return transfer;
+  });
+
+  await page.locator("body").dispatchEvent("dragenter", {dataTransfer});
+  await expect(page.getByText("Drop image to create build")).toBeVisible();
+
+  await page.locator("body").dispatchEvent("drop", {dataTransfer});
+  await expect(page.getByRole("dialog", {name: "New run"})).toBeVisible();
+});

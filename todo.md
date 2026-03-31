@@ -102,3 +102,13 @@ Still to consider:
 
 - deck hover tooltip - should be considered of browser overflow. tooltip should position within browser when close to the edge of the screen.
 - cursor issue: even when a div is cursor pointer, hovering on a text within reverts to cursor default
+
+- add alternate view mode to the browse page - details (default current) - add new thumbs mode - bigger image - show description + video on hover like in deck
+- my profile
+  - favorites
+  - runs tab
+  - saved builds tab
+  - most picked gifts
+  - least picked gifts/weapons...
+
+- wiki accreditation / "contibute"

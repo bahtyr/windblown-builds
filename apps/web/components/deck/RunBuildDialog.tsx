@@ -17,10 +17,13 @@ import {
 import {type Rectangle} from "../../lib/gift-icon-matcher";
 import {groupDeckItemsByType, useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
+import {useRouter} from "next/navigation";
 
 type RunBuildDialogProps = {
+  initialFile?: File | null;
   isOpen: boolean;
   onClose: () => void;
+  onInitialFileHandled?: () => void;
   templateSpecs: GiftMatchTemplateSpec[];
 };
 
@@ -30,9 +33,16 @@ type RunBuildDialogProps = {
  * @param {RunBuildDialogProps} props - Dialog state and template catalog.
  * @returns {JSX.Element | null} Upload and review dialog when open.
  */
-export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuildDialogProps): JSX.Element | null {
+export default function RunBuildDialog({
+  initialFile = null,
+  isOpen,
+  onClose,
+  onInitialFileHandled,
+  templateSpecs,
+}: RunBuildDialogProps): JSX.Element | null {
   const deck = useDeck();
   const deckUi = useDeckUi();
+  const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
   const [sourceSrc, setSourceSrc] = useState<string | null>(null);
@@ -55,6 +65,13 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
       resetDialogState();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && initialFile) {
+      setSourceFile(initialFile);
+      onInitialFileHandled?.();
+    }
+  }, [initialFile, isOpen, onInitialFileHandled]);
 
   useEffect(() => {
     if (!isOpen || typeof document === "undefined") {
@@ -175,6 +192,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
 
     deck.saveImportedDeck(buildName, buildItems);
     onClose();
+    router.push("/decks");
     deckUi.openDeck();
   }
 

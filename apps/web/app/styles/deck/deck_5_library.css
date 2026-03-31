@@ -355,6 +355,35 @@
     padding: var(--space-6);
 }
 
+.run-build-app-drop-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 79;
+    display: grid;
+    place-items: center;
+    padding: var(--space-6);
+    pointer-events: none;
+}
+
+.run-build-app-drop-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 10, 18, 0.54);
+    backdrop-filter: blur(3px);
+}
+
+.run-build-app-drop-card {
+    position: relative;
+    padding: var(--space-8) var(--space-10);
+    border: 1px dashed rgba(79, 163, 255, 0.85);
+    border-radius: var(--radius-xl);
+    background: rgba(11, 18, 32, 0.94);
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 18px 40px rgba(5, 11, 21, 0.35);
+}
+
 .run-build-backdrop {
     position: absolute;
     inset: 0;
