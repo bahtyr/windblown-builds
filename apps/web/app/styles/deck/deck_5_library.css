@@ -152,7 +152,7 @@
 .deck-row-head {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: baseline;
     /*align-items: center;*/
     /*gap: var(--space-5);*/
     flex-wrap: wrap;
