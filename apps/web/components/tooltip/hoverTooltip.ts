@@ -1,5 +1,7 @@
 "use client";
 
+import {type MutableRefObject, useCallback, useEffect, useRef, useState} from "react";
+
 export type TooltipCoordinateSpace = {
   leftOffset: number;
   topOffset: number;
@@ -17,6 +19,16 @@ type TooltipPlacementInput = {
 type TooltipPlacement = {
   left: number;
   top: number;
+};
+
+type HoverTooltipState = {
+  left: number;
+  top: number;
+};
+
+type HoverTooltipOptions<T extends HTMLElement, U extends HTMLElement> = {
+  triggerRef: MutableRefObject<T | null>;
+  tooltipRef: MutableRefObject<U | null>;
 };
 
 /**
@@ -147,6 +159,115 @@ export function getTooltipPlacement(input: TooltipPlacementInput): TooltipPlacem
   return {
     left: Math.floor(left - coordinateSpace.leftOffset),
     top: Math.floor(clamp(top, minTop, maxTop) - coordinateSpace.topOffset),
+  };
+}
+
+/**
+ * Shares tooltip open/close lifecycle and placement refresh for hover-driven surfaces.
+ *
+ * @param {HoverTooltipOptions<T, U>} options - Trigger and tooltip refs used for placement.
+ * @returns {{
+ *   isOpen: boolean;
+ *   position: HoverTooltipState | null;
+ *   openTooltip: (element?: T | null) => void;
+ *   closeTooltip: () => void;
+ *   updateTooltipPosition: () => void;
+ * }} Tooltip state and lifecycle helpers.
+ */
+export function useHoverTooltip<T extends HTMLElement, U extends HTMLElement>({
+  triggerRef,
+  tooltipRef,
+}: HoverTooltipOptions<T, U>) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState<HoverTooltipState | null>(null);
+  const frameRef = useRef<number | null>(null);
+
+  const updateTooltipPosition = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    const triggerElement = triggerRef.current;
+    const tooltipElement = tooltipRef.current;
+    if (!triggerElement || !tooltipElement) return;
+
+    const viewportPadding = 12;
+    const gap = 8;
+    const minTop = getTooltipSafeTop(gap, viewportPadding);
+    const triggerRect = triggerElement.getBoundingClientRect();
+    const tooltipRect = tooltipElement.getBoundingClientRect();
+    const coordinateSpace = getTooltipCoordinateSpace(tooltipElement);
+    setPosition(getTooltipPlacement({
+      coordinateSpace,
+      gap,
+      minTop,
+      tooltipRect,
+      triggerRect,
+      viewportPadding,
+    }));
+  }, [tooltipRef, triggerRef]);
+
+  const closeTooltip = useCallback(() => {
+    if (typeof window !== "undefined" && frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+      frameRef.current = null;
+    }
+    setIsOpen(false);
+    setPosition(null);
+  }, []);
+
+  const openTooltip = useCallback((element?: T | null) => {
+    if (element) {
+      triggerRef.current = element;
+    }
+
+    setIsOpen(true);
+
+    if (typeof window === "undefined") return;
+    if (frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+    }
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      updateTooltipPosition();
+      frameRef.current = null;
+    });
+  }, [triggerRef, updateTooltipPosition]);
+
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined") return;
+
+    const triggerElement = triggerRef.current;
+    const tooltipElement = tooltipRef.current;
+    if (!triggerElement || !tooltipElement) return;
+
+    const observer = new ResizeObserver(() => {
+      updateTooltipPosition();
+    });
+    observer.observe(tooltipElement);
+
+    const handleViewportChange = () => updateTooltipPosition();
+    const scrollParents = getTooltipScrollParents(triggerElement);
+    window.addEventListener("resize", handleViewportChange);
+    scrollParents.forEach((parent) => parent.addEventListener("scroll", handleViewportChange, {passive: true}));
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", handleViewportChange);
+      scrollParents.forEach((parent) => parent.removeEventListener("scroll", handleViewportChange));
+    };
+  }, [isOpen, tooltipRef, triggerRef, updateTooltipPosition]);
+
+  useEffect(() => () => {
+    if (typeof window !== "undefined" && frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+    }
+  }, []);
+
+  return {
+    isOpen,
+    position,
+    openTooltip,
+    closeTooltip,
+    updateTooltipPosition,
   };
 }
 

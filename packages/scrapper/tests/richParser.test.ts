@@ -17,7 +17,6 @@ describe("rich text parser", () => {
 
   it("parse full gift: Complete Crystallize", () => {
     const tokens = parse(FULL_Crystallize);
-    console.log(JSON.stringify(tokens, null, 2));
     expect(tokens).toEqual([
       {
         "key": "text",
@@ -41,7 +40,6 @@ describe("rich text parser", () => {
 
   it("parse full gift: Cursed Criticals", () => {
     const tokens = parse(FULL_CURSE);
-    // console.log(JSON.stringify(tokens, null, 2));
     expect(tokens).toEqual([
       {
         "key": "entity",

@@ -36,6 +36,16 @@ export function buildDetectedDeckItems(squareResults: GiftMatchSquareResult[]): 
 }
 
 /**
+ * Builds a unique deck-item list from successful square matches for debug or user-facing flows.
+ *
+ * @param {GiftMatchSquareResult[]} squareResults - Workflow results for every detected square.
+ * @returns {MatchedDeckItem[]} Unique matched items ordered by first successful match.
+ */
+export function buildMatchedDeckItems(squareResults: GiftMatchSquareResult[]): MatchedDeckItem[] {
+  return buildDetectedDeckItems(squareResults);
+}
+
+/**
  * Collects unique alternate candidates for squares that did not meet the match threshold.
  *
  * @param {GiftMatchSquareResult[]} squareResults - Workflow results for every detected square.

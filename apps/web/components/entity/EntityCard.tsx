@@ -1,17 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
 import RichText from "./RichText";
 import EntityVideoPreview from "./EntityVideoPreview";
 import {
-  getTooltipCoordinateSpace,
-  getTooltipPlacement,
-  getTooltipSafeTop,
-  getTooltipScrollParents,
+  useHoverTooltip,
 } from "../tooltip/hoverTooltip";
 
 type CardViewMode = "details" | "thumbs";
@@ -37,11 +34,6 @@ type StatRow = {
   value: string;
 };
 
-type TooltipPosition = {
-  left: number;
-  top: number;
-};
-
 export default function EntityCard({
   item,
   type,
@@ -64,9 +56,16 @@ export default function EntityCard({
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
   const [showPreview, setShowPreview] = useState(false);
-  const thumbsPositionFrame = useRef<number | null>(null);
-  const [showThumbsHover, setShowThumbsHover] = useState(false);
-  const [thumbsTooltipPosition, setThumbsTooltipPosition] = useState<TooltipPosition | null>(null);
+  const {
+    isOpen: showThumbsHover,
+    position: thumbsTooltipPosition,
+    openTooltip: openThumbsHover,
+    closeTooltip: closeThumbsHover,
+    updateTooltipPosition: updateThumbsTooltipPosition,
+  } = useHoverTooltip({
+    triggerRef: thumbsMediaRef,
+    tooltipRef: thumbsTooltipRef,
+  });
 
   const handleAdd = () => {
     const res = deck.add(makeDeckItem(type, item), limits);
@@ -78,76 +77,6 @@ export default function EntityCard({
   const handleRemove = () => {
     deck.remove(`${type}:${item.name}`);
   };
-
-  const updateThumbsTooltipPosition = useCallback(() => {
-    if (typeof window === "undefined") return;
-
-    const tooltipElement = thumbsTooltipRef.current;
-    const mediaElement = thumbsMediaRef.current;
-    if (!tooltipElement || !mediaElement) return;
-
-    const viewportPadding = 12;
-    const gap = 8;
-    const minTop = getTooltipSafeTop(gap, viewportPadding);
-    const mediaRect = mediaElement.getBoundingClientRect();
-    const tooltipRect = tooltipElement.getBoundingClientRect();
-    const coordinateSpace = getTooltipCoordinateSpace(tooltipElement);
-    setThumbsTooltipPosition(getTooltipPlacement({
-      coordinateSpace,
-      gap,
-      minTop,
-      tooltipRect,
-      triggerRect: mediaRect,
-      viewportPadding,
-    }));
-  }, []);
-
-  const closeThumbsHover = useCallback(() => {
-    if (thumbsPositionFrame.current !== null) {
-      window.cancelAnimationFrame(thumbsPositionFrame.current);
-      thumbsPositionFrame.current = null;
-    }
-    setShowThumbsHover(false);
-    setThumbsTooltipPosition(null);
-  }, []);
-
-  const openThumbsHover = useCallback((cardElement: HTMLElement | null) => {
-    cardElementRef.current = cardElement;
-    setShowThumbsHover(true);
-
-    if (thumbsPositionFrame.current !== null) {
-      window.cancelAnimationFrame(thumbsPositionFrame.current);
-    }
-
-    thumbsPositionFrame.current = window.requestAnimationFrame(() => {
-      updateThumbsTooltipPosition();
-      thumbsPositionFrame.current = null;
-    });
-  }, [updateThumbsTooltipPosition]);
-
-  useEffect(() => {
-    if (!showThumbsHover || typeof window === "undefined") return;
-
-    const tooltipElement = thumbsTooltipRef.current;
-    const mediaElement = thumbsMediaRef.current;
-    if (!tooltipElement || !mediaElement) return;
-
-    const observer = new ResizeObserver(() => {
-      updateThumbsTooltipPosition();
-    });
-    observer.observe(tooltipElement);
-
-    const handleViewportChange = () => updateThumbsTooltipPosition();
-    const scrollParents = getTooltipScrollParents(mediaElement);
-    window.addEventListener("resize", handleViewportChange);
-    scrollParents.forEach((parent) => parent.addEventListener("scroll", handleViewportChange, {passive: true}));
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", handleViewportChange);
-      scrollParents.forEach((parent) => parent.removeEventListener("scroll", handleViewportChange));
-    };
-  }, [showThumbsHover, updateThumbsTooltipPosition]);
 
   const cardClasses = `card ${viewMode === "thumbs" ? "card-thumbs" : "card-details"} ${
     highlight || presentInDeck ? "is-highlighted" : ""
@@ -166,9 +95,9 @@ export default function EntityCard({
           closeThumbsHover();
         }
       }}
-      onFocus={(event) => {
+      onFocus={() => {
         if (viewMode === "thumbs") {
-          openThumbsHover(event.currentTarget);
+          openThumbsHover();
         }
       }}
       onMouseLeave={() => {
@@ -176,9 +105,9 @@ export default function EntityCard({
           closeThumbsHover();
         }
       }}
-      onMouseEnter={(event) => {
+      onMouseEnter={() => {
         if (viewMode === "thumbs") {
-          openThumbsHover(event.currentTarget);
+          openThumbsHover();
         }
       }}
     >

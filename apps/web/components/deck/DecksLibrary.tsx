@@ -16,10 +16,7 @@ import RichText from "../entity/RichText";
 import {getEntityStats} from "../entity/EntityCard";
 import EntityVideoPreview from "../entity/EntityVideoPreview";
 import {
-  getTooltipCoordinateSpace,
-  getTooltipPlacement,
-  getTooltipSafeTop,
-  getTooltipScrollParents,
+  useHoverTooltip,
 } from "../tooltip/hoverTooltip";
 
 type DrawerPhase = "opening" | "open" | "closing";
@@ -42,11 +39,6 @@ type DeckCategoryMeta = {
   image?: string;
   itemIds: string[];
   name: string;
-};
-
-type DeckTooltipPosition = {
-  left: number;
-  top: number;
 };
 
 const DRAWER_OPENING_DELAY_MS = 24;
@@ -148,7 +140,7 @@ export default function DecksLibrary() {
     if (!drawerMounted) return;
     setDrawerPhase("closing");
     return;
-  }, [deck.cancelEditing, deckUi.open, drawerMounted]);
+  }, [deckUi.open, drawerMounted]);
 
   const handleShare = async (deckName: string) => {
     const savedDeck = deck.saved.find((entry) => entry.name === deckName);
@@ -247,12 +239,6 @@ export default function DecksLibrary() {
                     categories={buildDeckCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
                     entityLookup={entityLookup}
                     row={favoritesRow}
-                    onDelete={() => {}}
-                    onDiscardShared={() => {}}
-                    onDuplicate={() => {}}
-                    onEdit={() => {}}
-                    onSaveShared={() => {}}
-                    onShare={() => {}}
                   />
                 ) : (
                   <div className="deck-row-empty">No favorites yet.</div>
@@ -335,18 +321,17 @@ type DeckRowProps = {
   categories: DeckCategoryMeta[];
   entityLookup: EntityLookup;
   row: DeckRowModel;
-  onDelete: () => void;
-  onDiscardShared: () => void;
-  onDuplicate: () => void;
-  onEdit: () => void;
-  onSaveShared: () => void;
-  onShare: () => void;
+  onDelete?: () => void;
+  onDiscardShared?: () => void;
+  onDuplicate?: () => void;
+  onEdit?: () => void;
+  onSaveShared?: () => void;
+  onShare?: () => void;
 };
 
 function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDuplicate, onEdit, onSaveShared, onShare}: DeckRowProps) {
   const isShared = row.kind === "shared";
   const isFavorites = row.kind === "favorites";
-  const meta = isShared || isFavorites ? null : formatRoughDate(row.deck.createdAt);
   const title = isFavorites ? "\u2665 Favorites" : row.deck.name;
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const activeCategoryItemIds = useMemo(
@@ -361,7 +346,6 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
           <div className="deck-row-head">
             <div className="deck-row-title-group">
               <h2 className="deck-row-meta">{title}</h2>
-              {/*{meta && <p className="deck-row-meta">{meta}</p>}*/}
             </div>
             <div className="deck-row-actions">
               {isShared ? (
@@ -410,17 +394,6 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
                       </span>
                     </button>
                   ))}
-                  {/*{activeCategory ? (*/}
-                  {/*  <button*/}
-                  {/*    className="btn ghost deck-row-category-reset"*/}
-                  {/*    type="button"*/}
-                  {/*    onClick={() => {*/}
-                  {/*      setActiveCategory(null);*/}
-                  {/*    }}*/}
-                  {/*  >*/}
-                  {/*    Reset*/}
-                  {/*  </button>*/}
-                  {/*) : null}*/}
                 </div>
               ) : (
                 <p className="deck-row-side-empty">No gift categories</p>
@@ -456,77 +429,16 @@ function DeckRowItem({
   const itemElementRef = useRef<HTMLDivElement | null>(null);
   const tooltipElementRef = useRef<HTMLDivElement | null>(null);
   const stats = details ? getEntityStats(details.entity, details.type) : [];
-  const tooltipFrameRef = useRef<number | null>(null);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipPosition, setTooltipPosition] = useState<DeckTooltipPosition>({left: 0, top: 0});
-
-  const updateTooltipPosition = () => {
-    if (typeof window === "undefined") return;
-
-    const itemElement = itemElementRef.current;
-    const tooltipElement = tooltipElementRef.current;
-    if (!tooltipElement) return;
-    if (!itemElement) return;
-
-    const viewportPadding = 12;
-    const gap = 8;
-    const minTop = getTooltipSafeTop(gap, viewportPadding);
-    const itemRect = itemElement.getBoundingClientRect();
-    const tooltipRect = tooltipElement.getBoundingClientRect();
-    const coordinateSpace = getTooltipCoordinateSpace(tooltipElement);
-    setTooltipPosition(getTooltipPlacement({
-      coordinateSpace,
-      gap,
-      minTop,
-      tooltipRect,
-      triggerRect: itemRect,
-      viewportPadding,
-    }));
-  };
-
-  const closeTooltip = () => {
-    if (tooltipFrameRef.current !== null) {
-      window.cancelAnimationFrame(tooltipFrameRef.current);
-      tooltipFrameRef.current = null;
-    }
-    setShowTooltip(false);
-  };
-
-  const openTooltip = (itemElement: HTMLDivElement | null) => {
-    itemElementRef.current = itemElement;
-    setShowTooltip(true);
-    if (tooltipFrameRef.current !== null) {
-      window.cancelAnimationFrame(tooltipFrameRef.current);
-    }
-    tooltipFrameRef.current = window.requestAnimationFrame(() => {
-      updateTooltipPosition();
-      tooltipFrameRef.current = null;
-    });
-  };
-
-  useEffect(() => {
-    if (!showTooltip || typeof window === "undefined") return;
-
-    const tooltipElement = tooltipElementRef.current;
-    const itemElement = itemElementRef.current;
-    if (!tooltipElement || !itemElement) return;
-
-    const observer = new ResizeObserver(() => {
-      updateTooltipPosition();
-    });
-    observer.observe(tooltipElement);
-
-    const handleViewportChange = () => updateTooltipPosition();
-    const scrollParents = getTooltipScrollParents(itemElement);
-    window.addEventListener("resize", handleViewportChange);
-    scrollParents.forEach((parent) => parent.addEventListener("scroll", handleViewportChange, {passive: true}));
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", handleViewportChange);
-      scrollParents.forEach((parent) => parent.removeEventListener("scroll", handleViewportChange));
-    };
-  }, [showTooltip]);
+  const {
+    isOpen: showTooltip,
+    position: tooltipPosition,
+    openTooltip,
+    closeTooltip,
+    updateTooltipPosition,
+  } = useHoverTooltip({
+    triggerRef: itemElementRef,
+    tooltipRef: tooltipElementRef,
+  });
 
   return (
     <div
@@ -548,8 +460,10 @@ function DeckRowItem({
         ref={tooltipElementRef}
         role="tooltip"
         style={{
-          left: `${tooltipPosition.left}px`,
-          top: `${tooltipPosition.top}px`,
+          left: `${tooltipPosition?.left ?? 0}px`,
+          top: `${tooltipPosition?.top ?? 0}px`,
+          opacity: showTooltip && tooltipPosition ? undefined : 0,
+          visibility: showTooltip && tooltipPosition ? undefined : "hidden",
         }}
       >
         {showTooltip ? (

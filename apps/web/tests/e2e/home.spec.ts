@@ -110,3 +110,61 @@ test("creating a new build drawer renders an opening phase before settling open"
 
   await expect(surface).toHaveClass(/is-open/);
 });
+
+test("adding and removing items does not retrigger drawer opening phases", async ({page}) => {
+  await page.goto("/decks");
+
+  await page.getByRole("button", {name: "Create new build"}).click();
+
+  const surface = page.locator(".deck-builder-surface");
+  await expect(surface).toHaveClass(/is-open/);
+
+  await page.evaluate(() => {
+    const surfaceElement = document.querySelector(".deck-builder-surface");
+    const observedClasses: string[] = [];
+
+    if (!surfaceElement) {
+      throw new Error("Drawer surface not found");
+    }
+
+    observedClasses.push(surfaceElement.className);
+
+    const observer = new MutationObserver(() => {
+      observedClasses.push(surfaceElement.className);
+    });
+
+    observer.observe(surfaceElement, {attributes: true, attributeFilter: ["class"]});
+    (window as Window & { __drawerClassObserver?: MutationObserver; __drawerObservedClasses?: string[] }).__drawerClassObserver = observer;
+    (window as Window & { __drawerObservedClasses?: string[] }).__drawerObservedClasses = observedClasses;
+  });
+
+  const firstCard = page.locator(".card").first();
+  await expect(firstCard).toBeVisible({timeout: 30000});
+  await firstCard.hover();
+
+  const addButton = firstCard.getByRole("button", {name: "Add to deck"});
+  await expect(addButton).toBeVisible();
+  await addButton.click();
+
+  const deckItems = page.locator(".deck-item");
+  await expect(deckItems).toHaveCount(1);
+
+  await firstCard.hover();
+  const removeButton = firstCard.getByRole("button", {name: "Remove from deck"});
+  await expect(removeButton).toBeVisible();
+  await removeButton.click();
+  await expect(deckItems).toHaveCount(0);
+
+  const observedClasses = await page.evaluate(() => {
+    const scopedWindow = window as Window & {
+      __drawerClassObserver?: MutationObserver;
+      __drawerObservedClasses?: string[];
+    };
+
+    scopedWindow.__drawerClassObserver?.disconnect();
+    return scopedWindow.__drawerObservedClasses ?? [];
+  });
+
+  expect(observedClasses.some((className) => /is-opening|is-closing/.test(className))).toBe(false);
+  await expect(surface).toHaveClass(/is-open/);
+});

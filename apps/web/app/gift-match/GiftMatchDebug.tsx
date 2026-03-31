@@ -5,7 +5,6 @@ import Image from "next/image";
 import {type ChangeEvent, useEffect, useMemo, useRef, useState} from "react";
 import {buildDeckShareUrl} from "../../components/deck/deck-share";
 import {type Rectangle} from "../../lib/gift-icon-matcher";
-import {type EntityType} from "../../lib/types";
 import {
   isGiftMatch,
   runGiftMatchWorkflow,
@@ -13,16 +12,10 @@ import {
   type GiftMatchSquareResult,
   type GiftMatchTemplateSpec,
 } from "./gift-match-workflow";
+import {buildMatchedDeckItems, type MatchedDeckItem} from "./run-build-flow";
 
 type GiftMatchDebugProps = {
   templateSpecs: GiftMatchTemplateSpec[];
-};
-
-type MatchedDeckItem = {
-  id: string;
-  type: Exclude<EntityType, "effects">;
-  name: string;
-  image?: string;
 };
 
 /**
@@ -46,7 +39,7 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
     }
   }, []);
 
-  const matchedDeckItems = useMemo(() => buildDeckItems(state?.squareResults ?? []), [state?.squareResults]);
+  const matchedDeckItems = useMemo(() => buildMatchedDeckItems(state?.squareResults ?? []), [state?.squareResults]);
 
   async function handleStart() {
     if (!sourceSrc) {
@@ -263,45 +256,6 @@ function isSuccessfulSquare(square: GiftMatchSquareResult): boolean {
 
 function getSquareBorderColor(square: GiftMatchSquareResult): string {
   return isSuccessfulSquare(square) ? "#16a34a" : "#dc2626";
-}
-
-function buildDeckItems(squareResults: GiftMatchSquareResult[]): MatchedDeckItem[] {
-  const uniqueItems = new Map<string, MatchedDeckItem>();
-
-  for (const square of squareResults) {
-    const template = square.bestTemplate;
-    if (!template || !isGiftMatch(template.score)) {
-      continue;
-    }
-
-    const type = extractEntityTypeFromPath(template.path);
-    if (!type || type === "boosts") {
-      continue;
-    }
-
-    const id = `${type}:${template.name}`;
-    if (!uniqueItems.has(id)) {
-      uniqueItems.set(id, {
-        id,
-        type,
-        name: template.name,
-        image: template.path,
-      });
-    }
-  }
-
-  return [...uniqueItems.values()];
-}
-
-function extractEntityTypeFromPath(imagePath: string): Exclude<EntityType, "effects"> | null {
-  const pathParts = imagePath.split("/");
-  const type = pathParts[2];
-
-  if (type === "gifts" || type === "weapons" || type === "trinkets" || type === "magifishes" || type === "hexes" || type === "boosts") {
-    return type;
-  }
-
-  return null;
 }
 
 function buildShortTimestamp(): string {
