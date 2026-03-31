@@ -1,5 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {
+  groupDeckItemsByType,
   isEditingDeckSession,
   normalizeSavedDecks,
   resolveSharedDeckFromLocation,
@@ -45,6 +46,26 @@ describe("normalizeSavedDecks", () => {
     const normalized = normalizeSavedDecks([{name: "Deck 1", items: []}]);
     expect(normalized[0]).toMatchObject({name: "Deck 1", items: []});
     expect(normalized[0].createdAt).toEqual(expect.any(String));
+  });
+});
+
+describe("groupDeckItemsByType", () => {
+  it("groups items by deck type order while preserving first-seen order inside each group", () => {
+    expect(groupDeckItemsByType([
+      {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom"},
+      {id: "gifts:Abundance", type: "gifts", name: "Abundance"},
+      {id: "magifishes:Gobbling Fish", type: "magifishes", name: "Gobbling Fish"},
+      {id: "weapons:Beatbolt", type: "weapons", name: "Beatbolt"},
+      {id: "hexes:Affliction Hex", type: "hexes", name: "Affliction Hex"},
+      {id: "trinkets:Bomb", type: "trinkets", name: "Bomb"},
+    ])).toEqual([
+      {id: "gifts:Abundance", type: "gifts", name: "Abundance"},
+      {id: "hexes:Affliction Hex", type: "hexes", name: "Affliction Hex"},
+      {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom"},
+      {id: "weapons:Beatbolt", type: "weapons", name: "Beatbolt"},
+      {id: "trinkets:Bomb", type: "trinkets", name: "Bomb"},
+      {id: "magifishes:Gobbling Fish", type: "magifishes", name: "Gobbling Fish"},
+    ]);
   });
 });
 

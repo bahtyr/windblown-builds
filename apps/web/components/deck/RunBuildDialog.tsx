@@ -15,7 +15,7 @@ import {
   type MatchedDeckItem,
 } from "../../app/gift-match/run-build-flow";
 import {type Rectangle} from "../../lib/gift-icon-matcher";
-import {useDeck} from "./DeckContext";
+import {groupDeckItemsByType, useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
 
 type RunBuildDialogProps = {
@@ -69,8 +69,14 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
     };
   }, [isOpen]);
 
-  const matchedItems = useMemo(() => buildDetectedDeckItems(runResult?.squareResults ?? []), [runResult?.squareResults]);
-  const failedSquares = useMemo(() => buildFailedSquareCandidates(runResult?.squareResults ?? []), [runResult?.squareResults]);
+  const matchedItems = useMemo(
+    () => groupMatchedItems(buildDetectedDeckItems(runResult?.squareResults ?? [])),
+    [runResult?.squareResults],
+  );
+  const failedSquares = useMemo(
+    () => groupMatchedItems(buildFailedSquareCandidates(runResult?.squareResults ?? [])),
+    [runResult?.squareResults],
+  );
   const visibleMatchedItems = useMemo(
     () => matchedItems.filter((item) => !removedMatchedIds.includes(item.id)),
     [matchedItems, removedMatchedIds],
@@ -354,4 +360,8 @@ function buildOverlayStyle(square: Rectangle, sourceWidth: number, sourceHeight:
 
 function formatRoundedSeconds(milliseconds: number): string {
   return `${Math.max(1, Math.round(milliseconds / 1000))}`;
+}
+
+function groupMatchedItems(items: MatchedDeckItem[]): MatchedDeckItem[] {
+  return groupDeckItemsByType(items) as MatchedDeckItem[];
 }

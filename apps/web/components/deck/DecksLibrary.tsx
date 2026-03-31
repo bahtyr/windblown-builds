@@ -473,15 +473,19 @@ export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map
 }
 
 function sortDeckItemsByType(items: DeckItem[]): DeckItem[] {
-  return [...items].sort(compareDeckItems);
-}
+  const groupedItems = new Map<EntityType, DeckItem[]>();
 
-function compareDeckItems(a: DeckItem, b: DeckItem): number {
-  const typeOrder = compareTypeOrder(a.type, b.type);
-  if (typeOrder !== 0) return typeOrder;
-  return a.name.localeCompare(b.name);
-}
+  for (const item of items) {
+    groupedItems.set(item.type, [...(groupedItems.get(item.type) ?? []), item]);
+  }
 
-function compareTypeOrder(a: EntityType, b: EntityType): number {
-  return ENTITY_TYPES.indexOf(a) - ENTITY_TYPES.indexOf(b);
+  return [
+    ...(groupedItems.get("gifts") ?? []),
+    ...(groupedItems.get("hexes") ?? []),
+    ...(groupedItems.get("weapons") ?? []),
+    ...(groupedItems.get("trinkets") ?? []),
+    ...(groupedItems.get("magifishes") ?? []),
+    ...(groupedItems.get("boosts") ?? []),
+    ...(groupedItems.get("effects") ?? []),
+  ];
 }

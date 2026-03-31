@@ -136,12 +136,12 @@ function rows(items: DeckItem[]): { type: EntityType; list: DeckItem[] }[][] {
   return [
     [{type: "gifts" as const, list: group("gifts")}],
     [
+      {type: "hexes" as const, list: group("hexes")},
       {type: "weapons" as const, list: group("weapons")},
       {type: "trinkets" as const, list: group("trinkets")},
       {type: "magifishes" as const, list: group("magifishes")},
     ],
     [
-      {type: "hexes" as const, list: group("hexes")},
       {type: "boosts" as const, list: group("boosts")},
     ],
   ];

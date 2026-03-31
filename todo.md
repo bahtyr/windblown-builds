@@ -48,28 +48,6 @@ Goal: keep the debugger flow separate, and create a simpler user-facing flow for
 
 ---
 
-## Follow-up TODO for Done Items
-
-### Deck more info follow-up
-- Improve the overall visual treatment.
-- Fix bottom spacing.
-- Hide empty category-image slots so they do not take space.
-- Fix hover filters so they clear on hover-out.
-- Stop fading unmatched deck items when category hover/filter is active.
-- Show a reset button at the end of the category row when a filter is active.
-
-### Entity videos follow-up
-- On the My Builds page, move the video after the description to the end of the deck-item tooltip.
-
-### Better detect build flow follow-up
-- Change the v1 dialog subtext to: `Calculated in {rounded seconds} seconds. x items detected.`
-- Change the build-name default to a weekday/time format like `Sunday 23:30` using rounded minutes.
-- Make the initial source prompt use the app white text style: `drop an image or click to upload`.
-- Add a clear hover state to the empty drop zone with a blue highlighted border.
-- Ensure the empty drop zone uses a pointer cursor.
-
----
-
 ## 6. Gift matching debugger
 
 Status: discuss before implementing.
@@ -119,3 +97,8 @@ Initial implementation direction:
 
 Still to consider:
 - Whether the side-panel layout should be changed more broadly.
+
+---
+
+- deck hover tooltip - should be considered of browser overflow. tooltip should position within browser when close to the edge of the screen.
+- cursor issue: even when a div is cursor pointer, hovering on a text within reverts to cursor default

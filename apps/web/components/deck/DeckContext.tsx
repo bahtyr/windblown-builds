@@ -206,7 +206,8 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setEditingSource("saved");
       },
       saveImportedDeck: (deckName, nextItems) => {
-        const persisted = saveExternalDeck(saved, deckName, nextItems);
+        const orderedItems = groupDeckItemsByType(nextItems);
+        const persisted = saveExternalDeck(saved, deckName, orderedItems);
         setSaved(persisted.saved);
         setItems(persisted.savedDeck.items);
         setEditingDeckName(persisted.savedDeck.name);
@@ -365,7 +366,23 @@ async function hydrateDeckItems(deckItems: DeckItem[]): Promise<DeckItem[]> {
   return changed ? nextItems : deckItems;
 }
 
-const TYPE_ORDER: EntityType[] = ["gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts", "effects"];
+const TYPE_ORDER: EntityType[] = ["gifts", "hexes", "weapons", "trinkets", "magifishes", "boosts", "effects"];
+
+/**
+ * Groups deck items by the canonical deck display order while preserving arrival order inside each group.
+ *
+ * @param {DeckItem[]} items - Flat deck item list.
+ * @returns {DeckItem[]} Reordered deck items with stable within-group order.
+ */
+export function groupDeckItemsByType(items: DeckItem[]): DeckItem[] {
+  const groupedItems = new Map<EntityType, DeckItem[]>();
+
+  for (const item of items) {
+    groupedItems.set(item.type, [...(groupedItems.get(item.type) ?? []), item]);
+  }
+
+  return TYPE_ORDER.flatMap((type) => groupedItems.get(type) ?? []);
+}
 
 function insertByType(list: DeckItem[], item: DeckItem): DeckItem[] {
   const order = TYPE_ORDER.indexOf(item.type);
