@@ -15,9 +15,6 @@ export default function NavBar() {
             <Link className={`tab ${pathname === "/decks" ? "is-active" : ""}`} href="/decks">
               My Builds
             </Link>
-            <Link className={`tab ${pathname === "/gift-match" ? "is-active" : ""}`} href="/gift-match">
-              Detect Build
-            </Link>
             <Link className={`tab ${pathname === "/browse" ? "is-active" : ""}`} href="/browse">
               Browse
             </Link>
@@ -31,9 +28,6 @@ export default function NavBar() {
             </Link>
             <Link className="tab tab-secondary" href="https://discord.com/invite/v4S6Vsarkx" rel="noreferrer" target="_blank">
               Discord ↗
-            </Link>
-            <Link className="tab tab-secondary" href="https://github.com/bahtyr/windblown-builds" rel="noreferrer" target="_blank">
-              Support development ↗
             </Link>
           </nav>
         </div>

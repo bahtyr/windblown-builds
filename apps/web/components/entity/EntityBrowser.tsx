@@ -64,7 +64,6 @@ export default function EntityBrowser({embedded = false}: Props) {
       setLikedOnly(false);
       setDeckOnly(embeddedFilters.deckOnly);
       setMatchDisplayMode(embeddedFilters.matchDisplayMode);
-      setViewMode("details");
       setFiltersHydrated(true);
       return;
     }
@@ -335,29 +334,27 @@ function SidebarActions({
 }: SidebarActionsProps) {
   return (
     <div className="browse-sidebar-section browse-sidebar-tools">
-      {!embedded && (
-        <>
-          <div className="browse-sidebar-subtitle">View</div>
-          <div className="browse-sidebar-view-toggle" role="group" aria-label="Browse view mode">
-            <button
-              type="button"
-              className={`browse-sidebar-link ${viewMode === "details" ? "is-active" : ""}`}
-              onClick={() => onViewModeChange("details")}
-              aria-pressed={viewMode === "details"}
-            >
-              Details
-            </button>
-            <button
-              type="button"
-              className={`browse-sidebar-link ${viewMode === "thumbs" ? "is-active" : ""}`}
-              onClick={() => onViewModeChange("thumbs")}
-              aria-pressed={viewMode === "thumbs"}
-            >
-              Thumbs
-            </button>
-          </div>
-        </>
-      )}
+      <>
+        <div className="browse-sidebar-subtitle">View</div>
+        <div className="browse-sidebar-view-toggle" role="group" aria-label="Browse view mode">
+          <button
+            type="button"
+            className={`browse-sidebar-link ${viewMode === "details" ? "is-active" : ""}`}
+            onClick={() => onViewModeChange("details")}
+            aria-pressed={viewMode === "details"}
+          >
+            Details
+          </button>
+          <button
+            type="button"
+            className={`browse-sidebar-link ${viewMode === "thumbs" ? "is-active" : ""}`}
+            onClick={() => onViewModeChange("thumbs")}
+            aria-pressed={viewMode === "thumbs"}
+          >
+            Thumbs
+          </button>
+        </div>
+      </>
       <button
         type="button"
         className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}

@@ -226,6 +226,22 @@ test("deck category hover activates a filter and reset clears it", async ({page}
   await expect(deckRow.locator(".deck-row-item.is-category-mismatch")).toHaveCount(0);
 });
 
+test("embedded deck browser supports thumbs view", async ({page}) => {
+  await page.goto("/decks");
+
+  await page.getByRole("button", {name: "Create new build"}).click();
+  await expect(page.getByRole("dialog", {name: "Build editor"})).toBeVisible();
+
+  const deckBrowser = page.locator(".deck-builder-browser");
+  await deckBrowser.getByRole("button", {name: "Thumbs"}).click();
+  await deckBrowser.getByPlaceholder("Search text...").fill("Abundance");
+  await deckBrowser.getByRole("button", {name: "Hide unmatching results"}).click();
+
+  const card = deckBrowser.locator(".card-thumbs").first();
+  await expect(card).toBeVisible();
+  await expect(card.locator(".card-thumbs-image")).toBeVisible();
+});
+
 test("dropping an image anywhere in the app opens the new run dialog", async ({page}) => {
   await page.goto("/browse");
 

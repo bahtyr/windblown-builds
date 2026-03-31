@@ -58,6 +58,7 @@ header, .header {
 }
 
 .tabs-secondary {
+    margin-left: auto;
     gap: var(--space-1);
 }
 
