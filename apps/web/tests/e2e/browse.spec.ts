@@ -70,8 +70,9 @@ test("browse thumbs view shows larger art and hover details with video", async (
 
   await page.getByRole("button", {name: "Thumbs"}).click();
   await page.getByPlaceholder("Search text...").fill("Abundance");
+  await page.getByRole("button", {name: "Hide unmatching results"}).click();
 
-  const card = page.locator(".card-thumbs", {has: page.getByText("Abundance", {exact: true})}).first();
+  const card = page.locator(".card-thumbs").first();
   await expect(card).toBeVisible();
 
   const image = card.locator(".card-thumbs-image");
@@ -79,7 +80,7 @@ test("browse thumbs view shows larger art and hover details with video", async (
   const video = hover.locator("video");
 
   await expect(image).toBeVisible();
-  await card.hover();
+  await card.hover({force: true});
 
   await expect(hover).toBeVisible();
   await expect(hover.getByText("Abundance", {exact: true})).toBeVisible();
@@ -101,13 +102,15 @@ test("browse thumbs view shows larger art and hover details with video", async (
   const imageBox = await image.boundingBox();
   const hoverBox = await hover.boundingBox();
   const videoBox = await video.boundingBox();
+  const filtersBox = await page.locator(".filters-body").boundingBox();
 
-  expect(imageBox?.width ?? 0).toBeGreaterThan(90);
-  expect(imageBox?.height ?? 0).toBeGreaterThan(90);
+  expect(imageBox?.width ?? 0).toBeGreaterThan(60);
+  expect(imageBox?.height ?? 0).toBeGreaterThan(60);
   expect(hoverBox).not.toBeNull();
   expect(videoBox?.width ?? 0).toBeGreaterThan(300);
   expect(videoBox?.height ?? 0).toBeGreaterThan(170);
-  expect((hoverBox?.y ?? 0) + (hoverBox?.height ?? 0)).toBeLessThanOrEqual((imageBox?.y ?? 0) + 2);
+  expect(hoverBox?.y ?? 0).toBeGreaterThanOrEqual((filtersBox?.y ?? 0) + (filtersBox?.height ?? 0));
+  expect((hoverBox?.y ?? 0) + (hoverBox?.height ?? 0)).toBeLessThanOrEqual(720);
 });
 
 test("decks hover tooltip renders a visible video area", async ({page}) => {

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
@@ -29,6 +29,11 @@ type StatRow = {
   value: string;
 };
 
+type TooltipPosition = {
+  left: number;
+  top: number;
+};
+
 export default function EntityCard({
   item,
   type,
@@ -46,6 +51,7 @@ export default function EntityCard({
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
   const [showPreview, setShowPreview] = useState(false);
+  const [thumbsTooltipPosition, setThumbsTooltipPosition] = useState<TooltipPosition | null>(null);
 
   const handleAdd = () => {
     const res = deck.add(makeDeckItem(type, item), limits);
@@ -58,12 +64,65 @@ export default function EntityCard({
     deck.remove(`${type}:${item.name}`);
   };
 
+  const updateThumbsTooltipPosition = useCallback((cardElement: HTMLElement | null) => {
+    if (!cardElement || typeof window === "undefined") return;
+
+    const tooltipElement = cardElement.querySelector<HTMLElement>(".card-thumbs-hover");
+    const mediaElement = cardElement.querySelector<HTMLElement>(".card-thumbs-media-wrap");
+    if (!tooltipElement || !mediaElement) return;
+
+    const viewportPadding = 12;
+    const gap = 8;
+    const filtersBottom = document.querySelector<HTMLElement>(".filters-body")?.getBoundingClientRect().bottom ?? 0;
+    const minTop = Math.max(viewportPadding, filtersBottom + gap);
+    const mediaRect = mediaElement.getBoundingClientRect();
+    const tooltipRect = tooltipElement.getBoundingClientRect();
+    const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipRect.width - viewportPadding);
+    let left = mediaRect.left + (mediaRect.width / 2) - (tooltipRect.width / 2);
+    left = Math.min(Math.max(left, viewportPadding), maxLeft);
+
+    const aboveTop = mediaRect.top - tooltipRect.height - gap;
+    const belowTop = mediaRect.bottom + gap;
+    const maxTop = Math.max(minTop, window.innerHeight - tooltipRect.height - viewportPadding);
+
+    let top = aboveTop;
+    if (aboveTop < minTop && belowTop <= maxTop) {
+      top = belowTop;
+    }
+
+    top = Math.min(Math.max(top, minTop), maxTop);
+    setThumbsTooltipPosition({left, top});
+  }, []);
+
   const cardClasses = `card ${viewMode === "thumbs" ? "card-thumbs" : "card-details"} ${
     highlight || presentInDeck ? "is-highlighted" : ""
   } ${presentInDeck ? "is-in-deck" : ""} ${fade ? "is-faded" : ""}`;
 
   return (
-    <article className={cardClasses}>
+    <article
+      className={cardClasses}
+      tabIndex={viewMode === "thumbs" ? 0 : undefined}
+      onBlur={(event) => {
+        if (viewMode === "thumbs" && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          setThumbsTooltipPosition(null);
+        }
+      }}
+      onFocus={(event) => {
+        if (viewMode === "thumbs") {
+          updateThumbsTooltipPosition(event.currentTarget);
+        }
+      }}
+      onMouseLeave={() => {
+        if (viewMode === "thumbs") {
+          setThumbsTooltipPosition(null);
+        }
+      }}
+      onMouseEnter={(event) => {
+        if (viewMode === "thumbs") {
+          updateThumbsTooltipPosition(event.currentTarget);
+        }
+      }}
+    >
       {viewMode === "thumbs" ? (
         <>
           <div className="card-thumbs-media-wrap">
@@ -85,7 +144,16 @@ export default function EntityCard({
               />
             </div>
           </div>
-          <div className="card-thumbs-hover" role="tooltip">
+          <div
+            className="card-thumbs-hover"
+            role="tooltip"
+            style={{
+              left: `${thumbsTooltipPosition?.left ?? 0}px`,
+              top: `${thumbsTooltipPosition?.top ?? 0}px`,
+              opacity: thumbsTooltipPosition ? undefined : 0,
+              visibility: thumbsTooltipPosition ? undefined : "hidden",
+            }}
+          >
             <div className="card-thumbs-hover-head">
               <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
                 {item.name}

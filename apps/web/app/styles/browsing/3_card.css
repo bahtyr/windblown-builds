@@ -213,13 +213,11 @@
 }
 
 .card-thumbs-hover {
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + var(--space-3));
+    position: fixed;
     z-index: 20;
     width: min(420px, 72vw);
     max-height: 420px;
-    transform: translateX(-50%) translateY(4px);
+    transform: translateY(4px);
     display: grid;
     align-content: start;
     gap: var(--space-3);
@@ -243,7 +241,7 @@
 .card-thumbs:focus-within .card-thumbs-hover {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
 }
 
 .card-thumbs:hover .card-thumbs-media-wrap,
