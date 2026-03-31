@@ -339,8 +339,8 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
         <div className="deck-row-main">
           <div className="deck-row-head">
             <div className="deck-row-title-group">
-              <h2 className="deck-row-title">{title}</h2>
-              {meta && <p className="deck-row-meta">{meta}</p>}
+              <h2 className="deck-row-meta">{title}</h2>
+              {/*{meta && <p className="deck-row-meta">{meta}</p>}*/}
             </div>
             <div className="deck-row-actions">
               {isShared ? (

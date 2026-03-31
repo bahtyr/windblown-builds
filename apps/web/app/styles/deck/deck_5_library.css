@@ -2,6 +2,13 @@
     /*padding-top: var(--space-20);*/
 }
 
+.page-decks .body-wrapper {
+    /*width: 100%;*/
+    /*max-width: calc(var(--max-width) * 1.5);*/
+    /*margin-left: 0;*/
+    /*margin-right: auto;*/
+}
+
 .decks-page {
     display: grid;
 }
@@ -98,6 +105,8 @@
     display: grid;
     padding: 0;
     background: transparent;
+    max-width: calc(var(--max-width) * 0.5);
+    /*max-width: 600px;*/
 }
 
 .decks-grid-favorites {
