@@ -1,18 +1,39 @@
-import {readdir} from "node:fs/promises";
+import {readdir, writeFile} from "node:fs/promises";
 import path from "node:path";
-import type {GiftMatchTemplateSpec} from "./gift-match-workflow";
+
+type GiftMatchTemplateSpec = {
+  name: string;
+  path: string;
+};
 
 const EXCLUDED_IMAGE_DIRECTORIES = new Set(["effects"]);
+const GIFT_MATCH_TEMPLATES_OUTPUT = "gift-match-templates.json";
 
 /**
- * Reads public image assets and exposes them as comparison template specs.
+ * Generates the matcher template catalog JSON used by the web app.
  *
- * @returns {Promise<GiftMatchTemplateSpec[]>} Sorted template specs for browser-side matching.
+ * @param {string} publicDir - Web public directory where the catalog should be written.
+ * @returns {Promise<void>} Resolves when the JSON file has been written.
  */
-export async function loadGiftMatchTemplateSpecs(): Promise<GiftMatchTemplateSpec[]> {
-  const imageDirectory = path.join(process.cwd(), "public", "images");
+export async function writeGiftMatchTemplateCatalog(publicDir: string): Promise<void> {
+  const imageDirectory = path.join(publicDir, "images");
   const relativePaths = await collectTemplateImagePaths(imageDirectory);
+  const specs = buildGiftMatchTemplateSpecs(relativePaths);
 
+  await writeFile(
+    path.join(publicDir, GIFT_MATCH_TEMPLATES_OUTPUT),
+    JSON.stringify(specs, null, 2),
+    "utf-8",
+  );
+}
+
+/**
+ * Converts image-relative paths into the matcher catalog format consumed by the web app.
+ *
+ * @param {string[]} relativePaths - Relative image paths under `public/images`.
+ * @returns {GiftMatchTemplateSpec[]} Sorted template specs for the matcher.
+ */
+export function buildGiftMatchTemplateSpecs(relativePaths: string[]): GiftMatchTemplateSpec[] {
   return relativePaths
     .map((relativePath) => ({
       name: formatTemplateName(path.basename(relativePath)),

@@ -2,6 +2,7 @@
 
 import {createContext, useContext, useEffect, useMemo, useRef, useState} from "react";
 import {type GiftMatchTemplateSpec} from "../../app/gift-match/gift-match-workflow";
+import {loadGiftMatchTemplateSpecs} from "../../lib/loadGiftMatchTemplateSpecs";
 import RunBuildDialog from "./RunBuildDialog";
 
 type RunBuildUiContextType = {
@@ -13,20 +14,54 @@ const RunBuildUiContext = createContext<RunBuildUiContextType | null>(null);
 /**
  * Provides the global new-run dialog together with app-wide paste and drop handlers.
  *
- * @param {{ children: React.ReactNode; templateSpecs: GiftMatchTemplateSpec[] }} props - Provider children and matcher templates.
+ * @param {{ children: React.ReactNode }} props - Provider children.
  * @returns {JSX.Element} Provider with global dialog and upload affordances.
  */
 export function RunBuildUiProvider({
   children,
-  templateSpecs,
 }: {
   children: React.ReactNode;
-  templateSpecs: GiftMatchTemplateSpec[];
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [templateSpecs, setTemplateSpecs] = useState<GiftMatchTemplateSpec[]>([]);
+  const [templatesLoading, setTemplatesLoading] = useState(false);
+  const [templatesError, setTemplatesError] = useState<string | null>(null);
   const dragDepthRef = useRef(0);
+
+  async function ensureTemplateSpecsLoaded(): Promise<GiftMatchTemplateSpec[]> {
+    if (templateSpecs.length > 0) {
+      return templateSpecs;
+    }
+
+    setTemplatesLoading(true);
+    setTemplatesError(null);
+
+    try {
+      const nextTemplateSpecs = await loadGiftMatchTemplateSpecs();
+      setTemplateSpecs(nextTemplateSpecs);
+      return nextTemplateSpecs;
+    } catch (loadError: unknown) {
+      const message = loadError instanceof Error ? loadError.message : "Failed to load matcher templates.";
+      setTemplatesError(message);
+      throw loadError;
+    } finally {
+      setTemplatesLoading(false);
+    }
+  }
+
+  async function openDialog(file?: File | null) {
+    setPendingFile(file ?? null);
+
+    try {
+      await ensureTemplateSpecsLoaded();
+    } catch {
+      // Open the dialog even when template loading fails so the user can see the error state.
+    }
+
+    setDialogOpen(true);
+  }
 
   useEffect(() => {
     function hasFiles(event: DragEvent): boolean {
@@ -82,8 +117,7 @@ export function RunBuildUiProvider({
 
       const droppedFile = Array.from(event.dataTransfer?.files ?? []).find((file) => isImageFile(file));
       if (droppedFile) {
-        setPendingFile(droppedFile);
-        setDialogOpen(true);
+        void openDialog(droppedFile);
       }
     }
 
@@ -103,8 +137,7 @@ export function RunBuildUiProvider({
 
       if (pastedFile && isImageFile(pastedFile)) {
         event.preventDefault();
-        setPendingFile(pastedFile);
-        setDialogOpen(true);
+        void openDialog(pastedFile);
       }
     }
 
@@ -126,11 +159,10 @@ export function RunBuildUiProvider({
   const value = useMemo<RunBuildUiContextType>(
     () => ({
       openRunBuildDialog: (file) => {
-        setPendingFile(file ?? null);
-        setDialogOpen(true);
+        void openDialog(file);
       },
     }),
-    [],
+    [templateSpecs],
   );
 
   return (
@@ -150,6 +182,8 @@ export function RunBuildUiProvider({
           setPendingFile(null);
         }}
         onInitialFileHandled={() => setPendingFile(null)}
+        templatesError={templatesError}
+        templatesLoading={templatesLoading}
         templateSpecs={templateSpecs}
       />
     </RunBuildUiContext.Provider>

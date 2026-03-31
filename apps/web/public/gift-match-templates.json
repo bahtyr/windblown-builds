@@ -1,0 +1,718 @@
+[
+  {
+    "name": "Abundance",
+    "path": "/images/gifts/Abundance_Icon.png"
+  },
+  {
+    "name": "Advanced Alterattacks",
+    "path": "/images/gifts/Advanced_Alterattacks_Icon.png"
+  },
+  {
+    "name": "Affliction Blast Hex",
+    "path": "/images/hexes/Affliction_Blast_Hex_Icon.png"
+  },
+  {
+    "name": "Affliction Hex",
+    "path": "/images/hexes/Affliction_Hex_Icon.png"
+  },
+  {
+    "name": "Aggressive Alterattacks",
+    "path": "/images/gifts/Aggressive_Alterattacks_Icon.png"
+  },
+  {
+    "name": "Alter Mark",
+    "path": "/images/gifts/Alter_Mark_Icon.png"
+  },
+  {
+    "name": "Anchor Boom",
+    "path": "/images/weapons/Anchor_Boom_Icon.png"
+  },
+  {
+    "name": "Assassinate",
+    "path": "/images/gifts/Assassinate_Icon.png"
+  },
+  {
+    "name": "Attack Speed Boost",
+    "path": "/images/boosts/Attack_Speed_Boost_Icon.png"
+  },
+  {
+    "name": "Balance",
+    "path": "/images/gifts/Balance_Icon.png"
+  },
+  {
+    "name": "Beatbolt",
+    "path": "/images/weapons/Beatbolt_Icon.png"
+  },
+  {
+    "name": "Berserk Fury",
+    "path": "/images/gifts/Berserk_Fury_Icon.png"
+  },
+  {
+    "name": "Blade Storm",
+    "path": "/images/trinkets/Blade_Storm_Icon.png"
+  },
+  {
+    "name": "Bleed Aura",
+    "path": "/images/trinkets/Bleed_Aura_Icon.png"
+  },
+  {
+    "name": "Bleeding Criticals",
+    "path": "/images/gifts/Bleeding_Criticals_Icon.png"
+  },
+  {
+    "name": "Bleeding Hits",
+    "path": "/images/gifts/Bleeding_Hits_Icon.png"
+  },
+  {
+    "name": "Blood Boil",
+    "path": "/images/gifts/Blood_Boil_Icon.png"
+  },
+  {
+    "name": "Blood Gush",
+    "path": "/images/gifts/Blood_Gush_Icon.png"
+  },
+  {
+    "name": "Boing Fish",
+    "path": "/images/magifishes/Boing_Fish_Icon.png"
+  },
+  {
+    "name": "Bomb",
+    "path": "/images/trinkets/Bomb_Icon.png"
+  },
+  {
+    "name": "Boomerang",
+    "path": "/images/weapons/Boomerang_Icon.png"
+  },
+  {
+    "name": "Boost Stock",
+    "path": "/images/gifts/Boost_Stock_Icon.png"
+  },
+  {
+    "name": "Boss Killer",
+    "path": "/images/gifts/Boss_Killer_Icon.png"
+  },
+  {
+    "name": "Brutal Alternation",
+    "path": "/images/gifts/Brutal_Alternation_Icon.png"
+  },
+  {
+    "name": "Brutal Dash",
+    "path": "/images/gifts/Brutal_Dash_Icon.png"
+  },
+  {
+    "name": "Brutal Trinkets",
+    "path": "/images/gifts/Brutal_Trinkets_Icon.png"
+  },
+  {
+    "name": "Brutality Hex",
+    "path": "/images/hexes/Brutality_Hex_Icon.png"
+  },
+  {
+    "name": "Burn Aura",
+    "path": "/images/trinkets/Burn_Aura_Icon.png"
+  },
+  {
+    "name": "Burning Criticals",
+    "path": "/images/gifts/Burning_Criticals_Icon.png"
+  },
+  {
+    "name": "Burning Hits",
+    "path": "/images/gifts/Burning_Hits_Icon.png"
+  },
+  {
+    "name": "Burning Mark",
+    "path": "/images/gifts/Burning_Mark_Icon.png"
+  },
+  {
+    "name": "Charged Blade",
+    "path": "/images/weapons/Charged_Blade_Icon.png"
+  },
+  {
+    "name": "Chrono Catch",
+    "path": "/images/trinkets/Chrono_Catch_Icon.png"
+  },
+  {
+    "name": "Complete Crystallize",
+    "path": "/images/gifts/Complete_Crystallize_Icon.png"
+  },
+  {
+    "name": "Corrosive Alterattack",
+    "path": "/images/gifts/Corrosive_Alterattack_Icon.png"
+  },
+  {
+    "name": "Corrosive Control",
+    "path": "/images/gifts/Corrosive_Control_Icon.png"
+  },
+  {
+    "name": "Corrosive Trinkets",
+    "path": "/images/gifts/Corrosive_Trinkets_Icon.png"
+  },
+  {
+    "name": "Countless Scythes",
+    "path": "/images/gifts/Countless_Scythes_Icon.png"
+  },
+  {
+    "name": "Crippling Dodge",
+    "path": "/images/gifts/Crippling_Dodge_Icon.png"
+  },
+  {
+    "name": "Critical Blast",
+    "path": "/images/gifts/Critical_Blast_Icon.png"
+  },
+  {
+    "name": "Critical Echo",
+    "path": "/images/gifts/Critical_Echo_Icon.png"
+  },
+  {
+    "name": "Critical Hex",
+    "path": "/images/hexes/Critical_Hex_Icon.png"
+  },
+  {
+    "name": "Critical Mark",
+    "path": "/images/gifts/Critical_Mark_Icon.png"
+  },
+  {
+    "name": "Critical Refill",
+    "path": "/images/gifts/Critical_Refill_Icon.png"
+  },
+  {
+    "name": "Criticals Boost",
+    "path": "/images/boosts/Criticals_Boost_Icon.png"
+  },
+  {
+    "name": "Crocojaws",
+    "path": "/images/weapons/Crocojaws_Icon.png"
+  },
+  {
+    "name": "Cruel Goo",
+    "path": "/images/gifts/Cruel_Goo_Icon.png"
+  },
+  {
+    "name": "Crystallize Barrier",
+    "path": "/images/gifts/Crystallize_Barrier_Icon.png"
+  },
+  {
+    "name": "Cuprik's Hammer",
+    "path": "/images/weapons/Cuprik's_Hammer_Icon.png"
+  },
+  {
+    "name": "Curse Hex",
+    "path": "/images/hexes/Curse_Hex_Icon.png"
+  },
+  {
+    "name": "Curse Trap",
+    "path": "/images/trinkets/Curse_Trap_Icon.png"
+  },
+  {
+    "name": "Cursed Criticals",
+    "path": "/images/gifts/Cursed_Criticals_Icon.png"
+  },
+  {
+    "name": "Cursed Hits",
+    "path": "/images/gifts/Cursed_Hits_Icon.png"
+  },
+  {
+    "name": "Cursed Replication",
+    "path": "/images/gifts/Cursed_Replication_Icon.png"
+  },
+  {
+    "name": "Cursed Stun",
+    "path": "/images/gifts/Cursed_Stun_Icon.png"
+  },
+  {
+    "name": "Damage Boost",
+    "path": "/images/boosts/Damage_Boost_Icon.png"
+  },
+  {
+    "name": "Damage Scythe",
+    "path": "/images/gifts/Damage_Scythe_Icon.png"
+  },
+  {
+    "name": "Dash Mark",
+    "path": "/images/gifts/Dash_Mark_Icon.png"
+  },
+  {
+    "name": "Deadly Brutality",
+    "path": "/images/gifts/Deadly_Brutality_Icon.png"
+  },
+  {
+    "name": "Deadly Explosion",
+    "path": "/images/gifts/Deadly_Explosion_Icon.png"
+  },
+  {
+    "name": "Deadly Extension",
+    "path": "/images/gifts/Deadly_Extension_Icon.png"
+  },
+  {
+    "name": "Deadly Refill",
+    "path": "/images/gifts/Deadly_Refill_Icon.png"
+  },
+  {
+    "name": "Deadly Scythe",
+    "path": "/images/gifts/Deadly_Scythe_Icon.png"
+  },
+  {
+    "name": "Death Orb",
+    "path": "/images/trinkets/Death_Orb_Icon.png"
+  },
+  {
+    "name": "Deep Freeze",
+    "path": "/images/gifts/Deep_Freeze_Icon.png"
+  },
+  {
+    "name": "Detonado",
+    "path": "/images/trinkets/Detonado_Icon.png"
+  },
+  {
+    "name": "Dissolve",
+    "path": "/images/gifts/Dissolve_Icon.png"
+  },
+  {
+    "name": "Double Alterattack",
+    "path": "/images/gifts/Double_Alterattack_Icon.png"
+  },
+  {
+    "name": "Double Rush",
+    "path": "/images/gifts/Double_Rush_Icon.png"
+  },
+  {
+    "name": "Duelist",
+    "path": "/images/gifts/Duelist_Icon.png"
+  },
+  {
+    "name": "Echo Hex",
+    "path": "/images/hexes/Echo_Hex_Icon.png"
+  },
+  {
+    "name": "Echoing Effects",
+    "path": "/images/gifts/Echoing_Effects_Icon.png"
+  },
+  {
+    "name": "Echoing Hits",
+    "path": "/images/gifts/Echoing_Hits_Icon.png"
+  },
+  {
+    "name": "Elder Sword",
+    "path": "/images/weapons/Elder_Sword_Icon.png"
+  },
+  {
+    "name": "Enduring Goo",
+    "path": "/images/gifts/Enduring_Goo_Icon.png"
+  },
+  {
+    "name": "Enhanced Blast",
+    "path": "/images/gifts/Enhanced_Blast_Icon.png"
+  },
+  {
+    "name": "Enraged Dodge",
+    "path": "/images/gifts/Enraged_Dodge_Icon.png"
+  },
+  {
+    "name": "Ethereal Blades",
+    "path": "/images/trinkets/Ethereal_Blades_Icon.png"
+  },
+  {
+    "name": "Explosive Criticals",
+    "path": "/images/gifts/Explosive_Criticals_Icon.png"
+  },
+  {
+    "name": "Explosive Hits",
+    "path": "/images/gifts/Explosive_Hits_Icon.png"
+  },
+  {
+    "name": "Extended Scythe",
+    "path": "/images/gifts/Extended_Scythe_Icon.png"
+  },
+  {
+    "name": "Eye Blade",
+    "path": "/images/weapons/Eye_Blade_Icon.png"
+  },
+  {
+    "name": "Fast Scythe",
+    "path": "/images/gifts/Fast_Scythe_Icon.png"
+  },
+  {
+    "name": "Fiery Claws",
+    "path": "/images/weapons/Fiery_Claws_Icon.png"
+  },
+  {
+    "name": "Fireball",
+    "path": "/images/gifts/Fireball_Icon.png"
+  },
+  {
+    "name": "Fireworks",
+    "path": "/images/trinkets/Fireworks_Icon.png"
+  },
+  {
+    "name": "Fish Knife",
+    "path": "/images/weapons/Fish_Knife_Icon.png"
+  },
+  {
+    "name": "Fishing Rod",
+    "path": "/images/weapons/Fishing_Rod_Icon.png"
+  },
+  {
+    "name": "Frost Nova",
+    "path": "/images/trinkets/Frost_Nova_Icon.png"
+  },
+  {
+    "name": "Full Blast",
+    "path": "/images/gifts/Full_Blast_Icon.png"
+  },
+  {
+    "name": "Fury",
+    "path": "/images/trinkets/Fury_Icon.png"
+  },
+  {
+    "name": "Gobbling Fish",
+    "path": "/images/magifishes/Gobbling_Fish_Icon.png"
+  },
+  {
+    "name": "Golden Health",
+    "path": "/images/gifts/Golden_Health_Icon.png"
+  },
+  {
+    "name": "Golem Flail",
+    "path": "/images/weapons/Golem_Flail_Icon.png"
+  },
+  {
+    "name": "Goo Blast",
+    "path": "/images/gifts/Goo_Blast_Icon.png"
+  },
+  {
+    "name": "Goo Bomb",
+    "path": "/images/trinkets/Goo_Bomb_Icon.png"
+  },
+  {
+    "name": "Goo Brush",
+    "path": "/images/weapons/Goo_Brush_Icon.png"
+  },
+  {
+    "name": "Gory Flame",
+    "path": "/images/gifts/Gory_Flame_Icon.png"
+  },
+  {
+    "name": "Grenade",
+    "path": "/images/trinkets/Grenade_Icon.png"
+  },
+  {
+    "name": "Hammer Echo",
+    "path": "/images/gifts/Hammer_Echo_Icon.png"
+  },
+  {
+    "name": "Health Boost",
+    "path": "/images/boosts/Health_Boost_Icon.png"
+  },
+  {
+    "name": "Heavy Blade",
+    "path": "/images/weapons/Heavy_Blade_Icon.png"
+  },
+  {
+    "name": "Heavy Bleeding",
+    "path": "/images/gifts/Heavy_Bleeding_Icon.png"
+  },
+  {
+    "name": "Heavy Rush",
+    "path": "/images/gifts/Heavy_Rush_Icon.png"
+  },
+  {
+    "name": "Hemorrhage",
+    "path": "/images/gifts/Hemorrhage_Icon.png"
+  },
+  {
+    "name": "Hibiki's Umbrella",
+    "path": "/images/weapons/Hibiki's_Umbrella_Icon.png"
+  },
+  {
+    "name": "Impactone",
+    "path": "/images/weapons/Impactone_Icon.png"
+  },
+  {
+    "name": "Incandescent Burn",
+    "path": "/images/gifts/Incandescent_Burn_Icon.png"
+  },
+  {
+    "name": "Intense Burn",
+    "path": "/images/gifts/Intense_Burn_Icon.png"
+  },
+  {
+    "name": "Intense Freeze",
+    "path": "/images/gifts/Intense_Freeze_Icon.png"
+  },
+  {
+    "name": "Jar",
+    "path": "/images/weapons/Jar_Icon.png"
+  },
+  {
+    "name": "Katars",
+    "path": "/images/weapons/Katars_Icon.png"
+  },
+  {
+    "name": "Kunai",
+    "path": "/images/weapons/Kunai_Icon.png"
+  },
+  {
+    "name": "L-BR0",
+    "path": "/images/trinkets/L-BR0_Icon.png"
+  },
+  {
+    "name": "Leafade",
+    "path": "/images/trinkets/Leafade_Icon.png"
+  },
+  {
+    "name": "Lifesteal Flasks",
+    "path": "/images/gifts/Lifesteal_Flasks_Icon.png"
+  },
+  {
+    "name": "Loot Boost",
+    "path": "/images/boosts/Loot_Boost_Icon.png"
+  },
+  {
+    "name": "Lucky Boosts",
+    "path": "/images/gifts/Lucky_Boosts_Icon.png"
+  },
+  {
+    "name": "Mark Hex",
+    "path": "/images/hexes/Mark_Hex_Icon.png"
+  },
+  {
+    "name": "Marked Blast",
+    "path": "/images/gifts/Marked_Blast_Icon.png"
+  },
+  {
+    "name": "Megalterattacks",
+    "path": "/images/gifts/Megalterattacks_Icon.png"
+  },
+  {
+    "name": "Melee Hex",
+    "path": "/images/hexes/Melee_Hex_Icon.png"
+  },
+  {
+    "name": "Merged Scythe",
+    "path": "/images/gifts/Merged_Scythe_Icon.png"
+  },
+  {
+    "name": "Midas",
+    "path": "/images/gifts/Midas_Icon.png"
+  },
+  {
+    "name": "Necromancy",
+    "path": "/images/gifts/Necromancy_Icon.png"
+  },
+  {
+    "name": "Ninja Stars",
+    "path": "/images/weapons/Ninja_Stars_Icon.png"
+  },
+  {
+    "name": "Overpower",
+    "path": "/images/gifts/Overpower_Icon.png"
+  },
+  {
+    "name": "Overwhelm Hex",
+    "path": "/images/hexes/Overwhelm_Hex_Icon.png"
+  },
+  {
+    "name": "Overwhelming Afflictions",
+    "path": "/images/gifts/Overwhelming_Afflictions_Icon.png"
+  },
+  {
+    "name": "Overwhelming Dash",
+    "path": "/images/gifts/Overwhelming_Dash_Icon.png"
+  },
+  {
+    "name": "Overwhelming Hits",
+    "path": "/images/gifts/Overwhelming_Hits_Icon.png"
+  },
+  {
+    "name": "Persistent Brutality",
+    "path": "/images/gifts/Persistent_Brutality_Icon.png"
+  },
+  {
+    "name": "Persistent Curse",
+    "path": "/images/gifts/Persistent_Curse_Icon.png"
+  },
+  {
+    "name": "Persistent Scythe",
+    "path": "/images/gifts/Persistent_Scythe_Icon.png"
+  },
+  {
+    "name": "Pool Hex",
+    "path": "/images/hexes/Pool_Hex_Icon.png"
+  },
+  {
+    "name": "Power Blast Hex",
+    "path": "/images/hexes/Power_Blast_Hex_Icon.png"
+  },
+  {
+    "name": "Power Refill",
+    "path": "/images/gifts/Power_Refill_Icon.png"
+  },
+  {
+    "name": "Powerful Brutality",
+    "path": "/images/gifts/Powerful_Brutality_Icon.png"
+  },
+  {
+    "name": "Powerful Rush",
+    "path": "/images/gifts/Powerful_Rush_Icon.png"
+  },
+  {
+    "name": "Powerful Scythe",
+    "path": "/images/gifts/Powerful_Scythe_Icon.png"
+  },
+  {
+    "name": "Protection",
+    "path": "/images/gifts/Protection_Icon.png"
+  },
+  {
+    "name": "Protector Fish",
+    "path": "/images/magifishes/Protector_Fish_Icon.png"
+  },
+  {
+    "name": "Proximity",
+    "path": "/images/gifts/Proximity_Icon.png"
+  },
+  {
+    "name": "Random Chrysalis Hex",
+    "path": "/images/hexes/Random_Chrysalis_Hex_Icon.png"
+  },
+  {
+    "name": "Random Eroding Hex",
+    "path": "/images/hexes/Random_Eroding_Hex_Icon.png"
+  },
+  {
+    "name": "Random Mark",
+    "path": "/images/gifts/Random_Mark_Icon.png"
+  },
+  {
+    "name": "Random Trade Hex",
+    "path": "/images/hexes/Random_Trade_Hex_Icon.png"
+  },
+  {
+    "name": "Ranged Hex",
+    "path": "/images/hexes/Ranged_Hex_Icon.png"
+  },
+  {
+    "name": "Ravenblade",
+    "path": "/images/weapons/Ravenblade_Icon.png"
+  },
+  {
+    "name": "Refillable Flask",
+    "path": "/images/gifts/Refillable_Flask_Icon.png"
+  },
+  {
+    "name": "Refilling Crystallize",
+    "path": "/images/gifts/Refilling_Crystallize_Icon.png"
+  },
+  {
+    "name": "Rush Alterattacks",
+    "path": "/images/gifts/Rush_Alterattacks_Icon.png"
+  },
+  {
+    "name": "Rush Hex",
+    "path": "/images/hexes/Rush_Hex_Icon.png"
+  },
+  {
+    "name": "Rush Trinkets",
+    "path": "/images/gifts/Rush_Trinkets_Icon.png"
+  },
+  {
+    "name": "Sentinel Wings",
+    "path": "/images/weapons/Sentinel_Wings_Icon.png"
+  },
+  {
+    "name": "Sharp Sisters",
+    "path": "/images/weapons/Sharp_Sisters_Icon.png"
+  },
+  {
+    "name": "Shield",
+    "path": "/images/weapons/Shield_Icon.png"
+  },
+  {
+    "name": "Simple Hex",
+    "path": "/images/hexes/Simple_Hex_Icon.png"
+  },
+  {
+    "name": "Smokey Dokey",
+    "path": "/images/trinkets/Smokey_Dokey_Icon.png"
+  },
+  {
+    "name": "Sneaky",
+    "path": "/images/gifts/Sneaky_Icon.png"
+  },
+  {
+    "name": "Speed Hex",
+    "path": "/images/hexes/Speed_Hex_Icon.png"
+  },
+  {
+    "name": "Spinalsword",
+    "path": "/images/weapons/Spinalsword_Icon.png"
+  },
+  {
+    "name": "Spread Echo",
+    "path": "/images/gifts/Spread_Echo_Icon.png"
+  },
+  {
+    "name": "Spread Mark",
+    "path": "/images/gifts/Spread_Mark_Icon.png"
+  },
+  {
+    "name": "Strong Recovery",
+    "path": "/images/gifts/Strong_Recovery_Icon.png"
+  },
+  {
+    "name": "Survivor",
+    "path": "/images/gifts/Survivor_Icon.png"
+  },
+  {
+    "name": "Swift Echo",
+    "path": "/images/gifts/Swift_Echo_Icon.png"
+  },
+  {
+    "name": "Telepike",
+    "path": "/images/weapons/Telepike_Icon.png"
+  },
+  {
+    "name": "Tranquility",
+    "path": "/images/gifts/Tranquility_Icon.png"
+  },
+  {
+    "name": "Trinket Hex",
+    "path": "/images/hexes/Trinket_Hex_Icon.png"
+  },
+  {
+    "name": "Trinket Mark",
+    "path": "/images/gifts/Trinket_Mark_Icon.png"
+  },
+  {
+    "name": "Trinket Refill Boost",
+    "path": "/images/boosts/Trinket_Refill_Boost_Icon.png"
+  },
+  {
+    "name": "Trinket Scythe",
+    "path": "/images/gifts/Trinket_Scythe_Icon.png"
+  },
+  {
+    "name": "Unstable",
+    "path": "/images/gifts/Unstable_Icon.png"
+  },
+  {
+    "name": "Upgrading Crystallize",
+    "path": "/images/gifts/Upgrading_Crystallize_Icon.png"
+  },
+  {
+    "name": "Weakening Curse",
+    "path": "/images/gifts/Weakening_Curse_Icon.png"
+  },
+  {
+    "name": "Weapon Hex",
+    "path": "/images/hexes/Weapon_Hex_Icon.png"
+  },
+  {
+    "name": "Wind Gust",
+    "path": "/images/trinkets/Wind_Gust_Icon.png"
+  },
+  {
+    "name": "Worm Claws",
+    "path": "/images/weapons/Worm_Claws_Icon.png"
+  }
+]

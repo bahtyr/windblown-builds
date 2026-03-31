@@ -7,6 +7,7 @@ import {scrapeMagifishes} from "./pages/magifishes.js";
 import {scrapeHexes} from "./pages/hexes.js";
 import {scrapeEffects} from "./pages/effects.js";
 import {scrapeBoosts} from "./pages/boosts.js";
+import {writeGiftMatchTemplateCatalog} from "./core/giftMatchTemplates.js";
 
 const OUTPUT_DIR = "../../apps/web/public";
 
@@ -32,6 +33,8 @@ async function main(): Promise<void> {
       const output = JSON.stringify(data, null, 2);
       await writeFile(`${OUTPUT_DIR}/${task.name}.json`, output, "utf-8");
     }
+
+    await writeGiftMatchTemplateCatalog(OUTPUT_DIR);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     process.stderr.write(`Scraping failed: ${message}\n`);

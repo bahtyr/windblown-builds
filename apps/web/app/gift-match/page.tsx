@@ -1,13 +1,10 @@
-import GiftMatchDebug from "./GiftMatchDebug";
-import {loadGiftMatchTemplateSpecs} from "./template-specs";
+import GiftMatchDebugPageClient from "./GiftMatchDebugPageClient";
 
 /**
- * Loads the image catalog for the gift-match debug page.
+ * Loads the dedicated gift-match debug page.
  *
- * @returns {Promise<JSX.Element>} Gift-match debug page with the server-generated template list.
+ * @returns {JSX.Element} Gift-match debug route.
  */
-export default async function GiftMatchPage(): Promise<JSX.Element> {
-  const templateSpecs = await loadGiftMatchTemplateSpecs();
-
-  return <GiftMatchDebug templateSpecs={templateSpecs}/>;
+export default function GiftMatchPage(): JSX.Element {
+  return <GiftMatchDebugPageClient/>;
 }

@@ -1,50 +1,19 @@
 # TODO
 
-## Status Overview
-
-### Ready to implement, execution order
-1. Deck more info follow-up polish
-2. Entity videos tooltip order
-3. Better detect build flow follow-up polish
-
-### To discuss before implementing
-- Gift matching debugger
-- Builds vs runs
-- Browse filter button
-
 ---
-
-remove done todos. keep the heading & goal. put ✅ to done items.
 
 ## 1. Liked deck build ✅
 Goal: add a dynamic Favorites deck to My Builds.
-
 ## 2. Deck hover content ✅
 Goal: make deck items image-first and move detail to hover.
-
 ## 3. Deck more info ✅
 Goal: show extra metadata for every deck.
-- doesn't look nice
-- spacing bottom.
-- when image empty should not take up space
-- hovering on one of these items sets a filter, does not go away when hover out.
-- fades unmatching items in the deck.
-- show reset button at the end of these items when a filter is present.
-
 ## 4. Entity videos ✅
 Goal: bring entity videos into the app and surface them in deck/browse hover UI.
-
 ## 5. Better detect build flow ✅
 Goal: keep the debugger flow separate, and create a simpler user-facing flow for making a build from an image.
-
 ### v1 dialog ✅
-
-### v2 anywhere in the app
-- Allow drag-and-drop image upload anywhere in the app.
-- Show a clear "drop image to create deck" style affordance.
-- Dropping an image should open the same dialog.
-- Also support paste:
-- If the user pastes an image, open the same dialog.
+### v2 anywhere in the app ✅
 
 ---
 
@@ -112,3 +81,5 @@ Still to consider:
   - least picked gifts/weapons...
 
 - wiki accreditation / "contibute"
+- boost count support +-
+- runs should also import diffuclty - run time - damage count 

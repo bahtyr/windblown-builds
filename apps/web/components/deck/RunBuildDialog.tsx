@@ -24,6 +24,8 @@ type RunBuildDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   onInitialFileHandled?: () => void;
+  templatesError?: string | null;
+  templatesLoading?: boolean;
   templateSpecs: GiftMatchTemplateSpec[];
 };
 
@@ -38,6 +40,8 @@ export default function RunBuildDialog({
   isOpen,
   onClose,
   onInitialFileHandled,
+  templatesError = null,
+  templatesLoading = false,
   templateSpecs,
 }: RunBuildDialogProps): JSX.Element | null {
   const deck = useDeck();
@@ -46,6 +50,7 @@ export default function RunBuildDialog({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
   const [sourceSrc, setSourceSrc] = useState<string | null>(null);
+  const [pendingSourceFile, setPendingSourceFile] = useState<File | null>(null);
   const [runResult, setRunResult] = useState<GiftMatchRunResult | null>(null);
   const [manualItems, setManualItems] = useState<MatchedDeckItem[]>([]);
   const [removedMatchedIds, setRemovedMatchedIds] = useState<string[]>([]);
@@ -67,11 +72,20 @@ export default function RunBuildDialog({
   }, [isOpen]);
 
   useEffect(() => {
-    if (isOpen && initialFile) {
+    if (isOpen && initialFile && !templatesLoading && templateSpecs.length > 0) {
       setSourceFile(initialFile);
       onInitialFileHandled?.();
     }
-  }, [initialFile, isOpen, onInitialFileHandled]);
+  }, [initialFile, isOpen, onInitialFileHandled, templateSpecs.length, templatesLoading]);
+
+  useEffect(() => {
+    if (!isOpen || !pendingSourceFile || templatesLoading || templateSpecs.length === 0) {
+      return;
+    }
+
+    setSourceFile(pendingSourceFile);
+    setPendingSourceFile(null);
+  }, [isOpen, pendingSourceFile, templateSpecs.length, templatesLoading]);
 
   useEffect(() => {
     if (!isOpen || typeof document === "undefined") {
@@ -107,6 +121,11 @@ export default function RunBuildDialog({
   }
 
   async function runDetection(nextSourceSrc: string) {
+    if (templateSpecs.length === 0) {
+      setError("Matcher templates are still loading.");
+      return;
+    }
+
     try {
       setIsRunning(true);
       setError(null);
@@ -130,6 +149,7 @@ export default function RunBuildDialog({
     }
 
     setSourceSrc(null);
+    setPendingSourceFile(null);
     setRunResult(null);
     setManualItems([]);
     setRemovedMatchedIds([]);
@@ -156,7 +176,11 @@ export default function RunBuildDialog({
       return;
     }
 
-    setSourceFile(file);
+    if (templatesLoading || templateSpecs.length === 0) {
+      setPendingSourceFile(file);
+    } else {
+      setSourceFile(file);
+    }
     event.target.value = "";
   }
 
@@ -222,7 +246,7 @@ export default function RunBuildDialog({
                 className={`run-build-dropzone ${sourceSrc ? "is-static" : ""} ${isDragActive ? "is-drag-active" : ""} ${isRunning ? "is-loading" : ""}`}
                 type="button"
                 onClick={() => {
-                  if (!isRunning) {
+                  if (!isRunning && !templatesLoading) {
                     fileInputRef.current?.click();
                   }
                 }}
@@ -246,7 +270,11 @@ export default function RunBuildDialog({
                   setIsDragActive(false);
                   const file = event.dataTransfer.files?.[0];
                   if (file) {
-                    setSourceFile(file);
+                    if (templatesLoading || templateSpecs.length === 0) {
+                      setPendingSourceFile(file);
+                    } else {
+                      setSourceFile(file);
+                    }
                   }
                 }}
               >
@@ -257,6 +285,11 @@ export default function RunBuildDialog({
                       <div className="run-build-loading-overlay">
                         <span className="run-build-loading-spinner" aria-hidden="true"/>
                         <span>Parsing screenshot...</span>
+                      </div>
+                    ) : templatesLoading ? (
+                      <div className="run-build-loading-overlay">
+                        <span className="run-build-loading-spinner" aria-hidden="true"/>
+                        <span>Preparing matcher...</span>
                       </div>
                     ) : null}
                     {runResult?.squareResults.map((square) => (
@@ -274,13 +307,13 @@ export default function RunBuildDialog({
                   </div>
                 ) : (
                   <div className="run-build-dropzone-copy">
-                    <strong>Drop an image here</strong>
-                    <span>or click to upload a run screenshot</span>
+                    <span>drop an image or click to upload</span>
                   </div>
                 )}
               </button>
 
               <div className="run-build-preview-meta">
+                {templatesLoading && !sourceSrc ? <p>Preparing matcher...</p> : null}
                 {sourceSrc && !isRunning ? (
                   <div className="run-build-preview-meta-row">
                     <button className="btn ghost" type="button" onClick={() => fileInputRef.current?.click()}>
@@ -293,6 +326,7 @@ export default function RunBuildDialog({
                     ) : null}
                   </div>
                 ) : null}
+                {templatesError ? <p className="run-build-error">{templatesError}</p> : null}
                 {error ? <p className="run-build-error">{error}</p> : null}
               </div>
             </section>
