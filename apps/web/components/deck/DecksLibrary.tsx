@@ -15,6 +15,12 @@ import {EntityType, ScrapedEntity} from "../../lib/types";
 import RichText from "../entity/RichText";
 import {getEntityStats} from "../entity/EntityCard";
 import EntityVideoPreview from "../entity/EntityVideoPreview";
+import {
+  getTooltipCoordinateSpace,
+  getTooltipPlacement,
+  getTooltipSafeTop,
+  getTooltipScrollParents,
+} from "../tooltip/hoverTooltip";
 
 type DrawerPhase = "opening" | "open" | "closing";
 type LibraryTab = "favorites" | "saved-builds" | "recent-runs";
@@ -43,110 +49,7 @@ type DeckTooltipPosition = {
   top: number;
 };
 
-type TooltipCoordinateSpace = {
-  leftOffset: number;
-  topOffset: number;
-};
-
 const DRAWER_OPENING_DELAY_MS = 24;
-
-/**
- * Collect scrollable ancestors that can move a tooltip trigger without moving the viewport.
- *
- * @param {HTMLElement | null} element - Trigger or tooltip element inside the layout.
- * @returns {(HTMLElement | Window)[]} Scroll event targets that should refresh tooltip placement.
- */
-function getTooltipScrollParents(element: HTMLElement | null): Array<HTMLElement | Window> {
-  if (typeof window === "undefined") return [];
-
-  const parents: Array<HTMLElement | Window> = [window];
-  let current = element?.parentElement ?? null;
-
-  while (current) {
-    const {overflowY, overflow} = window.getComputedStyle(current);
-    if (/(auto|scroll|overlay)/.test(`${overflowY} ${overflow}`)) {
-      parents.push(current);
-    }
-    current = current.parentElement;
-  }
-
-  return parents;
-}
-
-function getTooltipSafeTop(gap: number, viewportPadding: number): number {
-  const blockers = [
-    document.querySelector<HTMLElement>(".header"),
-    document.querySelector<HTMLElement>(".filters-body"),
-    document.querySelector<HTMLElement>(".decks-page-top"),
-    document.querySelector<HTMLElement>(".deck-builder-surface"),
-  ].filter((element): element is HTMLElement => Boolean(element));
-
-  const blockerBottom = blockers.reduce((maxBottom, element) => {
-    const rect = element.getBoundingClientRect();
-    if (element.classList.contains("deck-builder-surface")) {
-      return Math.max(maxBottom, rect.top);
-    }
-    return Math.max(maxBottom, rect.bottom);
-  }, 0);
-
-  return Math.max(viewportPadding, blockerBottom + gap);
-}
-
-function getHoverAnchorLeft(
-  triggerRect: DOMRect,
-  tooltipWidth: number,
-  viewportPadding: number,
-  preferRightEdge: boolean,
-): number {
-  const minLeft = viewportPadding;
-  const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipWidth - viewportPadding);
-  const leftAligned = triggerRect.left;
-  const rightAligned = triggerRect.right - tooltipWidth;
-
-  const preferred = preferRightEdge ? rightAligned : leftAligned;
-  const fallback = preferRightEdge ? leftAligned : rightAligned;
-
-  if (preferred >= minLeft && preferred <= maxLeft) return preferred;
-  if (fallback >= minLeft && fallback <= maxLeft) return fallback;
-  return Math.min(Math.max(preferred, minLeft), maxLeft);
-}
-
-function rectsIntersect(
-  left: number,
-  top: number,
-  width: number,
-  height: number,
-  triggerRect: DOMRect,
-): boolean {
-  const right = left + width;
-  const bottom = top + height;
-
-  return !(
-    right <= triggerRect.left ||
-    left >= triggerRect.right ||
-    bottom <= triggerRect.top ||
-    top >= triggerRect.bottom
-  );
-}
-
-/**
- * Resolve local tooltip offsets for surfaces that create their own fixed-position containing block.
- *
- * @param {HTMLElement | null} tooltipElement - Tooltip element being positioned.
- * @returns {TooltipCoordinateSpace} Coordinate offsets for the tooltip's containing block.
- */
-function getTooltipCoordinateSpace(tooltipElement: HTMLElement | null): TooltipCoordinateSpace {
-  const deckBuilderSurface = tooltipElement?.closest<HTMLElement>(".deck-builder-surface");
-  if (!deckBuilderSurface) {
-    return {leftOffset: 0, topOffset: 0};
-  }
-
-  const rect = deckBuilderSurface.getBoundingClientRect();
-  return {
-    leftOffset: rect.left - deckBuilderSurface.scrollLeft,
-    topOffset: rect.top - deckBuilderSurface.scrollTop,
-  };
-}
 
 /**
  * Read-only saved deck library with share, duplicate, edit, and delete actions.
@@ -507,17 +410,17 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
                       </span>
                     </button>
                   ))}
-                  {activeCategory ? (
-                    <button
-                      className="btn ghost deck-row-category-reset"
-                      type="button"
-                      onClick={() => {
-                        setActiveCategory(null);
-                      }}
-                    >
-                      Reset
-                    </button>
-                  ) : null}
+                  {/*{activeCategory ? (*/}
+                  {/*  <button*/}
+                  {/*    className="btn ghost deck-row-category-reset"*/}
+                  {/*    type="button"*/}
+                  {/*    onClick={() => {*/}
+                  {/*      setActiveCategory(null);*/}
+                  {/*    }}*/}
+                  {/*  >*/}
+                  {/*    Reset*/}
+                  {/*  </button>*/}
+                  {/*) : null}*/}
                 </div>
               ) : (
                 <p className="deck-row-side-empty">No gift categories</p>
@@ -571,45 +474,14 @@ function DeckRowItem({
     const itemRect = itemElement.getBoundingClientRect();
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const coordinateSpace = getTooltipCoordinateSpace(tooltipElement);
-    const rightAlignedLeft = itemRect.right + gap;
-    const leftAlignedLeft = itemRect.left - tooltipRect.width - gap;
-    const canPlaceRight = rightAlignedLeft + tooltipRect.width <= window.innerWidth - viewportPadding;
-    const canPlaceLeft = leftAlignedLeft >= viewportPadding;
-    const belowTop = itemRect.bottom + gap;
-    const aboveTop = itemRect.top - tooltipRect.height - gap;
-    const maxTop = Math.max(minTop, window.innerHeight - tooltipRect.height - viewportPadding);
-    const moreRoomOnRight = (window.innerWidth - viewportPadding) - itemRect.left >= itemRect.right - viewportPadding;
-    const hasSidePlacement = canPlaceRight || canPlaceLeft;
-    let left = 0;
-    let top = 0;
-
-    if (hasSidePlacement) {
-      left = canPlaceRight ? rightAlignedLeft : leftAlignedLeft;
-      top = Math.min(Math.max(itemRect.top, minTop), maxTop);
-    } else {
-      left = getHoverAnchorLeft(
-        itemRect,
-        tooltipRect.width,
-        viewportPadding,
-        belowTop + tooltipRect.height > window.innerHeight - viewportPadding ? moreRoomOnRight : !moreRoomOnRight,
-      );
-      top = belowTop + tooltipRect.height > window.innerHeight - viewportPadding && aboveTop >= minTop ? aboveTop : belowTop;
-
-      left = Math.floor(left);
-      top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
-
-      if (rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, itemRect)) {
-        top = Math.floor(Math.min(Math.max(aboveTop, minTop), maxTop));
-      }
-    }
-
-    left = Math.floor(left);
-    top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
-
-    setTooltipPosition({
-      left: left - coordinateSpace.leftOffset,
-      top: top - coordinateSpace.topOffset,
-    });
+    setTooltipPosition(getTooltipPlacement({
+      coordinateSpace,
+      gap,
+      minTop,
+      tooltipRect,
+      triggerRect: itemRect,
+      viewportPadding,
+    }));
   };
 
   const closeTooltip = () => {

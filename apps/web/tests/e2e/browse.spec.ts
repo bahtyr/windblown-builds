@@ -232,7 +232,7 @@ test("deck category hover activates a filter and reset clears it", async ({page}
   await expect(deckRow).toBeVisible();
 
   const firstChip = deckRow.locator(".deck-row-category-chip").first();
-  await firstChip.hover();
+  await firstChip.focus();
 
   await expect(deckRow.getByRole("button", {name: "Reset"})).toBeVisible();
   await expect
@@ -243,7 +243,7 @@ test("deck category hover activates a filter and reset clears it", async ({page}
   await expect(deckRow.getByRole("button", {name: "Reset"})).toHaveCount(0);
   await expect(deckRow.locator(".deck-row-item.is-category-mismatch")).toHaveCount(0);
 
-  await firstChip.hover();
+  await firstChip.focus();
   await expect(deckRow.getByRole("button", {name: "Reset"})).toBeVisible();
 
   await deckRow.getByRole("button", {name: "Reset"}).click();
@@ -327,7 +327,7 @@ test("embedded deck browser hover uses the correct placement after the drawer sc
 
   await expect(card).toBeVisible();
   await drawerSurface.evaluate((element) => {
-    element.scrollTo({top: 180});
+    element.scrollTo({top: 500});
   });
   await expect(card).toBeVisible();
 
@@ -350,8 +350,11 @@ test("embedded deck browser hover uses the correct placement after the drawer sc
       const isEdgeAligned =
         Math.abs(hoverBox.x - imageBox.x) <= 2 ||
         Math.abs((hoverBox.x + hoverBox.width) - (imageBox.x + imageBox.width)) <= 2;
+      const isReasonablyClose =
+        Math.abs(hoverBox.y - imageBox.y) <= imageBox.height + 24 ||
+        Math.abs((hoverBox.y + hoverBox.height) - (imageBox.y + imageBox.height)) <= imageBox.height + 24;
 
-      return isSidePlaced || (isVerticallyStacked && isEdgeAligned);
+      return (isSidePlaced || (isVerticallyStacked && isEdgeAligned)) && isReasonablyClose;
     })
     .toBeTruthy();
 });
