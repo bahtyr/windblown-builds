@@ -44,7 +44,7 @@ test("builds page tabs switch between favorites, saved builds, and recent runs",
   await expect(page.getByRole("heading", {name: "Category Test"})).toHaveCount(0);
 });
 
-test("new run dialog can parse a screenshot and save a build", async ({page}) => {
+test("new run dialog can parse a screenshot and save a run", async ({page}) => {
   await page.goto("/decks");
 
   await page.getByRole("button", {name: "New run"}).click();
@@ -53,7 +53,7 @@ test("new run dialog can parse a screenshot and save a build", async ({page}) =>
   const fileInput = page.locator(".run-build-hidden-input");
   await fileInput.setInputFiles(path.join(process.cwd(), "public", "source-cropped-2.png"));
 
-  const saveButton = page.getByRole("button", {name: "Save build"});
+  const saveButton = page.getByRole("button", {name: "Save run"});
   await expect(saveButton).toBeEnabled({timeout: 30000});
 
   await saveButton.click();

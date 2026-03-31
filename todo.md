@@ -87,3 +87,14 @@ Still to consider:
 - code review and cleanup for UI
 - build vs run
 - rename to my profile
+
+
+
+- run vs saved
+- run: created by image
+- saved: manual create & share
+- update edit save button names when editing
+
+
+- recent runs; remove 'duplicate' button. make share a primary action button (should have different bg)
+- recent runs; add 

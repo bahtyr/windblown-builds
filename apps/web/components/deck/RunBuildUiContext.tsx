@@ -1,6 +1,7 @@
 "use client";
 
-import {createContext, useContext, useEffect, useMemo, useRef, useState} from "react";
+import {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from "react";
+import {usePathname, useRouter} from "next/navigation";
 import {type GiftMatchTemplateSpec} from "../../app/gift-match/gift-match-workflow";
 import {loadGiftMatchTemplateSpecs} from "../../lib/loadGiftMatchTemplateSpecs";
 import RunBuildDialog from "./RunBuildDialog";
@@ -22,6 +23,8 @@ export function RunBuildUiProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -30,7 +33,7 @@ export function RunBuildUiProvider({
   const [templatesError, setTemplatesError] = useState<string | null>(null);
   const dragDepthRef = useRef(0);
 
-  async function ensureTemplateSpecsLoaded(): Promise<GiftMatchTemplateSpec[]> {
+  const ensureTemplateSpecsLoaded = useCallback(async (): Promise<GiftMatchTemplateSpec[]> => {
     if (templateSpecs.length > 0) {
       return templateSpecs;
     }
@@ -49,10 +52,13 @@ export function RunBuildUiProvider({
     } finally {
       setTemplatesLoading(false);
     }
-  }
+  }, [templateSpecs]);
 
-  async function openDialog(file?: File | null) {
+  const openDialog = useCallback(async (file?: File | null) => {
     setPendingFile(file ?? null);
+    if (pathname === "/browse") {
+      router.push("/decks");
+    }
 
     try {
       await ensureTemplateSpecsLoaded();
@@ -61,7 +67,7 @@ export function RunBuildUiProvider({
     }
 
     setDialogOpen(true);
-  }
+  }, [ensureTemplateSpecsLoaded, pathname, router]);
 
   useEffect(() => {
     function hasFiles(event: DragEvent): boolean {
@@ -154,7 +160,7 @@ export function RunBuildUiProvider({
       window.removeEventListener("drop", handleDrop);
       window.removeEventListener("paste", handlePaste);
     };
-  }, [dialogOpen]);
+  }, [dialogOpen, openDialog]);
 
   const value = useMemo<RunBuildUiContextType>(
     () => ({
@@ -162,7 +168,7 @@ export function RunBuildUiProvider({
         void openDialog(file);
       },
     }),
-    [templateSpecs],
+    [openDialog],
   );
 
   return (

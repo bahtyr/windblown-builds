@@ -243,7 +243,7 @@ test("embedded deck browser supports thumbs view", async ({page}) => {
   await expect(card.locator(".card-thumbs-image")).toBeVisible();
 });
 
-test("dropping an image anywhere in the app opens the new run dialog", async ({page}) => {
+test("dropping an image from browse opens the new run dialog on my builds", async ({page}) => {
   await page.goto("/browse");
 
   const dataTransfer = await page.evaluateHandle(async () => {
@@ -258,5 +258,7 @@ test("dropping an image anywhere in the app opens the new run dialog", async ({p
   await expect(page.getByText("Drop image to create build")).toBeVisible();
 
   await page.locator("body").dispatchEvent("drop", {dataTransfer});
+  await expect(page).toHaveURL(/\/decks$/);
+  await expect(page.getByRole("link", {name: "My Builds"})).toHaveClass(/is-active/);
   await expect(page.getByRole("dialog", {name: "New run"})).toBeVisible();
 });

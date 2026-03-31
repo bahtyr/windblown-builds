@@ -390,7 +390,7 @@ export default function RunBuildDialog({
               <div className="run-build-actions">
                 <button className="btn ghost" type="button" onClick={onClose}>Cancel</button>
                 <button className="btn ghost" disabled={buildItems.length === 0} type="button" onClick={handleSaveAndEdit}>Edit</button>
-                <button className="btn" disabled={buildItems.length === 0} type="button" onClick={handleSave}>Save build</button>
+                <button className="btn" disabled={buildItems.length === 0} type="button" onClick={handleSave}>Save run</button>
               </div>
             </section>
           </div>

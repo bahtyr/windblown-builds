@@ -362,7 +362,7 @@ Use tests as behavior clues:
 - if a feature touches deck save/load behavior, read `deck-context.test.ts`
 - if a feature touches matcher flow, read `gift-match-workflow.test.ts`
 - if a feature touches shared deck URL behavior, read `deck-share.test.ts`
-- if a feature changes visible UI or interaction flow, run focused Playwright coverage before calling it complete
+[//]: # (- if a feature changes visible UI or interaction flow, run focused Playwright coverage before calling it complete)
 
 ---
 
