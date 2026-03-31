@@ -32,31 +32,33 @@ export default function DeckPanel({onCancel, onCommit}: Props) {
   return (
     <div className="deck">
       <div className="deck-manager">
-        <div className="deck-builder-title-group">
-          <h2 className="deck-builder-title">{isEditing ? "Edit build" : "Create new build"}</h2>
-        </div>
-        <div className="deck-actions">
-          <input
-            className="deck-name-input"
-            value={deck.name}
-            onChange={(e) => deck.setName(e.target.value)}
-            placeholder="Deck name"
-          />
+        <div className="deck-manager-top">
+          <div className="deck-builder-title-group">
+            <h2 className="deck-builder-title">{isEditing ? "Edit build" : "Create new build"}</h2>
+          </div>
+          <div className="deck-actions">
+            <input
+              className="deck-name-input"
+              value={deck.name}
+              onChange={(e) => deck.setName(e.target.value)}
+              placeholder="Deck name"
+            />
 
-          <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
-            Reset
-          </button>
-          {isEditing && (
-            <button className="btn ghost" type="button" onClick={handleDelete}>
-              Delete
+            <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
+              Reset
             </button>
-          )}
-          <button className="btn ghost" type="button" onClick={onCancel}>
-            Cancel
-          </button>
-          <button className="btn" type="button" onClick={handleCommit}>
-            {isEditing ? "Update build" : "Save build"}
-          </button>
+            {isEditing && (
+              <button className="btn ghost" type="button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+            <button className="btn ghost" type="button" onClick={onCancel}>
+              Cancel
+            </button>
+            <button className="btn" type="button" onClick={handleCommit}>
+              {isEditing ? "Update build" : "Save build"}
+            </button>
+          </div>
         </div>
         <div className="deck-content">
           {deck.items.length === 0 && <div className="muted">No items yet</div>}

@@ -15,8 +15,6 @@
 
 .decks-page-top {
     /*position: sticky;*/
-    top: calc(var(--header-height) - 1px);
-    z-index: calc(var(--z-header) - 1);
     background: var(--color-overlay-header);
     border-bottom: 1px solid var(--border);
 }

@@ -4,7 +4,16 @@
     gap: var(--space-4);
     border: 1px dashed var(--border);
     border-radius: var(--radius-xl);
+    padding: 0;
+    overflow: hidden;
+}
+
+.deck-manager-top {
+    display: grid;
+    gap: var(--space-4);
     padding: var(--space-8);
+    background: var(--color-overlay-header);
+    border-bottom: 1px solid var(--border);
 }
 
 .deck-builder-title-group {
@@ -47,7 +56,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    padding: var(--space-4);
+    padding: var(--space-6) var(--space-8) var(--space-8);
 }
 
 .deck-groups {
