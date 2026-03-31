@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useRef, useState, type TransitionEvent} from "react";
 import {DeckItem, SavedDeck, SharedDeck, groupDeckItemsByType, makeDeckItem, useDeck} from "./DeckContext";
 import {useRunBuildUi} from "./RunBuildUiContext";
 import {useDeckUi} from "./DeckUiContext";
@@ -53,6 +53,7 @@ export default function DecksLibrary() {
   const deckUi = useDeckUi();
   const runBuildUi = useRunBuildUi();
   const likes = useLikes();
+  const cancelEditOnCloseRef = useRef(false);
   const [activeTab, setActiveTab] = useState<LibraryTab>("recent-runs");
   const [drawerMounted, setDrawerMounted] = useState(deckUi.open);
   const [drawerPhase, setDrawerPhase] = useState<DrawerPhase>(deckUi.open ? "open" : "closing");
@@ -121,7 +122,6 @@ export default function DecksLibrary() {
 
   useEffect(() => {
     let frameId = 0;
-    let timeoutId = 0;
 
     if (deckUi.open) {
       setDrawerMounted(true);
@@ -136,14 +136,8 @@ export default function DecksLibrary() {
 
     if (!drawerMounted) return;
     setDrawerPhase("closing");
-    timeoutId = window.setTimeout(() => {
-      setDrawerMounted(false);
-    }, 300);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [deckUi.open, drawerMounted]);
+    return;
+  }, [deck.cancelEditing, deckUi.open, drawerMounted]);
 
   const handleShare = async (deckName: string) => {
     const savedDeck = deck.saved.find((entry) => entry.name === deckName);
@@ -154,13 +148,25 @@ export default function DecksLibrary() {
   };
 
   const handleCreateNew = () => {
+    cancelEditOnCloseRef.current = false;
     deck.createDeck();
     deckUi.openDeck();
   };
 
   const handleCancelEditing = () => {
-    deck.cancelEditing();
+    cancelEditOnCloseRef.current = true;
     deckUi.closeDeck();
+  };
+
+  const handleDrawerSurfaceTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget || event.propertyName !== "transform") return;
+    if (deckUi.open || drawerPhase !== "closing") return;
+
+    setDrawerMounted(false);
+    if (cancelEditOnCloseRef.current) {
+      cancelEditOnCloseRef.current = false;
+      deck.cancelEditing();
+    }
   };
 
   const tabCopy = {
@@ -262,6 +268,7 @@ export default function DecksLibrary() {
                       onDiscardShared={() => deck.discardSharedDeck()}
                       onDuplicate={() => deck.duplicateDeck(row.deck.name)}
                       onEdit={() => {
+                        cancelEditOnCloseRef.current = false;
                         if (row.kind === "shared") {
                           deck.editSharedDeck();
                         } else {
@@ -297,7 +304,10 @@ export default function DecksLibrary() {
             className={`deck-builder-drawer is-${drawerPhase}`}
             role="dialog"
           >
-            <div className={`deck-builder-surface is-${drawerPhase}`}>
+            <div
+              className={`deck-builder-surface is-${drawerPhase}`}
+              onTransitionEnd={handleDrawerSurfaceTransitionEnd}
+            >
               <DeckPanel onCancel={handleCancelEditing} onCommit={() => deckUi.closeDeck()}/>
               <div className="deck-builder-browser">
                 <EntityBrowser embedded/>
