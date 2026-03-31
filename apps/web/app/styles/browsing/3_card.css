@@ -9,8 +9,8 @@
 }
 
 .card-list-thumbs {
-    grid-template-columns: repeat(auto-fill, minmax(116px, 116px));
-    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(64px, 64px));
+    gap: var(--space-3);
 }
 
 /* ---------- Card shell ---------- */
@@ -185,12 +185,13 @@
 
 .card-thumbs-media-wrap {
     position: relative;
-    width: 112px;
-    height: 112px;
+    width: 64px;
+    height: 64px;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
     background: rgba(7, 12, 22, 0.72);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .card-thumbs-image {
@@ -248,6 +249,20 @@
 .card-thumbs:hover .card-thumbs-media-wrap,
 .card-thumbs:focus-within .card-thumbs-media-wrap {
     border-color: var(--color-surface-selected);
+    transform: translateY(-1px);
+}
+
+.card-thumbs:has(.is-liked) .card-thumbs-media-wrap {
+    --color-like-rgb: 255, 111, 168;
+    border-color: rgba(var(--color-like-rgb), 0.45);
+}
+
+.card-thumbs.is-in-deck .card-thumbs-media-wrap {
+    box-shadow: 0 0 0 1px var(--color-text-link);
+}
+
+.card-thumbs.is-in-deck:has(.is-liked) .card-thumbs-media-wrap {
+    box-shadow: 0 0 0 1px rgba(255, 111, 168, 0.7);
 }
 
 .card-thumbs-hover-head {
@@ -292,12 +307,12 @@
 
 @media (max-width: 768px) {
     .card-list-thumbs {
-        grid-template-columns: repeat(auto-fill, minmax(96px, 96px));
+        grid-template-columns: repeat(auto-fill, minmax(64px, 64px));
     }
 
     .card-thumbs-media-wrap {
-        width: 92px;
-        height: 92px;
+        width: 64px;
+        height: 64px;
     }
 }
 

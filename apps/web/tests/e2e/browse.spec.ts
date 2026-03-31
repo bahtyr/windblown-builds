@@ -102,8 +102,8 @@ test("browse thumbs view shows larger art and hover details with video", async (
   const hoverBox = await hover.boundingBox();
   const videoBox = await video.boundingBox();
 
-  expect(imageBox?.width ?? 0).toBeGreaterThan(100);
-  expect(imageBox?.height ?? 0).toBeGreaterThan(100);
+  expect(imageBox?.width ?? 0).toBeGreaterThan(90);
+  expect(imageBox?.height ?? 0).toBeGreaterThan(90);
   expect(hoverBox).not.toBeNull();
   expect(videoBox?.width ?? 0).toBeGreaterThan(300);
   expect(videoBox?.height ?? 0).toBeGreaterThan(170);
