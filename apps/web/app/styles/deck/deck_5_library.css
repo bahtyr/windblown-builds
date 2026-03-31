@@ -47,6 +47,54 @@
     transform: translateY(-1px);
 }
 
+.decks-page-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: flex-end;
+    padding-bottom: 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.decks-page-tab {
+    appearance: none;
+    position: relative;
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background: transparent;
+    color: var(--muted);
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.decks-page-tab:hover,
+.decks-page-tab:focus-visible {
+    border-color: rgba(79, 163, 255, 0.3);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-text);
+}
+
+.decks-page-tab.is-active {
+    border-color: var(--border);
+    background: var(--color-overlay-header);
+    color: var(--color-text);
+    margin-bottom: -1px;
+}
+
+.decks-page-tab.is-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: var(--color-overlay-header);
+}
+
 .decks-grid {
     display: grid;
     /*gap: var(--space-6);*/

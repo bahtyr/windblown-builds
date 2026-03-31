@@ -17,6 +17,7 @@ import {getEntityStats} from "../entity/EntityCard";
 import EntityVideoPreview from "../entity/EntityVideoPreview";
 
 type DrawerPhase = "opening" | "open" | "closing";
+type LibraryTab = "favorites" | "saved-builds" | "recent-runs";
 type DeckRowModel =
   | { kind: "favorites"; deck: SavedDeck }
   | { kind: "shared"; deck: SharedDeck }
@@ -52,6 +53,7 @@ export default function DecksLibrary() {
   const deckUi = useDeckUi();
   const runBuildUi = useRunBuildUi();
   const likes = useLikes();
+  const [activeTab, setActiveTab] = useState<LibraryTab>("recent-runs");
   const [drawerMounted, setDrawerMounted] = useState(deckUi.open);
   const [drawerPhase, setDrawerPhase] = useState<DrawerPhase>(deckUi.open ? "open" : "closing");
   const [entityLookup, setEntityLookup] = useState<EntityLookup>(new Map());
@@ -161,6 +163,12 @@ export default function DecksLibrary() {
     deckUi.closeDeck();
   };
 
+  const tabCopy = {
+    "favorites": "Quick access to everything you have liked.",
+    "saved-builds": "Saved builds will appear here.",
+    "recent-runs": "Revisit your runs and share with others.",
+  } satisfies Record<LibraryTab, string>;
+
   return (
     <>
       <div className="page page-decks">
@@ -168,7 +176,7 @@ export default function DecksLibrary() {
           <div className="decks-page-header">
             <div>
               <h1 className="decks-page-title">Your library</h1>
-              <p className="decks-page-copy">Revisit your runs and share with others.</p>
+              <p className="decks-page-copy">{tabCopy[activeTab]}</p>
             </div>
             <div className="decks-page-header-actions">
               <button className="btn decks-page-primary-button" type="button" onClick={() => runBuildUi.openRunBuildDialog()}>New run</button>
@@ -176,50 +184,95 @@ export default function DecksLibrary() {
             </div>
           </div>
 
-          {favoritesRow ? (
-            <div className="decks-grid decks-grid-favorites">
-              <DeckRow
-                key={`${favoritesRow.kind}-${favoritesRow.deck.name}`}
-                categories={buildDeckCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
-                entityLookup={entityLookup}
-                row={favoritesRow}
-                onDelete={() => {}}
-                onDiscardShared={() => {}}
-                onDuplicate={() => {}}
-                onEdit={() => {}}
-                onSaveShared={() => {}}
-                onShare={() => {}}
-              />
+          <div aria-label="Build library sections" className="decks-page-tabs" role="tablist">
+            <button
+              aria-selected={activeTab === "favorites"}
+              className={`decks-page-tab ${activeTab === "favorites" ? "is-active" : ""}`}
+              id="decks-tab-favorites"
+              role="tab"
+              type="button"
+              onClick={() => setActiveTab("favorites")}
+            >
+              Favorites
+            </button>
+            <button
+              aria-selected={activeTab === "saved-builds"}
+              className={`decks-page-tab ${activeTab === "saved-builds" ? "is-active" : ""}`}
+              id="decks-tab-saved-builds"
+              role="tab"
+              type="button"
+              onClick={() => setActiveTab("saved-builds")}
+            >
+              Saved Builds
+            </button>
+            <button
+              aria-selected={activeTab === "recent-runs"}
+              className={`decks-page-tab ${activeTab === "recent-runs" ? "is-active" : ""}`}
+              id="decks-tab-recent-runs"
+              role="tab"
+              type="button"
+              onClick={() => setActiveTab("recent-runs")}
+            >
+              Recent Runs
+            </button>
+          </div>
+
+          {activeTab === "favorites" ? (
+            <div aria-labelledby="decks-tab-favorites" className="decks-grid decks-grid-favorites" role="tabpanel">
+              {favoritesRow ? (
+                <DeckRow
+                  key={`${favoritesRow.kind}-${favoritesRow.deck.name}`}
+                  categories={buildDeckCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
+                  entityLookup={entityLookup}
+                  row={favoritesRow}
+                  onDelete={() => {}}
+                  onDiscardShared={() => {}}
+                  onDuplicate={() => {}}
+                  onEdit={() => {}}
+                  onSaveShared={() => {}}
+                  onShare={() => {}}
+                />
+              ) : (
+                <div className="deck-row-empty">No favorites yet.</div>
+              )}
             </div>
           ) : null}
 
-          <div className="decks-grid">
-            {rows.length > 0 ? (
-              rows.map((row) => (
-                <DeckRow
-                  key={`${row.kind}-${row.deck.name}`}
-                  categories={buildDeckCategoryMeta(row.deck.items, giftCategoryLookup)}
-                  entityLookup={entityLookup}
-                  row={row}
-                  onDelete={() => deck.deleteDeck(row.deck.name)}
-                  onDiscardShared={() => deck.discardSharedDeck()}
-                  onDuplicate={() => deck.duplicateDeck(row.deck.name)}
-                  onEdit={() => {
-                    if (row.kind === "shared") {
-                      deck.editSharedDeck();
-                    } else {
-                      deck.loadDeck(row.deck.name);
-                    }
-                    deckUi.openDeck();
-                  }}
-                  onSaveShared={() => deck.saveSharedDeck()}
-                  onShare={() => handleShare(row.deck.name)}
-                />
-              ))
-            ) : (
+          {activeTab === "saved-builds" ? (
+            <div aria-labelledby="decks-tab-saved-builds" className="decks-grid" role="tabpanel">
               <div className="deck-row-empty">No saved builds yet.</div>
-            )}
-          </div>
+            </div>
+          ) : null}
+
+          {activeTab === "recent-runs" ? (
+            <div aria-labelledby="decks-tab-recent-runs" className="decks-grid" role="tabpanel">
+              {rows.length > 0 ? (
+                rows.map((row) => (
+                  <DeckRow
+                    key={`${row.kind}-${row.deck.name}`}
+                    categories={buildDeckCategoryMeta(row.deck.items, giftCategoryLookup)}
+                    entityLookup={entityLookup}
+                    row={row}
+                    onDelete={() => deck.deleteDeck(row.deck.name)}
+                    onDiscardShared={() => deck.discardSharedDeck()}
+                    onDuplicate={() => deck.duplicateDeck(row.deck.name)}
+                    onEdit={() => {
+                      if (row.kind === "shared") {
+                        deck.editSharedDeck();
+                      } else {
+                        deck.loadDeck(row.deck.name);
+                      }
+                      deckUi.openDeck();
+                    }}
+                    onSaveShared={() => deck.saveSharedDeck()}
+                    onShare={() => handleShare(row.deck.name)}
+                  />
+                ))
+              ) : (
+                <div className="deck-row-empty">No recent runs yet.</div>
+              )}
+            </div>
+          ) : null}
         </section>
       </div>
 

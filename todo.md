@@ -82,3 +82,8 @@ Still to consider:
 - wiki accreditation / "contibute"
 - boost count support +-
 - runs should also import diffuclty - run time - damage count 
+
+- review app slownews ui draw
+- code review and cleanup for UI
+- build vs run
+- rename to my profile

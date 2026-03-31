@@ -11,6 +11,39 @@ test("homepage redirects to the builds library", async ({page}) => {
   await expect(page.getByRole("link", {name: "My Builds"})).toHaveClass(/is-active/);
 });
 
+test("builds page tabs switch between favorites, saved builds, and recent runs", async ({page}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("windblown.likes.v1", JSON.stringify([
+      "gifts:Abundance",
+      "gifts:Balance",
+    ]));
+    localStorage.setItem("windblown.deck.saved.v3", JSON.stringify([
+      {
+        name: "Category Test",
+        createdAt: "2026-03-30T12:00:00.000Z",
+        items: [
+          {id: "gifts:Abundance", type: "gifts", name: "Abundance", image: "/images/gifts/Abundance_Icon.png"},
+          {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
+        ],
+      },
+    ]));
+  });
+
+  await page.goto("/decks");
+
+  await expect(page.getByRole("tab", {name: "Recent Runs"})).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("heading", {name: "Category Test"})).toBeVisible();
+
+  await page.getByRole("tab", {name: "Favorites"}).click();
+  await expect(page.getByRole("tab", {name: "Favorites"})).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("heading", {name: /Favorites/})).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Category Test"})).toHaveCount(0);
+
+  await page.getByRole("tab", {name: "Saved Builds"}).click();
+  await expect(page.getByText("No saved builds yet.")).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Category Test"})).toHaveCount(0);
+});
+
 test("new run dialog can parse a screenshot and save a build", async ({page}) => {
   await page.goto("/decks");
 

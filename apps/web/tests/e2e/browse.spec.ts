@@ -163,7 +163,8 @@ test("decks hover tooltip renders a visible video area", async ({page}) => {
 
   await page.goto("/decks");
 
-  await expect(page.getByText("Favorites", {exact: false})).toBeVisible();
+  await page.getByRole("tab", {name: "Favorites"}).click();
+  await expect(page.getByRole("heading", {name: /Favorites/})).toBeVisible();
 
   const item = page.locator(".decks-grid-favorites .deck-row-item").last();
   await item.hover();
