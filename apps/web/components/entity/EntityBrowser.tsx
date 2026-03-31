@@ -253,6 +253,7 @@ export default function EntityBrowser({embedded = false}: Props) {
                           fade={matchDisplayMode === "fade-unmatched" && !matched}
                           inDeck={inDeck}
                           onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
+                          allowAddToDeck={embedded}
                         />
                       );
                     })}

@@ -18,6 +18,7 @@ type Props = {
   fade?: boolean;
   inDeck?: boolean;
   onEntityFilter?: (id: string) => void;
+  allowAddToDeck?: boolean;
 };
 
 type StatRow = {
@@ -25,7 +26,18 @@ type StatRow = {
   value: string;
 };
 
-export default function EntityCard({item, type, highlight, deck, likes, limits, fade, inDeck, onEntityFilter}: Props) {
+export default function EntityCard({
+  item,
+  type,
+  highlight,
+  deck,
+  likes,
+  limits,
+  fade,
+  inDeck,
+  onEntityFilter,
+  allowAddToDeck = true,
+}: Props) {
   const presentInDeck = inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`);
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
@@ -83,7 +95,7 @@ export default function EntityCard({item, type, highlight, deck, likes, limits, 
           >
             ♥
           </button>
-          {type !== "effects" && !presentInDeck && (
+          {type !== "effects" && !presentInDeck && allowAddToDeck && (
             <button
               className="card-action-btn"
               aria-label="Add to deck"

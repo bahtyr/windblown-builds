@@ -424,6 +424,14 @@
     transition: border-color var(--transition-fast), transform var(--transition-fast), background var(--transition-fast);
 }
 
+.run-build-dropzone:hover:not(.is-loading),
+.run-build-dropzone:focus-visible:not(.is-loading) {
+    border-color: rgba(79, 163, 255, 0.9);
+    background: rgba(29, 78, 216, 0.14);
+    box-shadow: 0 0 0 1px rgba(79, 163, 255, 0.22), 0 14px 32px rgba(5, 11, 21, 0.18);
+    cursor: pointer;
+}
+
 .run-build-dropzone.is-static {
     cursor: default;
 }
@@ -446,6 +454,9 @@
     display: grid;
     gap: var(--space-2);
     text-align: center;
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
 }
 
 .run-build-source-frame {

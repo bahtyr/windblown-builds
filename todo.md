@@ -3,11 +3,9 @@
 ## Status Overview
 
 ### Ready to implement, execution order
-1. Liked deck build
-2. Deck more info
-3. Deck hover content
-4. Entity videos
-5. Better detect build flow
+1. Deck more info follow-up polish
+2. Entity videos tooltip order
+3. Better detect build flow follow-up polish
 
 ### To discuss before implementing
 - Gift matching debugger
@@ -35,26 +33,40 @@ Goal: show extra metadata for every deck.
 
 ## 4. Entity videos ✅
 Goal: bring entity videos into the app and surface them in deck/browse hover UI.
-- on the "my builds" page - move the video after the description to the end of the tooltip - hover tooltip of deck items
 
 ## 5. Better detect build flow ✅
 Goal: keep the debugger flow separate, and create a simpler user-facing flow for making a build from an image.
 
 ### v1 dialog ✅
-- source image area zone: no hover state when image already selected and want to replace
-- update subtext: "Calculated in {rounded seconds} seconds. x items detected."
-- Build name: "Sunday 23:30" (round minute)
-- make initial source text color white (used in the app) "drop an image or click to upload"
-- add hover state to drop zone - blue highlight the box /border.
-- drop zone cursor pointer
 
 ### v2 anywhere in the app
-
 - Allow drag-and-drop image upload anywhere in the app.
 - Show a clear "drop image to create deck" style affordance.
 - Dropping an image should open the same dialog.
 - Also support paste:
 - If the user pastes an image, open the same dialog.
+
+---
+
+## Follow-up TODO for Done Items
+
+### Deck more info follow-up
+- Improve the overall visual treatment.
+- Fix bottom spacing.
+- Hide empty category-image slots so they do not take space.
+- Fix hover filters so they clear on hover-out.
+- Stop fading unmatched deck items when category hover/filter is active.
+- Show a reset button at the end of the category row when a filter is active.
+
+### Entity videos follow-up
+- On the My Builds page, move the video after the description to the end of the deck-item tooltip.
+
+### Better detect build flow follow-up
+- Change the v1 dialog subtext to: `Calculated in {rounded seconds} seconds. x items detected.`
+- Change the build-name default to a weekday/time format like `Sunday 23:30` using rounded minutes.
+- Make the initial source prompt use the app white text style: `drop an image or click to upload`.
+- Add a clear hover state to the empty drop zone with a blue highlighted border.
+- Ensure the empty drop zone uses a pointer cursor.
 
 ---
 

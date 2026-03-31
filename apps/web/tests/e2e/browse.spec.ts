@@ -19,6 +19,7 @@ test("browse search flow can narrow and reset visible results", async ({page}) =
   await expect(searchInput).toHaveValue("");
   await expect(page.getByText(/total$/)).toBeVisible();
   await expect(page.getByText("Balance", {exact: true})).toBeVisible();
+  await expect(page.getByRole("button", {name: "Add to deck"})).toHaveCount(0);
 });
 
 test("browse hover preview plays above the hovered card", async ({page}) => {

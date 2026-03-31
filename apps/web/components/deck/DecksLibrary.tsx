@@ -336,7 +336,6 @@ function DeckRowItem({item, details}: { item: DeckItem; details: LoadedDeckEntit
     <div className="deck-row-item" tabIndex={0}>
       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
       <div className="deck-row-item-hover" role="tooltip">
-        {details ? <EntityVideoPreview entity={details.entity} wrapperClassName="deck-row-item-video"/> : null}
         <div className="deck-row-item-hover-head">
           <div className="deck-row-item-name">{item.name}</div>
         </div>
@@ -351,6 +350,7 @@ function DeckRowItem({item, details}: { item: DeckItem; details: LoadedDeckEntit
           </div>
         )}
         {details ? <RichText parts={details.entity.richDescription}/> : null}
+        {details ? <EntityVideoPreview entity={details.entity} wrapperClassName="deck-row-item-video"/> : null}
       </div>
     </div>
   );

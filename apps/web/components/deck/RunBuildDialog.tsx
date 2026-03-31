@@ -198,7 +198,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                 className={`run-build-dropzone ${sourceSrc ? "is-static" : ""} ${isDragActive ? "is-drag-active" : ""} ${isRunning ? "is-loading" : ""}`}
                 type="button"
                 onClick={() => {
-                  if (!sourceSrc) {
+                  if (!isRunning) {
                     fileInputRef.current?.click();
                   }
                 }}
@@ -264,7 +264,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                     </button>
                     {runResult ? (
                       <p>
-                        Took {formatSeconds(runResult.totalMilliseconds)}. {runResult.squares.length} squares detected. {runResult.sourceHeight}x{runResult.sourceWidth}
+                        Calculated in {formatRoundedSeconds(runResult.totalMilliseconds)} seconds. {matchedItems.length} items detected.
                       </p>
                     ) : null}
                   </div>
@@ -352,6 +352,6 @@ function buildOverlayStyle(square: Rectangle, sourceWidth: number, sourceHeight:
   };
 }
 
-function formatSeconds(milliseconds: number): string {
-  return `${(milliseconds / 1000).toFixed(2)}s`;
+function formatRoundedSeconds(milliseconds: number): string {
+  return `${Math.max(1, Math.round(milliseconds / 1000))}`;
 }

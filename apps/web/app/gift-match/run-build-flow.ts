@@ -96,12 +96,17 @@ export function saveExternalDeck(
  * @returns {string} Default run name for the upload flow.
  */
 export function buildDetectedRunName(now: Date = new Date()): string {
-  const month = `${now.getMonth() + 1}`.padStart(2, "0");
-  const day = `${now.getDate()}`.padStart(2, "0");
-  const hours = `${now.getHours()}`.padStart(2, "0");
-  const minutes = `${now.getMinutes()}`.padStart(2, "0");
+  const rounded = new Date(now);
+  if (rounded.getSeconds() >= 30 || rounded.getMilliseconds() >= 500) {
+    rounded.setMinutes(rounded.getMinutes() + 1);
+  }
+  rounded.setSeconds(0, 0);
 
-  return `Run ${month}${day}-${hours}${minutes}`;
+  const weekday = new Intl.DateTimeFormat("en-US", {weekday: "long"}).format(rounded);
+  const hours = `${rounded.getHours()}`.padStart(2, "0");
+  const minutes = `${rounded.getMinutes()}`.padStart(2, "0");
+
+  return `${weekday} ${hours}:${minutes}`;
 }
 
 function buildDeckItemFromTemplate(template: GiftMatchTemplateScore | null | undefined): MatchedDeckItem | null {
