@@ -9,7 +9,7 @@ import {buildDeckShareUrl} from "./deck-share";
 import DeckPanel from "./DeckPanel";
 import EntityBrowser from "../entity/EntityBrowser";
 import {useLikes} from "../like/LikeContext";
-import {ENTITY_TYPES, loadEntities} from "../../lib/loadEntities";
+import {loadAllEntities} from "../../lib/loadEntities";
 import categoryImages from "../../public/category-images.json";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import RichText from "../entity/RichText";
@@ -64,23 +64,18 @@ export default function DecksLibrary() {
     let cancelled = false;
 
     async function loadEntityLookups() {
-      const entityEntries = await Promise.all(
-        ENTITY_TYPES.map(async (type) => ({
-          type,
-          entities: await loadEntities(type),
-        })),
-      );
+      const entityEntries = await loadAllEntities();
 
       if (cancelled) return;
 
       const nextEntityLookup: EntityLookup = new Map();
       const nextGiftCategoryLookup: GiftCategoryLookup = new Map();
 
-      for (const entry of entityEntries) {
-        for (const entity of entry.entities) {
-          const deckItem = makeDeckItem(entry.type, entity);
-          nextEntityLookup.set(deckItem.id, {card: deckItem, entity, type: entry.type});
-          if (entry.type === "gifts" && entity.category) {
+      for (const [type, entities] of entityEntries) {
+        for (const entity of entities) {
+          const deckItem = makeDeckItem(type, entity);
+          nextEntityLookup.set(deckItem.id, {card: deckItem, entity, type});
+          if (type === "gifts" && entity.category) {
             nextGiftCategoryLookup.set(deckItem.id, entity.category);
           }
         }
@@ -392,7 +387,7 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
                       onMouseEnter={() => setActiveCategory(category.name)}
                       onFocus={() => setActiveCategory(category.name)}
                     >
-                      {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : null}
+                      {category.image ? <img className="deck-row-category-thumb" decoding="async" loading="lazy" src={category.image} alt=""/> : null}
                       <span>
                         {category.count > 1 ? `${category.count} ` : ""}
                         {category.name}
@@ -443,6 +438,8 @@ function DeckRowItem({
   fadeCategoryMismatch: boolean;
 }) {
   const stats = details ? getEntityStats(details.entity, details.type) : [];
+  const tooltipFrameRef = useRef<number | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<DeckTooltipPosition>({left: 0, top: 0});
 
   const updateTooltipPosition = (itemElement: HTMLDivElement | null) => {
@@ -457,7 +454,7 @@ function DeckRowItem({
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipRect.width - viewportPadding);
     let left = itemRect.left + (itemRect.width / 2) - (tooltipRect.width / 2);
-    left = Math.min(Math.max(left, viewportPadding), maxLeft);
+    left = Math.floor(Math.min(Math.max(left, viewportPadding), maxLeft));
 
     const belowTop = itemRect.bottom + gap;
     const aboveTop = itemRect.top - tooltipRect.height - gap;
@@ -468,18 +465,43 @@ function DeckRowItem({
       top = aboveTop;
     }
 
-    top = Math.min(Math.max(top, viewportPadding), maxTop);
+    top = Math.floor(Math.min(Math.max(top, viewportPadding), maxTop));
     setTooltipPosition({left, top});
+  };
+
+  const closeTooltip = () => {
+    if (tooltipFrameRef.current !== null) {
+      window.cancelAnimationFrame(tooltipFrameRef.current);
+      tooltipFrameRef.current = null;
+    }
+    setShowTooltip(false);
+  };
+
+  const openTooltip = (itemElement: HTMLDivElement | null) => {
+    setShowTooltip(true);
+    if (tooltipFrameRef.current !== null) {
+      window.cancelAnimationFrame(tooltipFrameRef.current);
+    }
+    tooltipFrameRef.current = window.requestAnimationFrame(() => {
+      updateTooltipPosition(itemElement);
+      tooltipFrameRef.current = null;
+    });
   };
 
   return (
     <div
       className={`deck-row-item ${fadeCategoryMismatch ? "is-category-mismatch" : ""}`}
       tabIndex={0}
-      onFocus={(event) => updateTooltipPosition(event.currentTarget)}
-      onMouseEnter={(event) => updateTooltipPosition(event.currentTarget)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          closeTooltip();
+        }
+      }}
+      onFocus={(event) => openTooltip(event.currentTarget)}
+      onMouseEnter={(event) => openTooltip(event.currentTarget)}
+      onMouseLeave={closeTooltip}
     >
-      {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
+      {item.image ? <img className="deck-row-item-thumb" decoding="async" loading="lazy" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
       <div
         className="deck-row-item-hover"
         role="tooltip"
@@ -488,21 +510,29 @@ function DeckRowItem({
           top: `${tooltipPosition.top}px`,
         }}
       >
-        <div className="deck-row-item-hover-head">
-          <div className="deck-row-item-name">{item.name}</div>
-        </div>
-        {stats.length > 0 && (
-          <div className="deck-row-item-stats">
-            {stats.map((stat) => (
-              <div className="deck-row-item-stat" key={stat.label}>
-                <span className="deck-row-item-stat-value">{stat.value}</span>
-                <span className="deck-row-item-stat-label">{stat.label}</span>
+        {showTooltip ? (
+          <>
+            <div className="deck-row-item-hover-head">
+              <div className="deck-row-item-name">{item.name}</div>
+            </div>
+            {stats.length > 0 && (
+              <div className="deck-row-item-stats">
+                {stats.map((stat) => (
+                  <div className="deck-row-item-stat" key={stat.label}>
+                    <span className="deck-row-item-stat-value">{stat.value}</span>
+                    <span className="deck-row-item-stat-label">{stat.label}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
+            {details ? <RichText parts={details.entity.richDescription}/> : null}
+            {details ? <EntityVideoPreview active={showTooltip} entity={details.entity} preload="metadata" wrapperClassName="deck-row-item-video"/> : null}
+          </>
+        ) : (
+          <div className="deck-row-item-hover-head">
+            <div className="deck-row-item-name">{item.name}</div>
           </div>
         )}
-        {details ? <RichText parts={details.entity.richDescription}/> : null}
-        {details ? <EntityVideoPreview entity={details.entity} wrapperClassName="deck-row-item-video"/> : null}
       </div>
     </div>
   );

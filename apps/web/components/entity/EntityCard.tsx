@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useCallback, useState} from "react";
+import {useCallback, useRef, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
@@ -13,6 +13,7 @@ type CardViewMode = "details" | "thumbs";
 type Props = {
   item: ScrapedEntity;
   type: EntityType;
+  cardRef?: (element: HTMLElement | null) => void;
   highlight?: boolean;
   deck: ReturnType<typeof useDeck>;
   likes: ReturnType<typeof useLikes>;
@@ -38,6 +39,7 @@ type TooltipPosition = {
 export default function EntityCard({
   item,
   type,
+  cardRef,
   highlight,
   deck,
   likes,
@@ -53,6 +55,8 @@ export default function EntityCard({
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
   const [showPreview, setShowPreview] = useState(false);
+  const thumbsPositionFrame = useRef<number | null>(null);
+  const [showThumbsHover, setShowThumbsHover] = useState(false);
   const [thumbsTooltipPosition, setThumbsTooltipPosition] = useState<TooltipPosition | null>(null);
 
   const handleAdd = () => {
@@ -81,7 +85,7 @@ export default function EntityCard({
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipRect.width - viewportPadding);
     let left = mediaRect.left + (mediaRect.width / 2) - (tooltipRect.width / 2);
-    left = Math.min(Math.max(left, viewportPadding), maxLeft);
+    left = Math.floor(Math.min(Math.max(left, viewportPadding), maxLeft));
 
     const aboveTop = mediaRect.top - tooltipRect.height - gap;
     const belowTop = mediaRect.bottom + gap;
@@ -92,9 +96,31 @@ export default function EntityCard({
       top = belowTop;
     }
 
-    top = Math.min(Math.max(top, minTop), maxTop);
+    top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
     setThumbsTooltipPosition({left, top});
   }, []);
+
+  const closeThumbsHover = useCallback(() => {
+    if (thumbsPositionFrame.current !== null) {
+      window.cancelAnimationFrame(thumbsPositionFrame.current);
+      thumbsPositionFrame.current = null;
+    }
+    setShowThumbsHover(false);
+    setThumbsTooltipPosition(null);
+  }, []);
+
+  const openThumbsHover = useCallback((cardElement: HTMLElement | null) => {
+    setShowThumbsHover(true);
+
+    if (thumbsPositionFrame.current !== null) {
+      window.cancelAnimationFrame(thumbsPositionFrame.current);
+    }
+
+    thumbsPositionFrame.current = window.requestAnimationFrame(() => {
+      updateThumbsTooltipPosition(cardElement);
+      thumbsPositionFrame.current = null;
+    });
+  }, [updateThumbsTooltipPosition]);
 
   const cardClasses = `card ${viewMode === "thumbs" ? "card-thumbs" : "card-details"} ${
     highlight || presentInDeck ? "is-highlighted" : ""
@@ -103,25 +129,26 @@ export default function EntityCard({
   return (
     <article
       className={cardClasses}
+      ref={cardRef}
       tabIndex={viewMode === "thumbs" ? 0 : undefined}
       onBlur={(event) => {
         if (viewMode === "thumbs" && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          setThumbsTooltipPosition(null);
+          closeThumbsHover();
         }
       }}
       onFocus={(event) => {
         if (viewMode === "thumbs") {
-          updateThumbsTooltipPosition(event.currentTarget);
+          openThumbsHover(event.currentTarget);
         }
       }}
       onMouseLeave={() => {
         if (viewMode === "thumbs") {
-          setThumbsTooltipPosition(null);
+          closeThumbsHover();
         }
       }}
       onMouseEnter={(event) => {
         if (viewMode === "thumbs") {
-          updateThumbsTooltipPosition(event.currentTarget);
+          openThumbsHover(event.currentTarget);
         }
       }}
     >
@@ -129,7 +156,7 @@ export default function EntityCard({
         <>
           <div className="card-thumbs-media-wrap">
             {item.image ? (
-              <img className="card-thumbs-image" src={item.image} alt=""/>
+              <img className="card-thumbs-image" decoding="async" loading="lazy" src={item.image} alt=""/>
             ) : (
               <div className="card-thumbs-image card-thumbs-image-empty"/>
             )}
@@ -152,30 +179,45 @@ export default function EntityCard({
             style={{
               left: `${thumbsTooltipPosition?.left ?? 0}px`,
               top: `${thumbsTooltipPosition?.top ?? 0}px`,
-              opacity: thumbsTooltipPosition ? undefined : 0,
-              visibility: thumbsTooltipPosition ? undefined : "hidden",
+              opacity: showThumbsHover && thumbsTooltipPosition ? undefined : 0,
+              visibility: showThumbsHover && thumbsTooltipPosition ? undefined : "hidden",
             }}
           >
-            <div className="card-thumbs-hover-head">
-              <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
-                {item.name}
-              </div>
-            </div>
-            {stats.length > 0 && (
-              <div className="card-thumbs-hover-stats card-stats">
-                {stats.map((stat) => (
-                  <div className="card-stat" key={stat.label}>
-                    <span className="card-stat-value">{stat.value}</span>
-                    <span className="card-stat-label">{stat.label}</span>
+            {showThumbsHover ? (
+              <>
+                <div className="card-thumbs-hover-head">
+                  <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
+                    {item.name}
                   </div>
-                ))}
+                </div>
+                {stats.length > 0 && (
+                  <div className="card-thumbs-hover-stats card-stats">
+                    {stats.map((stat) => (
+                      <div className="card-stat" key={stat.label}>
+                        <span className="card-stat-value">{stat.value}</span>
+                        <span className="card-stat-label">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <RichText
+                  parts={item.richDescription}
+                  onEntityFilter={onEntityFilter}
+                />
+                <EntityVideoPreview
+                  active={showThumbsHover}
+                  entity={item}
+                  preload="metadata"
+                  wrapperClassName="card-thumbs-hover-video"
+                />
+              </>
+            ) : (
+              <div className="card-thumbs-hover-head">
+                <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
+                  {item.name}
+                </div>
               </div>
             )}
-            <RichText
-              parts={item.richDescription}
-              onEntityFilter={onEntityFilter}
-            />
-            <EntityVideoPreview entity={item} wrapperClassName="card-thumbs-hover-video"/>
           </div>
         </>
       ) : (
@@ -192,14 +234,16 @@ export default function EntityCard({
                   onMouseEnter={() => setShowPreview(true)}
                   onMouseLeave={() => setShowPreview(false)}
                 >
-                  {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
+                  {item.image && <img className="card-thumb-image" decoding="async" loading="lazy" src={item.image} alt=""/>}
                 </button>
                 {showPreview ? (
                   <div className="card-image-hover-preview">
                     <EntityVideoPreview
+                      active={showPreview}
                       entity={item}
                       wrapperClassName="card-image-hover-preview-surface"
                       mediaClassName="card-image-hover-preview-media"
+                      preload="metadata"
                     />
                   </div>
                 ) : null}

@@ -3,7 +3,7 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
-import {ENTITY_TYPES, loadEntities} from "../../lib/loadEntities";
+import {ENTITY_TYPES, loadAllEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {
   DEFAULT_LIMITS,
@@ -141,8 +141,14 @@ export default function EntityBrowser({embedded = false}: Props) {
     () => [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
     [items, search, selectedEntity, likedOnly, deckOnly, likes.ids, deck.items],
   );
-  const {matchNav, scrollToNearest} = useMatchNavigation(
-    !loading && !error && matchDisplayMode === "fade-unmatched",
+  const matchNavEnabled =
+    !loading &&
+    !error &&
+    matchDisplayMode === "fade-unmatched" &&
+    filteredCount > 0 &&
+    filteredCount < visibleItems.length;
+  const {matchNav, registerMatchElement, scrollToNearest} = useMatchNavigation(
+    matchNavEnabled,
     matchNavDeps,
   );
 
@@ -255,6 +261,7 @@ export default function EntityBrowser({embedded = false}: Props) {
                       return (
                         <EntityCard
                           key={`${item.entityType}-${item.name}-${idx}`}
+                          cardRef={matched ? registerMatchElement(`${item.entityType}:${item.name}`) : undefined}
                           item={item}
                           type={item.entityType}
                           highlight={embedded && inDeck}
@@ -411,12 +418,12 @@ function SidebarSection({
         {options.map((option) => (
           <button
             key={option.value}
-            className={`browse-sidebar-link ${selectedValue === option.value ? "is-active" : ""}`}
-            type="button"
-            onClick={() => onSelect(selectedValue === option.value && deselectValue !== undefined ? deselectValue : option.value)}
+              className={`browse-sidebar-link ${selectedValue === option.value ? "is-active" : ""}`}
+              type="button"
+              onClick={() => onSelect(selectedValue === option.value && deselectValue !== undefined ? deselectValue : option.value)}
           >
             {option.image ? (
-              <img className="browse-sidebar-link-image" src={option.image} alt=""/>
+              <img className="browse-sidebar-link-image" decoding="async" loading="lazy" src={option.image} alt=""/>
             ) : (
               <span aria-hidden="true" className="browse-sidebar-link-image browse-sidebar-link-image-placeholder"/>
             )}
@@ -448,7 +455,7 @@ function useEntityData() {
     let mounted = true;
     setLoading(true);
 
-    Promise.all(ENTITY_TYPES.map(async (entityType) => [entityType, await loadEntities(entityType)] as const))
+    loadAllEntities()
       .then((entries) => entries.flatMap(([entityType, data]) => data.map((item) => ({...item, entityType}))))
       .then((data: DisplayEntity[]) => {
         if (mounted) {
@@ -537,23 +544,42 @@ function buildSearchText(item: DisplayEntity): string {
  */
 function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
   const [matchNav, setMatchNav] = useState<MatchNav>({above: 0, below: 0});
+  const matchElementsRef = useRef<Map<string, HTMLElement>>(new Map());
   const scrollTimer = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   const collectMatches = useCallback(
     () =>
-      Array.from(document.querySelectorAll<HTMLElement>(".card:not(.is-faded)")).map((el) => ({
-        el,
-        rect: el.getBoundingClientRect(),
+      Array.from(matchElementsRef.current.entries()).map(([id, element]) => ({
+        id,
+        el: element,
+        rect: element.getBoundingClientRect(),
       })),
     [],
   );
 
+  const registerMatchElement = useCallback(
+    (id: string) => (element: HTMLElement | null) => {
+      if (element) {
+        matchElementsRef.current.set(id, element);
+      } else {
+        matchElementsRef.current.delete(id);
+      }
+    },
+    [],
+  );
+
   const refreshMatchNav = useCallback(() => {
+    if (!active) {
+      setMatchNav({above: 0, below: 0});
+      return;
+    }
+
     const matches = collectMatches();
     const above = matches.filter((match) => match.rect.bottom < 0).length;
     const below = matches.filter((match) => match.rect.top > window.innerHeight).length;
     setMatchNav({above, below});
-  }, [collectMatches]);
+  }, [active, collectMatches]);
 
   const scrollToNearest = useCallback(
     (direction: "up" | "down") => {
@@ -575,12 +601,24 @@ function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
   );
 
   useEffect(() => {
-    if (!active) return;
+    if (!active) {
+      matchElementsRef.current.clear();
+      setMatchNav({above: 0, below: 0});
+      return;
+    }
 
     refreshMatchNav();
     const handler = () => {
       window.clearTimeout(scrollTimer.current ?? undefined);
-      scrollTimer.current = window.setTimeout(refreshMatchNav, NAV_REFRESH_DELAY);
+      scrollTimer.current = window.setTimeout(() => {
+        if (rafRef.current !== null) {
+          window.cancelAnimationFrame(rafRef.current);
+        }
+        rafRef.current = window.requestAnimationFrame(() => {
+          refreshMatchNav();
+          rafRef.current = null;
+        });
+      }, NAV_REFRESH_DELAY);
     };
 
     window.addEventListener("scroll", handler, {passive: true});
@@ -589,8 +627,13 @@ function useMatchNavigation(active: boolean, deps: ReadonlyArray<unknown>) {
     return () => {
       window.removeEventListener("scroll", handler);
       window.removeEventListener("resize", handler);
+      window.clearTimeout(scrollTimer.current ?? undefined);
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
     };
   }, [active, deps, refreshMatchNav]);
 
-  return {matchNav, scrollToNearest};
+  return {matchNav, registerMatchElement, scrollToNearest};
 }

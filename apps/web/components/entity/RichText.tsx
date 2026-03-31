@@ -46,7 +46,7 @@ export default function RichText({parts, onEntityFilter}: Props) {
               }
             }}
           >
-            {p.image ? <img src={p.image} alt={(p.text || p.id) + " image"}/> : null}
+            {p.image ? <img decoding="async" loading="lazy" src={p.image} alt={(p.text || p.id) + " image"}/> : null}
             {p.text ? <span>{p.text}</span> : ""}
           </span>
         );

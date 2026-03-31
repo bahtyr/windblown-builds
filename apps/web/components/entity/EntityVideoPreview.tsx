@@ -6,7 +6,9 @@ import {ScrapedEntity} from "../../lib/types";
 
 type Props = {
   entity: ScrapedEntity;
+  active?: boolean;
   mediaClassName?: string;
+  preload?: "none" | "metadata" | "auto";
   wrapperClassName?: string;
 };
 
@@ -31,7 +33,13 @@ export function getEntityVideos(entity: ScrapedEntity): string[] {
  * @param {Props} props - Video preview props.
  * @returns {JSX.Element | null} Video preview when media exists.
  */
-export default function EntityVideoPreview({entity, mediaClassName = "", wrapperClassName = ""}: Props) {
+export default function EntityVideoPreview({
+  entity,
+  active = true,
+  mediaClassName = "",
+  preload = "metadata",
+  wrapperClassName = "",
+}: Props) {
   const videos = getEntityVideos(entity);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -41,8 +49,14 @@ export default function EntityVideoPreview({entity, mediaClassName = "", wrapper
 
     video.muted = true;
     video.defaultMuted = true;
+    if (!active) {
+      video.pause();
+      video.currentTime = 0;
+      return;
+    }
+
     void video.play().catch(() => {});
-  }, [videos]);
+  }, [active, videos]);
 
   if (videos.length === 0) return null;
 
@@ -55,7 +69,7 @@ export default function EntityVideoPreview({entity, mediaClassName = "", wrapper
         loop
         muted
         playsInline
-        preload="auto"
+        preload={preload}
         ref={videoRef}
       >
         <source src={videos[0]} type="video/webm"/>
