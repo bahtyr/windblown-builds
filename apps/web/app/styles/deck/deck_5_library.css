@@ -1,20 +1,8 @@
-.page-decks {
-    /*padding-top: var(--space-20);*/
-}
-
-.page-decks .body-wrapper {
-    /*width: 100%;*/
-    /*max-width: calc(var(--max-width) * 1.5);*/
-    /*margin-left: 0;*/
-    /*margin-right: auto;*/
-}
-
 .decks-page {
     display: grid;
 }
 
 .decks-page-top {
-    /*position: sticky;*/
     background: var(--color-overlay-header);
     border-bottom: 1px solid var(--border);
 }
@@ -105,7 +93,6 @@
     padding: 0;
     background: transparent;
     max-width: calc(var(--max-width) * 0.5);
-    /*max-width: 600px;*/
 }
 
 .decks-grid-favorites {
@@ -153,8 +140,6 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    /*align-items: center;*/
-    /*gap: var(--space-5);*/
     flex-wrap: wrap;
 }
 

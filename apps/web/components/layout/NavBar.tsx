@@ -21,13 +21,13 @@ export default function NavBar() {
           </nav>
           <nav className="tabs tabs-secondary" aria-label="Community links">
             <Link className="tab tab-secondary" href="https://windblown.wiki.gg/" rel="noreferrer" target="_blank">
-              Wiki ↗
+              {"Wiki \u2197"}
             </Link>
             <Link className="tab tab-secondary" href="https://www.reddit.com/r/WindblownGame/" rel="noreferrer" target="_blank">
-              Reddit ↗
+              {"Reddit \u2197"}
             </Link>
             <Link className="tab tab-secondary" href="https://discord.com/invite/v4S6Vsarkx" rel="noreferrer" target="_blank">
-              Discord ↗
+              {"Discord \u2197"}
             </Link>
           </nav>
         </div>
