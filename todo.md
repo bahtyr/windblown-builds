@@ -16,104 +16,37 @@
 
 ---
 
-## 1. Liked deck build
+remove done todos. keep the heading & goal. put ✅ to done items.
 
+## 1. Liked deck build ✅
 Goal: add a dynamic Favorites deck to My Builds.
 
-- Add a `Favorites` deck to the My Builds page.
-- Hide it if there are no liked entities.
-- The deck is auto-generated from the user's current likes from the Browse page.
-- This is not a snapshot or independent saved deck.
-
----
-
-## 2. Deck hover content
-
+## 2. Deck hover content ✅
 Goal: make deck items image-first and move detail to hover.
 
-- Remove visible names from deck items so the grid is image only.
-- On hover, show the entity name.
-- On hover, show the entity description using the same card-style content used on Browse.
-- Hide image actions inside the hover content:
-- No favorite action
-- No add action
-
----
-
-## 3. Deck more info
-
+## 3. Deck more info ✅
 Goal: show extra metadata for every deck.
+- doesn't look nice
+- spacing bottom.
+- when image empty should not take up space
+- hovering on one of these items sets a filter, does not go away when hover out.
+- fades unmatching items in the deck.
+- show reset button at the end of these items when a filter is present.
 
-- Add a visible list of gift categories for every deck.
-- Place this to the left of the deck, similar to a side panel.
-- This should always be visible, not only on selection or expand.
-- Categories do not currently have their own image list.
-- Create a category-image mapping based on existing entity images.
-- Store that mapping in a JSON file.
-- This can be generated once and used only for this deck info UI.
-- No need to add category images to the Browse page.
-
----
-
-## 4. Entity videos
-
+## 4. Entity videos ✅
 Goal: bring entity videos into the app and surface them in deck/browse hover UI.
+- on the "my builds" page - move the video after the description to the end of the tooltip - hover tooltip of deck items
 
-- Parse videos from the wiki so opening an entity page has video data available.
-- Store video assets as URLs, consistent with current scraper asset handling.
-- Weapons can have multiple videos, so all videos need to be stored.
-- Decide where to show them in the UI:
-- On deck hover, show the video above the entity description card.
-- On the Browse page, hovering the image should show the video as a floating preview, not inserted into the card.
-- Video previews should stay small, like thumbnails, not large embeds.
-
-Reference:
-- Wiki parsing lives in `packages/scrapper`.
-
----
-
-## 5. Better detect build flow
-
+## 5. Better detect build flow ✅
 Goal: keep the debugger flow separate, and create a simpler user-facing flow for making a build from an image.
 
-- Keep the gift matcher debugger page as a separate UI flow.
-- Add a user-facing flow to upload a run screenshot, parse it, and create a build.
-- For v1, this still saves into normal builds.
-- The entry point button should be named `New run`.
-
-### v1 dialog
-
-- Add a `New run` button.
-- Meaning: the user just played a game/run and wants to upload the screenshot.
-- Clicking it opens a popup dialog.
-- Dialog should support:
-  - Click to upload image
-  - Drag and drop image
-  - Use a familiar upload/dropzone pattern, similar to file attach or Google Drive drag/drop modals.
-  - The source image preview should have a max width/height and should not take over the full screen.
-  - Auto-start parsing when the file is selected.
-    - No need to show total parsing time.
-      - Still highlight found and not-found squares in the source image.
-- Show a deck-builder style layout with:
-  - Input for build name
-  - List of added items
-  - Remove button for added items
-  - Successful matches should be added automatically to the build list.
-  - Below that, show failed matches in a separate section.
-  - For failed matches, show alternate candidates in a similar UI with add buttons.
-  - Adding a candidate adds it to the build list above.
-    - Do not remove it from the failed list when added.
-- Save build button.
-- Edit button: 
-  - Save first
-  - Then open the edit modal
-  - This prevents the user from losing the build
-- Dialog should have:
-  - X button at top right
-  - Faded background overlay
-- Clicking items should not change the highlighted squares in the source image.
-- This flow should save the deck immediately.
-- Do not use the previous share-link/open-link method.
+### v1 dialog ✅
+- source image area zone: no hover state when image already selected and want to replace
+- update subtext: "Calculated in {rounded seconds} seconds. x items detected."
+- Build name: "Sunday 23:30" (round minute)
+- make initial source text color white (used in the app) "drop an image or click to upload"
+- add hover state to drop zone - blue highlight the box /border.
+- drop zone cursor pointer
 
 ### v2 anywhere in the app
 

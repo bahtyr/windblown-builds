@@ -279,7 +279,6 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
             <div className="deck-row-title-group">
               <h2 className="deck-row-title">{title}</h2>
               {meta && <p className="deck-row-meta">{meta}</p>}
-              {isFavorites && <p className="deck-row-meta">Built from your current likes</p>}
             </div>
             <div className="deck-row-actions">
               {isShared ? (

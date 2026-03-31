@@ -132,8 +132,8 @@
 
 .deck-row-content {
     display: grid;
-    grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
-    gap: var(--space-6);
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
     align-items: start;
 }
 
@@ -151,9 +151,10 @@
 }
 
 .deck-row-category-list {
-    display: grid;
-    gap: var(--space-2);
-    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    align-items: flex-start;
     justify-items: start;
 }
 
@@ -423,6 +424,10 @@
     transition: border-color var(--transition-fast), transform var(--transition-fast), background var(--transition-fast);
 }
 
+.run-build-dropzone.is-static {
+    cursor: default;
+}
+
 .run-build-dropzone.is-loading {
     cursor: wait;
 }
@@ -445,9 +450,8 @@
 
 .run-build-source-frame {
     position: relative;
-    width: 100%;
-    max-width: 520px;
-    max-height: 520px;
+    width: fit-content;
+    max-width: 100%;
     overflow: hidden;
     border-radius: var(--radius-md);
     isolation: isolate;
@@ -455,7 +459,8 @@
 
 .run-build-source-image {
     display: block;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
     max-height: 520px;
     object-fit: contain;
@@ -506,6 +511,14 @@
     margin: 0;
 }
 
+.run-build-preview-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
 .run-build-error {
     color: #fda4af;
 }
@@ -546,13 +559,31 @@
 }
 
 .run-build-success-tile {
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     display: grid;
     place-items: center;
     aspect-ratio: 1;
     padding: var(--space-1);
-    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.run-build-success-tile:hover,
+.run-build-success-tile:focus-visible {
+    transform: translateY(-1px);
+}
+
+.run-build-success-tile.is-dimmed {
+    opacity: 0.4;
+}
+
+.run-build-success-tile.is-selected {
+    opacity: 1;
+    border-color: rgba(79, 163, 255, 0.75);
+    box-shadow: 0 0 0 1px rgba(79, 163, 255, 0.28), 0 10px 24px rgba(5, 11, 21, 0.3);
 }
 
 .run-build-success-image {
@@ -564,9 +595,7 @@
 }
 
 .run-build-failed-tile {
-    cursor: pointer;
     opacity: 0.42;
-    transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
 .run-build-failed-tile:hover,

@@ -38,6 +38,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
   const [sourceSrc, setSourceSrc] = useState<string | null>(null);
   const [runResult, setRunResult] = useState<GiftMatchRunResult | null>(null);
   const [manualItems, setManualItems] = useState<MatchedDeckItem[]>([]);
+  const [removedMatchedIds, setRemovedMatchedIds] = useState<string[]>([]);
   const [buildName, setBuildName] = useState<string>(buildDetectedRunName());
   const [error, setError] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -70,9 +71,13 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
 
   const matchedItems = useMemo(() => buildDetectedDeckItems(runResult?.squareResults ?? []), [runResult?.squareResults]);
   const failedSquares = useMemo(() => buildFailedSquareCandidates(runResult?.squareResults ?? []), [runResult?.squareResults]);
-  const visibleMatchedItems = useMemo(() => matchedItems, [matchedItems]);
+  const visibleMatchedItems = useMemo(
+    () => matchedItems.filter((item) => !removedMatchedIds.includes(item.id)),
+    [matchedItems, removedMatchedIds],
+  );
   const buildItems = useMemo(() => [...visibleMatchedItems, ...manualItems], [manualItems, visibleMatchedItems]);
   const selectedCandidateIds = useMemo(() => new Set(manualItems.map((item) => item.id)), [manualItems]);
+  const selectedMatchedIds = useMemo(() => new Set(visibleMatchedItems.map((item) => item.id)), [visibleMatchedItems]);
 
   if (!isOpen) {
     return null;
@@ -84,6 +89,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
       setError(null);
       setRunResult(null);
       setManualItems([]);
+      setRemovedMatchedIds([]);
 
       const nextState = await runGiftMatchWorkflow(templateSpecs, nextSourceSrc);
       setRunResult(nextState);
@@ -103,6 +109,7 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
     setSourceSrc(null);
     setRunResult(null);
     setManualItems([]);
+    setRemovedMatchedIds([]);
     setBuildName(buildDetectedRunName());
     setError(null);
     setIsRunning(false);
@@ -135,6 +142,14 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
       current.some((entry) => entry.id === item.id)
         ? current.filter((entry) => entry.id !== item.id)
         : [...current, item]
+    ));
+  }
+
+  function handleToggleMatchedItem(item: MatchedDeckItem) {
+    setRemovedMatchedIds((current) => (
+      current.includes(item.id)
+        ? current.filter((entry) => entry !== item.id)
+        : [...current, item.id]
     ));
   }
 
@@ -180,9 +195,13 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                 onChange={handleFileInput}
               />
               <button
-                className={`run-build-dropzone ${isDragActive ? "is-drag-active" : ""} ${isRunning ? "is-loading" : ""}`}
+                className={`run-build-dropzone ${sourceSrc ? "is-static" : ""} ${isDragActive ? "is-drag-active" : ""} ${isRunning ? "is-loading" : ""}`}
                 type="button"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                  if (!sourceSrc) {
+                    fileInputRef.current?.click();
+                  }
+                }}
                 onDragEnter={(event) => {
                   event.preventDefault();
                   setIsDragActive(true);
@@ -238,7 +257,18 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
               </button>
 
               <div className="run-build-preview-meta">
-                {!isRunning && runResult ? <p>{runResult.squares.length} squares detected.</p> : null}
+                {sourceSrc && !isRunning ? (
+                  <div className="run-build-preview-meta-row">
+                    <button className="btn ghost" type="button" onClick={() => fileInputRef.current?.click()}>
+                      Replace image
+                    </button>
+                    {runResult ? (
+                      <p>
+                        Took {formatSeconds(runResult.totalMilliseconds)}. {runResult.squares.length} squares detected. {runResult.sourceHeight}x{runResult.sourceWidth}
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
                 {error ? <p className="run-build-error">{error}</p> : null}
               </div>
             </section>
@@ -255,17 +285,23 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                 />
               </div>
 
-              {visibleMatchedItems.length > 0 ? (
+              {matchedItems.length > 0 ? (
                 <div className="run-build-section">
                   <div className="run-build-section-head">
                     <h3>Build items</h3>
-                    <span>{visibleMatchedItems.length}</span>
                   </div>
                   <div className="run-build-success-grid" aria-label="Detected build items">
-                    {visibleMatchedItems.map((item) => (
-                      <div className="run-build-success-tile" key={item.id} title={item.name}>
+                    {matchedItems.map((item) => (
+                      <button
+                        key={item.id}
+                        aria-pressed={selectedMatchedIds.has(item.id)}
+                        className={`run-build-success-tile ${selectedMatchedIds.has(item.id) ? "is-selected" : "is-dimmed"}`}
+                        title={item.name}
+                        type="button"
+                        onClick={() => handleToggleMatchedItem(item)}
+                      >
                         {item.image ? <img alt={item.name} className="run-build-success-image" src={item.image}/> : null}
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -275,7 +311,6 @@ export default function RunBuildDialog({isOpen, onClose, templateSpecs}: RunBuil
                 <div className="run-build-section">
                   <div className="run-build-section-head">
                     <h3>Candidates for failed matches</h3>
-                    <span>{failedSquares.length}</span>
                   </div>
                   <div className="run-build-success-grid" aria-label="Failed match candidates">
                     {failedSquares.map((candidate) => (
@@ -315,4 +350,8 @@ function buildOverlayStyle(square: Rectangle, sourceWidth: number, sourceHeight:
     height: `${(square.height / sourceHeight) * 100}%`,
     borderColor,
   };
+}
+
+function formatSeconds(milliseconds: number): string {
+  return `${(milliseconds / 1000).toFixed(2)}s`;
 }
