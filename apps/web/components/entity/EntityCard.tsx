@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {useCallback, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
@@ -36,6 +36,57 @@ type TooltipPosition = {
   top: number;
 };
 
+function getTooltipSafeTop(gap: number, viewportPadding: number): number {
+  const blockers = [
+    document.querySelector<HTMLElement>(".header"),
+    document.querySelector<HTMLElement>(".filters-body"),
+    document.querySelector<HTMLElement>(".decks-page-top"),
+  ].filter((element): element is HTMLElement => Boolean(element));
+
+  const blockerBottom = blockers.reduce((maxBottom, element) => {
+    return Math.max(maxBottom, element.getBoundingClientRect().bottom);
+  }, 0);
+
+  return Math.max(viewportPadding, blockerBottom + gap);
+}
+
+function getHoverAnchorLeft(
+  triggerRect: DOMRect,
+  tooltipWidth: number,
+  viewportPadding: number,
+  preferRightEdge: boolean,
+): number {
+  const minLeft = viewportPadding;
+  const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipWidth - viewportPadding);
+  const leftAligned = triggerRect.left;
+  const rightAligned = triggerRect.right - tooltipWidth;
+
+  const preferred = preferRightEdge ? rightAligned : leftAligned;
+  const fallback = preferRightEdge ? leftAligned : rightAligned;
+
+  if (preferred >= minLeft && preferred <= maxLeft) return preferred;
+  if (fallback >= minLeft && fallback <= maxLeft) return fallback;
+  return Math.min(Math.max(preferred, minLeft), maxLeft);
+}
+
+function rectsIntersect(
+  left: number,
+  top: number,
+  width: number,
+  height: number,
+  triggerRect: DOMRect,
+): boolean {
+  const right = left + width;
+  const bottom = top + height;
+
+  return !(
+    right <= triggerRect.left ||
+    left >= triggerRect.right ||
+    bottom <= triggerRect.top ||
+    top >= triggerRect.bottom
+  );
+}
+
 export default function EntityCard({
   item,
   type,
@@ -51,6 +102,9 @@ export default function EntityCard({
   showDeckState = true,
   viewMode = "details",
 }: Props) {
+  const cardElementRef = useRef<HTMLElement | null>(null);
+  const thumbsTooltipRef = useRef<HTMLDivElement | null>(null);
+  const thumbsMediaRef = useRef<HTMLDivElement | null>(null);
   const presentInDeck = showDeckState && (inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`));
   const liked = likes.ids.has(`${type}:${item.name}`);
   const stats = getEntityStats(item, type);
@@ -70,33 +124,52 @@ export default function EntityCard({
     deck.remove(`${type}:${item.name}`);
   };
 
-  const updateThumbsTooltipPosition = useCallback((cardElement: HTMLElement | null) => {
-    if (!cardElement || typeof window === "undefined") return;
+  const updateThumbsTooltipPosition = useCallback(() => {
+    if (typeof window === "undefined") return;
 
-    const tooltipElement = cardElement.querySelector<HTMLElement>(".card-thumbs-hover");
-    const mediaElement = cardElement.querySelector<HTMLElement>(".card-thumbs-media-wrap");
+    const tooltipElement = thumbsTooltipRef.current;
+    const mediaElement = thumbsMediaRef.current;
     if (!tooltipElement || !mediaElement) return;
 
     const viewportPadding = 12;
     const gap = 8;
-    const filtersBottom = document.querySelector<HTMLElement>(".filters-body")?.getBoundingClientRect().bottom ?? 0;
-    const minTop = Math.max(viewportPadding, filtersBottom + gap);
+    const minTop = getTooltipSafeTop(gap, viewportPadding);
     const mediaRect = mediaElement.getBoundingClientRect();
     const tooltipRect = tooltipElement.getBoundingClientRect();
-    const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipRect.width - viewportPadding);
-    let left = mediaRect.left + (mediaRect.width / 2) - (tooltipRect.width / 2);
-    left = Math.floor(Math.min(Math.max(left, viewportPadding), maxLeft));
+    const rightAlignedLeft = mediaRect.right + gap;
+    const leftAlignedLeft = mediaRect.left - tooltipRect.width - gap;
+    const canPlaceRight = rightAlignedLeft + tooltipRect.width <= window.innerWidth - viewportPadding;
+    const canPlaceLeft = leftAlignedLeft >= viewportPadding;
+
+    let left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, false);
+    if (canPlaceRight) {
+      left = rightAlignedLeft;
+    } else if (canPlaceLeft) {
+      left = leftAlignedLeft;
+    }
 
     const aboveTop = mediaRect.top - tooltipRect.height - gap;
     const belowTop = mediaRect.bottom + gap;
     const maxTop = Math.max(minTop, window.innerHeight - tooltipRect.height - viewportPadding);
+    const moreRoomOnRight = (window.innerWidth - viewportPadding) - mediaRect.left >= mediaRect.right - viewportPadding;
 
     let top = aboveTop;
     if (aboveTop < minTop && belowTop <= maxTop) {
       top = belowTop;
+      left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, !moreRoomOnRight);
+    } else {
+      left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, moreRoomOnRight);
     }
 
+    left = Math.floor(left);
     top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
+
+    const stackedPlacementOverlapsTrigger = rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, mediaRect);
+    if (stackedPlacementOverlapsTrigger && (canPlaceRight || canPlaceLeft)) {
+      left = Math.floor(canPlaceRight ? rightAlignedLeft : leftAlignedLeft);
+      top = Math.floor(Math.min(Math.max(mediaRect.top, minTop), maxTop));
+    }
+
     setThumbsTooltipPosition({left, top});
   }, []);
 
@@ -110,6 +183,7 @@ export default function EntityCard({
   }, []);
 
   const openThumbsHover = useCallback((cardElement: HTMLElement | null) => {
+    cardElementRef.current = cardElement;
     setShowThumbsHover(true);
 
     if (thumbsPositionFrame.current !== null) {
@@ -117,10 +191,32 @@ export default function EntityCard({
     }
 
     thumbsPositionFrame.current = window.requestAnimationFrame(() => {
-      updateThumbsTooltipPosition(cardElement);
+      updateThumbsTooltipPosition();
       thumbsPositionFrame.current = null;
     });
   }, [updateThumbsTooltipPosition]);
+
+  useEffect(() => {
+    if (!showThumbsHover || typeof window === "undefined") return;
+
+    const tooltipElement = thumbsTooltipRef.current;
+    if (!tooltipElement) return;
+
+    const observer = new ResizeObserver(() => {
+      updateThumbsTooltipPosition();
+    });
+    observer.observe(tooltipElement);
+
+    const handleViewportChange = () => updateThumbsTooltipPosition();
+    window.addEventListener("resize", handleViewportChange);
+    window.addEventListener("scroll", handleViewportChange, {passive: true});
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", handleViewportChange);
+      window.removeEventListener("scroll", handleViewportChange);
+    };
+  }, [showThumbsHover, updateThumbsTooltipPosition]);
 
   const cardClasses = `card ${viewMode === "thumbs" ? "card-thumbs" : "card-details"} ${
     highlight || presentInDeck ? "is-highlighted" : ""
@@ -129,7 +225,10 @@ export default function EntityCard({
   return (
     <article
       className={cardClasses}
-      ref={cardRef}
+      ref={(element) => {
+        cardElementRef.current = element;
+        cardRef?.(element);
+      }}
       tabIndex={viewMode === "thumbs" ? 0 : undefined}
       onBlur={(event) => {
         if (viewMode === "thumbs" && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
@@ -154,7 +253,7 @@ export default function EntityCard({
     >
       {viewMode === "thumbs" ? (
         <>
-          <div className="card-thumbs-media-wrap">
+          <div className="card-thumbs-media-wrap" ref={thumbsMediaRef}>
             {item.image ? (
               <img className="card-thumbs-image" decoding="async" loading="lazy" src={item.image} alt=""/>
             ) : (
@@ -175,6 +274,7 @@ export default function EntityCard({
           </div>
           <div
             className="card-thumbs-hover"
+            ref={thumbsTooltipRef}
             role="tooltip"
             style={{
               left: `${thumbsTooltipPosition?.left ?? 0}px`,
@@ -207,6 +307,7 @@ export default function EntityCard({
                 <EntityVideoPreview
                   active={showThumbsHover}
                   entity={item}
+                  onMediaReady={updateThumbsTooltipPosition}
                   preload="metadata"
                   wrapperClassName="card-thumbs-hover-video"
                 />

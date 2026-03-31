@@ -43,6 +43,57 @@ type DeckTooltipPosition = {
   top: number;
 };
 
+function getTooltipSafeTop(gap: number, viewportPadding: number): number {
+  const blockers = [
+    document.querySelector<HTMLElement>(".header"),
+    document.querySelector<HTMLElement>(".filters-body"),
+    document.querySelector<HTMLElement>(".decks-page-top"),
+  ].filter((element): element is HTMLElement => Boolean(element));
+
+  const blockerBottom = blockers.reduce((maxBottom, element) => {
+    return Math.max(maxBottom, element.getBoundingClientRect().bottom);
+  }, 0);
+
+  return Math.max(viewportPadding, blockerBottom + gap);
+}
+
+function getHoverAnchorLeft(
+  triggerRect: DOMRect,
+  tooltipWidth: number,
+  viewportPadding: number,
+  preferRightEdge: boolean,
+): number {
+  const minLeft = viewportPadding;
+  const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipWidth - viewportPadding);
+  const leftAligned = triggerRect.left;
+  const rightAligned = triggerRect.right - tooltipWidth;
+
+  const preferred = preferRightEdge ? rightAligned : leftAligned;
+  const fallback = preferRightEdge ? leftAligned : rightAligned;
+
+  if (preferred >= minLeft && preferred <= maxLeft) return preferred;
+  if (fallback >= minLeft && fallback <= maxLeft) return fallback;
+  return Math.min(Math.max(preferred, minLeft), maxLeft);
+}
+
+function rectsIntersect(
+  left: number,
+  top: number,
+  width: number,
+  height: number,
+  triggerRect: DOMRect,
+): boolean {
+  const right = left + width;
+  const bottom = top + height;
+
+  return !(
+    right <= triggerRect.left ||
+    left >= triggerRect.right ||
+    bottom <= triggerRect.top ||
+    top >= triggerRect.bottom
+  );
+}
+
 /**
  * Read-only saved deck library with share, duplicate, edit, and delete actions.
  *
@@ -437,35 +488,60 @@ function DeckRowItem({
   details: LoadedDeckEntity | null;
   fadeCategoryMismatch: boolean;
 }) {
+  const itemElementRef = useRef<HTMLDivElement | null>(null);
+  const tooltipElementRef = useRef<HTMLDivElement | null>(null);
   const stats = details ? getEntityStats(details.entity, details.type) : [];
   const tooltipFrameRef = useRef<number | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<DeckTooltipPosition>({left: 0, top: 0});
 
-  const updateTooltipPosition = (itemElement: HTMLDivElement | null) => {
-    if (!itemElement || typeof window === "undefined") return;
+  const updateTooltipPosition = () => {
+    if (typeof window === "undefined") return;
 
-    const tooltipElement = itemElement.querySelector<HTMLDivElement>(".deck-row-item-hover");
+    const itemElement = itemElementRef.current;
+    const tooltipElement = tooltipElementRef.current;
     if (!tooltipElement) return;
+    if (!itemElement) return;
 
     const viewportPadding = 12;
     const gap = 8;
+    const minTop = getTooltipSafeTop(gap, viewportPadding);
     const itemRect = itemElement.getBoundingClientRect();
     const tooltipRect = tooltipElement.getBoundingClientRect();
-    const maxLeft = Math.max(viewportPadding, window.innerWidth - tooltipRect.width - viewportPadding);
-    let left = itemRect.left + (itemRect.width / 2) - (tooltipRect.width / 2);
-    left = Math.floor(Math.min(Math.max(left, viewportPadding), maxLeft));
+    const rightAlignedLeft = itemRect.right + gap;
+    const leftAlignedLeft = itemRect.left - tooltipRect.width - gap;
+    const canPlaceRight = rightAlignedLeft + tooltipRect.width <= window.innerWidth - viewportPadding;
+    const canPlaceLeft = leftAlignedLeft >= viewportPadding;
+    let left = getHoverAnchorLeft(itemRect, tooltipRect.width, viewportPadding, false);
+
+    if (canPlaceRight) {
+      left = rightAlignedLeft;
+    } else if (canPlaceLeft) {
+      left = leftAlignedLeft;
+    }
 
     const belowTop = itemRect.bottom + gap;
     const aboveTop = itemRect.top - tooltipRect.height - gap;
-    const maxTop = Math.max(viewportPadding, window.innerHeight - tooltipRect.height - viewportPadding);
+    const maxTop = Math.max(minTop, window.innerHeight - tooltipRect.height - viewportPadding);
+    const moreRoomOnRight = (window.innerWidth - viewportPadding) - itemRect.left >= itemRect.right - viewportPadding;
     let top = belowTop;
 
-    if (belowTop + tooltipRect.height > window.innerHeight - viewportPadding && aboveTop >= viewportPadding) {
+    if (belowTop + tooltipRect.height > window.innerHeight - viewportPadding && aboveTop >= minTop) {
       top = aboveTop;
+      left = getHoverAnchorLeft(itemRect, tooltipRect.width, viewportPadding, moreRoomOnRight);
+    } else {
+      left = getHoverAnchorLeft(itemRect, tooltipRect.width, viewportPadding, !moreRoomOnRight);
     }
 
-    top = Math.floor(Math.min(Math.max(top, viewportPadding), maxTop));
+    left = Math.floor(left);
+    top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
+
+    const stackedPlacementOverlapsTrigger = rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, itemRect);
+    if (stackedPlacementOverlapsTrigger && (canPlaceRight || canPlaceLeft)) {
+      left = Math.floor(canPlaceRight ? rightAlignedLeft : leftAlignedLeft);
+      top = Math.floor(Math.min(Math.max(itemRect.top, minTop), maxTop));
+    }
+
     setTooltipPosition({left, top});
   };
 
@@ -478,19 +554,43 @@ function DeckRowItem({
   };
 
   const openTooltip = (itemElement: HTMLDivElement | null) => {
+    itemElementRef.current = itemElement;
     setShowTooltip(true);
     if (tooltipFrameRef.current !== null) {
       window.cancelAnimationFrame(tooltipFrameRef.current);
     }
     tooltipFrameRef.current = window.requestAnimationFrame(() => {
-      updateTooltipPosition(itemElement);
+      updateTooltipPosition();
       tooltipFrameRef.current = null;
     });
   };
 
+  useEffect(() => {
+    if (!showTooltip || typeof window === "undefined") return;
+
+    const tooltipElement = tooltipElementRef.current;
+    if (!tooltipElement) return;
+
+    const observer = new ResizeObserver(() => {
+      updateTooltipPosition();
+    });
+    observer.observe(tooltipElement);
+
+    const handleViewportChange = () => updateTooltipPosition();
+    window.addEventListener("resize", handleViewportChange);
+    window.addEventListener("scroll", handleViewportChange, {passive: true});
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", handleViewportChange);
+      window.removeEventListener("scroll", handleViewportChange);
+    };
+  }, [showTooltip]);
+
   return (
     <div
       className={`deck-row-item ${fadeCategoryMismatch ? "is-category-mismatch" : ""}`}
+      ref={itemElementRef}
       tabIndex={0}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
@@ -504,6 +604,7 @@ function DeckRowItem({
       {item.image ? <img className="deck-row-item-thumb" decoding="async" loading="lazy" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
       <div
         className="deck-row-item-hover"
+        ref={tooltipElementRef}
         role="tooltip"
         style={{
           left: `${tooltipPosition.left}px`,
@@ -526,7 +627,7 @@ function DeckRowItem({
               </div>
             )}
             {details ? <RichText parts={details.entity.richDescription}/> : null}
-            {details ? <EntityVideoPreview active={showTooltip} entity={details.entity} preload="metadata" wrapperClassName="deck-row-item-video"/> : null}
+            {details ? <EntityVideoPreview active={showTooltip} entity={details.entity} onMediaReady={updateTooltipPosition} preload="metadata" wrapperClassName="deck-row-item-video"/> : null}
           </>
         ) : (
           <div className="deck-row-item-hover-head">

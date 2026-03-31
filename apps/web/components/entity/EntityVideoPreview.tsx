@@ -8,6 +8,7 @@ type Props = {
   entity: ScrapedEntity;
   active?: boolean;
   mediaClassName?: string;
+  onMediaReady?: () => void;
   preload?: "none" | "metadata" | "auto";
   wrapperClassName?: string;
 };
@@ -37,6 +38,7 @@ export default function EntityVideoPreview({
   entity,
   active = true,
   mediaClassName = "",
+  onMediaReady,
   preload = "metadata",
   wrapperClassName = "",
 }: Props) {
@@ -68,6 +70,8 @@ export default function EntityVideoPreview({
         className={`entity-video-preview-media ${mediaClassName}`.trim()}
         loop
         muted
+        onLoadedData={onMediaReady}
+        onLoadedMetadata={onMediaReady}
         playsInline
         preload={preload}
         ref={videoRef}

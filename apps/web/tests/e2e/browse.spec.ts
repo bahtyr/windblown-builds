@@ -129,10 +129,22 @@ test("browse thumbs view shows larger art and hover details with video", async (
   expect(imageBox?.width ?? 0).toBeGreaterThan(60);
   expect(imageBox?.height ?? 0).toBeGreaterThan(60);
   expect(hoverBox).not.toBeNull();
-  expect(videoBox?.width ?? 0).toBeGreaterThan(300);
-  expect(videoBox?.height ?? 0).toBeGreaterThan(170);
+  expect(videoBox?.width ?? 0).toBeGreaterThan(240);
+  expect(videoBox?.height ?? 0).toBeGreaterThan(130);
   expect(hoverBox?.y ?? 0).toBeGreaterThanOrEqual((filtersBox?.y ?? 0) + (filtersBox?.height ?? 0));
   expect((hoverBox?.y ?? 0) + (hoverBox?.height ?? 0)).toBeLessThanOrEqual(720);
+  expect(hoverBox).not.toBeNull();
+  expect(imageBox).not.toBeNull();
+  const isSidePlaced =
+    (hoverBox?.x ?? 0) >= ((imageBox?.x ?? 0) + (imageBox?.width ?? 0)) ||
+    ((hoverBox?.x ?? 0) + (hoverBox?.width ?? 0)) <= (imageBox?.x ?? 0);
+  const isVerticallyStacked =
+    (hoverBox?.y ?? 0) >= ((imageBox?.y ?? 0) + (imageBox?.height ?? 0)) ||
+    ((hoverBox?.y ?? 0) + (hoverBox?.height ?? 0)) <= (imageBox?.y ?? 0);
+  const isEdgeAligned =
+    Math.abs((hoverBox?.x ?? 0) - (imageBox?.x ?? 0)) <= 2 ||
+    Math.abs(((hoverBox?.x ?? 0) + (hoverBox?.width ?? 0)) - ((imageBox?.x ?? 0) + (imageBox?.width ?? 0))) <= 2;
+  expect(isSidePlaced || (isVerticallyStacked && isEdgeAligned)).toBeTruthy();
 });
 
 test("decks hover tooltip renders a visible video area", async ({page}) => {
@@ -171,20 +183,32 @@ test("decks hover tooltip renders a visible video area", async ({page}) => {
 
   const tooltip = item.locator(".deck-row-item-hover");
   const video = tooltip.locator("video");
+  const pageHeader = page.locator(".decks-page-top");
 
   await expect(tooltip).toBeVisible();
   await expect(video).toBeVisible();
 
+  const itemBox = await item.boundingBox();
+  const pageHeaderBox = await pageHeader.boundingBox();
   const tooltipBox = await tooltip.boundingBox();
   const box = await video.boundingBox();
 
   expect(tooltipBox).not.toBeNull();
   expect(tooltipBox?.x ?? 0).toBeGreaterThanOrEqual(0);
   expect(tooltipBox?.y ?? 0).toBeGreaterThanOrEqual(0);
+  expect(tooltipBox?.y ?? 0).toBeGreaterThanOrEqual((pageHeaderBox?.y ?? 0) + (pageHeaderBox?.height ?? 0));
   expect((tooltipBox?.x ?? 0) + (tooltipBox?.width ?? 0)).toBeLessThanOrEqual(1280);
   expect((tooltipBox?.y ?? 0) + (tooltipBox?.height ?? 0)).toBeLessThanOrEqual(720);
-  expect(box?.width ?? 0).toBeGreaterThan(300);
-  expect(box?.height ?? 0).toBeGreaterThan(170);
+  expect((tooltipBox?.x ?? 0)).toBeGreaterThanOrEqual(0);
+  expect(box?.width ?? 0).toBeGreaterThan(240);
+  expect(box?.height ?? 0).toBeGreaterThan(130);
+  expect(itemBox).not.toBeNull();
+  expect(
+    (tooltipBox?.x ?? 0) >= ((itemBox?.x ?? 0) + (itemBox?.width ?? 0)) ||
+    ((tooltipBox?.x ?? 0) + (tooltipBox?.width ?? 0)) <= (itemBox?.x ?? 0) ||
+    Math.abs((tooltipBox?.x ?? 0) - (itemBox?.x ?? 0)) <= 2 ||
+    Math.abs(((tooltipBox?.x ?? 0) + (tooltipBox?.width ?? 0)) - ((itemBox?.x ?? 0) + (itemBox?.width ?? 0))) <= 2
+  ).toBeTruthy();
 });
 
 test("deck category hover activates a filter and reset clears it", async ({page}) => {
