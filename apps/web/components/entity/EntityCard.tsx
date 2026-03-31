@@ -36,15 +36,48 @@ type TooltipPosition = {
   top: number;
 };
 
+type TooltipCoordinateSpace = {
+  leftOffset: number;
+  topOffset: number;
+};
+
+/**
+ * Collect scrollable ancestors that can move a tooltip trigger without moving the viewport.
+ *
+ * @param {HTMLElement | null} element - Trigger or tooltip element inside the layout.
+ * @returns {(HTMLElement | Window)[]} Scroll event targets that should refresh tooltip placement.
+ */
+function getTooltipScrollParents(element: HTMLElement | null): Array<HTMLElement | Window> {
+  if (typeof window === "undefined") return [];
+
+  const parents: Array<HTMLElement | Window> = [window];
+  let current = element?.parentElement ?? null;
+
+  while (current) {
+    const {overflowY, overflow} = window.getComputedStyle(current);
+    if (/(auto|scroll|overlay)/.test(`${overflowY} ${overflow}`)) {
+      parents.push(current);
+    }
+    current = current.parentElement;
+  }
+
+  return parents;
+}
+
 function getTooltipSafeTop(gap: number, viewportPadding: number): number {
   const blockers = [
     document.querySelector<HTMLElement>(".header"),
     document.querySelector<HTMLElement>(".filters-body"),
     document.querySelector<HTMLElement>(".decks-page-top"),
+    document.querySelector<HTMLElement>(".deck-builder-surface"),
   ].filter((element): element is HTMLElement => Boolean(element));
 
   const blockerBottom = blockers.reduce((maxBottom, element) => {
-    return Math.max(maxBottom, element.getBoundingClientRect().bottom);
+    const rect = element.getBoundingClientRect();
+    if (element.classList.contains("deck-builder-surface")) {
+      return Math.max(maxBottom, rect.top);
+    }
+    return Math.max(maxBottom, rect.bottom);
   }, 0);
 
   return Math.max(viewportPadding, blockerBottom + gap);
@@ -85,6 +118,25 @@ function rectsIntersect(
     bottom <= triggerRect.top ||
     top >= triggerRect.bottom
   );
+}
+
+/**
+ * Resolve local tooltip offsets for surfaces that create their own fixed-position containing block.
+ *
+ * @param {HTMLElement | null} tooltipElement - Tooltip element being positioned.
+ * @returns {TooltipCoordinateSpace} Coordinate offsets for the tooltip's containing block.
+ */
+function getTooltipCoordinateSpace(tooltipElement: HTMLElement | null): TooltipCoordinateSpace {
+  const deckBuilderSurface = tooltipElement?.closest<HTMLElement>(".deck-builder-surface");
+  if (!deckBuilderSurface) {
+    return {leftOffset: 0, topOffset: 0};
+  }
+
+  const rect = deckBuilderSurface.getBoundingClientRect();
+  return {
+    leftOffset: rect.left - deckBuilderSurface.scrollLeft,
+    topOffset: rect.top - deckBuilderSurface.scrollTop,
+  };
 }
 
 export default function EntityCard({
@@ -136,41 +188,41 @@ export default function EntityCard({
     const minTop = getTooltipSafeTop(gap, viewportPadding);
     const mediaRect = mediaElement.getBoundingClientRect();
     const tooltipRect = tooltipElement.getBoundingClientRect();
+    const coordinateSpace = getTooltipCoordinateSpace(tooltipElement);
     const rightAlignedLeft = mediaRect.right + gap;
     const leftAlignedLeft = mediaRect.left - tooltipRect.width - gap;
     const canPlaceRight = rightAlignedLeft + tooltipRect.width <= window.innerWidth - viewportPadding;
     const canPlaceLeft = leftAlignedLeft >= viewportPadding;
-
-    let left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, false);
-    if (canPlaceRight) {
-      left = rightAlignedLeft;
-    } else if (canPlaceLeft) {
-      left = leftAlignedLeft;
-    }
-
     const aboveTop = mediaRect.top - tooltipRect.height - gap;
     const belowTop = mediaRect.bottom + gap;
     const maxTop = Math.max(minTop, window.innerHeight - tooltipRect.height - viewportPadding);
     const moreRoomOnRight = (window.innerWidth - viewportPadding) - mediaRect.left >= mediaRect.right - viewportPadding;
+    const hasSidePlacement = canPlaceRight || canPlaceLeft;
+    let left = 0;
+    let top = 0;
 
-    let top = aboveTop;
-    if (aboveTop < minTop && belowTop <= maxTop) {
-      top = belowTop;
-      left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, !moreRoomOnRight);
+    if (hasSidePlacement) {
+      left = canPlaceRight ? rightAlignedLeft : leftAlignedLeft;
+      top = Math.min(Math.max(mediaRect.top, minTop), maxTop);
     } else {
-      left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, moreRoomOnRight);
+      left = getHoverAnchorLeft(mediaRect, tooltipRect.width, viewportPadding, aboveTop >= minTop ? moreRoomOnRight : !moreRoomOnRight);
+      top = aboveTop >= minTop ? aboveTop : belowTop;
+
+      left = Math.floor(left);
+      top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
+
+      if (rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, mediaRect)) {
+        top = Math.floor(Math.min(Math.max(belowTop, minTop), maxTop));
+      }
     }
 
     left = Math.floor(left);
     top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
 
-    const stackedPlacementOverlapsTrigger = rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, mediaRect);
-    if (stackedPlacementOverlapsTrigger && (canPlaceRight || canPlaceLeft)) {
-      left = Math.floor(canPlaceRight ? rightAlignedLeft : leftAlignedLeft);
-      top = Math.floor(Math.min(Math.max(mediaRect.top, minTop), maxTop));
-    }
-
-    setThumbsTooltipPosition({left, top});
+    setThumbsTooltipPosition({
+      left: left - coordinateSpace.leftOffset,
+      top: top - coordinateSpace.topOffset,
+    });
   }, []);
 
   const closeThumbsHover = useCallback(() => {
@@ -200,7 +252,8 @@ export default function EntityCard({
     if (!showThumbsHover || typeof window === "undefined") return;
 
     const tooltipElement = thumbsTooltipRef.current;
-    if (!tooltipElement) return;
+    const mediaElement = thumbsMediaRef.current;
+    if (!tooltipElement || !mediaElement) return;
 
     const observer = new ResizeObserver(() => {
       updateThumbsTooltipPosition();
@@ -208,13 +261,14 @@ export default function EntityCard({
     observer.observe(tooltipElement);
 
     const handleViewportChange = () => updateThumbsTooltipPosition();
+    const scrollParents = getTooltipScrollParents(mediaElement);
     window.addEventListener("resize", handleViewportChange);
-    window.addEventListener("scroll", handleViewportChange, {passive: true});
+    scrollParents.forEach((parent) => parent.addEventListener("scroll", handleViewportChange, {passive: true}));
 
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", handleViewportChange);
-      window.removeEventListener("scroll", handleViewportChange);
+      scrollParents.forEach((parent) => parent.removeEventListener("scroll", handleViewportChange));
     };
   }, [showThumbsHover, updateThumbsTooltipPosition]);
 

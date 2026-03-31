@@ -43,17 +43,50 @@ type DeckTooltipPosition = {
   top: number;
 };
 
+type TooltipCoordinateSpace = {
+  leftOffset: number;
+  topOffset: number;
+};
+
 const DRAWER_OPENING_DELAY_MS = 24;
+
+/**
+ * Collect scrollable ancestors that can move a tooltip trigger without moving the viewport.
+ *
+ * @param {HTMLElement | null} element - Trigger or tooltip element inside the layout.
+ * @returns {(HTMLElement | Window)[]} Scroll event targets that should refresh tooltip placement.
+ */
+function getTooltipScrollParents(element: HTMLElement | null): Array<HTMLElement | Window> {
+  if (typeof window === "undefined") return [];
+
+  const parents: Array<HTMLElement | Window> = [window];
+  let current = element?.parentElement ?? null;
+
+  while (current) {
+    const {overflowY, overflow} = window.getComputedStyle(current);
+    if (/(auto|scroll|overlay)/.test(`${overflowY} ${overflow}`)) {
+      parents.push(current);
+    }
+    current = current.parentElement;
+  }
+
+  return parents;
+}
 
 function getTooltipSafeTop(gap: number, viewportPadding: number): number {
   const blockers = [
     document.querySelector<HTMLElement>(".header"),
     document.querySelector<HTMLElement>(".filters-body"),
     document.querySelector<HTMLElement>(".decks-page-top"),
+    document.querySelector<HTMLElement>(".deck-builder-surface"),
   ].filter((element): element is HTMLElement => Boolean(element));
 
   const blockerBottom = blockers.reduce((maxBottom, element) => {
-    return Math.max(maxBottom, element.getBoundingClientRect().bottom);
+    const rect = element.getBoundingClientRect();
+    if (element.classList.contains("deck-builder-surface")) {
+      return Math.max(maxBottom, rect.top);
+    }
+    return Math.max(maxBottom, rect.bottom);
   }, 0);
 
   return Math.max(viewportPadding, blockerBottom + gap);
@@ -94,6 +127,25 @@ function rectsIntersect(
     bottom <= triggerRect.top ||
     top >= triggerRect.bottom
   );
+}
+
+/**
+ * Resolve local tooltip offsets for surfaces that create their own fixed-position containing block.
+ *
+ * @param {HTMLElement | null} tooltipElement - Tooltip element being positioned.
+ * @returns {TooltipCoordinateSpace} Coordinate offsets for the tooltip's containing block.
+ */
+function getTooltipCoordinateSpace(tooltipElement: HTMLElement | null): TooltipCoordinateSpace {
+  const deckBuilderSurface = tooltipElement?.closest<HTMLElement>(".deck-builder-surface");
+  if (!deckBuilderSurface) {
+    return {leftOffset: 0, topOffset: 0};
+  }
+
+  const rect = deckBuilderSurface.getBoundingClientRect();
+  return {
+    leftOffset: rect.left - deckBuilderSurface.scrollLeft,
+    topOffset: rect.top - deckBuilderSurface.scrollTop,
+  };
 }
 
 /**
@@ -518,41 +570,46 @@ function DeckRowItem({
     const minTop = getTooltipSafeTop(gap, viewportPadding);
     const itemRect = itemElement.getBoundingClientRect();
     const tooltipRect = tooltipElement.getBoundingClientRect();
+    const coordinateSpace = getTooltipCoordinateSpace(tooltipElement);
     const rightAlignedLeft = itemRect.right + gap;
     const leftAlignedLeft = itemRect.left - tooltipRect.width - gap;
     const canPlaceRight = rightAlignedLeft + tooltipRect.width <= window.innerWidth - viewportPadding;
     const canPlaceLeft = leftAlignedLeft >= viewportPadding;
-    let left = getHoverAnchorLeft(itemRect, tooltipRect.width, viewportPadding, false);
-
-    if (canPlaceRight) {
-      left = rightAlignedLeft;
-    } else if (canPlaceLeft) {
-      left = leftAlignedLeft;
-    }
-
     const belowTop = itemRect.bottom + gap;
     const aboveTop = itemRect.top - tooltipRect.height - gap;
     const maxTop = Math.max(minTop, window.innerHeight - tooltipRect.height - viewportPadding);
     const moreRoomOnRight = (window.innerWidth - viewportPadding) - itemRect.left >= itemRect.right - viewportPadding;
-    let top = belowTop;
+    const hasSidePlacement = canPlaceRight || canPlaceLeft;
+    let left = 0;
+    let top = 0;
 
-    if (belowTop + tooltipRect.height > window.innerHeight - viewportPadding && aboveTop >= minTop) {
-      top = aboveTop;
-      left = getHoverAnchorLeft(itemRect, tooltipRect.width, viewportPadding, moreRoomOnRight);
+    if (hasSidePlacement) {
+      left = canPlaceRight ? rightAlignedLeft : leftAlignedLeft;
+      top = Math.min(Math.max(itemRect.top, minTop), maxTop);
     } else {
-      left = getHoverAnchorLeft(itemRect, tooltipRect.width, viewportPadding, !moreRoomOnRight);
+      left = getHoverAnchorLeft(
+        itemRect,
+        tooltipRect.width,
+        viewportPadding,
+        belowTop + tooltipRect.height > window.innerHeight - viewportPadding ? moreRoomOnRight : !moreRoomOnRight,
+      );
+      top = belowTop + tooltipRect.height > window.innerHeight - viewportPadding && aboveTop >= minTop ? aboveTop : belowTop;
+
+      left = Math.floor(left);
+      top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
+
+      if (rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, itemRect)) {
+        top = Math.floor(Math.min(Math.max(aboveTop, minTop), maxTop));
+      }
     }
 
     left = Math.floor(left);
     top = Math.floor(Math.min(Math.max(top, minTop), maxTop));
 
-    const stackedPlacementOverlapsTrigger = rectsIntersect(left, top, tooltipRect.width, tooltipRect.height, itemRect);
-    if (stackedPlacementOverlapsTrigger && (canPlaceRight || canPlaceLeft)) {
-      left = Math.floor(canPlaceRight ? rightAlignedLeft : leftAlignedLeft);
-      top = Math.floor(Math.min(Math.max(itemRect.top, minTop), maxTop));
-    }
-
-    setTooltipPosition({left, top});
+    setTooltipPosition({
+      left: left - coordinateSpace.leftOffset,
+      top: top - coordinateSpace.topOffset,
+    });
   };
 
   const closeTooltip = () => {
@@ -579,7 +636,8 @@ function DeckRowItem({
     if (!showTooltip || typeof window === "undefined") return;
 
     const tooltipElement = tooltipElementRef.current;
-    if (!tooltipElement) return;
+    const itemElement = itemElementRef.current;
+    if (!tooltipElement || !itemElement) return;
 
     const observer = new ResizeObserver(() => {
       updateTooltipPosition();
@@ -587,13 +645,14 @@ function DeckRowItem({
     observer.observe(tooltipElement);
 
     const handleViewportChange = () => updateTooltipPosition();
+    const scrollParents = getTooltipScrollParents(itemElement);
     window.addEventListener("resize", handleViewportChange);
-    window.addEventListener("scroll", handleViewportChange, {passive: true});
+    scrollParents.forEach((parent) => parent.addEventListener("scroll", handleViewportChange, {passive: true}));
 
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", handleViewportChange);
-      window.removeEventListener("scroll", handleViewportChange);
+      scrollParents.forEach((parent) => parent.removeEventListener("scroll", handleViewportChange));
     };
   }, [showTooltip]);
 

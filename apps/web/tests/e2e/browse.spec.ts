@@ -267,6 +267,95 @@ test("embedded deck browser supports thumbs view", async ({page}) => {
   await expect(card.locator(".card-thumbs-image")).toBeVisible();
 });
 
+test("embedded deck browser hover tooltip stays within drawer-safe top and avoids the hovered icon", async ({page}) => {
+  await page.goto("/decks");
+
+  await page.getByRole("button", {name: "Create new build"}).click();
+  const deckBrowser = page.locator(".deck-builder-browser");
+  await expect(page.getByRole("dialog", {name: "Build editor"})).toBeVisible();
+
+  await deckBrowser.getByRole("button", {name: "Thumbs"}).click();
+  await deckBrowser.getByPlaceholder("Search text...").fill("Abundance");
+  await deckBrowser.getByRole("button", {name: "Hide unmatching results"}).click();
+
+  const card = deckBrowser.locator(".card-thumbs").first();
+  const image = card.locator(".card-thumbs-image");
+  const hover = card.locator(".card-thumbs-hover");
+  const drawerSurface = page.locator(".deck-builder-surface");
+
+  await expect(card).toBeVisible();
+  await card.hover({force: true});
+  await expect(hover).toBeVisible();
+
+  const imageBox = await image.boundingBox();
+  const hoverBox = await hover.boundingBox();
+  const drawerSurfaceBox = await drawerSurface.boundingBox();
+
+  expect(imageBox).not.toBeNull();
+  expect(hoverBox).not.toBeNull();
+  expect(drawerSurfaceBox).not.toBeNull();
+  expect(hoverBox?.y ?? 0).toBeGreaterThanOrEqual(drawerSurfaceBox?.y ?? 0);
+
+  const isSidePlaced =
+    (hoverBox?.x ?? 0) >= ((imageBox?.x ?? 0) + (imageBox?.width ?? 0)) ||
+    ((hoverBox?.x ?? 0) + (hoverBox?.width ?? 0)) <= (imageBox?.x ?? 0);
+  const isVerticallyStacked =
+    (hoverBox?.y ?? 0) >= ((imageBox?.y ?? 0) + (imageBox?.height ?? 0)) ||
+    ((hoverBox?.y ?? 0) + (hoverBox?.height ?? 0)) <= (imageBox?.y ?? 0);
+  const isEdgeAligned =
+    Math.abs((hoverBox?.x ?? 0) - (imageBox?.x ?? 0)) <= 2 ||
+    Math.abs(((hoverBox?.x ?? 0) + (hoverBox?.width ?? 0)) - ((imageBox?.x ?? 0) + (imageBox?.width ?? 0))) <= 2;
+
+  expect(isSidePlaced || (isVerticallyStacked && isEdgeAligned)).toBeTruthy();
+});
+
+test("embedded deck browser hover uses the correct placement after the drawer scrolls", async ({page}) => {
+  await page.goto("/decks");
+
+  await page.getByRole("button", {name: "Create new build"}).click();
+  const deckBrowser = page.locator(".deck-builder-browser");
+  const drawerSurface = page.locator(".deck-builder-surface");
+  await expect(page.getByRole("dialog", {name: "Build editor"})).toBeVisible();
+
+  await deckBrowser.getByRole("button", {name: "Thumbs"}).click();
+  await deckBrowser.getByPlaceholder("Search text...").fill("Abundance");
+  await deckBrowser.getByRole("button", {name: "Hide unmatching results"}).click();
+
+  const card = deckBrowser.locator(".card-thumbs").first();
+  const image = card.locator(".card-thumbs-image");
+  const hover = card.locator(".card-thumbs-hover");
+
+  await expect(card).toBeVisible();
+  await drawerSurface.evaluate((element) => {
+    element.scrollTo({top: 180});
+  });
+  await expect(card).toBeVisible();
+
+  await card.hover({force: true});
+  await expect(hover).toBeVisible();
+
+  await expect
+    .poll(async () => {
+      const imageBox = await image.boundingBox();
+      const hoverBox = await hover.boundingBox();
+
+      if (!imageBox || !hoverBox) return false;
+
+      const isSidePlaced =
+        hoverBox.x >= imageBox.x + imageBox.width ||
+        hoverBox.x + hoverBox.width <= imageBox.x;
+      const isVerticallyStacked =
+        hoverBox.y >= imageBox.y + imageBox.height ||
+        hoverBox.y + hoverBox.height <= imageBox.y;
+      const isEdgeAligned =
+        Math.abs(hoverBox.x - imageBox.x) <= 2 ||
+        Math.abs((hoverBox.x + hoverBox.width) - (imageBox.x + imageBox.width)) <= 2;
+
+      return isSidePlaced || (isVerticallyStacked && isEdgeAligned);
+    })
+    .toBeTruthy();
+});
+
 test("dropping an image from browse opens the new run dialog on my builds", async ({page}) => {
   await page.goto("/browse");
 
