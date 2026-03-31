@@ -20,6 +20,7 @@ import EntityCard from "./EntityCard";
 type MatchNav = { above: number; below: number };
 type DisplayEntity = ScrapedEntity & { entityType: EntityType };
 type SidebarOption = { value: string; label: string; image?: string; color?: string };
+type BrowseViewMode = "details" | "thumbs";
 type Props = {
   embedded?: boolean;
 };
@@ -27,6 +28,7 @@ type Props = {
 const NAV_REFRESH_DELAY = 80;
 const NAV_AFTER_SCROLL_DELAY = 200;
 const MATCH_DISPLAY_MODE_STORAGE_KEY = "entityMatchDisplayMode";
+const BROWSE_VIEW_MODE_STORAGE_KEY = "entityBrowseViewMode";
 
 /**
  * Browse all entity types together with filtering and deck helpers.
@@ -45,6 +47,7 @@ export default function EntityBrowser({embedded = false}: Props) {
   const [likedOnly, setLikedOnly] = useState(false);
   const [deckOnly, setDeckOnly] = useState(false);
   const [matchDisplayMode, setMatchDisplayMode] = useState<MatchDisplayMode>("fade-unmatched");
+  const [viewMode, setViewMode] = useState<BrowseViewMode>("details");
   const [filtersHydrated, setFiltersHydrated] = useState(false);
 
   const visibleItems = useMemo(
@@ -61,6 +64,7 @@ export default function EntityBrowser({embedded = false}: Props) {
       setLikedOnly(false);
       setDeckOnly(embeddedFilters.deckOnly);
       setMatchDisplayMode(embeddedFilters.matchDisplayMode);
+      setViewMode("details");
       setFiltersHydrated(true);
       return;
     }
@@ -80,6 +84,11 @@ export default function EntityBrowser({embedded = false}: Props) {
       }
     }
 
+    const persistedViewMode = window.localStorage.getItem(BROWSE_VIEW_MODE_STORAGE_KEY);
+    if (persistedViewMode === "details" || persistedViewMode === "thumbs") {
+      setViewMode(persistedViewMode);
+    }
+
     setFiltersHydrated(true);
   }, [deck.isEditingBuild, embedded]);
 
@@ -91,7 +100,8 @@ export default function EntityBrowser({embedded = false}: Props) {
       JSON.stringify({search, selectedEntity, likedOnly, deckOnly, matchDisplayMode}),
     );
     window.localStorage.setItem(MATCH_DISPLAY_MODE_STORAGE_KEY, matchDisplayMode);
-  }, [deckOnly, embedded, filtersHydrated, likedOnly, matchDisplayMode, search, selectedEntity]);
+    window.localStorage.setItem(BROWSE_VIEW_MODE_STORAGE_KEY, viewMode);
+  }, [deckOnly, embedded, filtersHydrated, likedOnly, matchDisplayMode, search, selectedEntity, viewMode]);
 
   const matchesFilters = useCallback(
     (item: DisplayEntity) => {
@@ -207,9 +217,11 @@ export default function EntityBrowser({embedded = false}: Props) {
               embedded={embedded}
               likedOnly={likedOnly}
               matchDisplayMode={matchDisplayMode}
+              viewMode={viewMode}
               onDeckOnlyChange={setDeckOnly}
               onLikedOnlyChange={setLikedOnly}
               onMatchDisplayModeChange={setMatchDisplayMode}
+              onViewModeChange={setViewMode}
             />
             <SidebarSection
               subtitle="Category"
@@ -237,7 +249,7 @@ export default function EntityBrowser({embedded = false}: Props) {
                     <h2 className={"section-heading " + (filtered.length === 0 ? "is-faded" : "")}>{category}</h2>
                     <span className="section-subheading">{formatSectionSubtext(filtered.length, list.length)}</span>
                   </div>
-                  <div className="card-list">
+                  <div className={`card-list ${viewMode === "thumbs" ? "card-list-thumbs" : ""}`}>
                     {getVisibleItems(list, filtered, matchDisplayMode).map((item, idx) => {
                       const matched = filtered.includes(item);
                       const inDeck = deckIds.has(`${item.entityType}:${item.name}`);
@@ -254,6 +266,7 @@ export default function EntityBrowser({embedded = false}: Props) {
                           inDeck={inDeck}
                           onEntityFilter={(id) => setSelectedEntity((prev) => (prev === id ? "" : id))}
                           allowAddToDeck={embedded}
+                          viewMode={viewMode}
                         />
                       );
                     })}
@@ -301,9 +314,11 @@ type SidebarActionsProps = {
   embedded: boolean;
   likedOnly: boolean;
   matchDisplayMode: MatchDisplayMode;
+  viewMode: BrowseViewMode;
   onDeckOnlyChange: (value: boolean) => void;
   onLikedOnlyChange: (value: boolean) => void;
   onMatchDisplayModeChange: (value: MatchDisplayMode) => void;
+  onViewModeChange: (value: BrowseViewMode) => void;
 };
 
 function SidebarActions({
@@ -311,12 +326,37 @@ function SidebarActions({
   embedded,
   likedOnly,
   matchDisplayMode,
+  viewMode,
   onDeckOnlyChange,
   onLikedOnlyChange,
   onMatchDisplayModeChange,
+  onViewModeChange,
 }: SidebarActionsProps) {
   return (
     <div className="browse-sidebar-section browse-sidebar-tools">
+      {!embedded && (
+        <>
+          <div className="browse-sidebar-subtitle">View</div>
+          <div className="browse-sidebar-view-toggle" role="group" aria-label="Browse view mode">
+            <button
+              type="button"
+              className={`browse-sidebar-link ${viewMode === "details" ? "is-active" : ""}`}
+              onClick={() => onViewModeChange("details")}
+              aria-pressed={viewMode === "details"}
+            >
+              Details
+            </button>
+            <button
+              type="button"
+              className={`browse-sidebar-link ${viewMode === "thumbs" ? "is-active" : ""}`}
+              onClick={() => onViewModeChange("thumbs")}
+              aria-pressed={viewMode === "thumbs"}
+            >
+              Thumbs
+            </button>
+          </div>
+        </>
+      )}
       <button
         type="button"
         className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}

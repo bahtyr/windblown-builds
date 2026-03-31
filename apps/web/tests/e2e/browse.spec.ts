@@ -6,8 +6,7 @@ test("browse search flow can narrow and reset visible results", async ({page}) =
   await expect(page.getByRole("heading", {name: "Browse items"})).toBeVisible();
 
   const sidebarSubtitles = page.locator(".browse-sidebar .browse-sidebar-subtitle");
-  await expect(sidebarSubtitles.nth(0)).toHaveText("Category");
-  await expect(sidebarSubtitles.nth(1)).toHaveText("Entities");
+  await expect(sidebarSubtitles).toContainText(["View", "Category", "Entities"]);
 
   const searchInput = page.getByPlaceholder("Search text...");
   await searchInput.fill("Abundance");
@@ -64,6 +63,51 @@ test("browse hover preview plays above the hovered card", async ({page}) => {
   expect(cardBox).not.toBeNull();
   expect(videoBox).not.toBeNull();
   expect((videoBox?.y ?? 0) + (videoBox?.height ?? 0)).toBeLessThanOrEqual((cardBox?.y ?? 0) + 1);
+});
+
+test("browse thumbs view shows larger art and hover details with video", async ({page}) => {
+  await page.goto("/browse");
+
+  await page.getByRole("button", {name: "Thumbs"}).click();
+  await page.getByPlaceholder("Search text...").fill("Abundance");
+
+  const card = page.locator(".card-thumbs", {has: page.getByText("Abundance", {exact: true})}).first();
+  await expect(card).toBeVisible();
+
+  const image = card.locator(".card-thumbs-image");
+  const hover = card.locator(".card-thumbs-hover");
+  const video = hover.locator("video");
+
+  await expect(image).toBeVisible();
+  await card.hover();
+
+  await expect(hover).toBeVisible();
+  await expect(hover.getByText("Abundance", {exact: true})).toBeVisible();
+  await expect(video).toBeVisible();
+
+  await expect
+    .poll(async () => {
+      return await video.evaluate((node) => {
+        const media = node as HTMLVideoElement;
+        return {
+          currentTime: media.currentTime,
+          paused: media.paused,
+          readyState: media.readyState,
+        };
+      });
+    })
+    .toMatchObject({paused: false});
+
+  const imageBox = await image.boundingBox();
+  const hoverBox = await hover.boundingBox();
+  const videoBox = await video.boundingBox();
+
+  expect(imageBox?.width ?? 0).toBeGreaterThan(100);
+  expect(imageBox?.height ?? 0).toBeGreaterThan(100);
+  expect(hoverBox).not.toBeNull();
+  expect(videoBox?.width ?? 0).toBeGreaterThan(300);
+  expect(videoBox?.height ?? 0).toBeGreaterThan(170);
+  expect((hoverBox?.y ?? 0) + (hoverBox?.height ?? 0)).toBeLessThanOrEqual((imageBox?.y ?? 0) + 2);
 });
 
 test("decks hover tooltip renders a visible video area", async ({page}) => {

@@ -28,6 +28,16 @@
     height: 180px;
 }
 
+.card-thumbs-hover-video {
+    width: 100%;
+}
+
+.card-thumbs-hover-video .entity-video-preview-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
 .entity-video-preview-count {
     position: absolute;
     top: var(--space-2);
@@ -84,11 +94,19 @@
     /*font-weight: var(--font-weight-bold);*/
 }
 
+.card-thumbs-hover-stats {
+    padding-bottom: var(--space-3);
+}
+
 /* ------------------------ Rich Description -------------------- */
 
 .rich-description {
     gap: 0 var(--space-2);
     color: var(--muted);
+}
+
+.card-thumbs-hover .rich-description {
+    font-size: var(--font-size-xs);
 }
 
 .rich-description span[style*="color"] {

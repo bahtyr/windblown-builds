@@ -8,6 +8,11 @@
     /*margin-top: var(--space-5);*/
 }
 
+.card-list-thumbs {
+    grid-template-columns: repeat(auto-fill, minmax(116px, 116px));
+    gap: var(--space-4);
+}
+
 /* ---------- Card shell ---------- */
 .card {
     display: flex;
@@ -170,6 +175,87 @@
     flex: 0 0 320px;
 }
 
+.card-thumbs {
+    gap: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.card-thumbs-media-wrap {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: rgba(7, 12, 22, 0.72);
+}
+
+.card-thumbs-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: radial-gradient(circle at top, rgba(79, 163, 255, 0.12), rgba(9, 13, 23, 0.94) 65%);
+}
+
+.card-thumbs-image-empty {
+    border: 1px dashed var(--border);
+}
+
+.card-thumbs-actions {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+}
+
+.card-thumbs-hover {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + var(--space-3));
+    z-index: 20;
+    width: min(420px, 72vw);
+    max-height: 420px;
+    transform: translateX(-50%) translateY(4px);
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    background: linear-gradient(
+            180deg,
+            rgba(11, 15, 26, 0.94),
+            rgba(11, 15, 26, 0.98)
+    );
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    overflow: auto;
+    pointer-events: none;
+}
+
+.card-thumbs:hover .card-thumbs-hover,
+.card-thumbs:focus-within .card-thumbs-hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.card-thumbs:hover .card-thumbs-media-wrap,
+.card-thumbs:focus-within .card-thumbs-media-wrap {
+    border-color: var(--color-surface-selected);
+}
+
+.card-thumbs-hover-head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
 /* ---------- Card Actions ---------- */
 
 .card-actions {
@@ -197,6 +283,22 @@
 .card:hover .card-action-btn,
 .card.is-in-deck .card-action-btn {
     visibility: visible;
+}
+
+.card-thumbs:hover .card-action-btn,
+.card-thumbs:focus-within .card-action-btn {
+    visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .card-list-thumbs {
+        grid-template-columns: repeat(auto-fill, minmax(96px, 96px));
+    }
+
+    .card-thumbs-media-wrap {
+        width: 92px;
+        height: 92px;
+    }
 }
 
 .card-action-btn:hover {

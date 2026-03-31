@@ -8,6 +8,8 @@ import {useLikes} from "../like/LikeContext";
 import RichText from "./RichText";
 import EntityVideoPreview from "./EntityVideoPreview";
 
+type CardViewMode = "details" | "thumbs";
+
 type Props = {
   item: ScrapedEntity;
   type: EntityType;
@@ -19,6 +21,7 @@ type Props = {
   inDeck?: boolean;
   onEntityFilter?: (id: string) => void;
   allowAddToDeck?: boolean;
+  viewMode?: CardViewMode;
 };
 
 type StatRow = {
@@ -37,6 +40,7 @@ export default function EntityCard({
   inDeck,
   onEntityFilter,
   allowAddToDeck = true,
+  viewMode = "details",
 }: Props) {
   const presentInDeck = inDeck ?? deck.items.some((x) => x.id === `${type}:${item.name}`);
   const liked = likes.ids.has(`${type}:${item.name}`);
@@ -54,88 +58,177 @@ export default function EntityCard({
     deck.remove(`${type}:${item.name}`);
   };
 
+  const cardClasses = `card ${viewMode === "thumbs" ? "card-thumbs" : "card-details"} ${
+    highlight || presentInDeck ? "is-highlighted" : ""
+  } ${presentInDeck ? "is-in-deck" : ""} ${fade ? "is-faded" : ""}`;
+
   return (
-    <article
-      className={`card ${highlight || presentInDeck ? "is-highlighted" : ""} ${presentInDeck ? "is-in-deck" : ""} ${
-        fade ? "is-faded" : ""
-      }`}
-    >
-      <div className="card-head">
-        <div className="card-title-wrap">
-          <div className="card-thumb-wrap">
-            <button
-              aria-label={`Preview ${item.name}`}
-              className="card-thumb-preview-trigger"
-              type="button"
-              onBlur={() => setShowPreview(false)}
-              onFocus={() => setShowPreview(true)}
-              onMouseEnter={() => setShowPreview(true)}
-              onMouseLeave={() => setShowPreview(false)}
-            >
-              {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
-            </button>
-            {showPreview ? (
-              <div className="card-image-hover-preview">
-                <EntityVideoPreview entity={item} wrapperClassName="card-image-hover-preview-surface" mediaClassName="card-image-hover-preview-media"/>
-              </div>
-            ) : null}
-          </div>
-          <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
-            {item.name}
-          </div>
-        </div>
-        <div className="card-actions">
-          <button
-            className={`card-action-btn like ${liked ? "is-liked" : ""}`}
-            aria-label={liked ? "Unheart" : "Heart"}
-            onClick={(e) => {
-              e.stopPropagation();
-              likes.toggle(`${type}:${item.name}`);
-            }}
-          >
-            ♥
-          </button>
-          {type !== "effects" && !presentInDeck && allowAddToDeck && (
-            <button
-              className="card-action-btn"
-              aria-label="Add to deck"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAdd();
-              }}
-            >
-              +
-            </button>
-          )}
-          {type !== "effects" && presentInDeck && (
-            <button
-              className="card-action-btn"
-              aria-label="Remove from deck"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleRemove();
-              }}
-            >
-              ×
-            </button>
-          )}
-        </div>
-      </div>
-      {stats.length > 0 && (
-        <div className="card-stats">
-          {stats.map((stat) => (
-            <div className="card-stat" key={stat.label}>
-              <span className="card-stat-value">{stat.value}</span>
-              <span className="card-stat-label">{stat.label}</span>
+    <article className={cardClasses}>
+      {viewMode === "thumbs" ? (
+        <>
+          <div className="card-thumbs-media-wrap">
+            {item.image ? (
+              <img className="card-thumbs-image" src={item.image} alt=""/>
+            ) : (
+              <div className="card-thumbs-image card-thumbs-image-empty"/>
+            )}
+            <div className="card-thumbs-actions card-actions">
+              <CardActionButtons
+                allowAddToDeck={allowAddToDeck}
+                itemName={item.name}
+                liked={liked}
+                likes={likes}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+                presentInDeck={presentInDeck}
+                type={type}
+              />
             </div>
-          ))}
-        </div>
+          </div>
+          <div className="card-thumbs-hover" role="tooltip">
+            <div className="card-thumbs-hover-head">
+              <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
+                {item.name}
+              </div>
+            </div>
+            {stats.length > 0 && (
+              <div className="card-thumbs-hover-stats card-stats">
+                {stats.map((stat) => (
+                  <div className="card-stat" key={stat.label}>
+                    <span className="card-stat-value">{stat.value}</span>
+                    <span className="card-stat-label">{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <RichText
+              parts={item.richDescription}
+              onEntityFilter={onEntityFilter}
+            />
+            <EntityVideoPreview entity={item} wrapperClassName="card-thumbs-hover-video"/>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="card-head">
+            <div className="card-title-wrap">
+              <div className="card-thumb-wrap">
+                <button
+                  aria-label={`Preview ${item.name}`}
+                  className="card-thumb-preview-trigger"
+                  type="button"
+                  onBlur={() => setShowPreview(false)}
+                  onFocus={() => setShowPreview(true)}
+                  onMouseEnter={() => setShowPreview(true)}
+                  onMouseLeave={() => setShowPreview(false)}
+                >
+                  {item.image && <img className="card-thumb-image" src={item.image} alt=""/>}
+                </button>
+                {showPreview ? (
+                  <div className="card-image-hover-preview">
+                    <EntityVideoPreview
+                      entity={item}
+                      wrapperClassName="card-image-hover-preview-surface"
+                      mediaClassName="card-image-hover-preview-media"
+                    />
+                  </div>
+                ) : null}
+              </div>
+              <div className="card-title" style={item.nameColor ? {color: item.nameColor} : undefined}>
+                {item.name}
+              </div>
+            </div>
+            <div className="card-actions">
+              <CardActionButtons
+                allowAddToDeck={allowAddToDeck}
+                itemName={item.name}
+                liked={liked}
+                likes={likes}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+                presentInDeck={presentInDeck}
+                type={type}
+              />
+            </div>
+          </div>
+          {stats.length > 0 && (
+            <div className="card-stats">
+              {stats.map((stat) => (
+                <div className="card-stat" key={stat.label}>
+                  <span className="card-stat-value">{stat.value}</span>
+                  <span className="card-stat-label">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          <RichText
+            parts={item.richDescription}
+            onEntityFilter={onEntityFilter}
+          />
+        </>
       )}
-      <RichText
-        parts={item.richDescription}
-        onEntityFilter={onEntityFilter}
-      />
     </article>
+  );
+}
+
+type CardActionButtonsProps = {
+  allowAddToDeck: boolean;
+  itemName: string;
+  liked: boolean;
+  likes: ReturnType<typeof useLikes>;
+  onAdd: () => void;
+  onRemove: () => void;
+  presentInDeck: boolean;
+  type: EntityType;
+};
+
+function CardActionButtons({
+  allowAddToDeck,
+  itemName,
+  liked,
+  likes,
+  onAdd,
+  onRemove,
+  presentInDeck,
+  type,
+}: CardActionButtonsProps) {
+  return (
+    <>
+      <button
+        className={`card-action-btn like ${liked ? "is-liked" : ""}`}
+        aria-label={liked ? "Unheart" : "Heart"}
+        onClick={(e) => {
+          e.stopPropagation();
+          likes.toggle(`${type}:${itemName}`);
+        }}
+      >
+        ♥
+      </button>
+      {type !== "effects" && !presentInDeck && allowAddToDeck && (
+        <button
+          className="card-action-btn"
+          aria-label="Add to deck"
+          onClick={(e) => {
+            e.stopPropagation();
+            onAdd();
+          }}
+        >
+          +
+        </button>
+      )}
+      {type !== "effects" && presentInDeck && (
+        <button
+          className="card-action-btn"
+          aria-label="Remove from deck"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
+        >
+          ×
+        </button>
+      )}
+    </>
   );
 }
 
