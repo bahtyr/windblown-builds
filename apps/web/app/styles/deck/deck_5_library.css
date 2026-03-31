@@ -14,9 +14,10 @@
 }
 
 .decks-page-top {
+    /*position: sticky;*/
+    top: calc(var(--header-height) - 1px);
+    z-index: calc(var(--z-header) - 1);
     background: var(--color-overlay-header);
-    background: hsla(214, 45%, 7%, 0.94);
-    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
 }
 

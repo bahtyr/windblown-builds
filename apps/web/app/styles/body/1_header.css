@@ -3,7 +3,6 @@ header, .header {
     top: 0;
     z-index: var(--z-header);
     background: var(--color-overlay-header);
-    background: hsla(214, 45%, 7%, 0.94);
     border: 1px solid var(--border);
     /*padding done through body-wrapper*/
 }
