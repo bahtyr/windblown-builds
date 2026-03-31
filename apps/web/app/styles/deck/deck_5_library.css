@@ -236,9 +236,9 @@
     z-index: 5;
 }
 
-.deck-row-item.is-category-match {
-    box-shadow: 0 0 0 1px rgba(79, 163, 255, 0.45);
-    border-radius: var(--radius-md);
+.deck-row-item.is-category-mismatch .deck-row-item-thumb,
+.deck-row-item.is-category-mismatch .deck-row-item-thumb-empty {
+    opacity: 0.38;
 }
 
 .deck-row-item-thumb {
@@ -344,6 +344,7 @@
 }
 
 .deck-row-category-reset {
+    font-size: var(--font-size-xs);
     white-space: nowrap;
 }
 

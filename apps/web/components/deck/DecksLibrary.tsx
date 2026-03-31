@@ -271,9 +271,7 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
   const isFavorites = row.kind === "favorites";
   const meta = isShared || isFavorites ? null : formatRoughDate(row.deck.createdAt);
   const title = isFavorites ? "\u2665 Favorites" : row.deck.name;
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const activeCategory = hoveredCategory ?? selectedCategory;
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const activeCategoryItemIds = useMemo(
     () => new Set(categories.find((category) => category.name === activeCategory)?.itemIds ?? []),
     [activeCategory, categories],
@@ -313,14 +311,11 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
                   {categories.map((category) => (
                     <button
                       key={category.name}
-                      aria-pressed={selectedCategory === category.name}
+                      aria-pressed={activeCategory === category.name}
                       className={`deck-row-category-chip ${activeCategory === category.name ? "is-active" : ""}`}
                       type="button"
-                      onClick={() => setSelectedCategory((current) => current === category.name ? null : category.name)}
-                      onMouseEnter={() => setHoveredCategory(category.name)}
-                      onMouseLeave={() => setHoveredCategory(null)}
-                      onFocus={() => setHoveredCategory(category.name)}
-                      onBlur={() => setHoveredCategory(null)}
+                      onMouseEnter={() => setActiveCategory(category.name)}
+                      onFocus={() => setActiveCategory(category.name)}
                     >
                       {category.image ? <img className="deck-row-category-thumb" src={category.image} alt=""/> : null}
                       <span>
@@ -334,8 +329,7 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
                       className="btn ghost deck-row-category-reset"
                       type="button"
                       onClick={() => {
-                        setHoveredCategory(null);
-                        setSelectedCategory(null);
+                        setActiveCategory(null);
                       }}
                     >
                       Reset
@@ -353,7 +347,7 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
                   key={item.id}
                   item={item}
                   details={entityLookup.get(item.id) ?? null}
-                  highlightCategoryMatch={activeCategoryItemIds.has(item.id)}
+                  fadeCategoryMismatch={activeCategoryItemIds.size > 0 && !activeCategoryItemIds.has(item.id)}
                 />
               ))}
             </div>
@@ -367,16 +361,16 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
 function DeckRowItem({
   item,
   details,
-  highlightCategoryMatch,
+  fadeCategoryMismatch,
 }: {
   item: DeckItem;
   details: LoadedDeckEntity | null;
-  highlightCategoryMatch: boolean;
+  fadeCategoryMismatch: boolean;
 }) {
   const stats = details ? getEntityStats(details.entity, details.type) : [];
 
   return (
-    <div className={`deck-row-item ${highlightCategoryMatch ? "is-category-match" : ""}`} tabIndex={0}>
+    <div className={`deck-row-item ${fadeCategoryMismatch ? "is-category-mismatch" : ""}`} tabIndex={0}>
       {item.image ? <img className="deck-row-item-thumb" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
       <div className="deck-row-item-hover" role="tooltip">
         <div className="deck-row-item-hover-head">

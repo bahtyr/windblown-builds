@@ -85,7 +85,7 @@ test("decks hover tooltip renders a visible video area", async ({page}) => {
   expect(box?.height ?? 0).toBeGreaterThan(170);
 });
 
-test("deck category hover highlights matching gifts and clears on hover out", async ({page}) => {
+test("deck category hover activates a filter and reset clears it", async ({page}) => {
   await page.addInitScript(() => {
     localStorage.setItem("windblown.deck.saved.v3", JSON.stringify([
       {
@@ -110,10 +110,10 @@ test("deck category hover highlights matching gifts and clears on hover out", as
 
   await expect(deckRow.getByRole("button", {name: "Reset"})).toBeVisible();
   await expect
-    .poll(async () => await deckRow.locator(".deck-row-item.is-category-match").count())
+    .poll(async () => await deckRow.locator(".deck-row-item.is-category-mismatch").count())
     .toBeGreaterThan(0);
 
-  await deckRow.getByRole("heading", {name: "Category Test"}).hover();
+  await deckRow.getByRole("button", {name: "Reset"}).click();
   await expect(deckRow.getByRole("button", {name: "Reset"})).toHaveCount(0);
-  await expect(deckRow.locator(".deck-row-item.is-category-match")).toHaveCount(0);
+  await expect(deckRow.locator(".deck-row-item.is-category-mismatch")).toHaveCount(0);
 });
