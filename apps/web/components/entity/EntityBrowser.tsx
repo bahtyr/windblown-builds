@@ -163,44 +163,115 @@ export default function EntityBrowser({embedded = false}: Props) {
     <div className={`page entity-browser ${embedded ? "entity-browser-embedded" : ""}`}>
       <div className="filters">
         <div className="filters-body body-wrapper">
-          <div className="scroll-hints">
-            <button
-              aria-hidden="true"
-              className="pill-toggle scroll-hints-placeholder"
-              tabIndex={-1}
-              type="button"
-            >
-              Previous match
-            </button>
-            {!loading &&
-              !error &&
-              matchDisplayMode === "fade-unmatched" &&
-              filteredCount > 0 &&
-              filteredCount < items.length &&
-              matchNav.above + matchNav.below > 0 && (
-                <>
-                  <button
-                    className="pill-toggle"
-                    type="button"
-                    disabled={matchNav.above === 0}
-                    onClick={() => scrollToNearest("up")}
-                  >
-                    Previous match {matchNav.above > 0 && <span className="badge">{matchNav.above}</span>}
-                  </button>
-                  <button
-                    className="pill-toggle"
-                    type="button"
-                    disabled={matchNav.below === 0}
-                    onClick={() => scrollToNearest("down")}
-                  >
-                    Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
-                  </button>
-                </>
+          <div className="filters-row">
+            <div className="filters-search-group">
+              <label className="browse-select-wrap" htmlFor="browseCategoryFilter">
+                <select
+                  aria-label="Category"
+                  className="browse-select"
+                  id="browseCategoryFilter"
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value as EntityType | "all")}
+                >
+                  {categoryOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <input
+                className="browse-search-input"
+                id="searchInput"
+                type="text"
+                placeholder="Search text..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              {hasActiveFilters && (
+                <button
+                  className="btn ghost browse-reset-button"
+                  type="button"
+                  onClick={resetFilters}
+                >
+                  Reset all filters
+                </button>
               )}
+            </div>
+
+            <div className="filters-tools-row">
+              <button
+                type="button"
+                className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
+                onClick={() =>
+                  setMatchDisplayMode(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
+                }
+                aria-pressed={matchDisplayMode === "show-matches-only"}
+              >
+                Hide unmatched results
+              </button>
+              <div className="browse-sidebar-view-toggle" role="group" aria-label="Browse view mode">
+                <button
+                  type="button"
+                  className={`browse-sidebar-link ${viewMode === "details" ? "is-active" : ""}`}
+                  onClick={() => setViewMode("details")}
+                  aria-pressed={viewMode === "details"}
+                >
+                  Details
+                </button>
+                <button
+                  type="button"
+                  className={`browse-sidebar-link ${viewMode === "thumbs" ? "is-active" : ""}`}
+                  onClick={() => setViewMode("thumbs")}
+                  aria-pressed={viewMode === "thumbs"}
+                >
+                  Cards
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="count">
-            {filteredCount === visibleItems.length ? `${visibleItems.length} total` : (filteredCount === 1 ? `1 result` : `${filteredCount} results`)}
+          <div className="filters-status-group">
+            <div className="count">
+              {filteredCount === visibleItems.length
+                ? `${visibleItems.length} total`
+                : (filteredCount === 1 ? "1 result" : `${filteredCount} results`)}
+            </div>
+            <div className="scroll-hints">
+              <button
+                aria-hidden="true"
+                className="pill-toggle scroll-hints-placeholder"
+                tabIndex={-1}
+                type="button"
+              >
+                Previous match
+              </button>
+              {!loading &&
+                !error &&
+                matchDisplayMode === "fade-unmatched" &&
+                filteredCount > 0 &&
+                filteredCount < items.length &&
+                matchNav.above + matchNav.below > 0 && (
+                  <>
+                    <button
+                      className="pill-toggle"
+                      type="button"
+                      disabled={matchNav.above === 0}
+                      onClick={() => scrollToNearest("up")}
+                    >
+                      Previous match {matchNav.above > 0 && <span className="badge">{matchNav.above}</span>}
+                    </button>
+                    <button
+                      className="pill-toggle"
+                      type="button"
+                      disabled={matchNav.below === 0}
+                      onClick={() => scrollToNearest("down")}
+                    >
+                      Next match {matchNav.below > 0 && <span className="badge">{matchNav.below}</span>}
+                    </button>
+                  </>
+                )}
+            </div>
           </div>
         </div>
       </div>
@@ -211,29 +282,12 @@ export default function EntityBrowser({embedded = false}: Props) {
       {!loading && !error && (
         <div className="browse-layout body-wrapper">
           <aside className="browse-sidebar">
-            <SidebarSearch
-              hasActiveFilters={hasActiveFilters}
-              search={search}
-              onReset={resetFilters}
-              onSearchChange={setSearch}
-            />
             <SidebarActions
               deckOnly={deckOnly}
               embedded={embedded}
               likedOnly={likedOnly}
-              matchDisplayMode={matchDisplayMode}
-              viewMode={viewMode}
               onDeckOnlyChange={setDeckOnly}
               onLikedOnlyChange={setLikedOnly}
-              onMatchDisplayModeChange={setMatchDisplayMode}
-              onViewModeChange={setViewMode}
-            />
-            <SidebarSection
-              subtitle="Category"
-              options={categoryOptions}
-              selectedValue={selectedType}
-              onSelect={(value) => setSelectedType(value as EntityType | "all")}
-              deselectValue="all"
             />
             <SidebarSection
               subtitle="Entities"
@@ -242,6 +296,7 @@ export default function EntityBrowser({embedded = false}: Props) {
               selectedValue={selectedEntity}
               onSelect={setSelectedEntity}
               deselectValue=""
+              fadeNonSelected={selectedEntity !== ""}
             />
           </aside>
 
@@ -287,90 +342,31 @@ export default function EntityBrowser({embedded = false}: Props) {
   );
 }
 
-type SidebarSearchProps = {
-  hasActiveFilters: boolean;
-  search: string;
-  onReset: () => void;
-  onSearchChange: (value: string) => void;
-};
-
-function SidebarSearch({hasActiveFilters, search, onReset, onSearchChange}: SidebarSearchProps) {
-  return (
-    <div className="browse-sidebar-section browse-sidebar-section-search">
-      <button
-        className={`btn ghost browse-sidebar-reset ${hasActiveFilters ? "is-active" : ""}`}
-        type="button"
-        onClick={onReset}
-      >
-        Reset filters
-      </button>
-      <input
-        className="browse-sidebar-search"
-        id="searchInput"
-        type="text"
-        placeholder="Search text..."
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
-      />
-    </div>
-  );
-}
-
 type SidebarActionsProps = {
   deckOnly: boolean;
   embedded: boolean;
   likedOnly: boolean;
-  matchDisplayMode: MatchDisplayMode;
-  viewMode: BrowseViewMode;
   onDeckOnlyChange: (value: boolean) => void;
   onLikedOnlyChange: (value: boolean) => void;
-  onMatchDisplayModeChange: (value: MatchDisplayMode) => void;
-  onViewModeChange: (value: BrowseViewMode) => void;
 };
 
 function SidebarActions({
   deckOnly,
   embedded,
   likedOnly,
-  matchDisplayMode,
-  viewMode,
   onDeckOnlyChange,
   onLikedOnlyChange,
-  onMatchDisplayModeChange,
-  onViewModeChange,
 }: SidebarActionsProps) {
   return (
     <div className="browse-sidebar-section browse-sidebar-tools">
-      <>
-        <div className="browse-sidebar-subtitle">View</div>
-        <div className="browse-sidebar-view-toggle" role="group" aria-label="Browse view mode">
-          <button
-            type="button"
-            className={`browse-sidebar-link ${viewMode === "details" ? "is-active" : ""}`}
-            onClick={() => onViewModeChange("details")}
-            aria-pressed={viewMode === "details"}
-          >
-            Details
-          </button>
-          <button
-            type="button"
-            className={`browse-sidebar-link ${viewMode === "thumbs" ? "is-active" : ""}`}
-            onClick={() => onViewModeChange("thumbs")}
-            aria-pressed={viewMode === "thumbs"}
-          >
-            Thumbs
-          </button>
-        </div>
-      </>
+      <div className="browse-sidebar-subtitle">Filters</div>
       <button
         type="button"
-        className={`browse-sidebar-link ${matchDisplayMode === "show-matches-only" ? "is-active" : ""}`}
-        onClick={() =>
-          onMatchDisplayModeChange(matchDisplayMode === "fade-unmatched" ? "show-matches-only" : "fade-unmatched")
-        }
-        aria-pressed={matchDisplayMode === "show-matches-only"}
+        className={`browse-sidebar-link ${likedOnly ? "is-active" : ""}`}
+        onClick={() => onLikedOnlyChange(!likedOnly)}
+        aria-pressed={likedOnly}
       >
-        Hide unmatching results
+        Likes
       </button>
       {embedded && (
         <button
@@ -379,17 +375,9 @@ function SidebarActions({
           onClick={() => onDeckOnlyChange(!deckOnly)}
           aria-pressed={deckOnly}
         >
-          🧩 In deck
+          In deck
         </button>
       )}
-      <button
-        type="button"
-        className={`browse-sidebar-link ${likedOnly ? "is-active" : ""}`}
-        onClick={() => onLikedOnlyChange(!likedOnly)}
-        aria-pressed={likedOnly}
-      >
-        ❤️ Likes
-      </button>
     </div>
   );
 }
@@ -401,6 +389,7 @@ type SidebarSectionProps = {
   onSelect: (value: string) => void;
   navClassName?: string;
   deselectValue?: string;
+  fadeNonSelected?: boolean;
 };
 
 function SidebarSection({
@@ -410,6 +399,7 @@ function SidebarSection({
   onSelect,
   navClassName = "browse-sidebar-nav",
   deselectValue,
+  fadeNonSelected = false,
 }: SidebarSectionProps) {
   return (
     <div className="browse-sidebar-section">
@@ -418,9 +408,9 @@ function SidebarSection({
         {options.map((option) => (
           <button
             key={option.value}
-              className={`browse-sidebar-link ${selectedValue === option.value ? "is-active" : ""}`}
-              type="button"
-              onClick={() => onSelect(selectedValue === option.value && deselectValue !== undefined ? deselectValue : option.value)}
+            className={`browse-sidebar-link ${selectedValue === option.value ? "is-active" : ""} ${fadeNonSelected && selectedValue !== option.value ? "is-dimmed" : ""}`}
+            type="button"
+            onClick={() => onSelect(selectedValue === option.value && deselectValue !== undefined ? deselectValue : option.value)}
           >
             {option.image ? (
               <img className="browse-sidebar-link-image" decoding="async" loading="lazy" src={option.image} alt=""/>

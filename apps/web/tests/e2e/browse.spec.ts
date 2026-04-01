@@ -6,7 +6,10 @@ test("browse search flow can narrow and reset visible results", async ({page}) =
   await expect(page.getByRole("heading", {name: "Browse items"})).toBeVisible();
 
   const sidebarSubtitles = page.locator(".browse-sidebar .browse-sidebar-subtitle");
-  await expect(sidebarSubtitles).toContainText(["View", "Category", "Entities"]);
+  await expect(sidebarSubtitles).toContainText(["Filters", "Entities"]);
+
+  await expect(page.getByLabel("Category")).toBeVisible();
+  await expect(page.getByRole("button", {name: "Reset all filters"})).toHaveCount(0);
 
   const searchInput = page.getByPlaceholder("Search text...");
   await searchInput.fill("Abundance");
@@ -15,13 +18,14 @@ test("browse search flow can narrow and reset visible results", async ({page}) =
   await expect(page.getByText("Abundance", {exact: true})).toBeVisible();
   await expect(page.getByText("Balance", {exact: true})).toBeVisible();
 
-  await page.getByRole("button", {name: "Hide unmatching results"}).click();
+  await page.getByRole("button", {name: "Hide unmatched results"}).click();
   await expect(page.getByText("Balance", {exact: true})).not.toBeVisible();
 
-  await page.getByRole("button", {name: "Reset filters"}).click();
+  await page.getByRole("button", {name: "Reset all filters"}).click();
   await expect(searchInput).toHaveValue("");
   await expect(page.getByText(/total$/)).toBeVisible();
   await expect(page.getByText("Balance", {exact: true})).toBeVisible();
+  await expect(page.getByRole("button", {name: "Reset all filters"})).toHaveCount(0);
   await expect(page.getByRole("button", {name: "Add to deck"})).toHaveCount(0);
 });
 
@@ -90,9 +94,9 @@ test("browse hover preview plays above the hovered card", async ({page}) => {
 test("browse thumbs view shows larger art and hover details with video", async ({page}) => {
   await page.goto("/browse");
 
-  await page.getByRole("button", {name: "Thumbs"}).click();
+  await page.getByRole("button", {name: "Cards"}).click();
   await page.getByPlaceholder("Search text...").fill("Abundance");
-  await page.getByRole("button", {name: "Hide unmatching results"}).click();
+  await page.getByRole("button", {name: "Hide unmatched results"}).click();
 
   const card = page.locator(".card-thumbs").first();
   await expect(card).toBeVisible();
@@ -258,9 +262,9 @@ test("embedded deck browser supports thumbs view", async ({page}) => {
   await expect(page.getByRole("dialog", {name: "Build editor"})).toBeVisible();
 
   const deckBrowser = page.locator(".deck-builder-browser");
-  await deckBrowser.getByRole("button", {name: "Thumbs"}).click();
+  await deckBrowser.getByRole("button", {name: "Cards"}).click();
   await deckBrowser.getByPlaceholder("Search text...").fill("Abundance");
-  await deckBrowser.getByRole("button", {name: "Hide unmatching results"}).click();
+  await deckBrowser.getByRole("button", {name: "Hide unmatched results"}).click();
 
   const card = deckBrowser.locator(".card-thumbs").first();
   await expect(card).toBeVisible();
@@ -274,9 +278,9 @@ test("embedded deck browser hover tooltip stays within drawer-safe top and avoid
   const deckBrowser = page.locator(".deck-builder-browser");
   await expect(page.getByRole("dialog", {name: "Build editor"})).toBeVisible();
 
-  await deckBrowser.getByRole("button", {name: "Thumbs"}).click();
+  await deckBrowser.getByRole("button", {name: "Cards"}).click();
   await deckBrowser.getByPlaceholder("Search text...").fill("Abundance");
-  await deckBrowser.getByRole("button", {name: "Hide unmatching results"}).click();
+  await deckBrowser.getByRole("button", {name: "Hide unmatched results"}).click();
 
   const card = deckBrowser.locator(".card-thumbs").first();
   const image = card.locator(".card-thumbs-image");
@@ -317,9 +321,9 @@ test("embedded deck browser hover uses the correct placement after the drawer sc
   const drawerSurface = page.locator(".deck-builder-surface");
   await expect(page.getByRole("dialog", {name: "Build editor"})).toBeVisible();
 
-  await deckBrowser.getByRole("button", {name: "Thumbs"}).click();
+  await deckBrowser.getByRole("button", {name: "Cards"}).click();
   await deckBrowser.getByPlaceholder("Search text...").fill("Abundance");
-  await deckBrowser.getByRole("button", {name: "Hide unmatching results"}).click();
+  await deckBrowser.getByRole("button", {name: "Hide unmatched results"}).click();
 
   const card = deckBrowser.locator(".card-thumbs").first();
   const image = card.locator(".card-thumbs-image");
