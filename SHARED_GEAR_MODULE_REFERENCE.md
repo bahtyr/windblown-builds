@@ -1,5 +1,11 @@
 # Shared Gear Module Reference
 
+1.  Create new dedicated folder
+2. Keep DeckContext.tsx as a compatibility wrapper in this phase.
+3. Extract only the shared surface needed by current consumers; don’t create unused APIs yet.
+4. Keep prop shapes close to current usage for a shallow migration.
+5. Don't update tests.
+
 This document identifies the current deck/build/run code that should be treated as shared `Gear` / `GearCollection`
 logic before wrapper-specific terminology is renamed in the UI.
 

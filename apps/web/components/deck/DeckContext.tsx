@@ -1,22 +1,30 @@
 "use client";
 
-import {createContext, useContext, useEffect, useMemo, useState} from "react";
-import {loadEntities} from "../../lib/loadEntities";
-import {EntityType, ScrapedEntity} from "../../lib/types";
+import {createContext, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
 import {saveExternalDeck} from "../../app/gift-match/run-build-flow";
+import {
+  GearCollectionProvider,
+  type GearCollectionContextType,
+  useGearCollection,
+} from "../gear/GearCollectionContext";
+import {
+  type Gear,
+  type GearCollectionSnapshot,
+  type GearLimits,
+  gearId,
+  groupGearsByType,
+  hydrateGears,
+  makeGear,
+  parseGearCollectionParam,
+  restoreGearCollectionSnapshot,
+} from "../gear/gear-collection-utils";
 
-export type DeckItem = {
-  id: string;
-  type: EntityType;
-  name: string;
-  image?: string;
-};
-
-export type DeckLimits = Partial<Record<Exclude<EntityType, "effects">, number>>;
+export type DeckItem = Gear;
+export type DeckLimits = GearLimits;
 
 export type SavedDeck = {
   name: string;
-  items: DeckItem[];
+  items: Gear[];
   createdAt: string;
 };
 
@@ -25,27 +33,28 @@ export type SharedDeck = SavedDeck & {
 };
 
 type DeckMode = "new" | "editing";
+type EditingSource = "saved" | "shared" | null;
+
 export type DeckSessionSnapshot = {
-  items: DeckItem[];
+  items: Gear[];
   name: string;
   editingDeckName: string | null;
 };
-type EditingSource = "saved" | "shared" | null;
 
-type DeckContextType = {
-  items: DeckItem[];
+export type DeckContextType = {
+  items: Gear[];
   name: string;
   saved: SavedDeck[];
   sharedDeck: SharedDeck | null;
   editingDeckName: string | null;
   isEditingBuild: boolean;
   mode: DeckMode;
-  add: (item: DeckItem, limits: DeckLimits) => { ok: boolean; reason?: string };
+  add: (item: Gear, limits: GearLimits) => { ok: boolean; reason?: string };
   remove: (id: string) => void;
-  moveWithinType: (type: EntityType, from: number, to: number) => void;
+  moveWithinType: GearCollectionContextType["moveWithinType"];
   setName: (name: string) => void;
   saveDeck: (asNew?: boolean) => void;
-  saveImportedDeck: (name: string, items: DeckItem[]) => string;
+  saveImportedDeck: (name: string, items: Gear[]) => string;
   saveSharedDeck: () => void;
   discardSharedDeck: () => void;
   createDeck: () => void;
@@ -64,42 +73,37 @@ const STORAGE_SAVED = "windblown.deck.saved.v3";
 const DEFAULT_DECK_NAME = "Untitled deck";
 
 /**
- * Provide active deck state, saved decks, and editing actions.
+ * Provides the legacy deck context API backed by the shared gear collection provider.
  *
  * @param {{ children: React.ReactNode }} props - Provider children.
  * @returns {JSX.Element} Context provider.
  */
-export function DeckProvider({children}: { children: React.ReactNode }) {
-  const [items, setItems] = useState<DeckItem[]>([]);
-  const [name, setNameState] = useState<string>(DEFAULT_DECK_NAME);
+export function DeckProvider({children}: { children: ReactNode }) {
+  return (
+    <GearCollectionProvider defaultName={DEFAULT_DECK_NAME} storageKey={STORAGE_KEY}>
+      <DeckProviderContent>{children}</DeckProviderContent>
+    </GearCollectionProvider>
+  );
+}
+
+function DeckProviderContent({children}: { children: ReactNode }) {
+  const gearCollection = useGearCollection();
   const [saved, setSaved] = useState<SavedDeck[]>([]);
   const [sharedDeck, setSharedDeck] = useState<SharedDeck | null>(null);
-  const [editingDeckName, setEditingDeckName] = useState<string | null>(null);
   const [sessionStart, setSessionStart] = useState<DeckSessionSnapshot | null>(null);
   const [editingSource, setEditingSource] = useState<EditingSource>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as { items?: DeckItem[]; name?: string; editingDeckName?: string | null };
-        setItems(parsed.items || []);
-        setNameState(normalizeDeckName(parsed.name));
-        setEditingDeckName(typeof parsed.editingDeckName === "string" ? parsed.editingDeckName : null);
-      } catch {
-        // ignore
-      }
-    }
 
     const savedDecks = localStorage.getItem(STORAGE_SAVED);
     if (savedDecks) {
       try {
-        const parsed = normalizeSavedDecks(JSON.parse(savedDecks) as Array<SavedDeck | { name: string; items: DeckItem[] }>);
+        const parsed = normalizeSavedDecks(JSON.parse(savedDecks) as Array<SavedDeck | { name: string; items: Gear[] }>);
         setSaved(parsed);
       } catch {
-        // ignore
+        // Ignore invalid persisted saved deck state.
       }
     }
 
@@ -113,34 +117,14 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({items, name, editingDeckName}));
-  }, [editingDeckName, hydrated, items, name]);
-
-  useEffect(() => {
-    if (!hydrated || typeof window === "undefined") return;
     localStorage.setItem(STORAGE_SAVED, JSON.stringify(saved));
   }, [hydrated, saved]);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    let cancelled = false;
-
-    hydrateDeckItems(items).then((nextItems) => {
-      if (!cancelled && nextItems !== items) {
-        setItems(nextItems);
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [hydrated, items]);
 
   useEffect(() => {
     if (!hydrated || !sharedDeck) return;
     let cancelled = false;
 
-    hydrateDeckItems(sharedDeck.items).then((nextItems) => {
+    hydrateGears(sharedDeck.items).then((nextItems) => {
       if (!cancelled && nextItems !== sharedDeck.items) {
         setSharedDeck((prev) => (prev ? {...prev, items: nextItems} : prev));
       }
@@ -151,53 +135,38 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
     };
   }, [hydrated, sharedDeck]);
 
-  const mode: DeckMode = editingDeckName ? "editing" : "new";
+  const editingDeckName = gearCollection.editingCollectionName;
+  const mode: DeckMode = gearCollection.mode;
   const isEditingBuild = isEditingDeckSession(editingDeckName, editingSource);
 
-  const api: DeckContextType = useMemo(
+  const api = useMemo<DeckContextType>(
     () => ({
-      items,
-      name,
+      items: gearCollection.items,
+      name: gearCollection.name,
       saved,
       sharedDeck,
       editingDeckName,
       isEditingBuild,
       mode,
-      add: (item, limits) => {
-        if (items.some((current) => current.id === item.id)) {
-          return {ok: false, reason: "Duplicate not allowed"};
-        }
-        if (item.type === "effects") {
-          return {ok: false, reason: "Effects cannot be added to deck"};
-        }
-        const limit = limits[item.type];
-        if (limit !== undefined) {
-          const count = items.filter((current) => current.type === item.type).length;
-          if (count >= limit) {
-            return {ok: false, reason: `Limit reached for ${item.type}`};
-          }
-        }
-        setItems((prev) => insertByType(prev, item));
-        return {ok: true};
-      },
-      remove: (id) => setItems((prev) => prev.filter((item) => item.id !== id)),
-      moveWithinType: (type, from, to) => setItems((prev) => reorderWithinType(prev, type, from, to)),
-      setName: (nextName) => setNameState(normalizeDeckName(nextName)),
+      add: gearCollection.add,
+      remove: gearCollection.remove,
+      moveWithinType: gearCollection.moveWithinType,
+      setName: gearCollection.setName,
       saveDeck: (asNew) => {
-        const desiredName = normalizeDeckName(name);
+        const desiredName = normalizeDeckName(gearCollection.name);
         if (mode === "editing" && !asNew && editingDeckName) {
-          setSaved((prev) => updateSavedDeck(prev, editingDeckName, desiredName, items));
-          setEditingDeckName(desiredName);
-          setNameState(desiredName);
+          setSaved((prev) => updateSavedDeck(prev, editingDeckName, desiredName, gearCollection.items));
+          gearCollection.setEditingCollectionName(desiredName);
+          gearCollection.setName(desiredName);
           setSessionStart(null);
           setEditingSource("saved");
           return;
         }
 
         const targetName = ensureUniqueDeckName(saved, desiredName);
-        setSaved((prev) => [...prev, {name: targetName, items, createdAt: createTimestamp()}]);
-        setEditingDeckName(targetName);
-        setNameState(targetName);
+        setSaved((prev) => [...prev, {name: targetName, items: gearCollection.items, createdAt: createTimestamp()}]);
+        gearCollection.setEditingCollectionName(targetName);
+        gearCollection.setName(targetName);
         setSessionStart(null);
         if (editingSource === "shared") {
           setSharedDeck(null);
@@ -206,12 +175,12 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setEditingSource("saved");
       },
       saveImportedDeck: (deckName, nextItems) => {
-        const orderedItems = groupDeckItemsByType(nextItems);
+        const orderedItems = groupGearsByType(nextItems);
         const persisted = saveExternalDeck(saved, deckName, orderedItems);
         setSaved(persisted.saved);
-        setItems(persisted.savedDeck.items);
-        setEditingDeckName(persisted.savedDeck.name);
-        setNameState(persisted.savedDeck.name);
+        gearCollection.setItems(persisted.savedDeck.items);
+        gearCollection.setEditingCollectionName(persisted.savedDeck.name);
+        gearCollection.setName(persisted.savedDeck.name);
         setSessionStart(null);
         setEditingSource("saved");
         return persisted.savedDeck.name;
@@ -230,52 +199,40 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         clearSharedDeckUrl();
       },
       createDeck: () => {
-        setSessionStart({items, name, editingDeckName});
-        setItems([]);
-        setNameState(DEFAULT_DECK_NAME);
-        setEditingDeckName(null);
+        setSessionStart(captureDeckSessionSnapshot(gearCollection));
+        gearCollection.setItems([]);
+        gearCollection.setName(DEFAULT_DECK_NAME);
+        gearCollection.setEditingCollectionName(null);
         setEditingSource(null);
       },
       loadDeck: (deckName) => {
         const match = saved.find((deck) => deck.name === deckName);
         if (!match) return;
-        setSessionStart({items, name, editingDeckName});
-        setItems(match.items);
-        setNameState(match.name);
-        setEditingDeckName(match.name);
+        setSessionStart(captureDeckSessionSnapshot(gearCollection));
+        gearCollection.setItems(match.items);
+        gearCollection.setName(match.name);
+        gearCollection.setEditingCollectionName(match.name);
         setEditingSource("saved");
       },
       editSharedDeck: () => {
         if (!sharedDeck) return;
-        setSessionStart({items, name, editingDeckName});
-        setItems(sharedDeck.items);
-        setNameState(sharedDeck.name);
-        setEditingDeckName(null);
+        setSessionStart(captureDeckSessionSnapshot(gearCollection));
+        gearCollection.setItems(sharedDeck.items);
+        gearCollection.setName(sharedDeck.name);
+        gearCollection.setEditingCollectionName(null);
         setEditingSource("shared");
       },
       cancelEditing: () => {
-        if (editingSource === "shared") {
-          const restored = restoreDeckSession(sessionStart);
-          setItems(restored.items);
-          setNameState(restored.name);
-          setEditingDeckName(restored.editingDeckName);
-          setSessionStart(null);
-          setEditingSource(null);
-          return;
-        }
-        const restored = restoreDeckSession(sessionStart);
-        setItems(restored.items);
-        setNameState(restored.name);
-        setEditingDeckName(restored.editingDeckName);
+        gearCollection.restoreSnapshot(toGearCollectionSnapshot(restoreDeckSession(sessionStart)));
         setSessionStart(null);
         setEditingSource(null);
       },
       deleteDeck: (deckName) => {
         setSaved((prev) => prev.filter((deck) => deck.name !== deckName));
         if (editingDeckName === deckName) {
-          setItems([]);
-          setNameState(DEFAULT_DECK_NAME);
-          setEditingDeckName(null);
+          gearCollection.setItems([]);
+          gearCollection.setName(DEFAULT_DECK_NAME);
+          gearCollection.setEditingCollectionName(null);
         }
         setSessionStart(null);
         setEditingSource(null);
@@ -287,16 +244,16 @@ export function DeckProvider({children}: { children: React.ReactNode }) {
         setSaved((prev) => [...prev, {name: copyName, items: [...source.items], createdAt: createTimestamp()}]);
         return copyName;
       },
-      resetDeck: () => setItems([]),
+      resetDeck: gearCollection.resetGearCollection,
     }),
-    [editingSource, editingDeckName, isEditingBuild, items, mode, name, saved, sessionStart, sharedDeck],
+    [editingDeckName, editingSource, gearCollection, isEditingBuild, mode, saved, sessionStart, sharedDeck],
   );
 
   return <DeckContext.Provider value={api}>{children}</DeckContext.Provider>;
 }
 
 /**
- * Read active deck state and actions from context.
+ * Reads active deck state and actions from the compatibility wrapper context.
  *
  * @returns {DeckContextType} Deck state and mutations.
  */
@@ -307,66 +264,22 @@ export function useDeck(): DeckContextType {
 }
 
 /**
- * Build a stable deck item identifier from entity type and name.
+ * Builds a stable deck item identifier from the entity type and entity name.
  *
- * @param {EntityType} type - Entity type.
+ * @param {Gear["type"]} type - Entity type.
  * @param {string} name - Entity name.
  * @returns {string} Deck item identifier.
  */
-export function deckId(type: EntityType, name: string): string {
-  return `${type}:${name}`;
-}
+export const deckId = gearId;
 
 /**
- * Convert a scraped entity into the deck item format used by the builder.
+ * Converts a scraped entity into the deck item format used by the legacy deck builder.
  *
- * @param {EntityType} type - Entity type.
- * @param {ScrapedEntity} entity - Source entity.
+ * @param {Gear["type"]} type - Entity type.
+ * @param {Parameters<typeof makeGear>[1]} entity - Source entity.
  * @returns {DeckItem} Deck item payload.
  */
-export function makeDeckItem(type: EntityType, entity: ScrapedEntity): DeckItem {
-  return {type, name: entity.name, id: deckId(type, entity.name), image: entity.image};
-}
-
-function parseDeckParam(raw: string): DeckItem[] {
-  const parts = raw.split(",");
-  const items: DeckItem[] = [];
-  for (const part of parts) {
-    const [type, nameEncoded] = part.split("|");
-    if (!type || !nameEncoded) continue;
-    if (!["gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts"].includes(type)) continue;
-    const name = decodeURIComponent(nameEncoded);
-    items.push({type: type as EntityType, name, id: deckId(type as EntityType, name)});
-  }
-  return items;
-}
-
-async function hydrateDeckItems(deckItems: DeckItem[]): Promise<DeckItem[]> {
-  const missingTypes = Array.from(new Set(deckItems.filter((item) => !item.image).map((item) => item.type)));
-  if (missingTypes.length === 0) return deckItems;
-
-  const fetched = new Map<EntityType, ScrapedEntity[]>();
-  for (const type of missingTypes) {
-    try {
-      fetched.set(type, await loadEntities(type));
-    } catch {
-      // ignore fetch errors; keep existing items
-    }
-  }
-
-  let changed = false;
-  const nextItems = deckItems.map((item) => {
-    if (item.image) return item;
-    const match = fetched.get(item.type)?.find((entity) => entity.name === item.name);
-    if (!match?.image) return item;
-    changed = true;
-    return {...item, image: match.image};
-  });
-
-  return changed ? nextItems : deckItems;
-}
-
-const TYPE_ORDER: EntityType[] = ["gifts", "hexes", "weapons", "trinkets", "magifishes", "boosts", "effects"];
+export const makeDeckItem = makeGear;
 
 /**
  * Groups deck items by the canonical deck display order while preserving arrival order inside each group.
@@ -374,73 +287,34 @@ const TYPE_ORDER: EntityType[] = ["gifts", "hexes", "weapons", "trinkets", "magi
  * @param {DeckItem[]} items - Flat deck item list.
  * @returns {DeckItem[]} Reordered deck items with stable within-group order.
  */
-export function groupDeckItemsByType(items: DeckItem[]): DeckItem[] {
-  const groupedItems = new Map<EntityType, DeckItem[]>();
-
-  for (const item of items) {
-    groupedItems.set(item.type, [...(groupedItems.get(item.type) ?? []), item]);
-  }
-
-  return TYPE_ORDER.flatMap((type) => groupedItems.get(type) ?? []);
-}
-
-function insertByType(list: DeckItem[], item: DeckItem): DeckItem[] {
-  const order = TYPE_ORDER.indexOf(item.type);
-  if (order === -1) return [...list, item];
-  const next = [...list];
-  let insertAt = next.length;
-  for (let i = 0; i < next.length; i++) {
-    const otherOrder = TYPE_ORDER.indexOf(next[i].type);
-    if (otherOrder > order) {
-      insertAt = i;
-      break;
-    }
-    if (otherOrder === order) {
-      insertAt = i + 1;
-    }
-  }
-  next.splice(insertAt, 0, item);
-  return next;
-}
-
-function reorderWithinType(list: DeckItem[], type: EntityType, from: number, to: number): DeckItem[] {
-  const sameType = list.filter((item) => item.type === type);
-  if (from < 0 || from >= sameType.length || to < 0 || to >= sameType.length) return list;
-  const indices = list.map((item, idx) => (item.type === type ? idx : -1)).filter((idx) => idx !== -1);
-  const globalFrom = indices[from];
-  const globalTo = indices[to];
-  const next = [...list];
-  const [item] = next.splice(globalFrom, 1);
-  next.splice(globalTo, 0, item);
-  return next;
-}
+export const groupDeckItemsByType = groupGearsByType;
 
 /**
- * Remove a deck and pick the first remaining saved deck.
+ * Removes a deck and returns the first remaining saved deck, or a default empty one.
  *
- * @param {{name: string; items: DeckItem[]; createdAt?: string}[]} list - Current saved decks.
+ * @param {{name: string; items: Gear[]; createdAt?: string}[]} list - Current saved decks.
  * @param {string} deckName - Deck being removed.
- * @returns {{saved: {name: string; items: DeckItem[]; createdAt: string}[]; firstSaved: {name: string; items: DeckItem[]; createdAt: string}}} Remaining decks and first selectable deck.
+ * @returns {{saved: {name: string; items: Gear[]; createdAt: string}[]; firstSaved: {name: string; items: Gear[]; createdAt: string}}} Remaining decks and first selectable deck.
  */
 export function selectFirstSavedAfterDelete(
-  list: { name: string; items: DeckItem[]; createdAt?: string }[],
+  list: { name: string; items: Gear[]; createdAt?: string }[],
   deckName: string,
-): { saved: { name: string; items: DeckItem[]; createdAt: string }[]; firstSaved: { name: string; items: DeckItem[]; createdAt: string } } {
+): { saved: { name: string; items: Gear[]; createdAt: string }[]; firstSaved: { name: string; items: Gear[]; createdAt: string } } {
   const normalizedFiltered = normalizeSavedDecks(list.filter((deck) => deck.name !== deckName));
   if (normalizedFiltered.length > 0) {
     return {saved: normalizedFiltered, firstSaved: normalizedFiltered[0]};
   }
-  const created = {name: DEFAULT_DECK_NAME, items: [] as DeckItem[], createdAt: createTimestamp()};
+  const created = {name: DEFAULT_DECK_NAME, items: [] as Gear[], createdAt: createTimestamp()};
   return {saved: [created], firstSaved: created};
 }
 
 /**
- * Normalize persisted decks so older saved payloads gain creation timestamps.
+ * Normalizes persisted decks so older payloads gain creation timestamps.
  *
- * @param {Array<SavedDeck | { name: string; items: DeckItem[] }>} list - Raw saved decks from storage.
+ * @param {Array<SavedDeck | { name: string; items: Gear[] }>} list - Raw saved decks from storage.
  * @returns {SavedDeck[]} Normalized saved deck list.
  */
-export function normalizeSavedDecks(list: Array<SavedDeck | { name: string; items: DeckItem[] }>): SavedDeck[] {
+export function normalizeSavedDecks(list: Array<SavedDeck | { name: string; items: Gear[] }>): SavedDeck[] {
   return list.map((deck) => ({
     name: normalizeDeckName(deck.name),
     items: deck.items,
@@ -449,7 +323,7 @@ export function normalizeSavedDecks(list: Array<SavedDeck | { name: string; item
 }
 
 /**
- * Build a unique copy name for a duplicated deck.
+ * Builds a unique copy name for a duplicated deck.
  *
  * @param {SavedDeck[]} existing - Existing saved decks.
  * @param {string} deckName - Original deck name.
@@ -466,7 +340,7 @@ export function suggestDuplicateName(existing: SavedDeck[], deckName: string): s
   return `${base} ${i}`;
 }
 
-function updateSavedDeck(list: SavedDeck[], sourceName: string, targetName: string, items: DeckItem[]): SavedDeck[] {
+function updateSavedDeck(list: SavedDeck[], sourceName: string, targetName: string, items: Gear[]): SavedDeck[] {
   const next = [...list];
   const idx = next.findIndex((deck) => deck.name === sourceName);
   if (idx === -1) {
@@ -505,22 +379,31 @@ function normalizeDeckName(value?: string): string {
 }
 
 /**
- * Resolve the state that should be restored when a deck edit session is cancelled.
+ * Resolves the state that should be restored when a deck edit session is cancelled.
  *
  * @param {DeckSessionSnapshot | null} snapshot - Starting state captured when the session opened.
  * @returns {DeckSessionSnapshot} Restored state for the editor.
  */
 export function restoreDeckSession(snapshot: DeckSessionSnapshot | null): DeckSessionSnapshot {
-  if (snapshot) return snapshot;
+  const restored = restoreGearCollectionSnapshot(
+    snapshot
+      ? {
+          items: snapshot.items,
+          name: snapshot.name,
+          editingCollectionName: snapshot.editingDeckName,
+        }
+      : null,
+    DEFAULT_DECK_NAME,
+  );
   return {
-    items: [],
-    name: DEFAULT_DECK_NAME,
-    editingDeckName: null,
+    items: restored.items,
+    name: restored.name,
+    editingDeckName: restored.editingCollectionName,
   };
 }
 
 /**
- * Determine whether the builder is currently editing an existing saved or shared build.
+ * Determines whether the builder is currently editing an existing saved or shared build.
  *
  * @param {string | null} editingDeckName - Saved deck currently being edited, if any.
  * @param {"saved" | "shared" | null} editingSource - Source for the current editing session.
@@ -534,7 +417,7 @@ export function isEditingDeckSession(
 }
 
 /**
- * Parse a shared deck row from the current `/decks` URL.
+ * Parses a transient shared deck from the current `/decks` URL.
  *
  * @param {string} pathname - Current pathname.
  * @param {string} search - Current search string.
@@ -545,7 +428,7 @@ export function resolveSharedDeckFromLocation(pathname: string, search: string):
   const params = new URLSearchParams(search);
   const rawDeck = params.get("deck");
   if (!rawDeck) return null;
-  const items = parseDeckParam(rawDeck);
+  const items = parseGearCollectionParam(rawDeck);
   if (items.length === 0) return null;
   const sharedName = `${normalizeDeckName(params.get("name") ?? undefined)} (shared)`;
   return {
@@ -557,7 +440,7 @@ export function resolveSharedDeckFromLocation(pathname: string, search: string):
 }
 
 /**
- * Remove transient shared-deck params from the current URL.
+ * Removes transient shared deck params from the current URL.
  */
 export function clearSharedDeckUrl() {
   if (typeof window === "undefined") return;
@@ -569,4 +452,21 @@ export function clearSharedDeckUrl() {
 
 function createTimestamp(): string {
   return new Date().toISOString();
+}
+
+function captureDeckSessionSnapshot(gearCollection: GearCollectionContextType): DeckSessionSnapshot {
+  const snapshot = gearCollection.captureSnapshot();
+  return {
+    items: snapshot.items,
+    name: snapshot.name,
+    editingDeckName: snapshot.editingCollectionName,
+  };
+}
+
+function toGearCollectionSnapshot(snapshot: DeckSessionSnapshot): GearCollectionSnapshot {
+  return {
+    items: snapshot.items,
+    name: snapshot.name,
+    editingCollectionName: snapshot.editingDeckName,
+  };
 }

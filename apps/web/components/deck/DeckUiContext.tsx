@@ -1,50 +1,40 @@
 "use client";
 
-import {createContext, useContext, useEffect, useMemo, useState} from "react";
-import {usePathname} from "next/navigation";
+import {type ReactNode} from "react";
+import {
+  GearCollectionEditorUiProvider,
+  type GearCollectionEditorUiContextType,
+  useGearCollectionEditorUi,
+} from "../gear/GearCollectionEditorUiContext";
 
-type DeckUiContextType = {
+export type DeckUiContextType = {
   open: boolean;
   openDeck: () => void;
   closeDeck: () => void;
 };
 
-const DeckUiContext = createContext<DeckUiContextType | null>(null);
-
 /**
- * Provide local UI state for the deck builder drawer.
+ * Provides the legacy deck editor UI wrapper around the shared editor UI state.
  *
  * @param {{ children: React.ReactNode }} props - Provider children.
  * @returns {JSX.Element} Context provider.
  */
-export function DeckUiProvider({children}: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (pathname === "/decks") return;
-    setOpen(false);
-  }, [pathname]);
-
-  const value = useMemo(
-    () => ({
-      open,
-      openDeck: () => setOpen(true),
-      closeDeck: () => setOpen(false),
-    }),
-    [open],
-  );
-
-  return <DeckUiContext.Provider value={value}>{children}</DeckUiContext.Provider>;
+export function DeckUiProvider({children}: { children: ReactNode }) {
+  return <GearCollectionEditorUiProvider keepOpenPathname="/decks">{children}</GearCollectionEditorUiProvider>;
 }
 
 /**
- * Read deck builder drawer UI state from context.
+ * Reads deck builder drawer UI state from the shared editor UI context.
  *
  * @returns {DeckUiContextType} Drawer UI actions and state.
  */
-export function useDeckUi() {
-  const ctx = useContext(DeckUiContext);
-  if (!ctx) throw new Error("DeckUiContext missing");
-  return ctx;
+export function useDeckUi(): DeckUiContextType {
+  const ctx = useGearCollectionEditorUi();
+  return {
+    open: ctx.open,
+    openDeck: ctx.openGearCollectionEditor,
+    closeDeck: ctx.closeGearCollectionEditor,
+  };
 }
+
+export type {GearCollectionEditorUiContextType};
