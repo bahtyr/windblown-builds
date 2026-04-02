@@ -1,12 +1,8 @@
 import {describe, expect, it} from "vitest";
-import {
-  buildGearCategorySummaries,
-  compareTypeOrder,
-  extractEntityTypeFromAssetPath,
-  getTypeOrder,
-  groupGearsForEditorRows,
-  normalizeCollectionName,
-} from "../components/gear/gear-collection-utils";
+import {buildGearCategorySummaries} from "../components/gear/gear-category-utils";
+import {groupGearsForEditorRows} from "../components/gear/gear-order";
+import {compareTypeOrder, getTypeOrder} from "../components/gear/gear-order";
+import {extractEntityTypeFromAssetPath, normalizeCollectionName} from "../components/gear/gear-serialization";
 
 describe("extractEntityTypeFromPath", () => {
   it("parses supported gear types from shared asset paths", () => {

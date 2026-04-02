@@ -8,16 +8,11 @@ import {
   useGearCollection,
 } from "../gear/GearCollectionContext";
 import {
-  type Gear,
-  type GearCollectionSnapshot,
-  type GearLimits,
-  gearId,
   groupGearsByType,
-  hydrateGears,
-  makeGear,
-  parseGearCollectionParam,
-  restoreGearCollectionSnapshot,
-} from "../gear/gear-collection-utils";
+} from "../gear/gear-order";
+import {gearId, makeGear, parseGearCollectionParam} from "../gear/gear-serialization";
+import {hydrateGears, restoreGearCollectionSnapshot} from "../gear/gear-state-utils";
+import {type Gear, type GearCollectionSnapshot, type GearLimits} from "../gear/gear-types";
 
 export type DeckItem = Gear;
 export type DeckLimits = GearLimits;
