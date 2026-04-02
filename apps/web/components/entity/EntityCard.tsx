@@ -3,7 +3,9 @@
 
 import {useRef, useState} from "react";
 import {EntityType, ScrapedEntity} from "../../lib/types";
-import {DeckLimits, makeDeckItem, useDeck} from "../deck/DeckContext";
+import {makeGear} from "../gear/gear-serialization";
+import {type GearLimits} from "../gear/gear-types";
+import {useDeck} from "../deck/DeckContext";
 import {useLikes} from "../like/LikeContext";
 import RichText from "./RichText";
 import EntityVideoPreview from "./EntityVideoPreview";
@@ -20,7 +22,7 @@ type Props = {
   highlight?: boolean;
   deck: ReturnType<typeof useDeck>;
   likes: ReturnType<typeof useLikes>;
-  limits: DeckLimits;
+  limits: GearLimits;
   fade?: boolean;
   inDeck?: boolean;
   onEntityFilter?: (id: string) => void;
@@ -68,7 +70,7 @@ export default function EntityCard({
   });
 
   const handleAdd = () => {
-    const res = deck.add(makeDeckItem(type, item), limits);
+    const res = deck.add(makeGear(type, item), limits);
     if (!res.ok) {
       alert(res.reason || "Cannot add");
     }

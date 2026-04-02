@@ -2,7 +2,7 @@
 "use client";
 
 import {useEffect, useMemo, useRef, useState, type TransitionEvent} from "react";
-import {SavedDeck, SharedDeck, groupDeckItemsByType, makeDeckItem, useDeck} from "./DeckContext";
+import {SavedDeck, SharedDeck, useDeck} from "./DeckContext";
 import {useRunBuildUi} from "./RunBuildUiContext";
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
@@ -11,6 +11,8 @@ import EntityBrowser from "../entity/EntityBrowser";
 import {useLikes} from "../like/LikeContext";
 import {loadAllEntities} from "../../lib/loadEntities";
 import {EntityType, ScrapedEntity} from "../../lib/types";
+import {groupGearsByType} from "../gear/gear-order";
+import {makeGear} from "../gear/gear-serialization";
 import {
   buildGearCategoryMeta,
   GearCollectionCategoryChips,
@@ -68,7 +70,7 @@ export default function DecksLibrary() {
 
       for (const [type, entities] of entityEntries) {
         for (const entity of entities) {
-          const deckItem = makeDeckItem(type, entity);
+          const deckItem = makeGear(type, entity);
           nextEntityLookup.set(deckItem.id, {card: deckItem, entity, type});
           if (type === "gifts" && entity.category) {
             nextGiftCategoryLookup.set(deckItem.id, entity.category);
@@ -446,5 +448,5 @@ export function buildDeckCategoryMeta(items: Gear[], giftCategoryLookup: Map<str
 }
 
 function sortDeckItemsByType(items: Gear[]): Gear[] {
-  return groupDeckItemsByType(items);
+  return groupGearsByType(items);
 }

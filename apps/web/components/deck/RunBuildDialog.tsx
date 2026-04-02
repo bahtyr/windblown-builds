@@ -15,7 +15,8 @@ import {
   type MatchedDeckItem,
 } from "../../app/gift-match/run-build-flow";
 import {type Rectangle} from "../../lib/gift-icon-matcher";
-import {groupDeckItemsByType, useDeck} from "./DeckContext";
+import {groupGearsByType} from "../gear/gear-order";
+import {useDeck} from "./DeckContext";
 import {useDeckUi} from "./DeckUiContext";
 import {useRouter} from "next/navigation";
 
@@ -415,5 +416,5 @@ function formatRoundedSeconds(milliseconds: number): string {
 }
 
 function groupMatchedItems(items: MatchedDeckItem[]): MatchedDeckItem[] {
-  return groupDeckItemsByType(items) as MatchedDeckItem[];
+  return groupGearsByType(items) as MatchedDeckItem[];
 }
