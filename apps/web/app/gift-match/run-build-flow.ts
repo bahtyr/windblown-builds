@@ -2,7 +2,6 @@ import {type DeckItem, type SavedDeck} from "../../components/deck/DeckContext";
 import {
   buildDetectedGears,
   buildFailedGearCandidates,
-  buildMatchedGears,
   type FailedGearCandidate,
   type MatchedGear,
 } from "../../components/gear/gear-detection";
@@ -11,7 +10,6 @@ export type MatchedDeckItem = MatchedGear;
 export type FailedSquareCandidate = FailedGearCandidate;
 
 export const buildDetectedDeckItems = buildDetectedGears;
-export const buildMatchedDeckItems = buildMatchedGears;
 export const buildFailedSquareCandidates = buildFailedGearCandidates;
 
 /**

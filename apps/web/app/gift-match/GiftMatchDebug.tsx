@@ -12,7 +12,7 @@ import {
   type GiftMatchSquareResult,
   type GiftMatchTemplateSpec,
 } from "./gift-match-workflow";
-import {buildMatchedDeckItems, type MatchedDeckItem} from "./run-build-flow";
+import {buildDetectedDeckItems} from "./run-build-flow";
 
 type GiftMatchDebugProps = {
   templateSpecs: GiftMatchTemplateSpec[];
@@ -39,7 +39,7 @@ export default function GiftMatchDebug({templateSpecs}: GiftMatchDebugProps): JS
     }
   }, []);
 
-  const matchedDeckItems = useMemo(() => buildMatchedDeckItems(state?.squareResults ?? []), [state?.squareResults]);
+  const matchedDeckItems = useMemo(() => buildDetectedDeckItems(state?.squareResults ?? []), [state?.squareResults]);
 
   async function handleStart() {
     if (!sourceSrc) {

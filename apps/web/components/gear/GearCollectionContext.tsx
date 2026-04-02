@@ -139,17 +139,17 @@ export function GearCollectionProvider({
       remove: (id) => setItems((prev) => prev.filter((item) => item.id !== id)),
       moveWithinType: (type, from, to) => setItems((prev) => reorderGearsWithinType(prev, type, from, to)),
       renameCollection: (nextName) => setNameState(normalizeCollectionName(nextName, defaultName)),
-      replaceCollection: (nextItems) => setItems(groupGears(nextItems)),
+      replaceCollection: (nextItems) => setItems(groupGearsByType(nextItems)),
       setEditingCollectionName: (nextName) => setEditingCollectionName(nextName),
       loadCollection: (snapshot) => {
-        setItems(groupGears(snapshot.items));
+        setItems(groupGearsByType(snapshot.items));
         setNameState(normalizeCollectionName(snapshot.name, defaultName));
         setEditingCollectionName(snapshot.editingCollectionName);
       },
       captureSnapshot: () => ({items, name, editingCollectionName}),
       restoreSnapshot: (snapshot) => {
         const restored = restoreGearCollectionSnapshot(snapshot, defaultName);
-        setItems(groupGears(restored.items));
+        setItems(groupGearsByType(restored.items));
         setNameState(normalizeCollectionName(restored.name, defaultName));
         setEditingCollectionName(restored.editingCollectionName);
       },
@@ -170,8 +170,4 @@ export function useGearCollection(): GearCollectionContextType {
   const ctx = useContext(GearCollectionContext);
   if (!ctx) throw new Error("GearCollectionContext missing");
   return ctx;
-}
-
-function groupGears(items: Gear[]): Gear[] {
-  return groupGearsByType(items);
 }

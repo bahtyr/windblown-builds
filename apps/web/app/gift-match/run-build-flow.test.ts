@@ -38,8 +38,8 @@ describe("buildFailedSquareCandidates", () => {
     ]);
 
     expect(failedSquares).toEqual([
-      {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
       {id: "hexes:Affliction Hex", type: "hexes", name: "Affliction Hex", image: "/images/hexes/Affliction_Hex_Icon.png"},
+      {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom", image: "/images/weapons/Anchor_Boom_Icon.png"},
     ]);
   });
 });

@@ -152,20 +152,7 @@ export function compareTypeOrder(left: Exclude<EntityType, "effects">, right: Ex
  * @returns {number} Stable ordering index.
  */
 export function getTypeOrder(type: Exclude<EntityType, "effects">): number {
-  switch (type) {
-    case "weapons":
-      return 0;
-    case "trinkets":
-      return 1;
-    case "magifishes":
-      return 2;
-    case "hexes":
-      return 3;
-    case "boosts":
-      return 4;
-    case "gifts":
-      return 5;
-  }
+  return GEAR_TYPE_ORDER.indexOf(type);
 }
 
 /**
