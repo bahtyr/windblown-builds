@@ -10,14 +10,14 @@ import DeckPanel from "./DeckPanel";
 import EntityBrowser from "../entity/EntityBrowser";
 import {useLikes} from "../like/LikeContext";
 import {loadAllEntities} from "../../lib/loadEntities";
-import categoryImages from "../../public/category-images.json";
 import {EntityType, ScrapedEntity} from "../../lib/types";
-import RichText from "../entity/RichText";
-import {getEntityStats} from "../entity/EntityCard";
-import EntityVideoPreview from "../entity/EntityVideoPreview";
 import {
-  useHoverTooltip,
-} from "../tooltip/hoverTooltip";
+  buildGearCategoryMeta,
+  GearCollectionCategoryChips,
+  type GearCollectionPreviewItemMeta,
+  GearCollectionPreviewItem,
+  getActivePreviewCategoryItemIds,
+} from "../gear/gear-preview";
 
 type DrawerPhase = "opening" | "open" | "closing";
 type LibraryTab = "favorites" | "saved-builds" | "recent-runs";
@@ -34,12 +34,6 @@ type LoadedDeckEntity = {
 
 type EntityLookup = Map<string, LoadedDeckEntity>;
 type GiftCategoryLookup = Map<string, string>;
-type DeckCategoryMeta = {
-  count: number;
-  image?: string;
-  itemIds: string[];
-  name: string;
-};
 
 const DRAWER_OPENING_DELAY_MS = 24;
 
@@ -236,7 +230,7 @@ export default function DecksLibrary() {
                 {favoritesRow ? (
                   <DeckRow
                     key={`${favoritesRow.kind}-${favoritesRow.deck.name}`}
-                    categories={buildDeckCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
+                    categories={buildGearCategoryMeta(favoritesRow.deck.items, giftCategoryLookup)}
                     entityLookup={entityLookup}
                     row={favoritesRow}
                   />
@@ -258,7 +252,7 @@ export default function DecksLibrary() {
                   rows.map((row) => (
                     <DeckRow
                       key={`${row.kind}-${row.deck.name}`}
-                      categories={buildDeckCategoryMeta(row.deck.items, giftCategoryLookup)}
+                      categories={buildGearCategoryMeta(row.deck.items, giftCategoryLookup)}
                       entityLookup={entityLookup}
                       row={row}
                       onDelete={() => deck.deleteDeck(row.deck.name)}
@@ -318,7 +312,7 @@ export default function DecksLibrary() {
 }
 
 type DeckRowProps = {
-  categories: DeckCategoryMeta[];
+  categories: GearCollectionPreviewItemMeta[];
   entityLookup: EntityLookup;
   row: DeckRowModel;
   onDelete?: () => void;
@@ -335,7 +329,7 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
   const title = isFavorites ? "\u2665 Favorites" : row.deck.name;
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const activeCategoryItemIds = useMemo(
-    () => new Set(categories.find((category) => category.name === activeCategory)?.itemIds ?? []),
+    () => getActivePreviewCategoryItemIds(categories, activeCategory),
     [activeCategory, categories],
   );
 
@@ -367,42 +361,17 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
 
           <div className="deck-row-content">
             <div className="deck-row-items-meta">
-              {categories.length > 0 ? (
-                <div
-                  className="deck-row-category-list"
-                  aria-label={`${row.deck.name} categories`}
-                  onBlur={(event) => {
-                    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-                      setActiveCategory(null);
-                    }
-                  }}
-                  onMouseLeave={() => setActiveCategory(null)}
-                >
-                  {categories.map((category) => (
-                    <button
-                      key={category.name}
-                      aria-pressed={activeCategory === category.name}
-                      className={`deck-row-category-chip ${activeCategory === category.name ? "is-active" : ""}`}
-                      type="button"
-                      onMouseEnter={() => setActiveCategory(category.name)}
-                      onFocus={() => setActiveCategory(category.name)}
-                    >
-                      {category.image ? <img className="deck-row-category-thumb" decoding="async" loading="lazy" src={category.image} alt=""/> : null}
-                      <span>
-                        {category.count > 1 ? `${category.count} ` : ""}
-                        {category.name}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <p className="deck-row-side-empty">No gift categories</p>
-              )}
+              <GearCollectionCategoryChips
+                categories={categories}
+                label={`${row.deck.name} categories`}
+                activeCategory={activeCategory}
+                onActiveCategoryChange={setActiveCategory}
+              />
             </div>
 
             <div className="deck-row-items">
               {row.deck.items.map((item) => (
-                <DeckRowItem
+                <GearCollectionPreviewItem
                   key={item.id}
                   item={item}
                   details={entityLookup.get(item.id) ?? null}
@@ -414,83 +383,6 @@ function DeckRow({categories, entityLookup, row, onDelete, onDiscardShared, onDu
         </div>
       </div>
     </article>
-  );
-}
-
-function DeckRowItem({
-  item,
-  details,
-  fadeCategoryMismatch,
-}: {
-  item: DeckItem;
-  details: LoadedDeckEntity | null;
-  fadeCategoryMismatch: boolean;
-}) {
-  const itemElementRef = useRef<HTMLDivElement | null>(null);
-  const tooltipElementRef = useRef<HTMLDivElement | null>(null);
-  const stats = details ? getEntityStats(details.entity, details.type) : [];
-  const {
-    isOpen: showTooltip,
-    position: tooltipPosition,
-    openTooltip,
-    closeTooltip,
-    updateTooltipPosition,
-  } = useHoverTooltip({
-    triggerRef: itemElementRef,
-    tooltipRef: tooltipElementRef,
-  });
-
-  return (
-    <div
-      className={`deck-row-item ${fadeCategoryMismatch ? "is-category-mismatch" : ""}`}
-      ref={itemElementRef}
-      tabIndex={0}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          closeTooltip();
-        }
-      }}
-      onFocus={(event) => openTooltip(event.currentTarget)}
-      onMouseEnter={(event) => openTooltip(event.currentTarget)}
-      onMouseLeave={closeTooltip}
-    >
-      {item.image ? <img className="deck-row-item-thumb" decoding="async" loading="lazy" src={item.image} alt=""/> : <div className="deck-row-item-thumb deck-row-item-thumb-empty"/>}
-      <div
-        className="deck-row-item-hover"
-        ref={tooltipElementRef}
-        role="tooltip"
-        style={{
-          left: `${tooltipPosition?.left ?? 0}px`,
-          top: `${tooltipPosition?.top ?? 0}px`,
-          opacity: showTooltip && tooltipPosition ? undefined : 0,
-          visibility: showTooltip && tooltipPosition ? undefined : "hidden",
-        }}
-      >
-        {showTooltip ? (
-          <>
-            <div className="deck-row-item-hover-head">
-              <div className="deck-row-item-name">{item.name}</div>
-            </div>
-            {stats.length > 0 && (
-              <div className="deck-row-item-stats">
-                {stats.map((stat) => (
-                  <div className="deck-row-item-stat" key={stat.label}>
-                    <span className="deck-row-item-stat-value">{stat.value}</span>
-                    <span className="deck-row-item-stat-label">{stat.label}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            {details ? <RichText parts={details.entity.richDescription}/> : null}
-            {details ? <EntityVideoPreview active={showTooltip} entity={details.entity} onMediaReady={updateTooltipPosition} preload="metadata" wrapperClassName="deck-row-item-video"/> : null}
-          </>
-        ) : (
-          <div className="deck-row-item-hover-head">
-            <div className="deck-row-item-name">{item.name}</div>
-          </div>
-        )}
-      </div>
-    </div>
   );
 }
 
@@ -546,31 +438,10 @@ export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<stri
  *
  * @param {DeckItem[]} items - Deck items shown in the row.
  * @param {Map<string, string>} giftCategoryLookup - Gift item id to category.
- * @returns {DeckCategoryMeta[]} Visible category metadata.
+ * @returns {GearCollectionPreviewItemMeta[]} Visible category metadata.
  */
-export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map<string, string>): DeckCategoryMeta[] {
-  const categoryItems = new Map<string, string[]>();
-  for (const item of items) {
-    if (item.type !== "gifts") continue;
-    const category = giftCategoryLookup.get(item.id);
-    if (category) {
-      categoryItems.set(category, [...(categoryItems.get(category) ?? []), item.id]);
-    }
-  }
-
-  return Array.from(categoryItems.entries())
-    .sort(([nameA, itemIdsA], [nameB, itemIdsB]) => {
-      const countA = itemIdsA.length;
-      const countB = itemIdsB.length;
-      if (countB !== countA) return countB - countA;
-      return nameA.localeCompare(nameB);
-    })
-    .map(([name, itemIds]) => ({
-      count: itemIds.length,
-      name,
-      image: categoryImages[name as keyof typeof categoryImages],
-      itemIds,
-    }));
+export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map<string, string>): GearCollectionPreviewItemMeta[] {
+  return buildGearCategoryMeta(items, giftCategoryLookup);
 }
 
 function sortDeckItemsByType(items: DeckItem[]): DeckItem[] {
