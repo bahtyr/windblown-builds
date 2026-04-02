@@ -10,12 +10,9 @@ import {
 import {
   groupGearsByType,
 } from "../gear/gear-order";
-import {gearId, makeGear, parseGearCollectionParam} from "../gear/gear-serialization";
+import {parseGearCollectionParam} from "../gear/gear-serialization";
 import {hydrateGears, restoreGearCollectionSnapshot} from "../gear/gear-state-utils";
 import {type Gear, type GearCollectionSnapshot, type GearLimits} from "../gear/gear-types";
-
-export type DeckItem = Gear;
-export type DeckLimits = GearLimits;
 
 export type SavedDeck = {
   name: string;
@@ -270,32 +267,6 @@ export function useDeck(): DeckContextType {
   if (!ctx) throw new Error("DeckContext missing");
   return ctx;
 }
-
-/**
- * Builds a stable deck item identifier from the entity type and entity name.
- *
- * @param {Gear["type"]} type - Entity type.
- * @param {string} name - Entity name.
- * @returns {string} Deck item identifier.
- */
-export const deckId = gearId;
-
-/**
- * Converts a scraped entity into the deck item format used by the legacy deck builder.
- *
- * @param {Gear["type"]} type - Entity type.
- * @param {Parameters<typeof makeGear>[1]} entity - Source entity.
- * @returns {DeckItem} Deck item payload.
- */
-export const makeDeckItem = makeGear;
-
-/**
- * Groups deck items by the canonical deck display order while preserving arrival order inside each group.
- *
- * @param {DeckItem[]} items - Flat deck item list.
- * @returns {DeckItem[]} Reordered deck items with stable within-group order.
- */
-export const groupDeckItemsByType = groupGearsByType;
 
 /**
  * Removes a deck and returns the first remaining saved deck, or a default empty one.

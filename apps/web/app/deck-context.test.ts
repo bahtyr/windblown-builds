@@ -1,6 +1,5 @@
 import {describe, expect, it} from "vitest";
 import {
-  groupDeckItemsByType,
   isEditingDeckSession,
   normalizeSavedDecks,
   resolveSharedDeckFromLocation,
@@ -8,6 +7,7 @@ import {
   selectFirstSavedAfterDelete,
   suggestDuplicateName,
 } from "../components/deck/DeckContext";
+import {groupGearsByType} from "../components/gear/gear-order";
 
 describe("selectFirstSavedAfterDelete", () => {
   it("selects the first remaining deck after deletion", () => {
@@ -49,9 +49,9 @@ describe("normalizeSavedDecks", () => {
   });
 });
 
-describe("groupDeckItemsByType", () => {
+describe("groupGearsByType", () => {
   it("groups items by deck type order while preserving first-seen order inside each group", () => {
-    expect(groupDeckItemsByType([
+    expect(groupGearsByType([
       {id: "weapons:Anchor Boom", type: "weapons", name: "Anchor Boom"},
       {id: "gifts:Abundance", type: "gifts", name: "Abundance"},
       {id: "magifishes:Gobbling Fish", type: "magifishes", name: "Gobbling Fish"},
