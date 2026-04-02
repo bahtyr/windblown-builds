@@ -7,7 +7,8 @@ import RichText from "../entity/RichText";
 import EntityVideoPreview from "../entity/EntityVideoPreview";
 import {getEntityStats} from "../entity/EntityCard";
 import {useHoverTooltip} from "../tooltip/hoverTooltip";
-import {buildGearCategorySummaries, type Gear} from "./gear-collection-utils";
+import {buildGearCategorySummaries} from "./gear-category-utils";
+import {type Gear} from "./gear-types";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type GearCollectionPreviewItemMeta = {

@@ -2,16 +2,15 @@
 
 import {createContext, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
 import {
-  type Gear,
   type GearCollectionSnapshot,
   type GearLimits,
   groupGearsByType,
-  hydrateGears,
   insertGearByType,
   normalizeCollectionName,
   reorderGearsWithinType,
-  restoreGearCollectionSnapshot,
 } from "./gear-collection-utils";
+import {type Gear} from "./gear-types";
+import {hydrateGears, restoreGearCollectionSnapshot} from "./gear-state-utils";
 
 type GearCollectionMode = "new" | "editing";
 

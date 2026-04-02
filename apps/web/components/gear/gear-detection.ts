@@ -1,6 +1,8 @@
 import {type EntityType} from "../../lib/types";
 import {isGiftMatch, type GiftMatchSquareResult, type GiftMatchTemplateScore} from "../../app/gift-match/gift-match-workflow";
-import {compareTypeOrder, extractEntityTypeFromAssetPath, type Gear} from "./gear-collection-utils";
+import {compareTypeOrder} from "./gear-order";
+import {extractEntityTypeFromAssetPath} from "./gear-serialization";
+import {type Gear} from "./gear-types";
 
 export type MatchedGear = Gear & {
   type: Exclude<EntityType, "effects">;

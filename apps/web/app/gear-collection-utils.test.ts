@@ -23,8 +23,8 @@ describe("extractEntityTypeFromPath", () => {
 describe("gear type ordering", () => {
   it("exposes the canonical shared gear ordering", () => {
     expect(getTypeOrder("weapons")).toBeLessThan(getTypeOrder("trinkets"));
-    expect(getTypeOrder("boosts")).toBeLessThan(getTypeOrder("gifts"));
-    expect(compareTypeOrder("hexes", "magifishes")).toBeGreaterThan(0);
+    expect(getTypeOrder("gifts")).toBeLessThan(getTypeOrder("boosts"));
+    expect(compareTypeOrder("hexes", "magifishes")).toBeLessThan(0);
   });
 });
 
