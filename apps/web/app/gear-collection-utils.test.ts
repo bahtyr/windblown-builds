@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {
   buildGearCategorySummaries,
   compareTypeOrder,
-  extractEntityTypeFromPath,
+  extractEntityTypeFromAssetPath,
   getTypeOrder,
   groupGearsForEditorRows,
   normalizeCollectionName,
@@ -10,13 +10,13 @@ import {
 
 describe("extractEntityTypeFromPath", () => {
   it("parses supported gear types from shared asset paths", () => {
-    expect(extractEntityTypeFromPath("images/entities/weapons/anchor-boom.webp")).toBe("weapons");
-    expect(extractEntityTypeFromPath("images/entities/gifts/strong-recovery.webp")).toBe("gifts");
+    expect(extractEntityTypeFromAssetPath("images/entities/weapons/anchor-boom.webp")).toBe("weapons");
+    expect(extractEntityTypeFromAssetPath("images/entities/gifts/strong-recovery.webp")).toBe("gifts");
   });
 
   it("returns null for unsupported asset paths", () => {
-    expect(extractEntityTypeFromPath("/images/entities/effects/smoke.webp")).toBeNull();
-    expect(extractEntityTypeFromPath("/images/other/path.webp")).toBeNull();
+    expect(extractEntityTypeFromAssetPath("/images/entities/effects/smoke.webp")).toBeNull();
+    expect(extractEntityTypeFromAssetPath("/images/other/path.webp")).toBeNull();
   });
 });
 

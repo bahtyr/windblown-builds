@@ -57,7 +57,7 @@ export function makeGear(type: EntityType, entity: ScrapedEntity): Gear {
  * @param {string} imagePath - Entity image path.
  * @returns {Exclude<EntityType, "effects"> | null} Parsed entity type, or null when unsupported.
  */
-export function extractEntityTypeFromPath(imagePath: string): Exclude<EntityType, "effects"> | null {
+export function extractEntityTypeFromAssetPath(imagePath: string): Exclude<EntityType, "effects"> | null {
   const pathParts = imagePath.split("/");
   const type = pathParts[2];
 

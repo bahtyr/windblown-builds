@@ -1,6 +1,6 @@
 import {type EntityType} from "../../lib/types";
 import {isGiftMatch, type GiftMatchSquareResult, type GiftMatchTemplateScore} from "../../app/gift-match/gift-match-workflow";
-import {compareTypeOrder, extractEntityTypeFromPath, type Gear} from "./gear-collection-utils";
+import {compareTypeOrder, extractEntityTypeFromAssetPath, type Gear} from "./gear-collection-utils";
 
 export type MatchedGear = Gear & {
   type: Exclude<EntityType, "effects">;
@@ -63,7 +63,7 @@ export function buildGearFromTemplate(template: GiftMatchTemplateScore | null | 
     return null;
   }
 
-  const type = extractEntityTypeFromPath(template.path);
+  const type = extractEntityTypeFromAssetPath(template.path);
   if (!type || type === "boosts") {
     return null;
   }
