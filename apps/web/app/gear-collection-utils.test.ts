@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
-import {buildGearCategorySummaries} from "../components/gear/gear-category-utils";
+import {buildGearCategoryMeta} from "../components/gear/gear-preview";
 import {groupGearsForEditorRows} from "../components/gear/gear-order";
-import {compareTypeOrder, getTypeOrder} from "../components/gear/gear-order";
+import {compareTypeOrder} from "../components/gear/gear-order";
 import {extractEntityTypeFromAssetPath, normalizeCollectionName} from "../components/gear/gear-serialization";
 
 describe("extractEntityTypeFromPath", () => {
@@ -18,8 +18,6 @@ describe("extractEntityTypeFromPath", () => {
 
 describe("gear type ordering", () => {
   it("exposes the canonical shared gear ordering", () => {
-    expect(getTypeOrder("weapons")).toBeLessThan(getTypeOrder("trinkets"));
-    expect(getTypeOrder("gifts")).toBeLessThan(getTypeOrder("boosts"));
     expect(compareTypeOrder("hexes", "magifishes")).toBeLessThan(0);
   });
 });
@@ -78,9 +76,9 @@ describe("normalizeCollectionName", () => {
   });
 });
 
-describe("buildGearCategorySummaries", () => {
-  it("aggregates and sorts gift categories without UI metadata", () => {
-    const summaries = buildGearCategorySummaries(
+describe("buildGearCategoryMeta", () => {
+  it("aggregates and sorts gift categories with preview metadata", () => {
+    const summaries = buildGearCategoryMeta(
       [
         {id: "gifts:Alpha", type: "gifts", name: "Alpha"},
         {id: "gifts:Beta", type: "gifts", name: "Beta"},
@@ -97,11 +95,13 @@ describe("buildGearCategorySummaries", () => {
     expect(summaries).toEqual([
       {
         count: 2,
+        image: undefined,
         itemIds: ["gifts:Alpha", "gifts:Beta"],
         name: "Recovery",
       },
       {
         count: 1,
+        image: undefined,
         itemIds: ["gifts:Gamma"],
         name: "Utility",
       },

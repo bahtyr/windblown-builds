@@ -1,6 +1,10 @@
 import {type EntityType} from "../../lib/types";
-import {isGiftMatch, type GiftMatchSquareResult, type GiftMatchTemplateScore} from "../../app/gift-match/gift-match-workflow";
-import {compareTypeOrder} from "./gear-order";
+import {
+  type GiftMatchSquareResult,
+  type GiftMatchTemplateScore,
+  isGiftMatch
+} from "../../app/gift-match/gift-match-workflow";
+import {compareGears} from "./gear-order";
 import {extractEntityTypeFromAssetPath} from "./gear-serialization";
 import {type Gear} from "./gear-types";
 
@@ -51,7 +55,7 @@ export function buildFailedGearCandidates(squareResults: GiftMatchSquareResult[]
     }
   }
 
-  return [...uniqueCandidates.values()].sort(compareMatchedGears);
+  return [...uniqueCandidates.values()].sort(compareGears);
 }
 
 /**
@@ -96,18 +100,3 @@ export function dedupeMatchedGears(items: Array<MatchedGear | null>): MatchedGea
   return [...uniqueItems.values()];
 }
 
-/**
- * Compares matched gears using the current collection preview ordering.
- *
- * @param {MatchedGear} left - Left matched gear.
- * @param {MatchedGear} right - Right matched gear.
- * @returns {number} Sort comparison result.
- */
-export function compareMatchedGears(left: MatchedGear, right: MatchedGear): number {
-  const typeOrder = compareTypeOrder(left.type, right.type);
-  if (typeOrder !== 0) {
-    return typeOrder;
-  }
-
-  return left.name.localeCompare(right.name);
-}

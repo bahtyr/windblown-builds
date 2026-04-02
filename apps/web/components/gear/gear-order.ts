@@ -1,5 +1,6 @@
 import {EntityType} from "../../lib/types";
 import {type Gear, type GearCollectionEditorRow} from "./gear-types";
+import {MatchedGear} from "./gear-detection";
 
 export const GEAR_TYPE_ORDER: EntityType[] = ["gifts", "hexes", "weapons", "trinkets", "magifishes", "boosts", "effects"];
 export const SUPPORTED_GEAR_ENTITY_TYPES: ReadonlyArray<Exclude<EntityType, "effects">> = [
@@ -48,24 +49,30 @@ export function groupGearsByType(items: Gear[]): Gear[] {
 }
 
 /**
+ * Compares gears using the current collection preview ordering.
+ *
+ * @param {Gear} left - Left gear.
+ * @param {Gear} right - Right gear.
+ * @returns {number} Sort comparison result.
+ */
+export function compareGears(left: Gear, right: Gear): number {
+  const typeOrder = compareTypeOrder(left.type, right.type);
+  if (typeOrder !== 0) {
+    return typeOrder;
+  }
+
+  return left.name.localeCompare(right.name);
+}
+
+/**
  * Compares two shared gear types using the canonical collection ordering.
  *
  * @param {Exclude<EntityType, "effects">} left - Left gear type.
  * @param {Exclude<EntityType, "effects">} right - Right gear type.
  * @returns {number} Sort comparison result.
  */
-export function compareTypeOrder(left: Exclude<EntityType, "effects">, right: Exclude<EntityType, "effects">): number {
-  return getTypeOrder(left) - getTypeOrder(right);
-}
-
-/**
- * Resolves the canonical ordering index for a shared gear type.
- *
- * @param {Exclude<EntityType, "effects">} type - Gear type.
- * @returns {number} Stable ordering index.
- */
-export function getTypeOrder(type: Exclude<EntityType, "effects">): number {
-  return GEAR_TYPE_ORDER.indexOf(type);
+export function compareTypeOrder(left: EntityType, right: EntityType): number {
+  return GEAR_TYPE_ORDER.indexOf(left) - GEAR_TYPE_ORDER.indexOf(right);
 }
 
 /**
