@@ -25,5 +25,5 @@ export {
 } from "./gear-serialization";
 
 export {hydrateGears, restoreGearCollectionSnapshot} from "./gear-state-utils";
-export {groupGearsForEditorRows} from "./gear-editor-layout";
 export {buildGearCategorySummaries} from "./gear-category-utils";
+export {groupGearsForEditorRows} from "./gear-order";

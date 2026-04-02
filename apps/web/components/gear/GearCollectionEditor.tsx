@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {groupGearsForEditorRows} from "./gear-editor-layout";
 import {type Gear} from "./gear-types";
 import {EntityType} from "../../lib/types";
+import {groupGearsForEditorRows} from "./gear-order";
 
 type GearCollectionEditorProps = {
   items: Gear[];
