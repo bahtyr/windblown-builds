@@ -80,7 +80,14 @@ const DEFAULT_DECK_NAME = "Untitled deck";
  */
 export function DeckProvider({children}: { children: ReactNode }) {
   return (
-    <GearCollectionProvider defaultName={DEFAULT_DECK_NAME} storageKey={STORAGE_KEY}>
+    <GearCollectionProvider
+      defaultName={DEFAULT_DECK_NAME}
+      storageKey={STORAGE_KEY}
+      storageMigration={migrateDeckCollectionStorage}
+      messages={{
+        disallowedType: () => "Effects cannot be added to deck",
+      }}
+    >
       <DeckProviderContent>{children}</DeckProviderContent>
     </GearCollectionProvider>
   );
@@ -151,13 +158,13 @@ function DeckProviderContent({children}: { children: ReactNode }) {
       add: gearCollection.add,
       remove: gearCollection.remove,
       moveWithinType: gearCollection.moveWithinType,
-      setName: gearCollection.setName,
+      setName: gearCollection.renameCollection,
       saveDeck: (asNew) => {
         const desiredName = normalizeDeckName(gearCollection.name);
         if (mode === "editing" && !asNew && editingDeckName) {
           setSaved((prev) => updateSavedDeck(prev, editingDeckName, desiredName, gearCollection.items));
           gearCollection.setEditingCollectionName(desiredName);
-          gearCollection.setName(desiredName);
+          gearCollection.renameCollection(desiredName);
           setSessionStart(null);
           setEditingSource("saved");
           return;
@@ -166,7 +173,7 @@ function DeckProviderContent({children}: { children: ReactNode }) {
         const targetName = ensureUniqueDeckName(saved, desiredName);
         setSaved((prev) => [...prev, {name: targetName, items: gearCollection.items, createdAt: createTimestamp()}]);
         gearCollection.setEditingCollectionName(targetName);
-        gearCollection.setName(targetName);
+        gearCollection.renameCollection(targetName);
         setSessionStart(null);
         if (editingSource === "shared") {
           setSharedDeck(null);
@@ -178,9 +185,9 @@ function DeckProviderContent({children}: { children: ReactNode }) {
         const orderedItems = groupGearsByType(nextItems);
         const persisted = saveExternalDeck(saved, deckName, orderedItems);
         setSaved(persisted.saved);
-        gearCollection.setItems(persisted.savedDeck.items);
+        gearCollection.replaceCollection(persisted.savedDeck.items);
         gearCollection.setEditingCollectionName(persisted.savedDeck.name);
-        gearCollection.setName(persisted.savedDeck.name);
+        gearCollection.renameCollection(persisted.savedDeck.name);
         setSessionStart(null);
         setEditingSource("saved");
         return persisted.savedDeck.name;
@@ -200,8 +207,8 @@ function DeckProviderContent({children}: { children: ReactNode }) {
       },
       createDeck: () => {
         setSessionStart(captureDeckSessionSnapshot(gearCollection));
-        gearCollection.setItems([]);
-        gearCollection.setName(DEFAULT_DECK_NAME);
+        gearCollection.clearCollection();
+        gearCollection.renameCollection(DEFAULT_DECK_NAME);
         gearCollection.setEditingCollectionName(null);
         setEditingSource(null);
       },
@@ -209,17 +216,21 @@ function DeckProviderContent({children}: { children: ReactNode }) {
         const match = saved.find((deck) => deck.name === deckName);
         if (!match) return;
         setSessionStart(captureDeckSessionSnapshot(gearCollection));
-        gearCollection.setItems(match.items);
-        gearCollection.setName(match.name);
-        gearCollection.setEditingCollectionName(match.name);
+        gearCollection.loadCollection({
+          items: match.items,
+          name: match.name,
+          editingCollectionName: match.name,
+        });
         setEditingSource("saved");
       },
       editSharedDeck: () => {
         if (!sharedDeck) return;
         setSessionStart(captureDeckSessionSnapshot(gearCollection));
-        gearCollection.setItems(sharedDeck.items);
-        gearCollection.setName(sharedDeck.name);
-        gearCollection.setEditingCollectionName(null);
+        gearCollection.loadCollection({
+          items: sharedDeck.items,
+          name: sharedDeck.name,
+          editingCollectionName: null,
+        });
         setEditingSource("shared");
       },
       cancelEditing: () => {
@@ -230,9 +241,11 @@ function DeckProviderContent({children}: { children: ReactNode }) {
       deleteDeck: (deckName) => {
         setSaved((prev) => prev.filter((deck) => deck.name !== deckName));
         if (editingDeckName === deckName) {
-          gearCollection.setItems([]);
-          gearCollection.setName(DEFAULT_DECK_NAME);
-          gearCollection.setEditingCollectionName(null);
+          gearCollection.loadCollection({
+            items: [],
+            name: DEFAULT_DECK_NAME,
+            editingCollectionName: null,
+          });
         }
         setSessionStart(null);
         setEditingSource(null);
@@ -244,7 +257,7 @@ function DeckProviderContent({children}: { children: ReactNode }) {
         setSaved((prev) => [...prev, {name: copyName, items: [...source.items], createdAt: createTimestamp()}]);
         return copyName;
       },
-      resetDeck: gearCollection.resetGearCollection,
+      resetDeck: gearCollection.clearCollection,
     }),
     [editingDeckName, editingSource, gearCollection, isEditingBuild, mode, saved, sessionStart, sharedDeck],
   );
@@ -452,6 +465,32 @@ export function clearSharedDeckUrl() {
 
 function createTimestamp(): string {
   return new Date().toISOString();
+}
+
+function migrateDeckCollectionStorage(parsed: unknown): {
+  items?: Gear[];
+  name?: string;
+  editingCollectionName?: string | null;
+} {
+  if (!parsed || typeof parsed !== "object") {
+    return {};
+  }
+
+  const value = parsed as {
+    items?: Gear[];
+    name?: string;
+    editingCollectionName?: string | null;
+    editingDeckName?: string | null;
+  };
+
+  return {
+    items: value.items,
+    name: value.name,
+    editingCollectionName:
+      typeof value.editingCollectionName === "string"
+        ? value.editingCollectionName
+        : (typeof value.editingDeckName === "string" ? value.editingDeckName : null),
+  };
 }
 
 function captureDeckSessionSnapshot(gearCollection: GearCollectionContextType): DeckSessionSnapshot {

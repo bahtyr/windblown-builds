@@ -1,10 +1,11 @@
 "use client";
 
-import {createContext, useContext, useEffect, useMemo, useState, type Dispatch, type ReactNode, type SetStateAction} from "react";
+import {createContext, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
 import {
   type Gear,
   type GearCollectionSnapshot,
   type GearLimits,
+  groupGearsByType,
   hydrateGears,
   insertGearByType,
   reorderGearsWithinType,
@@ -21,18 +22,29 @@ export type GearCollectionContextType = {
   add: (item: Gear, limits: GearLimits) => { ok: boolean; reason?: string };
   remove: (id: string) => void;
   moveWithinType: (type: Gear["type"], from: number, to: number) => void;
-  setName: (name: string) => void;
-  setItems: Dispatch<SetStateAction<Gear[]>>;
-  setEditingCollectionName: Dispatch<SetStateAction<string | null>>;
+  renameCollection: (name: string) => void;
+  replaceCollection: (items: Gear[]) => void;
+  setEditingCollectionName: (name: string | null) => void;
+  loadCollection: (snapshot: GearCollectionSnapshot) => void;
   captureSnapshot: () => GearCollectionSnapshot;
   restoreSnapshot: (snapshot: GearCollectionSnapshot | null) => void;
-  resetGearCollection: () => void;
+  clearCollection: () => void;
 };
 
 type GearCollectionProviderProps = {
   children: ReactNode;
   defaultName: string;
   storageKey: string;
+  storageMigration?: (parsed: unknown) => {
+    items?: Gear[];
+    name?: string;
+    editingCollectionName?: string | null;
+  };
+  messages?: {
+    duplicateNotAllowed?: string;
+    disallowedType?: (type: Gear["type"]) => string;
+    limitReached?: (type: Gear["type"]) => string;
+  };
 };
 
 const GearCollectionContext = createContext<GearCollectionContextType | null>(null);
@@ -43,7 +55,13 @@ const GearCollectionContext = createContext<GearCollectionContextType | null>(nu
  * @param {GearCollectionProviderProps} props - Provider children and persistence options.
  * @returns {JSX.Element} Shared gear collection context provider.
  */
-export function GearCollectionProvider({children, defaultName, storageKey}: GearCollectionProviderProps) {
+export function GearCollectionProvider({
+  children,
+  defaultName,
+  storageKey,
+  storageMigration,
+  messages,
+}: GearCollectionProviderProps) {
   const [items, setItems] = useState<Gear[]>([]);
   const [name, setNameState] = useState<string>(defaultName);
   const [editingCollectionName, setEditingCollectionName] = useState<string | null>(null);
@@ -54,26 +72,23 @@ export function GearCollectionProvider({children, defaultName, storageKey}: Gear
     const stored = localStorage.getItem(storageKey);
     if (stored) {
       try {
-        const parsed = JSON.parse(stored) as {
-          items?: Gear[];
-          name?: string;
-          editingCollectionName?: string | null;
-          editingDeckName?: string | null;
-        };
+        const parsed = storageMigration
+          ? storageMigration(JSON.parse(stored))
+          : (JSON.parse(stored) as {
+            items?: Gear[];
+            name?: string;
+            editingCollectionName?: string | null;
+          });
         setItems(parsed.items || []);
         setNameState(normalizeCollectionName(parsed.name, defaultName));
-        setEditingCollectionName(
-          typeof parsed.editingCollectionName === "string"
-            ? parsed.editingCollectionName
-            : (typeof parsed.editingDeckName === "string" ? parsed.editingDeckName : null),
-        );
+        setEditingCollectionName(typeof parsed.editingCollectionName === "string" ? parsed.editingCollectionName : null);
       } catch {
         // Ignore invalid persisted collection state.
       }
     }
 
     setHydrated(true);
-  }, [defaultName, storageKey]);
+  }, [defaultName, storageKey, storageMigration]);
 
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
@@ -105,16 +120,16 @@ export function GearCollectionProvider({children, defaultName, storageKey}: Gear
       mode,
       add: (item, limits) => {
         if (items.some((current) => current.id === item.id)) {
-          return {ok: false, reason: "Duplicate not allowed"};
+          return {ok: false, reason: messages?.duplicateNotAllowed ?? "Duplicate not allowed"};
         }
         if (item.type === "effects") {
-          return {ok: false, reason: "Effects cannot be added to deck"};
+          return {ok: false, reason: messages?.disallowedType?.(item.type) ?? `Items of type "${item.type}" cannot be added`};
         }
         const limit = limits[item.type];
         if (limit !== undefined) {
           const count = items.filter((current) => current.type === item.type).length;
           if (count >= limit) {
-            return {ok: false, reason: `Limit reached for ${item.type}`};
+            return {ok: false, reason: messages?.limitReached?.(item.type) ?? `Limit reached for ${item.type}`};
           }
         }
         setItems((prev) => insertGearByType(prev, item));
@@ -122,19 +137,24 @@ export function GearCollectionProvider({children, defaultName, storageKey}: Gear
       },
       remove: (id) => setItems((prev) => prev.filter((item) => item.id !== id)),
       moveWithinType: (type, from, to) => setItems((prev) => reorderGearsWithinType(prev, type, from, to)),
-      setName: (nextName) => setNameState(normalizeCollectionName(nextName, defaultName)),
-      setItems,
-      setEditingCollectionName,
+      renameCollection: (nextName) => setNameState(normalizeCollectionName(nextName, defaultName)),
+      replaceCollection: (nextItems) => setItems(groupGears(nextItems)),
+      setEditingCollectionName: (nextName) => setEditingCollectionName(nextName),
+      loadCollection: (snapshot) => {
+        setItems(groupGears(snapshot.items));
+        setNameState(normalizeCollectionName(snapshot.name, defaultName));
+        setEditingCollectionName(snapshot.editingCollectionName);
+      },
       captureSnapshot: () => ({items, name, editingCollectionName}),
       restoreSnapshot: (snapshot) => {
         const restored = restoreGearCollectionSnapshot(snapshot, defaultName);
-        setItems(restored.items);
-        setNameState(restored.name);
+        setItems(groupGears(restored.items));
+        setNameState(normalizeCollectionName(restored.name, defaultName));
         setEditingCollectionName(restored.editingCollectionName);
       },
-      resetGearCollection: () => setItems([]),
+      clearCollection: () => setItems([]),
     }),
-    [defaultName, editingCollectionName, items, mode, name],
+    [defaultName, editingCollectionName, items, messages, mode, name],
   );
 
   return <GearCollectionContext.Provider value={value}>{children}</GearCollectionContext.Provider>;
@@ -154,4 +174,8 @@ export function useGearCollection(): GearCollectionContextType {
 function normalizeCollectionName(value: string | undefined, defaultName: string): string {
   const trimmed = value?.trim();
   return trimmed ? trimmed : defaultName;
+}
+
+function groupGears(items: Gear[]): Gear[] {
+  return groupGearsByType(items);
 }
