@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {DeckItem, useDeck} from "./DeckContext";
-import {EntityType} from "../../lib/types";
+import GearCollectionEditor from "../gear/GearCollectionEditor";
+import {useDeck} from "./DeckContext";
 
 type Props = {
   onCancel: () => void;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- * Render the active deck editor controls and current item list.
+ * Renders the deck-specific wrapper over the shared gear collection editor.
  *
  * @param {Props} props - Deck editor callbacks.
  * @returns {JSX.Element} Deck editor content.
@@ -30,121 +30,22 @@ export default function DeckPanel({onCancel, onCommit}: Props) {
   };
 
   return (
-    <div className="deck">
-      <div className="deck-manager">
-        <div className="deck-manager-top">
-          <div className="deck-builder-title-group">
-            <h2 className="deck-builder-title">{isEditing ? "Edit build" : "Create new build"}</h2>
-          </div>
-          <div className="deck-actions">
-            <input
-              className="deck-name-input"
-              value={deck.name}
-              onChange={(e) => deck.setName(e.target.value)}
-              placeholder="Deck name"
-            />
-
-            <button className="btn ghost" type="button" onClick={() => deck.resetDeck()}>
-              Reset
-            </button>
-            {isEditing && (
-              <button className="btn ghost" type="button" onClick={handleDelete}>
-                Delete
-              </button>
-            )}
-            <button className="btn ghost" type="button" onClick={onCancel}>
-              Cancel
-            </button>
-            <button className="btn" type="button" onClick={handleCommit}>
-              {isEditing ? "Update build" : "Save build"}
-            </button>
-          </div>
-        </div>
-        <div className="deck-content">
-          {deck.items.length === 0 && <div className="muted">No items yet</div>}
-          {rows(deck.items).map((groups, rowIdx) => (
-            <div className="deck-groups" key={rowIdx}>
-              {groups.map(({type, list}: { type: EntityType; list: DeckItem[] }) => (
-                list.length > 0 && (
-                  <div className="deck-group" key={type}>
-                    <div className="deck-items">
-                      {list.map((item, idx) => (
-                        <DeckDraggable
-                          key={item.id}
-                          item={item}
-                          index={idx}
-                          type={type}
-                          onDrop={(from, to) => deck.moveWithinType(type, from, to)}
-                          onRemove={() => deck.remove(item.id)}
-                          highlight={type === "gifts" && idx < 8}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <GearCollectionEditor
+      items={deck.items}
+      name={deck.name}
+      isEditing={isEditing}
+      title={isEditing ? "Edit build" : "Create new build"}
+      namePlaceholder="Deck name"
+      emptyCopy="No items yet"
+      commitLabel={isEditing ? "Update build" : "Save build"}
+      showDelete={isEditing}
+      onNameChange={deck.setName}
+      onReset={deck.resetDeck}
+      onDelete={handleDelete}
+      onCancel={onCancel}
+      onCommit={handleCommit}
+      onRemove={deck.remove}
+      onMoveWithinType={deck.moveWithinType}
+    />
   );
-}
-
-type DragProps = {
-  item: DeckItem;
-  index: number;
-  type: EntityType;
-  onDrop: (from: number, to: number) => void;
-  onRemove: () => void;
-  highlight?: boolean;
-};
-
-function DeckDraggable({item, index, type, onDrop, onRemove, highlight}: DragProps) {
-  return (
-    <div
-      className={`deck-item ${highlight ? "is-highlighted" : ""}`}
-      draggable
-      onDragStart={(e) => {
-        e.dataTransfer.setData("text/plain", `${index}`);
-        e.dataTransfer.effectAllowed = "move";
-        e.currentTarget.classList.add("dragging");
-      }}
-      onDragOver={(e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
-      }}
-      onDrop={(e) => {
-        e.preventDefault();
-        const from = Number(e.dataTransfer.getData("text/plain"));
-        if (!Number.isNaN(from)) {
-          onDrop(from, index);
-        }
-      }}
-      onDragEnd={(e) => e.currentTarget.classList.remove("dragging")}
-      title={`${type} - ${item.name}`}
-    >
-      {item.image && <img src={item.image} alt="" className="deck-item-img"/>}
-      <div className="deck-chip-name">{item.name}</div>
-      <button className="deck-item-remove" onClick={onRemove} aria-label="Remove">
-        x
-      </button>
-    </div>
-  );
-}
-
-function rows(items: DeckItem[]): { type: EntityType; list: DeckItem[] }[][] {
-  const group = (type: EntityType) => items.filter((x) => x.type === type);
-  return [
-    [{type: "gifts" as const, list: group("gifts")}],
-    [
-      {type: "hexes" as const, list: group("hexes")},
-      {type: "weapons" as const, list: group("weapons")},
-      {type: "trinkets" as const, list: group("trinkets")},
-      {type: "magifishes" as const, list: group("magifishes")},
-    ],
-    [
-      {type: "boosts" as const, list: group("boosts")},
-    ],
-  ];
 }
