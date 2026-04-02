@@ -1,10 +1,11 @@
-import {DeckItem, SavedDeck} from "./DeckContext";
+import {type SavedDeck} from "./DeckContext";
+import {type Gear} from "../gear/gear-types";
 
 /**
  * Build a share URL for a saved deck.
  *
  * @param {string} origin - Current site origin.
- * @param {{name: string; items: DeckItem[]}} deck - Deck payload to serialize.
+ * @param {{name: string; items: Gear[]}} deck - Deck payload to serialize.
  * @returns {string} Shareable decks URL.
  */
 export function buildDeckShareUrl(origin: string, deck: Pick<SavedDeck, "name" | "items">): string {

@@ -1,4 +1,4 @@
-import {DeckLimits} from "../../components/deck/DeckContext";
+import {type GearLimits} from "../../components/gear/gear-types";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type MatchDisplayMode = "fade-unmatched" | "show-matches-only";
@@ -14,7 +14,7 @@ export const FILTERS_STORAGE_KEY = "entityFilters.v1";
 
 export const VALID_TYPES: (EntityType | "all")[] = ["all", "gifts", "weapons", "trinkets", "magifishes", "hexes", "boosts", "effects"];
 
-export const DEFAULT_LIMITS: DeckLimits = {
+export const DEFAULT_LIMITS: GearLimits = {
   gifts: 20,
   hexes: 3,
   magifishes: 1,

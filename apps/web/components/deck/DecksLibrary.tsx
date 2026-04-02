@@ -2,7 +2,7 @@
 "use client";
 
 import {useEffect, useMemo, useRef, useState, type TransitionEvent} from "react";
-import {DeckItem, SavedDeck, SharedDeck, groupDeckItemsByType, makeDeckItem, useDeck} from "./DeckContext";
+import {SavedDeck, SharedDeck, groupDeckItemsByType, makeDeckItem, useDeck} from "./DeckContext";
 import {useRunBuildUi} from "./RunBuildUiContext";
 import {useDeckUi} from "./DeckUiContext";
 import {buildDeckShareUrl} from "./deck-share";
@@ -18,6 +18,7 @@ import {
   GearCollectionPreviewItem,
   getActivePreviewCategoryItemIds,
 } from "../gear/gear-preview";
+import {type Gear} from "../gear/gear-types";
 
 type DrawerPhase = "opening" | "open" | "closing";
 type LibraryTab = "favorites" | "saved-builds" | "recent-runs";
@@ -27,7 +28,7 @@ type DeckRowModel =
   | { kind: "saved"; deck: SavedDeck };
 
 type LoadedDeckEntity = {
-  card: DeckItem;
+  card: Gear;
   entity: ScrapedEntity;
   type: EntityType;
 };
@@ -414,7 +415,7 @@ function pluralize(value: number, unit: string): string {
  * Build the derived Favorites deck from the current liked entity ids.
  *
  * @param {Set<string>} likedIds - Current liked entity ids.
- * @param {Map<string, DeckItem>} entityLookup - Loaded entity lookup by deck id.
+ * @param {Map<string, Gear>} entityLookup - Loaded entity lookup by gear id.
  * @returns {SavedDeck | null} Derived favorites deck, or null when empty.
  */
 export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<string, LoadedDeckEntity>): SavedDeck | null {
@@ -422,7 +423,7 @@ export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<stri
 
   const items = Array.from(likedIds)
     .map((id) => entityLookup.get(id)?.card)
-    .filter((item): item is DeckItem => Boolean(item));
+    .filter((item): item is Gear => Boolean(item));
 
   if (items.length === 0) return null;
 
@@ -436,14 +437,14 @@ export function buildFavoritesDeck(likedIds: Set<string>, entityLookup: Map<stri
 /**
  * Build gift category metadata for a deck row.
  *
- * @param {DeckItem[]} items - Deck items shown in the row.
+ * @param {Gear[]} items - Deck items shown in the row.
  * @param {Map<string, string>} giftCategoryLookup - Gift item id to category.
  * @returns {GearCollectionPreviewItemMeta[]} Visible category metadata.
  */
-export function buildDeckCategoryMeta(items: DeckItem[], giftCategoryLookup: Map<string, string>): GearCollectionPreviewItemMeta[] {
+export function buildDeckCategoryMeta(items: Gear[], giftCategoryLookup: Map<string, string>): GearCollectionPreviewItemMeta[] {
   return buildGearCategoryMeta(items, giftCategoryLookup);
 }
 
-function sortDeckItemsByType(items: DeckItem[]): DeckItem[] {
+function sortDeckItemsByType(items: Gear[]): Gear[] {
   return groupDeckItemsByType(items);
 }

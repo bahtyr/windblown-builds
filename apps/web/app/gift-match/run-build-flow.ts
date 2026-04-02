@@ -1,10 +1,11 @@
-import {type DeckItem, type SavedDeck} from "../../components/deck/DeckContext";
+import {type SavedDeck} from "../../components/deck/DeckContext";
 import {
   buildMatchedGears,
   buildFailedGearCandidates,
   type FailedGearCandidate,
   type MatchedGear,
 } from "../../components/gear/gear-detection";
+import {type Gear} from "../../components/gear/gear-types";
 
 export type MatchedDeckItem = MatchedGear;
 export type FailedSquareCandidate = FailedGearCandidate;
@@ -17,14 +18,14 @@ export const buildFailedSquareCandidates = buildFailedGearCandidates;
  *
  * @param {SavedDeck[]} existing - Existing saved build library.
  * @param {string} desiredName - User-entered or generated build name.
- * @param {DeckItem[]} items - Items that should be saved into the build.
+ * @param {Gear[]} items - Items that should be saved into the build.
  * @param {() => string} [createTimestamp] - Timestamp factory used for persistence and tests.
  * @returns {{saved: SavedDeck[]; savedDeck: SavedDeck}} Updated saved decks plus the created saved deck.
  */
 export function saveExternalDeck(
   existing: SavedDeck[],
   desiredName: string,
-  items: DeckItem[],
+  items: Gear[],
   createTimestamp: () => string = () => new Date().toISOString(),
 ): { saved: SavedDeck[]; savedDeck: SavedDeck } {
   const normalizedDesiredName = normalizeDeckName(desiredName);
