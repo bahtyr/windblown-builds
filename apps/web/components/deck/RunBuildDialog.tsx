@@ -9,7 +9,7 @@ import {
   runGiftMatchWorkflow,
 } from "../../app/gift-match/gift-match-workflow";
 import {
-  buildDetectedDeckItems,
+  buildMatchedDeckItems,
   buildDetectedRunName,
   buildFailedSquareCandidates,
   type MatchedDeckItem,
@@ -101,7 +101,7 @@ export default function RunBuildDialog({
   }, [isOpen]);
 
   const matchedItems = useMemo(
-    () => groupMatchedItems(buildDetectedDeckItems(runResult?.squareResults ?? [])),
+    () => groupMatchedItems(buildMatchedDeckItems(runResult?.squareResults ?? [])),
     [runResult?.squareResults],
   );
   const failedSquares = useMemo(

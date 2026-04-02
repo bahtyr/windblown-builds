@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {
-  buildDetectedDeckItems,
+  buildMatchedDeckItems,
   buildDetectedRunName,
   buildFailedSquareCandidates,
   saveExternalDeck,
@@ -8,7 +8,7 @@ import {
 
 describe("buildDetectedDeckItems", () => {
   it("keeps unique successful matches and ignores boosts", () => {
-    const items = buildDetectedDeckItems([
+    const items = buildMatchedDeckItems([
       buildSquareResult(0, {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.91}),
       buildSquareResult(1, {name: "Abundance", path: "/images/gifts/Abundance_Icon.png", score: 0.84}),
       buildSquareResult(2, {name: "Damage Boost", path: "/images/boosts/Damage_Boost_Icon.png", score: 0.95}),

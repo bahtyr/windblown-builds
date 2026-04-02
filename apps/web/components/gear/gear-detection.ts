@@ -16,7 +16,7 @@ export type FailedGearCandidate = MatchedGear;
  * @param {GiftMatchSquareResult[]} squareResults - Workflow results for every detected square.
  * @returns {MatchedGear[]} Unique matched gears ordered by first successful match.
  */
-export function buildDetectedGears(squareResults: GiftMatchSquareResult[]): MatchedGear[] {
+export function buildMatchedGears(squareResults: GiftMatchSquareResult[]): MatchedGear[] {
   const uniqueItems = new Map<string, MatchedGear>();
 
   for (const square of squareResults) {
@@ -36,7 +36,7 @@ export function buildDetectedGears(squareResults: GiftMatchSquareResult[]): Matc
  * @returns {FailedGearCandidate[]} Candidate groups for failed squares.
  */
 export function buildFailedGearCandidates(squareResults: GiftMatchSquareResult[]): FailedGearCandidate[] {
-  const foundIds = new Set(buildDetectedGears(squareResults).map((item) => item.id));
+  const foundIds = new Set(buildMatchedGears(squareResults).map((item) => item.id));
   const uniqueCandidates = new Map<string, FailedGearCandidate>();
 
   for (const square of squareResults) {
