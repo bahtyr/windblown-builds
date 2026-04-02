@@ -1,13 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {type Gear} from "./gear-collection-utils";
+import {groupGearsForEditorRows, type Gear} from "./gear-collection-utils";
 import {EntityType} from "../../lib/types";
-
-type GearCollectionEditorRow = {
-  type: EntityType;
-  list: Gear[];
-};
 
 type GearCollectionEditorProps = {
   items: Gear[];
@@ -152,26 +147,4 @@ function DraggableGearChip({item, index, type, onDrop, onRemove, highlight}: Dra
       </button>
     </div>
   );
-}
-
-/**
- * Groups gears into the existing editor row layout used by the current collection editor.
- *
- * @param {Gear[]} items - Flat gear collection items.
- * @returns {GearCollectionEditorRow[][]} Grouped row layout for the editor.
- */
-export function groupGearsForEditorRows(items: Gear[]): GearCollectionEditorRow[][] {
-  const group = (type: EntityType) => items.filter((x) => x.type === type);
-  return [
-    [{type: "gifts" as const, list: group("gifts")}],
-    [
-      {type: "hexes" as const, list: group("hexes")},
-      {type: "weapons" as const, list: group("weapons")},
-      {type: "trinkets" as const, list: group("trinkets")},
-      {type: "magifishes" as const, list: group("magifishes")},
-    ],
-    [
-      {type: "boosts" as const, list: group("boosts")},
-    ],
-  ];
 }

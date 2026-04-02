@@ -1,6 +1,6 @@
 import {type EntityType} from "../../lib/types";
 import {isGiftMatch, type GiftMatchSquareResult, type GiftMatchTemplateScore} from "../../app/gift-match/gift-match-workflow";
-import {type Gear} from "./gear-collection-utils";
+import {compareTypeOrder, extractEntityTypeFromPath, type Gear} from "./gear-collection-utils";
 
 export type MatchedGear = Gear & {
   type: Exclude<EntityType, "effects">;
@@ -118,36 +118,4 @@ export function compareMatchedGears(left: MatchedGear, right: MatchedGear): numb
   }
 
   return left.name.localeCompare(right.name);
-}
-
-function extractEntityTypeFromPath(imagePath: string): Exclude<EntityType, "effects"> | null {
-  const pathParts = imagePath.split("/");
-  const type = pathParts[2];
-
-  if (type === "gifts" || type === "weapons" || type === "trinkets" || type === "magifishes" || type === "hexes" || type === "boosts") {
-    return type;
-  }
-
-  return null;
-}
-
-function compareTypeOrder(left: Exclude<EntityType, "effects">, right: Exclude<EntityType, "effects">): number {
-  return getTypeOrder(left) - getTypeOrder(right);
-}
-
-function getTypeOrder(type: Exclude<EntityType, "effects">): number {
-  switch (type) {
-    case "weapons":
-      return 0;
-    case "trinkets":
-      return 1;
-    case "magifishes":
-      return 2;
-    case "hexes":
-      return 3;
-    case "boosts":
-      return 4;
-    case "gifts":
-      return 5;
-  }
 }

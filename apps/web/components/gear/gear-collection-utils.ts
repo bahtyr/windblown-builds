@@ -16,6 +16,17 @@ export type GearCollectionSnapshot = {
   editingCollectionName: string | null;
 };
 
+export type GearCollectionEditorRow = {
+  type: EntityType;
+  list: Gear[];
+};
+
+export type GearCategorySummary = {
+  count: number;
+  itemIds: string[];
+  name: string;
+};
+
 const GEAR_TYPE_ORDER: EntityType[] = ["gifts", "hexes", "weapons", "trinkets", "magifishes", "boosts", "effects"];
 
 /**
@@ -38,6 +49,23 @@ export function gearId(type: EntityType, name: string): string {
  */
 export function makeGear(type: EntityType, entity: ScrapedEntity): Gear {
   return {type, name: entity.name, id: gearId(type, entity.name), image: entity.image};
+}
+
+/**
+ * Parses a supported entity type from a shared gear asset path.
+ *
+ * @param {string} imagePath - Entity image path.
+ * @returns {Exclude<EntityType, "effects"> | null} Parsed entity type, or null when unsupported.
+ */
+export function extractEntityTypeFromPath(imagePath: string): Exclude<EntityType, "effects"> | null {
+  const pathParts = imagePath.split("/");
+  const type = pathParts[2];
+
+  if (type === "gifts" || type === "weapons" || type === "trinkets" || type === "magifishes" || type === "hexes" || type === "boosts") {
+    return type;
+  }
+
+  return null;
 }
 
 /**
@@ -107,6 +135,40 @@ export function groupGearsByType(items: Gear[]): Gear[] {
 }
 
 /**
+ * Compares two shared gear types using the canonical collection ordering.
+ *
+ * @param {Exclude<EntityType, "effects">} left - Left gear type.
+ * @param {Exclude<EntityType, "effects">} right - Right gear type.
+ * @returns {number} Sort comparison result.
+ */
+export function compareTypeOrder(left: Exclude<EntityType, "effects">, right: Exclude<EntityType, "effects">): number {
+  return getTypeOrder(left) - getTypeOrder(right);
+}
+
+/**
+ * Resolves the canonical ordering index for a shared gear type.
+ *
+ * @param {Exclude<EntityType, "effects">} type - Gear type.
+ * @returns {number} Stable ordering index.
+ */
+export function getTypeOrder(type: Exclude<EntityType, "effects">): number {
+  switch (type) {
+    case "weapons":
+      return 0;
+    case "trinkets":
+      return 1;
+    case "magifishes":
+      return 2;
+    case "hexes":
+      return 3;
+    case "boosts":
+      return 4;
+    case "gifts":
+      return 5;
+  }
+}
+
+/**
  * Inserts a gear item into the canonical collection order.
  *
  * @param {Gear[]} list - Existing ordered gear list.
@@ -151,6 +213,69 @@ export function reorderGearsWithinType(list: Gear[], type: EntityType, from: num
   const [item] = next.splice(globalFrom, 1);
   next.splice(globalTo, 0, item);
   return next;
+}
+
+/**
+ * Groups gears into the editor row layout used by the shared collection editor.
+ *
+ * @param {Gear[]} items - Flat gear collection items.
+ * @returns {GearCollectionEditorRow[][]} Grouped row layout for the editor.
+ */
+export function groupGearsForEditorRows(items: Gear[]): GearCollectionEditorRow[][] {
+  const group = (type: EntityType) => items.filter((item) => item.type === type);
+  return [
+    [{type: "gifts" as const, list: group("gifts")}],
+    [
+      {type: "hexes" as const, list: group("hexes")},
+      {type: "weapons" as const, list: group("weapons")},
+      {type: "trinkets" as const, list: group("trinkets")},
+      {type: "magifishes" as const, list: group("magifishes")},
+    ],
+    [{type: "boosts" as const, list: group("boosts")}],
+  ];
+}
+
+/**
+ * Normalizes a collection name by trimming whitespace and applying a fallback.
+ *
+ * @param {string | undefined} value - Raw collection name.
+ * @param {string} defaultName - Fallback name when the input is empty.
+ * @returns {string} Normalized collection name.
+ */
+export function normalizeCollectionName(value: string | undefined, defaultName: string): string {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : defaultName;
+}
+
+/**
+ * Aggregates gift items into preview category summaries without UI concerns.
+ *
+ * @param {Gear[]} items - Gear items shown in the preview.
+ * @param {Map<string, string>} giftCategoryLookup - Gift item id to category.
+ * @returns {GearCategorySummary[]} Visible category summaries.
+ */
+export function buildGearCategorySummaries(items: Gear[], giftCategoryLookup: Map<string, string>): GearCategorySummary[] {
+  const categoryItems = new Map<string, string[]>();
+  for (const item of items) {
+    if (item.type !== "gifts") continue;
+    const category = giftCategoryLookup.get(item.id);
+    if (category) {
+      categoryItems.set(category, [...(categoryItems.get(category) ?? []), item.id]);
+    }
+  }
+
+  return Array.from(categoryItems.entries())
+    .sort(([nameA, itemIdsA], [nameB, itemIdsB]) => {
+      const countA = itemIdsA.length;
+      const countB = itemIdsB.length;
+      if (countB !== countA) return countB - countA;
+      return nameA.localeCompare(nameB);
+    })
+    .map(([name, itemIds]) => ({
+      count: itemIds.length,
+      name,
+      itemIds,
+    }));
 }
 
 /**

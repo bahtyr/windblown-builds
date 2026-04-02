@@ -8,6 +8,7 @@ import {
   groupGearsByType,
   hydrateGears,
   insertGearByType,
+  normalizeCollectionName,
   reorderGearsWithinType,
   restoreGearCollectionSnapshot,
 } from "./gear-collection-utils";
@@ -169,11 +170,6 @@ export function useGearCollection(): GearCollectionContextType {
   const ctx = useContext(GearCollectionContext);
   if (!ctx) throw new Error("GearCollectionContext missing");
   return ctx;
-}
-
-function normalizeCollectionName(value: string | undefined, defaultName: string): string {
-  const trimmed = value?.trim();
-  return trimmed ? trimmed : defaultName;
 }
 
 function groupGears(items: Gear[]): Gear[] {

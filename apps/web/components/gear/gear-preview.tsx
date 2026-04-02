@@ -7,7 +7,7 @@ import RichText from "../entity/RichText";
 import EntityVideoPreview from "../entity/EntityVideoPreview";
 import {getEntityStats} from "../entity/EntityCard";
 import {useHoverTooltip} from "../tooltip/hoverTooltip";
-import {type Gear} from "./gear-collection-utils";
+import {buildGearCategorySummaries, type Gear} from "./gear-collection-utils";
 import {EntityType, ScrapedEntity} from "../../lib/types";
 
 export type GearCollectionPreviewItemMeta = {
@@ -169,28 +169,10 @@ export function GearCollectionCategoryChips({
  * @returns {GearCollectionPreviewItemMeta[]} Visible category metadata.
  */
 export function buildGearCategoryMeta(items: Gear[], giftCategoryLookup: Map<string, string>): GearCollectionPreviewItemMeta[] {
-  const categoryItems = new Map<string, string[]>();
-  for (const item of items) {
-    if (item.type !== "gifts") continue;
-    const category = giftCategoryLookup.get(item.id);
-    if (category) {
-      categoryItems.set(category, [...(categoryItems.get(category) ?? []), item.id]);
-    }
-  }
-
-  return Array.from(categoryItems.entries())
-    .sort(([nameA, itemIdsA], [nameB, itemIdsB]) => {
-      const countA = itemIdsA.length;
-      const countB = itemIdsB.length;
-      if (countB !== countA) return countB - countA;
-      return nameA.localeCompare(nameB);
-    })
-    .map(([name, itemIds]) => ({
-      count: itemIds.length,
-      name,
-      image: categoryImages[name as keyof typeof categoryImages],
-      itemIds,
-    }));
+  return buildGearCategorySummaries(items, giftCategoryLookup).map((category) => ({
+    ...category,
+    image: categoryImages[category.name as keyof typeof categoryImages],
+  }));
 }
 
 /**
